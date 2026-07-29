@@ -49,36 +49,53 @@ Open **`src/lib/siteConfig.ts`** and set:
 
 Then get a **Follow Up Boss API key**: in FUB, go to Admin → API → Create API Key.
 
-## Running it locally
+## Deploying via GitHub + Vercel (no terminal required)
 
+This is now set up to deploy on Vercel using serverless functions (`/api/leads.js`
+and `/api/mls/search.js`) instead of a standalone server — which means Vercel
+builds and runs everything automatically. You don't need to run `npm install`
+or any command on your own computer at all.
+
+**Step 1 — Get the code onto GitHub**
+1. Unzip this project on your computer.
+2. Go to [github.com](https://github.com) and sign in (or create a free account).
+3. Click **New repository**, give it a name (e.g. `friedman-team-site`), leave it Private if you prefer, click **Create repository**.
+4. On the empty repo page, click the **"uploading an existing file"** link.
+5. Drag the unzipped project folder's contents into the browser window (all the files and folders at once — there are about 46 files, well under GitHub's drag-and-drop limit).
+6. Scroll down, click **Commit changes**.
+
+**Step 2 — Connect it to Vercel**
+1. Go to [vercel.com](https://vercel.com) and sign up using **"Continue with GitHub"** (easiest option — links your accounts automatically).
+2. Click **Add New... → Project**.
+3. Find and import the repo you just created.
+4. Before clicking Deploy, expand **Environment Variables** and add these (same values that would've gone in `.env`):
+   - `LOFTY_API_KEY` — your Lofty API key
+   - `FUB_API_KEY` — your Follow Up Boss API key
+   - `FUB_SOURCE` — e.g. `TheFriedmanTeam.com`
+   - `DEBUG_MLS` — `false` (flip to `true` temporarily later if you need to check field names)
+5. Click **Deploy**.
+
+That's it — Vercel gives you a live URL (something like `friedman-team-site.vercel.app`) within a minute or two. Every time you push new changes to GitHub, Vercel automatically redeploys.
+
+**If something's not working after deploying**, the fastest way to check is: Vercel dashboard → your project → **Deployments** → click the latest one → **Functions** tab — this shows you the server-side logs for `/api/leads` and `/api/mls/search`, including the `DEBUG_MLS` output if you turned it on.
+
+## Running it locally instead (optional)
+
+If you do want to test on your own computer before pushing to GitHub, you have two options:
+
+**Simplest — matches Vercel exactly:**
+```bash
+npx vercel dev
+```
+(Requires Node.js installed and the Vercel CLI, which `npx` installs automatically the first time. Also asks you to log into Vercel once.)
+
+**Alternative — separate frontend/backend (uses the older Express server.js, kept for other hosts like Render/Railway):**
 ```bash
 npm install
 cp .env.example .env
-# edit .env: set FUB_API_KEY now, MLS_API_BASE_URL / MLS_API_TOKEN once you have them
+# fill in .env with your real keys
 npm run dev:all
 ```
-
-This runs the frontend (port 3000) and backend (port 3001) together, with the
-frontend proxying `/api` calls to the backend. Open http://localhost:3000.
-
-If `npm run dev:all` doesn't work in your terminal, run these in two separate
-terminal windows instead:
-```bash
-npm run dev      # terminal 1 - frontend
-npm run server   # terminal 2 - backend
-```
-
-## Deploying
-
-This needs a persistent Node process running (`server.js`), not a pure static
-host:
-
-- **AI Studio / Cloud Run, Render, Railway, Fly.io, a VPS**: set `FUB_API_KEY`
-  (and later `MLS_API_BASE_URL` / `MLS_API_TOKEN`) as environment variables,
-  run `npm run build` once, then `npm start`.
-- **Static-only hosts (Netlify, Vercel static, GitHub Pages)**: won't work
-  as-is. Say the word if you want `server.js` converted to serverless
-  functions instead.
 
 ## Honesty notes (things I deliberately toned down or removed)
 

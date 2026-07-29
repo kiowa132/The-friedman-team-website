@@ -5,4 +5,4 @@
 // this to "friedmanreport". Used to embed Substack's real subscribe widget
 // in the footer (this is Substack's own official embeddable form, so
 // subscriptions actually go through - no custom backend needed for this one).
-export const SUBSTACK_SUBDOMAIN = 'YOUR-SUBSTACK-SUBDOMAIN';
+export const SUBSTACK_SUBDOMAIN: string = 'keysbykyle';
