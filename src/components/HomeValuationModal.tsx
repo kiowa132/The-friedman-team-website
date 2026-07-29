@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X, Calculator, ShieldCheck, Sparkles, CheckCircle2, ArrowRight, Building2, MapPin, DollarSign, AlertCircle } from 'lucide-react';
-import { HomeValuationResult } from '../types';
 import { submitLead } from '../lib/leads';
 
 interface HomeValuationModalProps {
@@ -29,7 +28,6 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
   const [ownerName, setOwnerName] = useState('');
   const [ownerEmail, setOwnerEmail] = useState('');
   const [ownerPhone, setOwnerPhone] = useState('');
-  const [result, setResult] = useState<HomeValuationResult | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -51,26 +49,20 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
     }
   };
 
-  const calculateEstimate = async (e: React.FormEvent) => {
+  const submitValuationRequest = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // Rough, non-appraisal estimate for engagement purposes only. This is NOT
-    // pulling live comps - it's a simple $/sqft heuristic to give the visitor
-    // a ballpark while Kyle prepares a real CMA from actual MLS data.
-    let basePricePerSqft = county === 'Baltimore County' ? 380 : county === 'Howard County' ? 350 : 310;
-    let calculatedMid = sqft * basePricePerSqft + acreage * 45000 + upgrades.length * 75000;
-
-    const calculatedLow = Math.round(calculatedMid * 0.9);
-    const calculatedHigh = Math.round(calculatedMid * 1.1);
-    calculatedMid = Math.round(calculatedMid);
-
+    // No price estimate is calculated or shown here, on purpose. A $/sqft
+    // formula was tested and produced a wildly wrong number (a $1.6M estimate
+    // on an actual $375K property) - there's no safe way to calibrate a
+    // generic formula to every property, so this now only collects details
+    // and routes them to Kyle for a real, comp-based valuation.
     const details = [
       `Property: ${address}, ${city}, ${county}`,
       `Type: ${propertyType} | ${sqft} sqft | ${acreage} acres`,
       upgrades.length ? `Notable features: ${upgrades.join(', ')}` : null,
-      `Rough self-service estimate shown to lead: $${calculatedLow.toLocaleString()} - $${calculatedHigh.toLocaleString()} (heuristic only, not a CMA)`,
     ].filter(Boolean).join('\n');
 
     const { ok, error } = await submitLead({
@@ -81,18 +73,13 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
       message: details,
     });
 
+    setIsSubmitting(false);
+
     if (!ok) {
       setSubmitError(error || 'Something went wrong sending your request. Please call or email Kyle directly.');
+      return;
     }
 
-    setResult({
-      estimatedLow: calculatedLow,
-      estimatedHigh: calculatedHigh,
-      estimatedMid: calculatedMid,
-      confidenceScore: 0,
-      comparableCount: 0
-    });
-    setIsSubmitting(false);
     setStep(3);
   };
 
@@ -247,7 +234,7 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
 
           {/* STEP 2: Upgrades & Contact Form */}
           {step === 2 && (
-            <form onSubmit={calculateEstimate} className="space-y-4 animate-fadeIn">
+            <form onSubmit={submitValuationRequest} className="space-y-4 animate-fadeIn">
               <div className="text-center space-y-1">
                 <h4 className="font-serif text-2xl font-bold text-[#0D2226]">
                   Select Custom Estate Features
@@ -339,28 +326,25 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
             </form>
           )}
 
-          {/* STEP 3: Results & CTA */}
-          {step === 3 && result && (
+          {/* STEP 3: Confirmation - no computed number, ever */}
+          {step === 3 && (
             <div className="space-y-6 text-center animate-fadeIn">
-              
+
               <div className="bg-[#0D2226] text-[#FAF8F5] p-6 rounded-xs border border-[#C9A96A] space-y-4">
                 <div className="text-xs uppercase tracking-widest text-[#C9A96A] font-bold flex items-center justify-center gap-2">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Preliminary Valuation Model Result</span>
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Request Received</span>
                 </div>
 
                 <div className="text-[#FAF8F5]">
-                  <span className="text-xs text-[#A8B2A1] block">Preliminary Range for {address || 'Your Property'}</span>
-                  <div className="text-3xl sm:text-4xl font-serif font-bold text-[#C9A96A] mt-1">
-                    ${result.estimatedLow.toLocaleString()} – ${result.estimatedHigh.toLocaleString()}
-                  </div>
-                  <div className="text-xs text-[#FAF8F5]/80 mt-1">
-                    Midpoint: <strong className="text-[#FAF8F5]">${result.estimatedMid.toLocaleString()}</strong>
-                  </div>
+                  <span className="text-xs text-[#A8B2A1] block">For {address || 'Your Property'}</span>
+                  <p className="text-sm sm:text-base mt-2 max-w-md mx-auto">
+                    Kyle will personally review your property details and prepare a real valuation using current comparable sales and local market data — not an automated guess.
+                  </p>
                 </div>
 
                 <div className="pt-2 border-t border-[#FAF8F5]/10 text-[11px] text-[#A8B2A1] leading-relaxed">
-                  This is a rough, self-service estimate based on general price-per-square-foot data — not a formal appraisal or a comparative market analysis pulled from live MLS comps.
+                  Expect to hear back within 1 business day.
                 </div>
               </div>
 
@@ -372,15 +356,6 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
                   </p>
                 </div>
               )}
-
-              <div className="bg-[#0F5C63]/10 border border-[#0F5C63] p-4 text-left space-y-2 rounded-xs">
-                <h5 className="font-serif font-bold text-[#0F5C63] text-base">
-                  Why Strategic Representation Outperforms Generic Automated Estimates
-                </h5>
-                <p className="text-xs text-[#1C2B2E] leading-relaxed">
-                  Algorithmic estimates like Zillow Zestimates cannot factor in custom equestrian amenities, private pond valuations, or high-net-worth relocation buyer demand. Kyle Friedman conducts custom in-person appraisals, using live MLS comps, to unlock maximum sale proceeds.
-                </p>
-              </div>
 
               <div className="space-y-3">
                 <button
