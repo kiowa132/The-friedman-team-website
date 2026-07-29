@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: #0F5C63;
+    --color-secondary: #C9A96A;
+    --color-accent: #A8B2A1;
+    --color-bg: #F5F1E8;
+    --color-surface: #FAF8F5;
+    --color-dark: #0D2226;
+  }
+
+  body {
+    font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #F5F1E8;
+    color: #1A1A1A;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-serif, .font-serif-luxury {
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .font-sans {
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+.text-teal { color: #0F5C63; }
+.bg-teal { background-color: #0F5C63; }
+.text-gold { color: #C9A96A; }
+.border-gold { border-color: #C9A96A; }
+
+/* Custom scrollbar for clean luxury feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F1E8;
+}
+::-webkit-scrollbar-thumb {
+  background: #C9A96A;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0F5C63;
+}
+
+/* Slow zoom animation for hero image */
+@keyframes kenburns {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 30s ease-in-out infinite alternate;
+}
+
+/* Custom glass / backdrop effects */
+.glass-luxury {
+  background: rgba(245, 241, 232, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.glass-dark {
+  background: rgba(13, 34, 38, 0.90);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(201, 169, 106, 0.3);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 50%, #C9A96A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
