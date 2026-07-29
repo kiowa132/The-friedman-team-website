@@ -95,7 +95,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           <div className="lg:col-span-5 relative z-10">
             <div className="relative rounded-xs overflow-hidden border-2 border-[#C9A96A] aspect-[4/5] shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=80"
+                src="/images/kyle-portrait.jpg"
                 alt="Kyle Friedman Real Estate Advisor"
                 className="w-full h-full object-cover"
               />
