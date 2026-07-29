@@ -65,7 +65,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           
           <div className="lg:col-span-7 space-y-6 z-10">
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#C9A96A] bg-[#0F5C63] px-3.5 py-1 border border-[#C9A96A]/30 inline-block">
-              Fiduciary Leadership & Advisory
+              Baltimore & Carroll County Real Estate
             </span>
 
             <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[#FAF8F5]">
@@ -77,7 +77,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </p>
 
             <p className="text-xs sm:text-sm text-[#FAF8F5]/90 leading-relaxed font-normal pt-2">
-              "My objective is simple: to deliver strategic clarity, uncompromising negotiation, and exceptional financial outcomes for Maryland homeowners. Real estate is not merely a transaction—it is a critical wealth event that demands bespoke execution."
+              "I got my start in sales the hard way — door to door, then wholesaling deals across Baltimore and Carroll County. That background means I price homes off real comps and real numbers, not a guess, and I'll tell you the truth about what your property is actually worth, even when it's not what you were hoping to hear."
             </p>
 
             <div className="pt-4 flex flex-wrap items-center gap-4">

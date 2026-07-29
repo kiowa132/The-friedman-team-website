@@ -367,15 +367,15 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           <div className="lg:col-span-7 space-y-6">
             <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">
-              Fiduciary Leadership
+              Meet Your Agent
             </span>
 
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
-              Strategic Representation for Maryland Homeowners Who Expect Results.
+              A Wholesaler's Instincts, Now Working for You as a Buyer or Seller.
             </h2>
 
             <p className="text-sm text-[#1C2B2E]/80 leading-relaxed font-normal">
-              Kyle Friedman has established a reputation for uncompromising negotiation, architectural storytelling, and hyper-local mastery of Maryland’s luxury countryside. Specializing in luxury residences, horse farms, land preservation, and historic estates across Carroll, Baltimore, and Howard counties.
+              Kyle Friedman started in door-to-door sales, then spent years wholesaling deals across Baltimore and Carroll County before becoming a REALTOR®. That means every listing gets priced off real comps and real numbers — not a guess — and every deal gets negotiated by someone who's actually sat across the table from motivated sellers and serious investors alike.
             </p>
 
             <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-[#0D2226]">
