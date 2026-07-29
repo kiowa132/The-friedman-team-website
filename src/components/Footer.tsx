@@ -25,39 +25,31 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7">
               <span className="text-[#C9A96A] text-xs font-semibold tracking-widest uppercase">
-                Weekly Market Newsletter
+                Market Intelligence Subscription
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl text-[#FAF8F5] font-semibold mt-1">
-                Subscribe to The Friedman Report
+                Subscribe to The Friedman Real Estate Report
               </h3>
               <p className="text-[#A8B2A1] text-sm mt-2 max-w-xl">
-                Local market data, new listings, and straight talk about buying and selling in Carroll, Baltimore, and Howard counties — every week.
+                Weekly Wall Street Journal-grade market analysis, off-market opportunities, and strategic insights for Maryland luxury estate owners.
               </p>
             </div>
             
             <div className="lg:col-span-5">
-              {SUBSTACK_SUBDOMAIN && SUBSTACK_SUBDOMAIN !== 'YOUR-SUBSTACK-SUBDOMAIN' ? (
-                /*
-                  Real Substack subscribe widget (Substack's own official embed) -
-                  this actually adds subscribers to The Friedman Report, unlike a
-                  custom form with nowhere to send the email.
-                */
-                <iframe
-                  src={`https://${SUBSTACK_SUBDOMAIN}.substack.com/embed`}
-                  width="100%"
-                  height="120"
-                  style={{ background: 'transparent', border: 'none' }}
-                  title="Subscribe to The Friedman Report"
-                />
-              ) : (
-                // Falls back to this instead of a broken iframe until
-                // SUBSTACK_SUBDOMAIN is set in src/lib/siteConfig.ts
-                <div className="bg-[#FAF8F5]/5 border border-[#FAF8F5]/15 rounded-xs p-4 text-center">
-                  <p className="text-xs text-[#A8B2A1]">
-                    Newsletter signup is almost ready — check back soon.
-                  </p>
-                </div>
-              )}
+              {/*
+                Real Substack subscribe widget (Substack's own official embed) -
+                this actually adds subscribers to The Friedman Report, unlike a
+                custom form with nowhere to send the email.
+                Set SUBSTACK_SUBDOMAIN in src/lib/siteConfig.ts to your real
+                Substack subdomain first.
+              */}
+              <iframe
+                src={`https://${SUBSTACK_SUBDOMAIN}.substack.com/embed`}
+                width="100%"
+                height="120"
+                style={{ background: 'transparent', border: 'none' }}
+                title="Subscribe to The Friedman Report"
+              />
             </div>
           </div>
         </div>

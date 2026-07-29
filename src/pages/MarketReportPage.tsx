@@ -198,7 +198,7 @@ export const MarketReportPage: React.FC<MarketReportPageProps> = ({
               Weekly Executive Subscription
             </span>
             <h2 className="font-serif text-3xl font-bold text-[#0D2226]">
-              Get The Friedman Report Delivered Directly to Your Inbox
+              Get The Friedman Real Estate Report Delivered Directly to Your Inbox
             </h2>
             <p className="text-xs sm:text-sm text-[#1C2B2E]/80 max-w-xl">
               Receive private off-market transaction summaries, regional pricing metrics, and agricultural land preservation alerts before standard news release.
