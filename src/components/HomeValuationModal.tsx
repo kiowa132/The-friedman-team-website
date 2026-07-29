@@ -92,7 +92,7 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
           <div className="flex items-center gap-2">
             <Calculator className="w-5 h-5 text-[#C9A96A]" />
             <h3 className="font-serif text-xl font-bold tracking-wide text-[#FAF8F5]">
-              Strategic Home Valuation Engine
+              What's Your Home Worth?
             </h3>
           </div>
           <button
