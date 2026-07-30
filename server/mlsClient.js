@@ -164,15 +164,16 @@ export async function searchListings(params = {}) {
     total: json.total ?? json.totalCount ?? listings.length,
   };
 
-  if (DEBUG_MLS) {
-    result.debugInfo = {
-      httpStatus: res.status,
-      requestBodySent: body,
-      responseTopLevelKeys: Object.keys(json),
-      rawListingsFoundByExtractor: rawListings.length,
-      responseSample: JSON.stringify(json).slice(0, 3000),
-    };
-  }
+  // TEMPORARILY always attaching debug info (not gated behind DEBUG_MLS)
+  // while we diagnose why listings aren't coming back correctly. Once
+  // fixed, this can go back to being gated behind DEBUG_MLS again.
+  result.debugInfo = {
+    httpStatus: res.status,
+    requestBodySent: body,
+    responseTopLevelKeys: Object.keys(json),
+    rawListingsFoundByExtractor: rawListings.length,
+    responseSample: JSON.stringify(json).slice(0, 3000),
+  };
 
   return result;
 }
