@@ -8,8 +8,7 @@ heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
 youtubeVideoId: ""
 carouselImages:
   - /images/uploads/image-1-.jpg
-  - /images/uploads/image-2-copy.jpg
-  - /images/uploads/image-3-.jpg
+  - /images/uploads/image-1-.jpg
 relatedGuideSlug: carroll-county-seller-guide
 relatedAreaSlug: carroll-county
 ---
@@ -36,13 +35,3 @@ Staging makes a space feel aspirational but staging only works on people who act
 And skip the bargain tool. Rent something commercial grade or hire it out. One pass beats three attempts and a laughing neighbor.
 
 If you’re gearing up to list in Baltimore County, Carroll County, or anywhere else I work, this is the exact conversation I have with every seller before we ever talk price what’s worth fixing before photos, and what buyers genuinely won’t notice. Happy to walk your place with you.
-
-Have Questions? Let’s Talk.
-
-📞 443-789-3101 | Kyle@Friedmanreteam.com
-
-8115 Maple Lawn Blvd. #350 Fulton, MD 20759
-
-Schedule a call
-
-Thanks for reading Friedman Real Estate Report! Subscribe for free to receive new posts and support my work.
