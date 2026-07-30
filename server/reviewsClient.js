@@ -45,9 +45,17 @@ let cachedPlaceId = null;
 // IPRG") that happened to share the word "Friedman" - showing that on the
 // site would mean displaying a stranger's reviews under Kyle's name, which
 // is worse than showing nothing. Never skip this check.
+//
+// Confirmed via real debug output that Google has Kyle's listing saved
+// simply as "The Friedman Team" (no "Kyle" in the name) - so that exact
+// name is explicitly allowed here, while decoys like "Team Friedman IPRG",
+// "Anthony Friedman Team...", "Kathy Friedman...", "Lee Friedman..." (all
+// real, different agents with the same surname in the area) are correctly
+// rejected since they don't match either condition below.
 function looksLikeKylesBusiness(name) {
   if (!name) return false;
-  const n = name.toLowerCase();
+  const n = name.toLowerCase().trim();
+  if (n === 'the friedman team') return true;
   return n.includes('kyle') && n.includes('friedman');
 }
 
