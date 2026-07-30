@@ -101,6 +101,28 @@ async function resolvePlaceId() {
     return cachedPlaceId;
   }
 
+  // Second fallback: Nearby Search ranks by proximity to an exact point
+  // rather than text relevance - useful here because Text Search wasn't
+  // surfacing Kyle's listing at all despite it existing at these exact
+  // confirmed coordinates (verified directly on Google Maps). A tight
+  // 50m radius means almost anything returned should genuinely be at
+  // that pin, not just something text-similar.
+  const nearbyUrl = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json');
+  nearbyUrl.searchParams.set('location', `${BUSINESS_LAT},${BUSINESS_LNG}`);
+  nearbyUrl.searchParams.set('radius', '50');
+  nearbyUrl.searchParams.set('keyword', 'Friedman');
+  nearbyUrl.searchParams.set('key', GOOGLE_PLACES_API_KEY);
+
+  const nearbyRes = await fetch(nearbyUrl.toString());
+  const nearbyJson = await nearbyRes.json();
+
+  const validNearby = (nearbyJson.results || []).find((r) => looksLikeKylesBusiness(r.name));
+
+  if (nearbyJson.status === 'OK' && validNearby) {
+    cachedPlaceId = validNearby.place_id;
+    return cachedPlaceId;
+  }
+
   const err = new Error(`Could not confidently resolve Kyle's Place ID for "${BUSINESS_NAME_QUERY}" - either no match or the match didn't look like his business.`);
   err.code = 'REVIEWS_PLACE_LOOKUP_FAILED';
   err.debugInfo = {
@@ -110,6 +132,9 @@ async function resolvePlaceId() {
     textSearchStatus: fallbackJson.status,
     textSearchCandidateNames: (fallbackJson.results || []).map((r) => r.name),
     textSearchErrorMessage: fallbackJson.error_message,
+    nearbySearchStatus: nearbyJson.status,
+    nearbySearchCandidateNames: (nearbyJson.results || []).map((r) => r.name),
+    nearbySearchErrorMessage: nearbyJson.error_message,
     businessNameQuery: BUSINESS_NAME_QUERY,
   };
   throw err;
