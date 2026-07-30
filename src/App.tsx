@@ -61,6 +61,7 @@ export default function App() {
         savedCount={savedListings.length}
         onOpenValuation={() => setIsValuationOpen(true)}
         onOpenConsultation={() => setIsConsultationOpen(true)}
+        onSelectNeighborhood={(id) => setSelectedNeighborhoodId(id)}
       />
 
       {/* Main Dynamic View Area */}

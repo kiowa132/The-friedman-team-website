@@ -1,5 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Building2, Phone, Menu, X, Heart, Calculator, ChevronRight, Compass, ShieldCheck } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Building2, Phone, Menu, X, Heart, Calculator, ChevronRight, ChevronDown, Compass, ShieldCheck } from 'lucide-react';
+
+interface NavDropdownItem {
+  label: string;
+  action: () => void;
+}
+
+interface NavGroup {
+  id: string;
+  label: string;
+  action?: () => void; // for a plain link with no dropdown (e.g. Home)
+  items?: NavDropdownItem[];
+}
 
 interface NavbarProps {
   activeTab: string;
@@ -7,7 +19,7 @@ interface NavbarProps {
   savedCount: number;
   onOpenValuation: () => void;
   onOpenConsultation: () => void;
-  onSelectCounty?: (county: string) => void;
+  onSelectNeighborhood?: (id: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -15,38 +27,97 @@ export const Navbar: React.FC<NavbarProps> = ({
   setActiveTab,
   savedCount,
   onOpenValuation,
-  onOpenConsultation
+  onOpenConsultation,
+  onSelectNeighborhood,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openDesktopGroup, setOpenDesktopGroup] = useState<string | null>(null);
+  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About Kyle' },
-    { id: 'sell', label: 'Sell Your Home' },
-    { id: 'buy', label: 'Buyers Strategy' },
-    { id: 'neighborhoods', label: 'Neighborhoods' },
-    { id: 'listings', label: 'Listings' },
-    { id: 'market-report', label: 'Market Intelligence' },
-    { id: 'contact', label: 'Contact' }
+  const goTo = (tab: string) => {
+    setActiveTab(tab);
+    setMobileMenuOpen(false);
+    setOpenDesktopGroup(null);
+    setOpenMobileGroup(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const goToNeighborhood = (neighborhoodId: string) => {
+    onSelectNeighborhood?.(neighborhoodId);
+    goTo('neighborhoods');
+  };
+
+  // Navigation reorganized around buyer/seller intent instead of a flat list
+  // of every page. Groups only include pages/actions that actually exist on
+  // the site today - no placeholder links to pages that aren't built yet
+  // (e.g. a dedicated Blog or Reviews page), so nothing in the nav is a dead
+  // end. Add those back in as their own group once that content exists.
+  const navGroups: NavGroup[] = [
+    { id: 'home', label: 'Home', action: () => goTo('home') },
+    {
+      id: 'buy',
+      label: 'Buy',
+      items: [
+        { label: 'Search Homes', action: () => goTo('listings') },
+        { label: "Buyer's Strategy", action: () => goTo('buy') },
+        { label: 'Neighborhoods', action: () => goTo('neighborhoods') },
+      ],
+    },
+    {
+      id: 'sell',
+      label: 'Sell',
+      items: [
+        { label: 'Get Your Home Value', action: () => onOpenValuation() },
+        { label: 'Seller Strategy', action: () => goTo('sell') },
+      ],
+    },
+    {
+      id: 'areas',
+      label: 'Areas',
+      items: [
+        { label: 'Carroll County', action: () => goToNeighborhood('carroll-county') },
+        { label: 'Baltimore County', action: () => goToNeighborhood('baltimore-county') },
+        { label: 'Howard County', action: () => goToNeighborhood('howard-county') },
+        { label: 'Market Reports', action: () => goTo('market-report') },
+      ],
+    },
+    {
+      id: 'about',
+      label: 'About',
+      items: [
+        { label: 'About Kyle', action: () => goTo('about') },
+        { label: 'Contact', action: () => goTo('contact') },
+      ],
+    },
   ];
 
-  const handleNavClick = (id: string) => {
-    setActiveTab(id);
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Which top-level group should show as "active" (for the underline/highlight)
+  const groupForTab: Record<string, string> = {
+    home: 'home',
+    listings: 'buy',
+    buy: 'buy',
+    neighborhoods: 'buy',
+    sell: 'sell',
+    'market-report': 'areas',
+    about: 'about',
+    contact: 'about',
+  };
+  const activeGroupId = groupForTab[activeTab] || 'home';
+
+  const handleDesktopEnter = (id: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenDesktopGroup(id);
+  };
+  const handleDesktopLeave = () => {
+    closeTimer.current = setTimeout(() => setOpenDesktopGroup(null), 150);
   };
 
   return (
@@ -59,10 +130,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          
+
           {/* Logo Branding */}
           <button
-            onClick={() => handleNavClick('home')}
+            onClick={() => goTo('home')}
             className="flex items-center gap-3 text-left group focus:outline-none"
             id="nav-logo-btn"
           >
@@ -74,43 +145,66 @@ export const Navbar: React.FC<NavbarProps> = ({
                 Friedman
               </div>
               <div className="text-[10px] sm:text-xs font-medium tracking-[0.25em] text-[#C9A96A] uppercase flex items-center gap-1.5">
-                <span>Real Estate Team</span>
+                <span>The Friedman Team</span>
                 <span className="inline-block w-1 h-1 rounded-full bg-[#A8B2A1]"></span>
                 <span className="text-[#A8B2A1]/90">eXp Realty</span>
               </div>
             </div>
           </button>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation - grouped by buyer/seller intent */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
-            {navItems.map((item) => {
-              const isActive = activeTab === item.id;
+            {navGroups.map((group) => {
+              const isActive = activeGroupId === group.id;
+              const hasDropdown = Boolean(group.items?.length);
+
               return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item.id)}
-                  id={`nav-link-${item.id}`}
-                  className={`px-3 py-2 text-xs xl:text-sm uppercase tracking-widest font-medium transition-all relative group ${
-                    isActive
-                      ? 'text-[#C9A96A] font-semibold'
-                      : 'text-[#FAF8F5]/85 hover:text-[#C9A96A]'
-                  }`}
+                <div
+                  key={group.id}
+                  className="relative"
+                  onMouseEnter={() => hasDropdown && handleDesktopEnter(group.id)}
+                  onMouseLeave={() => hasDropdown && handleDesktopLeave()}
                 >
-                  {item.label}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#C9A96A] rounded-full shadow-[0_0_8px_#C9A96A]" />
+                  <button
+                    onClick={() => (group.action ? group.action() : handleDesktopEnter(group.id))}
+                    id={`nav-link-${group.id}`}
+                    className={`px-3 py-2 text-xs xl:text-sm uppercase tracking-widest font-medium transition-all relative flex items-center gap-1 ${
+                      isActive ? 'text-[#C9A96A] font-semibold' : 'text-[#FAF8F5]/85 hover:text-[#C9A96A]'
+                    }`}
+                  >
+                    {group.label}
+                    {hasDropdown && <ChevronDown className="w-3 h-3" />}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#C9A96A] rounded-full shadow-[0_0_8px_#C9A96A]" />
+                    )}
+                  </button>
+
+                  {hasDropdown && openDesktopGroup === group.id && (
+                    <div className="absolute top-full left-0 pt-2 min-w-[220px] z-30">
+                      <div className="bg-[#0D2226] border border-[#C9A96A]/40 rounded-xs shadow-2xl overflow-hidden">
+                        {group.items!.map((item) => (
+                          <button
+                            key={item.label}
+                            onClick={item.action}
+                            className="w-full text-left px-4 py-3 text-xs uppercase tracking-wider text-[#FAF8F5]/90 hover:bg-[#0F5C63] hover:text-[#C9A96A] transition-colors border-b border-[#FAF8F5]/5 last:border-b-0"
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   )}
-                </button>
+                </div>
               );
             })}
           </nav>
 
           {/* Actions & Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            
+
             {/* Favorites Icon */}
             <button
-              onClick={() => handleNavClick('listings')}
+              onClick={() => goTo('listings')}
               className="relative p-2 text-[#FAF8F5]/80 hover:text-[#C9A96A] transition-colors focus:outline-none"
               title="Saved Properties"
               id="nav-saved-btn"
@@ -140,7 +234,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#0D2226] bg-[#C9A96A] hover:bg-[#D4AF37] rounded-xs shadow-md transition-all flex items-center gap-1.5"
             >
               <Phone className="w-3.5 h-3.5" />
-              <span>Consultation</span>
+              <span>Schedule Consultation</span>
             </button>
           </div>
 
@@ -165,23 +259,56 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu Drawer - same grouped structure, expandable sections */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0D2226] border-b border-[#C9A96A]/30 px-6 py-6 space-y-4 animate-fadeIn shadow-2xl">
-          <div className="flex flex-col space-y-3">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={`text-left text-sm uppercase tracking-widest py-2 border-b border-[#FAF8F5]/10 flex items-center justify-between ${
-                  activeTab === item.id ? 'text-[#C9A96A] font-bold' : 'text-[#FAF8F5]/80'
-                }`}
-              >
-                <span>{item.label}</span>
-                <ChevronRight className="w-4 h-4 text-[#C9A96A]/60" />
-              </button>
-            ))}
-          </div>
+        <div className="lg:hidden bg-[#0D2226] border-b border-[#C9A96A]/30 px-6 py-6 space-y-1 animate-fadeIn shadow-2xl max-h-[calc(100vh-80px)] overflow-y-auto">
+          {navGroups.map((group) => {
+            const hasDropdown = Boolean(group.items?.length);
+            const isOpen = openMobileGroup === group.id;
+            const isActive = activeGroupId === group.id;
+
+            if (!hasDropdown) {
+              return (
+                <button
+                  key={group.id}
+                  onClick={group.action}
+                  className={`w-full text-left text-sm uppercase tracking-widest py-3 border-b border-[#FAF8F5]/10 flex items-center justify-between ${
+                    isActive ? 'text-[#C9A96A] font-bold' : 'text-[#FAF8F5]/80'
+                  }`}
+                >
+                  <span>{group.label}</span>
+                  <ChevronRight className="w-4 h-4 text-[#C9A96A]/60" />
+                </button>
+              );
+            }
+
+            return (
+              <div key={group.id} className="border-b border-[#FAF8F5]/10">
+                <button
+                  onClick={() => setOpenMobileGroup(isOpen ? null : group.id)}
+                  className={`w-full text-left text-sm uppercase tracking-widest py-3 flex items-center justify-between ${
+                    isActive ? 'text-[#C9A96A] font-bold' : 'text-[#FAF8F5]/80'
+                  }`}
+                >
+                  <span>{group.label}</span>
+                  <ChevronDown className={`w-4 h-4 text-[#C9A96A]/60 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {isOpen && (
+                  <div className="pb-2 pl-4 space-y-1">
+                    {group.items!.map((item) => (
+                      <button
+                        key={item.label}
+                        onClick={item.action}
+                        className="w-full text-left text-xs uppercase tracking-wider py-2.5 text-[#FAF8F5]/70 hover:text-[#C9A96A]"
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
 
           <div className="pt-4 space-y-3">
             <button
