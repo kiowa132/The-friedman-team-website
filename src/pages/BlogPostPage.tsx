@@ -274,7 +274,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             </p>
             <p>8115 Maple Lawn Blvd. #350, Fulton, MD 20759</p>
           </div>
-          <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-28 h-28 rounded-full object-cover mx-auto" />
+          <img src="/images/kyle-signature.png" alt="Kyle Friedman - The Friedman Team - eXp Realty" className="w-40 h-40 object-contain mx-auto" />
           <button
             onClick={onOpenConsultation}
             className="px-8 py-3.5 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs flex items-center gap-2 mx-auto"
