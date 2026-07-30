@@ -48,7 +48,7 @@ export const ScrollSubscribePrompt: React.FC = () => {
       }`}
     >
       <div className="max-w-2xl mx-auto m-3 bg-[#0D2226] border border-[#C9A96A] rounded-xs shadow-2xl p-4 flex items-center gap-4">
-        <img src="/images/subscribe-bell-badge.webp" alt="" className="h-7 w-auto shrink-0 hidden sm:block" />
+        <img src="/images/subscribe-bell-badge-white.png" alt="" className="h-7 w-auto shrink-0 hidden sm:block" />
         <p className="text-xs text-[#FAF8F5] flex-1">
           Enjoying this? Get next week's report free, straight to your inbox.
         </p>
