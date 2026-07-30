@@ -214,7 +214,7 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
                       <span>Loading More...</span>
                     </>
                   ) : (
-                    <span>Load More Listings ({listings.length} of {total}+ shown)</span>
+                    <span>Load More Listings ({listings.length.toLocaleString()} of {total.toLocaleString()} shown)</span>
                   )}
                 </button>
               </div>

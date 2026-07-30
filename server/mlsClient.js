@@ -155,46 +155,11 @@ function mapListing(raw) {
  * Search live MLS listings via Lofty's V2 search endpoint.
  * @param {{ county?: string, propertyType?: string, maxPrice?: number, minBeds?: number, q?: string, skip?: number, top?: number }} params
  */
-export async function searchListings(params = {}) {
-  if (!isMlsConfigured()) {
-    const err = new Error('MLS feed is not configured (LOFTY_API_KEY missing).');
-    err.code = 'MLS_NOT_CONFIGURED';
-    throw err;
-  }
-
-  // When searching by keyword, pull a much bigger batch since we're
-  // searching by substring match across whatever comes back - a small
-  // recent-activity page is unlikely to contain the specific property
-  // someone's typing in an address for.
-  const pageSize = params.q && params.q.trim()
-    ? 100
-    : Math.min(params.top || 50, 100);
-
-  // pageNum was previously hard-coded to 1, meaning "load more" could never
-  // actually page through the rest of the MLS inventory. Now derived from
-  // `skip` so paging forward actually requests the next page from Lofty.
-  const pageNum = Math.floor((params.skip || 0) / pageSize) + 1;
-
-  const filterConditions = buildFilterConditions(params);
-
-  // Best-effort attempt at filtering to Maryland server-side (only
-  // documented location filter example was `{ city: [...] }`, but trying
-  // `state` under the same "location" key in case it's supported too -
-  // this would be far more efficient than fetching multi-state pages and
-  // filtering after the fact. If Lofty ignores/rejects this, the client-side
-  // Maryland filter below still catches it as a safety net either way.
-  if (!(params.q && params.q.trim())) {
-    filterConditions.location = { state: ['MD'] };
-  }
-
+async function fetchLoftyPage({ filterConditions, pageSize, pageNum }) {
   const body = {
     searchScope: 'all',
     soldFlag: false,
     filterConditions,
-    // Sorting by most-recently-listed rather than price - this feed spans
-    // multiple states, and sorting by price first risked burying Maryland
-    // listings behind more expensive out-of-state ones before our
-    // Maryland-only filter (below) even got a chance to see them.
     sortFields: ['MLS_LIST_DATE_L_DESC'],
     pageSize,
     pageNum,
@@ -218,58 +183,137 @@ export async function searchListings(params = {}) {
   }
 
   const json = await res.json();
-  const rawListings = extractRawListings(json);
+  return { json, rawListings: extractRawListings(json), requestBody: body, httpStatus: res.status };
+}
 
-  // This Bright MLS feed spans multiple states (confirmed: PA and VA listings
-  // showed up in testing) - filter to Maryland only, since that's what this
-  // site is for. Do this on the raw records (which have `state`) before
-  // mapping, since the mapped Listing type doesn't carry state through.
+function matchesKeyword(listing, q) {
+  const query = q.trim().toLowerCase();
+  return (
+    listing.address.toLowerCase().includes(query) ||
+    listing.city.toLowerCase().includes(query) ||
+    listing.mlsNumber.toLowerCase().includes(query)
+  );
+}
+
+export async function searchListings(params = {}) {
+  if (!isMlsConfigured()) {
+    const err = new Error('MLS feed is not configured (LOFTY_API_KEY missing).');
+    err.code = 'MLS_NOT_CONFIGURED';
+    throw err;
+  }
+
+  const isKeywordSearch = Boolean(params.q && params.q.trim());
+  const filterConditions = buildFilterConditions(params);
+
+  // Best-effort attempt at filtering to Maryland server-side (only
+  // documented location filter example was `{ city: [...] }`, but trying
+  // `state` under the same "location" key in case it's supported too).
+  // Applied for BOTH browsing and keyword search - restricting to Maryland
+  // shrinks the haystack either way, which helps keyword search actually
+  // find things instead of scanning irrelevant multi-state noise.
+  filterConditions.location = { state: ['MD'] };
+
+  let allDebugPages = [];
+  let lastJson = {};
+  let lastHttpStatus = 0;
+  let lastRequestBody = {};
+
+  if (isKeywordSearch) {
+    // Keyword search: scan multiple pages looking for matches, since the
+    // target property could be anywhere in a large multi-state feed, not
+    // just the most recent page. Capped to avoid excessive requests/timeouts.
+    const PAGE_SIZE = 100;
+    const MAX_PAGES = 8; // scans up to 800 raw listings
+    const MATCH_TARGET = 30; // stop early once we have enough matches
+
+    let matchedRaw = [];
+    let pagesScanned = 0;
+    let ranOutOfData = false;
+
+    for (let pageNum = 1; pageNum <= MAX_PAGES; pageNum++) {
+      const { json, rawListings, requestBody, httpStatus } = await fetchLoftyPage({
+        filterConditions,
+        pageSize: PAGE_SIZE,
+        pageNum,
+      });
+      lastJson = json;
+      lastHttpStatus = httpStatus;
+      lastRequestBody = requestBody;
+      pagesScanned++;
+      allDebugPages.push({ pageNum, rawCount: rawListings.length });
+
+      const marylandRaw = rawListings.filter((l) => (l.state || '').toUpperCase() === 'MD');
+      const matches = marylandRaw.filter((l) => matchesKeyword(mapListing(l), params.q));
+      matchedRaw.push(...matches);
+
+      if (rawListings.length < PAGE_SIZE) {
+        ranOutOfData = true;
+        break; // no more pages available from Lofty
+      }
+      if (matchedRaw.length >= MATCH_TARGET) {
+        break; // found enough, stop scanning further pages
+      }
+    }
+
+    const listings = matchedRaw.map(mapListing);
+
+    return {
+      listings,
+      total: listings.length,
+      hasMore: false, // keyword search returns everything found within the scan cap
+      nextSkip: 0,
+      debugInfo: {
+        mode: 'keyword-multi-page-scan',
+        keyword: params.q,
+        pagesScanned,
+        ranOutOfData,
+        matchesFound: listings.length,
+        lastHttpStatus,
+        lastRequestBody,
+        pageDebug: allDebugPages,
+        lastResponseTopLevelKeys: Object.keys(lastJson),
+        lastResponseMetadata: lastJson.metadata,
+      },
+    };
+  }
+
+  // Normal browsing (no keyword): single page per call, "Load More" pages forward.
+  const pageSize = Math.min(params.top || 50, 100);
+  const pageNum = Math.floor((params.skip || 0) / pageSize) + 1;
+
+  const { json, rawListings, requestBody, httpStatus } = await fetchLoftyPage({
+    filterConditions,
+    pageSize,
+    pageNum,
+  });
+
   const marylandRaw = rawListings.filter((l) => (l.state || '').toUpperCase() === 'MD');
-
   let listings = marylandRaw.map(mapListing);
 
-  // County isn't a documented filter field for the search endpoint, so we
-  // filter client-side on the county value Lofty returns per listing.
   if (params.county && params.county !== 'All') {
     const wanted = params.county.toLowerCase();
     listings = listings.filter((l) => l.county.toLowerCase() === wanted);
   }
 
-  // Same deal for free-text search - not a documented filter, so we match
-  // against address/city/MLS number after the fact.
-  if (params.q && params.q.trim()) {
-    const q = params.q.trim().toLowerCase();
-    listings = listings.filter(
-      (l) =>
-        l.address.toLowerCase().includes(q) ||
-        l.city.toLowerCase().includes(q) ||
-        l.mlsNumber.toLowerCase().includes(q)
-    );
-  }
-
-  const result = {
+  return {
     listings,
-    // Real total (across all pages) if Lofty's metadata provides one;
-    // otherwise fall back to what's on this page.
-    total: json.metadata?.total ?? json.metadata?.totalCount ?? listings.length,
-    // If Lofty returned a full page, there's likely more to fetch -
-    // powers a genuine "Load More" instead of stopping at one batch.
+    // Confirmed accurate via testing: Lofty's location.state filter genuinely
+    // restricts results to Maryland server-side (verified every listing in
+    // a real response had state:"MD"), so this total is a real count of
+    // active Maryland listings matching the price filter - not a multi-state
+    // artifact. Restored after incorrectly distrusting it earlier.
+    total: json.metadata?.totalCount ?? json.metadata?.total ?? listings.length,
     hasMore: rawListings.length >= pageSize,
     nextSkip: (params.skip || 0) + pageSize,
+    debugInfo: {
+      mode: 'browse-single-page',
+      httpStatus,
+      requestBodySent: requestBody,
+      responseTopLevelKeys: Object.keys(json),
+      responseMetadata: json.metadata,
+      rawListingsFoundByExtractor: rawListings.length,
+      marylandListingsAfterStateFilter: marylandRaw.length,
+      responseSample: JSON.stringify(json).slice(0, 3000),
+    },
   };
-
-  // TEMPORARILY always attaching debug info (not gated behind DEBUG_MLS)
-  // while we diagnose why listings aren't coming back correctly. Once
-  // fixed, this can go back to being gated behind DEBUG_MLS again.
-  result.debugInfo = {
-    httpStatus: res.status,
-    requestBodySent: body,
-    responseTopLevelKeys: Object.keys(json),
-    responseMetadata: json.metadata,
-    rawListingsFoundByExtractor: rawListings.length,
-    marylandListingsAfterStateFilter: marylandRaw.length,
-    responseSample: JSON.stringify(json).slice(0, 3000),
-  };
-
-  return result;
 }

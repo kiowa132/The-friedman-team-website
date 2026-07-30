@@ -171,7 +171,7 @@ export const IDXSearchHeader: React.FC<IDXSearchHeaderProps> = ({
         {/* Live Counter Badge */}
         <div className="text-[11px] text-[#A8B2A1] font-medium flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-[#C9A96A] animate-pulse"></span>
-          <span>Showing <strong className="text-[#FAF8F5]">{totalResultsCount}</strong> Luxury Properties</span>
+          <span>Showing <strong className="text-[#FAF8F5]">{totalResultsCount.toLocaleString()}</strong> Luxury Properties</span>
         </div>
 
       </div>
