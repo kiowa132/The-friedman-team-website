@@ -8,7 +8,6 @@ backend:
 # Where uploaded images get saved, and the URL path the site uses to serve them.
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
-media_library: {}
 
 collections:
   - name: "blog"
