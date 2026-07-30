@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, ArrowRight } from 'lucide-react';
-import { BLOG_POSTS } from '../data/blogContent';
+import { BLOG_POSTS } from '../lib/content';
 
 interface BlogListPageProps {
   setActiveTab: (tab: string) => void;

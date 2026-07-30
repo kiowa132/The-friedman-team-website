@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FileText, ArrowRight } from 'lucide-react';
-import { GUIDES } from '../data/blogContent';
+import { GUIDES } from '../lib/content';
 
 export const GuidesListPage: React.FC = () => {
   return (

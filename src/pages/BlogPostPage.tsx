@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, ArrowRight, Calculator, Phone, FileText } from 'lucide-react';
-import { BLOG_POSTS, GUIDES } from '../data/blogContent';
+import { BLOG_POSTS, GUIDES } from '../lib/content';
 import { NEIGHBORHOODS } from '../data/mockData';
 
 interface BlogPostPageProps {
@@ -101,11 +101,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
         </div>
       )}
 
-      <div className="prose prose-sm max-w-none space-y-5">
-        {post.body.map((paragraph, i) => (
-          <p key={i} className="text-sm sm:text-base text-[#1C2B2E]/85 leading-relaxed">{paragraph}</p>
-        ))}
-      </div>
+      <div className="prose prose-sm max-w-none space-y-5 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
 
       {/* Soft CTA - mid/end of article, matching Kyle's established voice */}
       <div className="bg-[#0D2226] text-[#FAF8F5] p-6 rounded-xs border border-[#C9A96A]/40 flex flex-col sm:flex-row items-center gap-4 justify-between">

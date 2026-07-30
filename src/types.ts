@@ -7,7 +7,7 @@ export interface BlogPost {
   heroImage: string;
   youtubeVideoId?: string; // just the ID, e.g. "dQw4w9WgXcQ"
   carouselImages?: string[];
-  body: string[]; // paragraphs
+  bodyHtml: string; // rendered from markdown
   relatedGuideSlug?: string;
   relatedAreaSlug?: string; // links to a neighborhood/county id
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { FileText, Download, AlertCircle, CheckCircle2 } from 'lucide-react';
-import { GUIDES, BLOG_POSTS } from '../data/blogContent';
+import { GUIDES, BLOG_POSTS } from '../lib/content';
 import { submitLead } from '../lib/leads';
 
 export const GuideDetailPage: React.FC = () => {

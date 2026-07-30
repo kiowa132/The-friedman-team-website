@@ -1,0 +1,44 @@
+backend:
+  name: github
+  repo: kiowa132/The-friedman-team-website
+  branch: main
+  base_url: https://www.friedmanreteam.com
+  auth_endpoint: api/decap-auth
+
+# Where uploaded images get saved, and the URL path the site uses to serve them.
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "The Friedman Report (Blog)"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Meta Description (for Google/SEO)", name: "metaDescription", widget: "text" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Market Reports", "Buying Resources", "Selling Resources", "Neighborhood Guides", "Real Estate Insights"]
+      - { label: "Publish Date", name: "publishDate", widget: "date" }
+      - { label: "Hero Image", name: "heroImage", widget: "image" }
+      - { label: "YouTube Video ID (just the ID, not the full URL)", name: "youtubeVideoId", widget: "string", required: false, hint: "From youtube.com/watch?v=THIS_PART" }
+      - { label: "Carousel Images", name: "carouselImages", widget: "list", field: { label: "Image", name: "image", widget: "image" }, required: false }
+      - { label: "Related Guide (slug)", name: "relatedGuideSlug", widget: "string", required: false, hint: "Must match a guide's filename exactly, e.g. carroll-county-seller-guide" }
+      - { label: "Related Area (slug)", name: "relatedAreaSlug", widget: "select", required: false, options: ["carroll-county", "baltimore-county", "howard-county"] }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "guides"
+    label: "Free Guides"
+    folder: "content/guides"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Cover Image", name: "coverImage", widget: "image" }
+      - { label: "PDF File (upload once you have the real guide)", name: "pdfUrl", widget: "file", required: false }
+      - { label: "Related Blog Post (slug)", name: "relatedPostSlug", widget: "string", required: false }
+      - { label: "Notes (not shown on site)", name: "body", widget: "markdown", required: false }
