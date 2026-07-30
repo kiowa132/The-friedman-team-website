@@ -109,7 +109,7 @@ async function resolvePlaceId() {
   // that pin, not just something text-similar.
   const nearbyUrl = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json');
   nearbyUrl.searchParams.set('location', `${BUSINESS_LAT},${BUSINESS_LNG}`);
-  nearbyUrl.searchParams.set('radius', '50');
+  nearbyUrl.searchParams.set('radius', '3000');
   nearbyUrl.searchParams.set('keyword', 'Friedman');
   nearbyUrl.searchParams.set('key', GOOGLE_PLACES_API_KEY);
 
