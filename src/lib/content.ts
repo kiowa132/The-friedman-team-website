@@ -80,7 +80,7 @@ export const BLOG_POSTS: BlogPost[] = Object.entries(blogFiles)
   .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
 export const GUIDES: Guide[] = Object.entries(guideFiles).map(([path, raw]) => {
-  const { data } = parseFrontmatter(raw);
+  const { data, content } = parseFrontmatter(raw);
   return {
     slug: slugFromPath(path),
     title: data.title || 'Untitled',
@@ -88,5 +88,6 @@ export const GUIDES: Guide[] = Object.entries(guideFiles).map(([path, raw]) => {
     coverImage: data.coverImage || '',
     pdfUrl: data.pdfUrl || undefined,
     relatedPostSlug: data.relatedPostSlug || undefined,
+    previewHtml: marked.parse(content || '') as string,
   };
 });

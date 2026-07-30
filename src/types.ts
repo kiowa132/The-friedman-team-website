@@ -19,6 +19,7 @@ export interface Guide {
   coverImage: string;
   pdfUrl?: string; // set once a real PDF is uploaded to /public/guides/
   relatedPostSlug?: string;
+  previewHtml: string; // "What's Inside" content, shown before the lead form
 }
 
 export interface Listing {
