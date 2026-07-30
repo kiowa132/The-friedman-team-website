@@ -41,4 +41,9 @@ collections:
       - { label: "Cover Image", name: "coverImage", widget: "image", hint: "Recommended size: 1200x900px (4:3 ratio), under 500KB." }
       - { label: "PDF File (upload once you have the real guide)", name: "pdfUrl", widget: "file", required: false }
       - { label: "Related Blog Post (slug)", name: "relatedPostSlug", widget: "string", required: false }
-      - { label: "What's Inside (shown as a preview before the download form)", name: "body", widget: "markdown", required: false, hint: "A few bullet points or short paragraphs about what someone gets in this guide. This builds trust before they hand over their email - it's genuinely shown on the page." }
+      - label: "What's Inside (short bullet points, shown before someone submits their info)"
+        name: "previewPoints"
+        widget: "list"
+        required: false
+        hint: "Short, punchy bullets - e.g. 'How Carroll County pricing actually works right now'. Builds trust before the ask."
+      - { label: "Full Guide Content (the real content - unlocks on the page right after someone submits their info)", name: "body", widget: "markdown", required: false }

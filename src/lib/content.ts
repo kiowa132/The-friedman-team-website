@@ -88,6 +88,7 @@ export const GUIDES: Guide[] = Object.entries(guideFiles).map(([path, raw]) => {
     coverImage: data.coverImage || '',
     pdfUrl: data.pdfUrl || undefined,
     relatedPostSlug: data.relatedPostSlug || undefined,
-    previewHtml: marked.parse(content || '') as string,
+    previewPoints: data.previewPoints || [],
+    fullContentHtml: marked.parse(content || '') as string,
   };
 });

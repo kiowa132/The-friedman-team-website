@@ -17,9 +17,10 @@ export interface Guide {
   title: string;
   description: string;
   coverImage: string;
-  pdfUrl?: string; // set once a real PDF is uploaded to /public/guides/
+  pdfUrl?: string; // optional - if set, also offers a real PDF download alongside on-page content
   relatedPostSlug?: string;
-  previewHtml: string; // "What's Inside" content, shown before the lead form
+  previewPoints: string[]; // short "what's inside" bullets, shown before the form
+  fullContentHtml: string; // the real guide content, unlocked after someone submits their info
 }
 
 export interface Listing {
