@@ -4,7 +4,7 @@ metaDescription: My wife grabbed one of those bargain power washers over the
   weekend, and I figured I’d handle the deck myself before we stained it
 category: Market Reports
 publishDate: 2026-07-30
-heroImage: /images/uploads/friedman-report-logo-.png
+heroImage: /images/uploads/website-header.png
 youtubeVideoId: ""
 carouselImages:
   - /images/uploads/image-1-.jpg
