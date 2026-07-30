@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Award, CheckCircle2, Phone, Calendar, ArrowRight, Compass, MapPin, Building2, Landmark, GraduationCap } from 'lucide-react';
+import { ReviewsSection } from '../components/ReviewsSection';
 
 interface AboutPageProps {
   onOpenConsultation: () => void;
@@ -210,6 +211,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           ))}
         </div>
       </section>
+
+      {/* Real Client Reviews */}
+      <ReviewsSection compact />
 
       {/* CTA Footer Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Star, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
-import { fetchGoogleReviews, ReviewsResult } from '../lib/reviewsApi';
+import { GOOGLE_REVIEWS, GOOGLE_OVERALL_RATING, GOOGLE_TOTAL_REVIEW_COUNT, GOOGLE_MAPS_URL } from '../data/reviews';
 
 function StarRow({ rating }: { rating: number }) {
   return (
@@ -15,13 +15,14 @@ function StarRow({ rating }: { rating: number }) {
   );
 }
 
-export const ReviewsSection: React.FC = () => {
-  const [result, setResult] = useState<ReviewsResult | null>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
+interface ReviewsSectionProps {
+  // Compact mode shrinks heading size for use on pages like About, where
+  // this section isn't the main homepage hero-adjacent feature.
+  compact?: boolean;
+}
 
-  useEffect(() => {
-    fetchGoogleReviews().then(setResult);
-  }, []);
+export const ReviewsSection: React.FC<ReviewsSectionProps> = ({ compact = false }) => {
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
   const scrollByCard = (direction: 'left' | 'right') => {
     const el = scrollerRef.current;
@@ -30,13 +31,7 @@ export const ReviewsSection: React.FC = () => {
     el.scrollBy({ left: direction === 'left' ? -(cardWidth + 24) : cardWidth + 24, behavior: 'smooth' });
   };
 
-  // Intentionally render nothing until reviews are confirmed real and
-  // loaded - a public homepage shouldn't show a "reviews not connected"
-  // placeholder to visitors. (If you're testing this yourself, check the
-  // browser console/network tab for the /api/reviews response instead.)
-  if (!result || result.status !== 'ok' || result.reviews.length === 0) {
-    return null;
-  }
+  if (GOOGLE_REVIEWS.length === 0) return null;
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,21 +39,20 @@ export const ReviewsSection: React.FC = () => {
         <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F5C63]">
           What Clients Say
         </span>
-        <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
+        <h2 className={`font-serif font-bold text-[#0D2226] ${compact ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'}`}>
           Real Reviews from Google
         </h2>
         <div className="flex items-center justify-center gap-2">
-          <StarRow rating={result.overallRating} />
-          <span className="text-sm font-bold text-[#0D2226]">{result.overallRating.toFixed(1)}</span>
+          <StarRow rating={GOOGLE_OVERALL_RATING} />
+          <span className="text-sm font-bold text-[#0D2226]">{GOOGLE_OVERALL_RATING.toFixed(1)}</span>
           <span className="text-xs text-[#1C2B2E]/60">
-            ({result.totalReviewCount} review{result.totalReviewCount === 1 ? '' : 's'})
+            ({GOOGLE_TOTAL_REVIEW_COUNT} review{GOOGLE_TOTAL_REVIEW_COUNT === 1 ? '' : 's'})
           </span>
         </div>
       </div>
 
       <div className="relative">
-        {/* Left/right arrows - hidden on small screens, where swipe works natively */}
-        {result.reviews.length > 1 && (
+        {GOOGLE_REVIEWS.length > 1 && (
           <>
             <button
               onClick={() => scrollByCard('left')}
@@ -77,14 +71,13 @@ export const ReviewsSection: React.FC = () => {
           </>
         )}
 
-        {/* Horizontal scrolling row - swipeable on mobile, arrow-driven on desktop */}
         <div
           ref={scrollerRef}
           className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {result.reviews.map((review) => (
+          {GOOGLE_REVIEWS.map((review) => (
             <div
-              key={`${review.authorName}-${review.time}`}
+              key={`${review.authorName}-${review.relativeTime}`}
               data-review-card
               className="snap-start shrink-0 w-[85%] sm:w-[360px] bg-[#FAF8F5] border border-[#C9A96A]/30 p-6 rounded-xs shadow-sm space-y-3"
             >
@@ -99,9 +92,9 @@ export const ReviewsSection: React.FC = () => {
                 </p>
               )}
               <div className="flex items-center gap-2 pt-2 border-t border-[#C9A96A]/20">
-                {review.authorPhotoUrl && (
-                  <img src={review.authorPhotoUrl} alt={review.authorName} className="w-7 h-7 rounded-full" />
-                )}
+                <div className="w-7 h-7 rounded-full bg-[#0F5C63] text-[#C9A96A] flex items-center justify-center text-xs font-bold">
+                  {review.authorName.charAt(0)}
+                </div>
                 <div>
                   <div className="text-xs font-bold text-[#0D2226]">{review.authorName}</div>
                   <div className="text-[10px] text-[#1C2B2E]/50">{review.relativeTime} via Google</div>
@@ -112,19 +105,17 @@ export const ReviewsSection: React.FC = () => {
         </div>
       </div>
 
-      {result.googleMapsUrl && (
-        <div className="text-center pt-8">
-          <a
-            href={result.googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0F5C63] hover:text-[#C9A96A]"
-          >
-            <span>See All Reviews on Google</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        </div>
-      )}
+      <div className="text-center pt-8">
+        <a
+          href={GOOGLE_MAPS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0F5C63] hover:text-[#C9A96A]"
+        >
+          <span>See All Reviews on Google</span>
+          <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+      </div>
     </section>
   );
 };
