@@ -137,14 +137,16 @@ export async function searchListings(params = {}) {
   }
 
   const json = await res.json();
-  const rawListings = extractRawListings(json);
 
-  if (DEBUG_MLS && !hasLoggedSample && rawListings.length) {
-    console.log('--- DEBUG_MLS: sample raw Lofty listing ---');
-    console.log(JSON.stringify(rawListings[0], null, 2));
-    console.log('--- compare field names above against server/mlsClient.js mapListing() ---');
+  if (DEBUG_MLS && !hasLoggedSample) {
+    console.log('--- DEBUG_MLS: raw Lofty response (top-level keys) ---');
+    console.log(Object.keys(json));
+    console.log('--- DEBUG_MLS: raw Lofty response (truncated) ---');
+    console.log(JSON.stringify(json).slice(0, 4000));
     hasLoggedSample = true;
   }
+
+  const rawListings = extractRawListings(json);
 
   let listings = rawListings.map(mapListing);
 
