@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FileText, Download, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { FileText, Download, AlertCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { GUIDES, BLOG_POSTS } from '../lib/content';
 import { submitLead } from '../lib/leads';
 
@@ -54,88 +54,117 @@ export const GuideDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="pt-28 pb-20 max-w-3xl mx-auto px-4 sm:px-6 space-y-8">
-      <div className="text-center space-y-4">
-        <div className="aspect-[16/9] rounded-xs overflow-hidden">
-          <img src={guide.coverImage} alt={guide.title} className="w-full h-full object-cover" />
-        </div>
-        <span className="text-xs font-bold uppercase tracking-widest text-[#C9A96A] flex items-center justify-center gap-2">
-          <FileText className="w-4 h-4" /> Free Guide
-        </span>
-        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">{guide.title}</h1>
-        <p className="text-sm text-[#1C2B2E]/80 max-w-xl mx-auto">{guide.description}</p>
-      </div>
+    <div className="pt-28 pb-20 max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
-      {!downloaded ? (
-        <form onSubmit={handleSubmit} className="bg-[#FAF8F5] border border-[#C9A96A]/40 p-6 sm:p-8 rounded-xs space-y-4 max-w-md mx-auto">
-          <h2 className="font-serif text-lg font-bold text-[#0D2226] text-center">Enter your info to get instant access</h2>
+        {/* Left column: cover, title, "what's inside" preview */}
+        <div className="lg:col-span-7 space-y-6">
+          <div className="aspect-[4/3] rounded-xs overflow-hidden shadow-lg">
+            <img src={guide.coverImage} alt={guide.title} className="w-full h-full object-cover" />
+          </div>
 
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Full Name"
-            className="w-full bg-white border border-[#C9A96A]/30 px-4 py-3 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
-          />
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            className="w-full bg-white border border-[#C9A96A]/30 px-4 py-3 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
-          />
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Phone (optional)"
-            className="w-full bg-white border border-[#C9A96A]/30 px-4 py-3 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
-          />
+          <div className="space-y-3">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#C9A96A] flex items-center gap-2">
+              <FileText className="w-4 h-4" /> Free Guide
+            </span>
+            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] leading-tight">{guide.title}</h1>
+            <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">{guide.description}</p>
+          </div>
 
-          {submitError && (
-            <div className="bg-red-900/10 border border-red-500/40 p-3 text-left rounded-xs flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-              <p className="text-xs text-red-700">{submitError}</p>
+          {/* Real "what's inside" preview content - builds trust before the email ask */}
+          {guide.previewHtml && (
+            <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 rounded-xs p-6 space-y-3">
+              <h2 className="font-serif text-lg font-bold text-[#0D2226]">What's Inside This Guide</h2>
+              <div
+                className="text-sm text-[#1C2B2E]/85 leading-relaxed [&_ul]:space-y-2 [&_li]:flex [&_li]:items-start [&_li]:gap-2 [&_p]:mb-3"
+                dangerouslySetInnerHTML={{ __html: guide.previewHtml }}
+              />
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all disabled:opacity-60 flex items-center justify-center gap-2"
-          >
-            <Download className="w-4 h-4" />
-            {isSubmitting ? 'Sending...' : 'Get Instant Access'}
-          </button>
-        </form>
-      ) : (
-        <div className="bg-[#0D2226] text-[#FAF8F5] border border-[#C9A96A] p-8 rounded-xs text-center space-y-4 max-w-md mx-auto">
-          <CheckCircle2 className="w-8 h-8 text-[#C9A96A] mx-auto" />
-          <h2 className="font-serif text-xl font-bold">You're In!</h2>
-          {guide.pdfUrl ? (
-            <a
-              href={guide.pdfUrl}
-              download
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9A96A] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs"
-            >
-              <Download className="w-4 h-4" />
-              Download Your Guide
-            </a>
-          ) : (
-            <p className="text-xs text-[#A8B2A1]">
-              Thanks! Kyle will send this guide directly to your email shortly.
-            </p>
+          {relatedPost && (
+            <div className="text-xs text-[#1C2B2E]/60">
+              Related reading: <Link to={`/blog/${relatedPost.slug}`} className="font-bold text-[#0F5C63] hover:text-[#C9A96A]">{relatedPost.title}</Link>
+            </div>
           )}
         </div>
-      )}
 
-      {relatedPost && (
-        <div className="text-center text-xs text-[#1C2B2E]/60">
-          Related: <Link to={`/blog/${relatedPost.slug}`} className="font-bold text-[#0F5C63] hover:text-[#C9A96A]">{relatedPost.title}</Link>
+        {/* Right column: sticky download form */}
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28">
+            {!downloaded ? (
+              <form onSubmit={handleSubmit} className="bg-[#0D2226] border border-[#C9A96A] p-6 sm:p-8 rounded-xs space-y-4 shadow-xl">
+                <h2 className="font-serif text-lg font-bold text-[#FAF8F5] text-center">Get Instant Access</h2>
+                <p className="text-[11px] text-[#A8B2A1] text-center">Enter your info below - no spam, ever.</p>
+
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Full Name"
+                  className="w-full bg-[#FAF8F5] border border-[#C9A96A]/30 px-4 py-3 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
+                />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                  className="w-full bg-[#FAF8F5] border border-[#C9A96A]/30 px-4 py-3 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
+                />
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Phone (optional)"
+                  className="w-full bg-[#FAF8F5] border border-[#C9A96A]/30 px-4 py-3 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
+                />
+
+                {submitError && (
+                  <div className="bg-red-900/20 border border-red-500/40 p-3 text-left rounded-xs flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                    <p className="text-xs text-red-200">{submitError}</p>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  {isSubmitting ? 'Sending...' : 'Get Instant Access'}
+                </button>
+
+                <p className="text-[10px] text-[#A8B2A1] text-center flex items-center justify-center gap-1.5 pt-1">
+                  <ShieldCheck className="w-3 h-3 text-[#C9A96A]" />
+                  Your info goes straight to Kyle - never sold or shared.
+                </p>
+              </form>
+            ) : (
+              <div className="bg-[#0D2226] text-[#FAF8F5] border border-[#C9A96A] p-8 rounded-xs text-center space-y-4 shadow-xl">
+                <CheckCircle2 className="w-8 h-8 text-[#C9A96A] mx-auto" />
+                <h2 className="font-serif text-xl font-bold">You're In!</h2>
+                {guide.pdfUrl ? (
+                  <a
+                    href={guide.pdfUrl}
+                    download
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9A96A] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download Your Guide
+                  </a>
+                ) : (
+                  <p className="text-xs text-[#A8B2A1]">
+                    Thanks! Kyle will send this guide directly to your email shortly.
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
