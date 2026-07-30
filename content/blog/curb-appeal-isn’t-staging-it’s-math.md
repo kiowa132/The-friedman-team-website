@@ -8,7 +8,7 @@ heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
 youtubeVideoId: ""
 carouselImages:
   - /images/uploads/image-1-.jpg
-  - /images/uploads/image-1-.jpg
+  - /images/uploads/image-2-copy.jpg
 relatedGuideSlug: carroll-county-seller-guide
 relatedAreaSlug: carroll-county
 ---
