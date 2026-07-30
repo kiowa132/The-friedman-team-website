@@ -39,6 +39,18 @@ export function isReviewsConfigured() {
 
 let cachedPlaceId = null;
 
+// Safety check: after resolving a candidate, verify its name actually looks
+// like Kyle's business before trusting it. This exists because a real test
+// run returned a completely different, unrelated company ("Team Friedman
+// IPRG") that happened to share the word "Friedman" - showing that on the
+// site would mean displaying a stranger's reviews under Kyle's name, which
+// is worse than showing nothing. Never skip this check.
+function looksLikeKylesBusiness(name) {
+  if (!name) return false;
+  const n = name.toLowerCase();
+  return n.includes('kyle') && n.includes('friedman');
+}
+
 async function resolvePlaceId() {
   if (cachedPlaceId) return cachedPlaceId;
 
@@ -52,7 +64,7 @@ async function resolvePlaceId() {
   const res = await fetch(url.toString());
   const json = await res.json();
 
-  if (json.status === 'OK' && json.candidates?.length) {
+  if (json.status === 'OK' && json.candidates?.length && looksLikeKylesBusiness(json.candidates[0].name)) {
     cachedPlaceId = json.candidates[0].place_id;
     return cachedPlaceId;
   }
@@ -60,27 +72,32 @@ async function resolvePlaceId() {
   // Fallback: Find Place From Text is strict about exact matches - Text
   // Search is more forgiving (same style as typing into Google Maps search)
   // and more likely to find the listing even if the name string isn't a
-  // perfect match.
+  // perfect match. Tightened radius from 5000m to 200m after the fallback
+  // previously matched an unrelated business a few miles away.
   const fallbackUrl = new URL('https://maps.googleapis.com/maps/api/place/textsearch/json');
   fallbackUrl.searchParams.set('query', BUSINESS_NAME_QUERY);
   fallbackUrl.searchParams.set('location', `${BUSINESS_LAT},${BUSINESS_LNG}`);
-  fallbackUrl.searchParams.set('radius', '5000');
+  fallbackUrl.searchParams.set('radius', '200');
   fallbackUrl.searchParams.set('key', GOOGLE_PLACES_API_KEY);
 
   const fallbackRes = await fetch(fallbackUrl.toString());
   const fallbackJson = await fallbackRes.json();
 
-  if (fallbackJson.status === 'OK' && fallbackJson.results?.length) {
-    cachedPlaceId = fallbackJson.results[0].place_id;
+  const validFallback = (fallbackJson.results || []).find((r) => looksLikeKylesBusiness(r.name));
+
+  if (fallbackJson.status === 'OK' && validFallback) {
+    cachedPlaceId = validFallback.place_id;
     return cachedPlaceId;
   }
 
-  const err = new Error(`Could not resolve Place ID for "${BUSINESS_NAME_QUERY}": ${json.status} (fallback: ${fallbackJson.status})`);
+  const err = new Error(`Could not confidently resolve Kyle's Place ID for "${BUSINESS_NAME_QUERY}" - either no match or the match didn't look like his business.`);
   err.code = 'REVIEWS_PLACE_LOOKUP_FAILED';
   err.debugInfo = {
     findPlaceStatus: json.status,
+    findPlaceTopCandidateName: json.candidates?.[0]?.name,
     findPlaceErrorMessage: json.error_message,
     textSearchStatus: fallbackJson.status,
+    textSearchCandidateNames: (fallbackJson.results || []).map((r) => r.name),
     textSearchErrorMessage: fallbackJson.error_message,
     businessNameQuery: BUSINESS_NAME_QUERY,
   };
@@ -112,6 +129,17 @@ export async function fetchGoogleReviews() {
   }
 
   const result = json.result || {};
+
+  // Final safety net (defense in depth, in addition to the check in
+  // resolvePlaceId): refuse to return reviews for anything that doesn't
+  // look like Kyle's actual business. Never remove this check.
+  if (!looksLikeKylesBusiness(result.name)) {
+    const err = new Error(`Resolved place "${result.name}" does not look like Kyle's business - refusing to display its reviews.`);
+    err.code = 'REVIEWS_WRONG_BUSINESS';
+    err.debugInfo = { resolvedPlaceId: placeId, resolvedBusinessName: result.name };
+    throw err;
+  }
+
   const reviews = (result.reviews || []).map((r) => ({
     authorName: r.author_name,
     authorPhotoUrl: r.profile_photo_url,
