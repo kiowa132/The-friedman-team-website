@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, ArrowRight, Calculator, Phone, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, ArrowRight, Calculator, Phone, FileText } from 'lucide-react';
 import { BLOG_POSTS, GUIDES } from '../lib/content';
 import { NEIGHBORHOODS } from '../data/mockData';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
@@ -13,7 +13,6 @@ interface BlogPostPageProps {
 export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, onOpenValuation }) => {
   const { slug } = useParams<{ slug: string }>();
   const post = BLOG_POSTS.find((p) => p.slug === slug);
-  const carouselRef = useRef<HTMLDivElement>(null);
 
   if (!post) {
     return (
@@ -31,12 +30,33 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
   const relatedArea = NEIGHBORHOODS.find((n) => n.id === post.relatedAreaSlug);
   const hasSubstack = SUBSTACK_SUBDOMAIN && SUBSTACK_SUBDOMAIN !== 'YOUR-SUBSTACK-SUBDOMAIN';
 
-  const scrollCarousel = (direction: 'left' | 'right') => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const cardWidth = el.querySelector('[data-carousel-slide]')?.clientWidth || 380;
-    el.scrollBy({ left: direction === 'left' ? -(cardWidth + 16) : cardWidth + 16, behavior: 'smooth' });
-  };
+  // Auto-distribute carousel images evenly through the article body, rather
+  // than clumping them all in one scrolling row at the end - this is what
+  // actually matches how the Substack version looks, without requiring
+  // manually inserting images into the markdown text.
+  const bodyBlocks = post.bodyHtml.split(/(?<=<\/(?:p|h2|h3|h4|ul|ol|blockquote)>)/).filter((b) => b.trim());
+  const images = post.carouselImages || [];
+  const interleavedContent: { type: 'html' | 'image'; value: string }[] = [];
+
+  if (images.length > 0 && bodyBlocks.length > 0) {
+    const spacing = Math.max(2, Math.ceil(bodyBlocks.length / (images.length + 1)));
+    let imageIndex = 0;
+    bodyBlocks.forEach((block, i) => {
+      interleavedContent.push({ type: 'html', value: block });
+      const isInsertionPoint = (i + 1) % spacing === 0 && imageIndex < images.length && i !== bodyBlocks.length - 1;
+      if (isInsertionPoint) {
+        interleavedContent.push({ type: 'image', value: images[imageIndex] });
+        imageIndex++;
+      }
+    });
+    // Any leftover images (e.g. more photos than natural gaps) go at the end.
+    while (imageIndex < images.length) {
+      interleavedContent.push({ type: 'image', value: images[imageIndex] });
+      imageIndex++;
+    }
+  } else {
+    bodyBlocks.forEach((block) => interleavedContent.push({ type: 'html', value: block }));
+  }
 
   // Article + VideoObject schema markup - this is what makes the post
   // eligible for rich results in Google, including video thumbnails
@@ -122,10 +142,20 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           </figcaption>
         </figure>
 
-        <div
-          className="prose prose-sm max-w-none space-y-5 pt-8 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed [&_p]:font-light [&_img]:w-full [&_img]:rounded-xs [&_img]:my-2 [&_h2]:font-serif [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#0D2226] [&_h2]:pt-2 [&_h3]:font-serif [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[#0D2226]"
-          dangerouslySetInnerHTML={{ __html: post.bodyHtml }}
-        />
+        <div className="prose prose-sm max-w-none space-y-5 pt-8 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed [&_p]:font-light [&_h2]:font-serif [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#0D2226] [&_h2]:pt-2 [&_h3]:font-serif [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[#0D2226]">
+          {interleavedContent.map((block, i) =>
+            block.type === 'html' ? (
+              <div key={i} dangerouslySetInnerHTML={{ __html: block.value }} />
+            ) : (
+              <img
+                key={i}
+                src={block.value}
+                alt={`${post.title} - photo`}
+                className="w-full rounded-xs my-2"
+              />
+            )
+          )}
+        </div>
 
         {/* Real branded valuation banner, clickable */}
         <button
@@ -138,45 +168,6 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             className="w-full h-auto"
           />
         </button>
-
-        {/* Image carousel - only renders if photos were actually added.
-            Recommended upload size per photo: 1000x1250px, under 400KB. */}
-        {post.carouselImages && post.carouselImages.length > 0 && (
-          <div className="relative pb-8">
-            {post.carouselImages.length > 1 && (
-              <>
-                <button
-                  onClick={() => scrollCarousel('left')}
-                  aria-label="Previous image"
-                  className="hidden sm:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[#0D2226] text-[#C9A96A] items-center justify-center shadow-lg hover:bg-[#0F5C63] transition-colors"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => scrollCarousel('right')}
-                  aria-label="Next image"
-                  className="hidden sm:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[#0D2226] text-[#C9A96A] items-center justify-center shadow-lg hover:bg-[#0F5C63] transition-colors"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
-            )}
-            <div
-              ref={carouselRef}
-              className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            >
-              {post.carouselImages.map((img, i) => (
-                <img
-                  key={i}
-                  data-carousel-slide
-                  src={img}
-                  alt={`${post.title} - slide ${i + 1}`}
-                  className="snap-start shrink-0 w-[70%] sm:w-[380px] aspect-[4/5] object-cover rounded-xs"
-                />
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Embedded YouTube video - at the bottom, and completely absent
             (not even a placeholder) unless a real video was actually added. */}
@@ -283,7 +274,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             </p>
             <p>8115 Maple Lawn Blvd. #350, Fulton, MD 20759</p>
           </div>
-          <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-16 h-16 rounded-full object-cover mx-auto" />
+          <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-28 h-28 rounded-full object-cover mx-auto" />
           <button
             onClick={onOpenConsultation}
             className="px-8 py-3.5 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs flex items-center gap-2 mx-auto"
