@@ -132,8 +132,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           rel={hasSubstack ? 'noopener noreferrer' : undefined}
           className="flex items-center justify-center gap-2 py-3 border-b border-[#C9A96A]/30 hover:opacity-80 transition-opacity"
         >
-          <img src="/images/subscribe-bell-badge.webp" alt="" className="h-4 w-auto" />
-          <span className="text-xs font-bold uppercase tracking-widest text-[#0D2226]">Subscribe to Stay in the Loop</span>
+          <img src="/images/subscribe-bell-badge.webp" alt="Subscribe to stay in the loop" className="h-10 w-auto mx-auto" />
         </a>
 
         <div className="space-y-4 pt-8 pb-6">
