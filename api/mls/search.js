@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
   try {
     const { county, propertyType, maxPrice, minBeds, q, skip, top } = req.query;
-    const { listings, total, debugInfo } = await searchListings({
+    const { listings, total, hasMore, nextSkip, debugInfo } = await searchListings({
       county,
       propertyType,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       skip: skip ? Number(skip) : undefined,
       top: top ? Number(top) : undefined,
     });
-    return res.status(200).json({ ok: true, listings, total, debugInfo });
+    return res.status(200).json({ ok: true, listings, total, hasMore, nextSkip, debugInfo });
   } catch (err) {
     console.error('MLS search failed:', err);
     return res.status(502).json({

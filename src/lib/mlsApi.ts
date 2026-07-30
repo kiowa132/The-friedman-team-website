@@ -11,7 +11,7 @@ export interface MlsSearchParams {
 }
 
 export type MlsSearchResult =
-  | { status: 'ok'; listings: Listing[]; total: number; debugInfo?: any }
+  | { status: 'ok'; listings: Listing[]; total: number; hasMore?: boolean; nextSkip?: number; debugInfo?: any }
   | { status: 'not_configured'; message: string; debugInfo?: any }
   | { status: 'error'; message: string; debugInfo?: any };
 
@@ -37,7 +37,14 @@ export async function fetchMlsListings(params: MlsSearchParams): Promise<MlsSear
       return { status: 'error', message: data?.message || 'Could not load listings right now.', debugInfo: data?.debugInfo };
     }
 
-    return { status: 'ok', listings: data.listings, total: data.total, debugInfo: data?.debugInfo };
+    return {
+      status: 'ok',
+      listings: data.listings,
+      total: data.total,
+      hasMore: data.hasMore,
+      nextSkip: data.nextSkip,
+      debugInfo: data?.debugInfo,
+    };
   } catch (err) {
     return { status: 'error', message: 'Could not reach the server. Please check your connection.' };
   }

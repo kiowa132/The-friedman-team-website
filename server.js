@@ -109,7 +109,7 @@ app.get('/api/mls/search', async (req, res) => {
 
   try {
     const { county, propertyType, maxPrice, minBeds, q, skip, top } = req.query;
-    const { listings, total, debugInfo } = await searchListings({
+    const { listings, total, hasMore, nextSkip, debugInfo } = await searchListings({
       county,
       propertyType,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
@@ -118,7 +118,7 @@ app.get('/api/mls/search', async (req, res) => {
       skip: skip ? Number(skip) : undefined,
       top: top ? Number(top) : undefined,
     });
-    return res.json({ ok: true, listings, total, debugInfo });
+    return res.json({ ok: true, listings, total, hasMore, nextSkip, debugInfo });
   } catch (err) {
     console.error('MLS search failed:', err);
     return res.status(502).json({

@@ -168,19 +168,36 @@ export async function searchListings(params = {}) {
   // someone's typing in an address for.
   const pageSize = params.q && params.q.trim()
     ? 100
-    : Math.min(params.top || 24, 50);
+    : Math.min(params.top || 50, 100);
+
+  // pageNum was previously hard-coded to 1, meaning "load more" could never
+  // actually page through the rest of the MLS inventory. Now derived from
+  // `skip` so paging forward actually requests the next page from Lofty.
+  const pageNum = Math.floor((params.skip || 0) / pageSize) + 1;
+
+  const filterConditions = buildFilterConditions(params);
+
+  // Best-effort attempt at filtering to Maryland server-side (only
+  // documented location filter example was `{ city: [...] }`, but trying
+  // `state` under the same "location" key in case it's supported too -
+  // this would be far more efficient than fetching multi-state pages and
+  // filtering after the fact. If Lofty ignores/rejects this, the client-side
+  // Maryland filter below still catches it as a safety net either way.
+  if (!(params.q && params.q.trim())) {
+    filterConditions.location = { state: ['MD'] };
+  }
 
   const body = {
     searchScope: 'all',
     soldFlag: false,
-    filterConditions: buildFilterConditions(params),
+    filterConditions,
     // Sorting by most-recently-listed rather than price - this feed spans
     // multiple states, and sorting by price first risked burying Maryland
     // listings behind more expensive out-of-state ones before our
     // Maryland-only filter (below) even got a chance to see them.
     sortFields: ['MLS_LIST_DATE_L_DESC'],
     pageSize,
-    pageNum: 1,
+    pageNum,
   };
 
   const res = await fetch(`${LOFTY_API_BASE}/v2.0/listings/search`, {
@@ -232,7 +249,13 @@ export async function searchListings(params = {}) {
 
   const result = {
     listings,
-    total: listings.length,
+    // Real total (across all pages) if Lofty's metadata provides one;
+    // otherwise fall back to what's on this page.
+    total: json.metadata?.total ?? json.metadata?.totalCount ?? listings.length,
+    // If Lofty returned a full page, there's likely more to fetch -
+    // powers a genuine "Load More" instead of stopping at one batch.
+    hasMore: rawListings.length >= pageSize,
+    nextSkip: (params.skip || 0) + pageSize,
   };
 
   // TEMPORARILY always attaching debug info (not gated behind DEBUG_MLS)
@@ -242,6 +265,7 @@ export async function searchListings(params = {}) {
     httpStatus: res.status,
     requestBodySent: body,
     responseTopLevelKeys: Object.keys(json),
+    responseMetadata: json.metadata,
     rawListingsFoundByExtractor: rawListings.length,
     marylandListingsAfterStateFilter: marylandRaw.length,
     responseSample: JSON.stringify(json).slice(0, 3000),

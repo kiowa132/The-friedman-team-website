@@ -35,6 +35,9 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
   const [listings, setListings] = useState<Listing[]>([]);
   const [total, setTotal] = useState(0);
   const [debugInfo, setDebugInfo] = useState<any>(undefined);
+  const [hasMore, setHasMore] = useState(false);
+  const [nextSkip, setNextSkip] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const runSearch = useCallback(async () => {
     setLoadState('loading');
@@ -44,7 +47,7 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
       maxPrice: priceRange[1],
       minBeds: minBeds > 0 ? minBeds : undefined,
       q: searchQuery.trim() || undefined,
-      top: 24,
+      top: 50,
     });
 
     setDebugInfo((result as any).debugInfo);
@@ -52,6 +55,8 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
     if (result.status === 'ok') {
       setListings(result.listings);
       setTotal(result.total);
+      setHasMore(Boolean(result.hasMore));
+      setNextSkip(result.nextSkip || 0);
       setLoadState('ok');
     } else if (result.status === 'not_configured') {
       setLoadState('not_configured');
@@ -61,6 +66,31 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
       setErrorMessage(result.message);
     }
   }, [searchQuery, selectedCounty, selectedType, priceRange, minBeds]);
+
+  const loadMore = useCallback(async () => {
+    setIsLoadingMore(true);
+    const result = await fetchMlsListings({
+      county: selectedCounty !== 'All' ? selectedCounty : undefined,
+      propertyType: selectedType !== 'All' ? selectedType : undefined,
+      maxPrice: priceRange[1],
+      minBeds: minBeds > 0 ? minBeds : undefined,
+      q: searchQuery.trim() || undefined,
+      top: 50,
+      skip: nextSkip,
+    });
+
+    if (result.status === 'ok') {
+      // Append, and de-dupe in case the same listing shows up across pages.
+      setListings((prev) => {
+        const existingIds = new Set(prev.map((l) => l.id));
+        const merged = [...prev, ...result.listings.filter((l) => !existingIds.has(l.id))];
+        return merged;
+      });
+      setHasMore(Boolean(result.hasMore));
+      setNextSkip(result.nextSkip || nextSkip);
+    }
+    setIsLoadingMore(false);
+  }, [searchQuery, selectedCounty, selectedType, priceRange, minBeds, nextSkip]);
 
   // Debounce so we don't fire a request on every keystroke / slider tick.
   useEffect(() => {
@@ -157,18 +187,39 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
       {/* Results */}
       {loadState === 'ok' && (
         listings.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {listings.map((listing) => (
-              <ListingCard
-                key={listing.id}
-                listing={listing}
-                isSaved={savedListings.includes(listing.id)}
-                onToggleSave={onToggleSave}
-                onSelectListing={onSelectListing}
-                onScheduleShowing={onScheduleShowing}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {listings.map((listing) => (
+                <ListingCard
+                  key={listing.id}
+                  listing={listing}
+                  isSaved={savedListings.includes(listing.id)}
+                  onToggleSave={onToggleSave}
+                  onSelectListing={onSelectListing}
+                  onScheduleShowing={onScheduleShowing}
+                />
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className="flex justify-center pt-4">
+                <button
+                  onClick={loadMore}
+                  disabled={isLoadingMore}
+                  className="px-8 py-3 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all disabled:opacity-60 flex items-center gap-2"
+                >
+                  {isLoadingMore ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Loading More...</span>
+                    </>
+                  ) : (
+                    <span>Load More Listings ({listings.length} of {total}+ shown)</span>
+                  )}
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="bg-[#FAF8F5] border border-[#C9A96A]/40 p-12 text-center rounded-xs space-y-4">
             <SearchX className="w-12 h-12 text-[#C9A96A] mx-auto" />
