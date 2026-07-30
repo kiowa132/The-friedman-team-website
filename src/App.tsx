@@ -13,7 +13,6 @@ import { SellPage } from './pages/SellPage';
 import { BuyersPage } from './pages/BuyersPage';
 import { NeighborhoodsPage } from './pages/NeighborhoodsPage';
 import { ListingsPage } from './pages/ListingsPage';
-import { MarketReportPage } from './pages/MarketReportPage';
 import { ContactPage } from './pages/ContactPage';
 import { BlogListPage } from './pages/BlogListPage';
 import { BlogPostPage } from './pages/BlogPostPage';
@@ -34,7 +33,6 @@ const PATH_TO_TAB: Record<string, string> = {
   '/buy': 'buy',
   '/neighborhoods': 'neighborhoods',
   '/listings': 'listings',
-  '/market-report': 'market-report',
   '/contact': 'contact',
   '/blog': 'blog',
   '/guides': 'guides',
@@ -47,7 +45,6 @@ const TAB_TO_PATH: Record<string, string> = {
   buy: '/buy',
   neighborhoods: '/neighborhoods',
   listings: '/listings',
-  'market-report': '/market-report',
   contact: '/contact',
   blog: '/blog',
   guides: '/guides',
@@ -164,12 +161,6 @@ export default function App() {
               onToggleSave={handleToggleSave}
               onSelectListing={(l) => setSelectedListing(l)}
               onScheduleShowing={handleScheduleShowing}
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-            />
-          } />
-
-          <Route path="/market-report" element={
-            <MarketReportPage
               onOpenConsultation={() => setIsConsultationOpen(true)}
             />
           } />

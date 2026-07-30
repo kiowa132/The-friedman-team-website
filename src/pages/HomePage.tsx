@@ -407,7 +407,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
           <div className="lg:col-span-4 flex lg:justify-end">
             <button
-              onClick={() => setActiveTab('market-report')}
+              onClick={() => setActiveTab('blog')}
               className="px-8 py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all flex items-center gap-2"
             >
               <span>See Market Reports</span>

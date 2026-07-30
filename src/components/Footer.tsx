@@ -133,7 +133,7 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('market-report'); window.scrollTo(0,0); }} className="hover:text-[#C9A96A] transition-colors">
+                <button onClick={() => { setActiveTab('blog'); window.scrollTo(0,0); }} className="hover:text-[#C9A96A] transition-colors">
                   Market Intelligence Report
                 </button>
               </li>

@@ -32,7 +32,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
 
   // Category label links back to its corresponding page on the site.
   const CATEGORY_LINKS: Record<string, string> = {
-    'Market Reports': '/market-report',
+    'Market Reports': '/blog',
     'Sell Your Home': '/sell',
     'Buy a Home': '/buy',
   };
