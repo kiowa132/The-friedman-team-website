@@ -177,10 +177,11 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           )}
         </div>
 
-        {/* Real branded valuation banner, clickable */}
+        {/* Real branded valuation banner, clickable - opens the same valuation
+            tool as the navbar's "Home Value" button */}
         <button
           onClick={onOpenValuation}
-          className="w-full my-8 block hover:opacity-90 transition-opacity"
+          className="w-full mt-8 mb-1 block hover:opacity-90 transition-opacity"
         >
           <img
             src="/images/know-your-home-value-banner.webp"
@@ -203,7 +204,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           </div>
         )}
 
-        <div className="text-center text-[11px] uppercase tracking-[0.3em] text-[#1C2B2E]/40 py-6">
+        <div className="text-center text-[11px] uppercase tracking-[0.3em] text-[#1C2B2E]/40 py-1">
           Or
         </div>
 
