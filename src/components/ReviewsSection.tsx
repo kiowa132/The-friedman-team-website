@@ -89,9 +89,15 @@ export const ReviewsSection: React.FC = () => {
               className="snap-start shrink-0 w-[85%] sm:w-[360px] bg-[#FAF8F5] border border-[#C9A96A]/30 p-6 rounded-xs shadow-sm space-y-3"
             >
               <StarRow rating={review.rating} />
-              <p className="text-xs text-[#1C2B2E]/80 leading-relaxed line-clamp-6">
-                {review.text}
-              </p>
+              {review.text ? (
+                <p className="text-xs text-[#1C2B2E]/80 leading-relaxed line-clamp-6">
+                  {review.text}
+                </p>
+              ) : (
+                <p className="text-xs text-[#1C2B2E]/40 italic">
+                  Left a {review.rating}-star rating
+                </p>
+              )}
               <div className="flex items-center gap-2 pt-2 border-t border-[#C9A96A]/20">
                 {review.authorPhotoUrl && (
                   <img src={review.authorPhotoUrl} alt={review.authorName} className="w-7 h-7 rounded-full" />

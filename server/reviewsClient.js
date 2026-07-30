@@ -46,16 +46,16 @@ let cachedPlaceId = null;
 // site would mean displaying a stranger's reviews under Kyle's name, which
 // is worse than showing nothing. Never skip this check.
 //
-// Confirmed via real debug output that Google has Kyle's listing saved
-// simply as "The Friedman Team" (no "Kyle" in the name) - so that exact
-// name is explicitly allowed here, while decoys like "Team Friedman IPRG",
-// "Anthony Friedman Team...", "Kathy Friedman...", "Lee Friedman..." (all
-// real, different agents with the same surname in the area) are correctly
-// rejected since they don't match either condition below.
+// IMPORTANT: an earlier version of this also accepted the exact string
+// "The Friedman Team" (no "Kyle") - that turned out to be a DIFFERENT,
+// apparently duplicate/stale Google listing with only 1 old review. Kyle's
+// real, active listing (confirmed directly on Google Maps: same phone
+// number 443-789-3101, 7 reviews) is named "The Friedman Team by Kyle
+// Friedman" - so the check below intentionally requires "kyle" AND
+// "friedman" both present, and does NOT accept the shorter name anymore.
 function looksLikeKylesBusiness(name) {
   if (!name) return false;
   const n = name.toLowerCase().trim();
-  if (n === 'the friedman team') return true;
   return n.includes('kyle') && n.includes('friedman');
 }
 
@@ -80,12 +80,15 @@ async function resolvePlaceId() {
   // Fallback: Find Place From Text is strict about exact matches - Text
   // Search is more forgiving (same style as typing into Google Maps search)
   // and more likely to find the listing even if the name string isn't a
-  // perfect match. Tightened radius from 5000m to 200m after the fallback
-  // previously matched an unrelated business a few miles away.
+  // perfect match. Radius widened back to 20km - the strict "kyle"+"friedman"
+  // name check above is what actually protects against wrong matches now,
+  // not a tight radius, since Kyle's real listing wasn't found within a
+  // 200m radius in testing (likely registered at a slightly different
+  // point than the coordinates we have on file).
   const fallbackUrl = new URL('https://maps.googleapis.com/maps/api/place/textsearch/json');
   fallbackUrl.searchParams.set('query', BUSINESS_NAME_QUERY);
   fallbackUrl.searchParams.set('location', `${BUSINESS_LAT},${BUSINESS_LNG}`);
-  fallbackUrl.searchParams.set('radius', '200');
+  fallbackUrl.searchParams.set('radius', '20000');
   fallbackUrl.searchParams.set('key', GOOGLE_PLACES_API_KEY);
 
   const fallbackRes = await fetch(fallbackUrl.toString());
