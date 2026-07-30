@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, ArrowRight, Calculator, Phone, FileText } from 'lucide-react';
+import { Calendar, ArrowRight, Calculator, Phone, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BLOG_POSTS, GUIDES } from '../lib/content';
 import { NEIGHBORHOODS } from '../data/mockData';
 
@@ -12,6 +12,7 @@ interface BlogPostPageProps {
 export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, onOpenValuation }) => {
   const { slug } = useParams<{ slug: string }>();
   const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   if (!post) {
     return (
@@ -27,6 +28,13 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
 
   const relatedGuide = GUIDES.find((g) => g.slug === post.relatedGuideSlug);
   const relatedArea = NEIGHBORHOODS.find((n) => n.id === post.relatedAreaSlug);
+
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const cardWidth = el.querySelector('[data-carousel-slide]')?.clientWidth || 380;
+    el.scrollBy({ left: direction === 'left' ? -(cardWidth + 16) : cardWidth + 16, behavior: 'smooth' });
+  };
 
   // Article + VideoObject schema markup - this is what makes the post
   // eligible for rich results in Google, including video thumbnails
@@ -71,39 +79,15 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
         </div>
       </div>
 
-      <div className="aspect-[16/9] rounded-xs overflow-hidden">
+      {/* Hero image - height-capped so a huge upload never blows up the layout.
+          Recommended upload size: 1600x900px, under 500KB. */}
+      <div className="max-h-[420px] aspect-[16/9] rounded-xs overflow-hidden">
         <img src={post.heroImage} alt={post.title} className="w-full h-full object-cover" />
       </div>
 
-      {/* Embedded YouTube video - only renders once a real video ID is set */}
-      {post.youtubeVideoId ? (
-        <div className="aspect-video rounded-xs overflow-hidden border border-[#C9A96A]/30">
-          <iframe
-            className="w-full h-full"
-            src={`https://www.youtube.com/embed/${post.youtubeVideoId}`}
-            title={post.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      ) : (
-        <div className="aspect-video rounded-xs border border-dashed border-[#C9A96A]/40 flex items-center justify-center bg-[#FAF8F5]">
-          <p className="text-xs text-[#1C2B2E]/40">Video coming soon</p>
-        </div>
-      )}
-
-      {/* Carousel images - only renders if provided */}
-      {post.carouselImages && post.carouselImages.length > 0 && (
-        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {post.carouselImages.map((img, i) => (
-            <img key={i} src={img} alt={`${post.title} - slide ${i + 1}`} className="snap-start shrink-0 w-[70%] sm:w-[380px] aspect-[4/5] object-cover rounded-xs" />
-          ))}
-        </div>
-      )}
-
       <div className="prose prose-sm max-w-none space-y-5 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
 
-      {/* Soft CTA - mid/end of article, matching Kyle's established voice */}
+      {/* Soft CTA box - now sits right after the body, above the carousel */}
       <div className="bg-[#0D2226] text-[#FAF8F5] p-6 rounded-xs border border-[#C9A96A]/40 flex flex-col sm:flex-row items-center gap-4 justify-between">
         <p className="text-sm">Curious what this means for your own property?</p>
         <button
@@ -114,6 +98,59 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           Get Your Home Value
         </button>
       </div>
+
+      {/* Image carousel - only renders if photos were actually added.
+          Recommended upload size per photo: 1000x1250px, under 400KB. */}
+      {post.carouselImages && post.carouselImages.length > 0 && (
+        <div className="relative">
+          {post.carouselImages.length > 1 && (
+            <>
+              <button
+                onClick={() => scrollCarousel('left')}
+                aria-label="Previous image"
+                className="hidden sm:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[#0D2226] text-[#C9A96A] items-center justify-center shadow-lg hover:bg-[#0F5C63] transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scrollCarousel('right')}
+                aria-label="Next image"
+                className="hidden sm:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[#0D2226] text-[#C9A96A] items-center justify-center shadow-lg hover:bg-[#0F5C63] transition-colors"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
+          <div
+            ref={carouselRef}
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {post.carouselImages.map((img, i) => (
+              <img
+                key={i}
+                data-carousel-slide
+                src={img}
+                alt={`${post.title} - slide ${i + 1}`}
+                className="snap-start shrink-0 w-[70%] sm:w-[380px] aspect-[4/5] object-cover rounded-xs"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Embedded YouTube video - now at the bottom, and completely absent
+          (not even a placeholder) unless a real video was actually added. */}
+      {post.youtubeVideoId && (
+        <div className="aspect-video rounded-xs overflow-hidden border border-[#C9A96A]/30">
+          <iframe
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${post.youtubeVideoId}`}
+            title={post.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      )}
 
       {/* Guide CTA */}
       {relatedGuide && (
