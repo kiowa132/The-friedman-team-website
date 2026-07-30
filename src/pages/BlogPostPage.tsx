@@ -4,6 +4,7 @@ import { Calendar, ArrowRight, Calculator, Phone, FileText } from 'lucide-react'
 import { BLOG_POSTS, GUIDES } from '../lib/content';
 import { NEIGHBORHOODS } from '../data/mockData';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
+import { ScrollSubscribePrompt } from '../components/ScrollSubscribePrompt';
 
 interface BlogPostPageProps {
   onOpenConsultation: () => void;
@@ -97,6 +98,8 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
   return (
     <div className="pt-20 pb-20">
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
+
+      <ScrollSubscribePrompt />
 
       {/* Masthead - real branded image */}
       <div className="bg-[#0D2226] py-4 border-b-4 border-[#C9A96A]">
