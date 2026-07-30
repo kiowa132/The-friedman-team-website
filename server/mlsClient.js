@@ -42,11 +42,12 @@ function buildFilterConditions({ maxPrice, minBeds, propertyType }) {
   return filterConditions;
 }
 
-// Lofty's response wrapper shape wasn't shown in the docs excerpt we had -
-// this defensively checks the common possibilities so a wrapper mismatch
-// doesn't silently produce zero results.
+// Lofty wraps results under "listing" (singular) alongside a "metadata" key -
+// confirmed from a real response. Keeping the other fallbacks too in case
+// this varies by account/dataset.
 function extractRawListings(json) {
   if (Array.isArray(json)) return json;
+  if (Array.isArray(json.listing)) return json.listing;
   if (Array.isArray(json.listings)) return json.listings;
   if (Array.isArray(json.data)) return json.data;
   if (Array.isArray(json.result)) return json.result;
@@ -55,38 +56,85 @@ function extractRawListings(json) {
   return [];
 }
 
-// Maps a raw Lofty listing record onto the shape the frontend's Listing type
-// expects (see src/types.ts).
-function mapListing(raw) {
-  const zip = Array.isArray(raw.listingZipcode) ? raw.listingZipcode[0] : raw.listingZipcode;
-  const price = typeof raw.price === 'string' ? parseFloat(raw.price) : (raw.price || 0);
+// Best-effort city -> county lookup for Kyle's core Maryland service area.
+// Lofty's response has no explicit "county" field, only city/state/zip, so
+// this is the practical way to support the county filter dropdown. Cities
+// not in this list will just show under "All Counties" rather than being
+// mis-filed - add more as needed.
+const CITY_TO_COUNTY = {
+  westminster: 'Carroll County',
+  eldersburg: 'Carroll County',
+  finksburg: 'Carroll County',
+  hampstead: 'Carroll County',
+  manchester: 'Carroll County',
+  'mount airy': 'Carroll County',
+  sykesville: 'Carroll County',
+  'new windsor': 'Carroll County',
+  'union bridge': 'Carroll County',
+  taneytown: 'Carroll County',
+  towson: 'Baltimore County',
+  timonium: 'Baltimore County',
+  cockeysville: 'Baltimore County',
+  lutherville: 'Baltimore County',
+  'owings mills': 'Baltimore County',
+  reisterstown: 'Baltimore County',
+  parkville: 'Baltimore County',
+  essex: 'Baltimore County',
+  dundalk: 'Baltimore County',
+  'perry hall': 'Baltimore County',
+  'white marsh': 'Baltimore County',
+  'middle river': 'Baltimore County',
+  baltimore: 'Baltimore County',
+  columbia: 'Howard County',
+  'ellicott city': 'Howard County',
+  elkridge: 'Howard County',
+  clarksville: 'Howard County',
+  fulton: 'Howard County',
+  highland: 'Howard County',
+};
 
-  // Best-effort photo lookup - field name wasn't in the docs excerpt.
-  // Check a few likely shapes; falls back to empty if none match.
-  const photoCandidates = raw.photos || raw.images || raw.media || [];
-  const photos = Array.isArray(photoCandidates)
-    ? photoCandidates.map((p) => (typeof p === 'string' ? p : p?.url)).filter(Boolean)
-    : [];
-  const singlePhoto = raw.mainPhotoUrl || raw.photoUrl || raw.imageUrl;
-  const gallery = photos.length ? photos : (singlePhoto ? [singlePhoto] : []);
+function guessCounty(city) {
+  if (!city) return '';
+  return CITY_TO_COUNTY[city.trim().toLowerCase()] || '';
+}
+
+// Maps a raw Lofty listing record onto the shape the frontend's Listing type
+// expects (see src/types.ts). Field names below are confirmed from an actual
+// live Lofty response (not just docs) as of this build.
+function mapListing(raw) {
+  const price = typeof raw.price === 'string' ? parseFloat(raw.price) : (raw.price || 0);
+  const sqft = typeof raw.sqft === 'number' && raw.sqft > 0 ? raw.sqft : 0;
+  const beds = typeof raw.bedrooms === 'number' && raw.bedrooms >= 0 ? raw.bedrooms : 0;
+  const baths = typeof raw.bathrooms === 'number' && raw.bathrooms >= 0 ? raw.bathrooms : 0;
+  // lotSize/totalAvailableAcres come back in square feet, not acres.
+  const lotSizeSqft = typeof raw.lotSize === 'number' && raw.lotSize > 0 ? raw.lotSize : 0;
+  const acres = lotSizeSqft ? Math.round((lotSizeSqft / 43560) * 100) / 100 : 0;
+
+  const statusText = (raw.listingStatus || '').toLowerCase();
+  let status = 'Active';
+  if (raw.soldListingYN === true || statusText === 'sold' || statusText === 'closed') {
+    status = 'Sold';
+  } else if (statusText.includes('contract') || statusText.includes('pending')) {
+    status = 'Pending';
+  }
 
   return {
-    id: String(raw.listingId),
-    title: [raw.listingStreetName, raw.listingCity].filter(Boolean).join(', ') || 'Property',
+    id: String(raw.id ?? raw.mlsListingId),
+    title: raw.address || raw.fullAddress || `${raw.streetAddress || ''} ${raw.city || ''}`.trim() || 'Property',
     price,
     formattedPrice: price ? `$${price.toLocaleString()}` : 'Call for Price',
-    address: raw.listingStreetName || '',
-    city: raw.listingCity || '',
-    county: raw.county || '',
-    zip: zip || '',
-    beds: raw.beds ?? 0,
-    baths: raw.baths ?? 0,
-    sqft: raw.sqft ?? 0,
-    acres: raw.lotSizeAcres ?? 0, // not in documented field table - verify if populated
-    propertyType: raw.propertyType || raw.property_type || 'Residential',
-    status: raw.soldFlag || raw.status === 'Sold' ? 'Sold' : 'Active',
-    heroImage: gallery[0] || '',
-    gallery,
+    address: raw.streetAddress || raw.address || '',
+    city: raw.city || '',
+    county: guessCounty(raw.city),
+    zip: raw.zipCode || '',
+    beds,
+    baths,
+    sqft,
+    acres,
+    propertyType: raw.propertyTypePrimary || raw.primaryType || raw.propertyType || 'Residential',
+    status,
+    heroImage: raw.previewPicture || '',
+    gallery: raw.previewPicture ? [raw.previewPicture] : [],
     description: raw.remarks || raw.description || raw.publicRemarks || '',
     highlights: [],
     yearBuilt: raw.builtYear || 0,
@@ -113,7 +161,11 @@ export async function searchListings(params = {}) {
     searchScope: 'all',
     soldFlag: false,
     filterConditions: buildFilterConditions(params),
-    sortFields: ['PRICE_DESC'],
+    // Sorting by most-recently-listed rather than price - this feed spans
+    // multiple states, and sorting by price first risked burying Maryland
+    // listings behind more expensive out-of-state ones before our
+    // Maryland-only filter (below) even got a chance to see them.
+    sortFields: ['MLS_LIST_DATE_L_DESC'],
     pageSize,
     pageNum: 1,
   };
@@ -138,7 +190,13 @@ export async function searchListings(params = {}) {
   const json = await res.json();
   const rawListings = extractRawListings(json);
 
-  let listings = rawListings.map(mapListing);
+  // This Bright MLS feed spans multiple states (confirmed: PA and VA listings
+  // showed up in testing) - filter to Maryland only, since that's what this
+  // site is for. Do this on the raw records (which have `state`) before
+  // mapping, since the mapped Listing type doesn't carry state through.
+  const marylandRaw = rawListings.filter((l) => (l.state || '').toUpperCase() === 'MD');
+
+  let listings = marylandRaw.map(mapListing);
 
   // County isn't a documented filter field for the search endpoint, so we
   // filter client-side on the county value Lofty returns per listing.
@@ -161,7 +219,7 @@ export async function searchListings(params = {}) {
 
   const result = {
     listings,
-    total: json.total ?? json.totalCount ?? listings.length,
+    total: listings.length,
   };
 
   // TEMPORARILY always attaching debug info (not gated behind DEBUG_MLS)
@@ -172,6 +230,7 @@ export async function searchListings(params = {}) {
     requestBodySent: body,
     responseTopLevelKeys: Object.keys(json),
     rawListingsFoundByExtractor: rawListings.length,
+    marylandListingsAfterStateFilter: marylandRaw.length,
     responseSample: JSON.stringify(json).slice(0, 3000),
   };
 
