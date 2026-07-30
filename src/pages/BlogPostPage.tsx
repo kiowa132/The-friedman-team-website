@@ -102,9 +102,13 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           <p className="text-base text-[#1C2B2E]/70 leading-relaxed font-light">
             {post.metaDescription}
           </p>
-          <p className="text-xs font-bold uppercase tracking-widest text-[#C9A96A]">
-            By Kyle Friedman
-          </p>
+          <div className="flex items-center gap-3">
+            <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-9 h-9 rounded-full object-cover" />
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#C9A96A]">Kyle Friedman</p>
+              <p className="text-[10px] text-[#1C2B2E]/50">The Friedman Team</p>
+            </div>
+          </div>
         </div>
 
         {/* Hero image - height-capped so a huge upload never blows up the layout.
@@ -118,7 +122,10 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           </figcaption>
         </figure>
 
-        <div className="prose prose-sm max-w-none space-y-5 pt-8 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed [&_p]:font-light" dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
+        <div
+          className="prose prose-sm max-w-none space-y-5 pt-8 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed [&_p]:font-light [&_img]:w-full [&_img]:rounded-xs [&_img]:my-2 [&_h2]:font-serif [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#0D2226] [&_h2]:pt-2 [&_h3]:font-serif [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[#0D2226]"
+          dangerouslySetInnerHTML={{ __html: post.bodyHtml }}
+        />
 
         {/* Real branded valuation banner, clickable */}
         <button
@@ -263,7 +270,20 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           </div>
         )}
 
-        <div className="text-center pt-4 border-t border-[#C9A96A]/20">
+        <div className="text-center pt-8 border-t border-[#C9A96A]/20 space-y-4">
+          <h3 className="font-serif text-2xl font-bold text-[#0D2226]">
+            Have Questions? Let's Talk.
+          </h3>
+          <div className="text-xs text-[#1C2B2E]/70 space-y-1">
+            <p className="flex items-center justify-center gap-2">
+              <Phone className="w-3.5 h-3.5 text-[#C9A96A]" />
+              <a href="tel:4437893101" className="hover:text-[#0F5C63]">443-789-3101</a>
+              <span>|</span>
+              <a href="mailto:kyle@friedmanreteam.com" className="hover:text-[#0F5C63] underline">kyle@friedmanreteam.com</a>
+            </p>
+            <p>8115 Maple Lawn Blvd. #350, Fulton, MD 20759</p>
+          </div>
+          <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-16 h-16 rounded-full object-cover mx-auto" />
           <button
             onClick={onOpenConsultation}
             className="px-8 py-3.5 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs flex items-center gap-2 mx-auto"
