@@ -30,6 +30,14 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
   const relatedArea = NEIGHBORHOODS.find((n) => n.id === post.relatedAreaSlug);
   const hasSubstack = SUBSTACK_SUBDOMAIN && SUBSTACK_SUBDOMAIN !== 'YOUR-SUBSTACK-SUBDOMAIN';
 
+  // Category label links back to its corresponding page on the site.
+  const CATEGORY_LINKS: Record<string, string> = {
+    'Market Reports': '/market-report',
+    'Sell Your Home': '/sell',
+    'Buy a Home': '/buy',
+  };
+  const categoryLink = CATEGORY_LINKS[post.category] || '/blog';
+
   // Auto-distribute carousel images evenly through the article body, rather
   // than clumping them all in one scrolling row at the end - this is what
   // actually matches how the Substack version looks, without requiring
@@ -106,14 +114,27 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
 
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
 
-        {/* Meta strip */}
+        {/* Meta strip - category now links back to its corresponding page */}
         <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-[#1C2B2E]/60 border-b border-[#C9A96A]/30 py-3">
-          <span className="font-bold text-[#0F5C63]">{post.category}</span>
+          <Link to={categoryLink} className="font-bold text-[#0F5C63] hover:text-[#C9A96A] transition-colors">
+            {post.category}
+          </Link>
           <span className="flex items-center gap-1.5">
             <Calendar className="w-3 h-3" />
             {new Date(post.publishDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
           </span>
         </div>
+
+        {/* Subscribe utility row - same position as the reference's top link row */}
+        <a
+          href={hasSubstack ? `https://${SUBSTACK_SUBDOMAIN}.substack.com` : '/blog'}
+          target={hasSubstack ? '_blank' : undefined}
+          rel={hasSubstack ? 'noopener noreferrer' : undefined}
+          className="flex items-center justify-center gap-2 py-3 border-b border-[#C9A96A]/30 hover:opacity-80 transition-opacity"
+        >
+          <img src="/images/subscribe-bell-badge.webp" alt="" className="h-4 w-auto" />
+          <span className="text-xs font-bold uppercase tracking-widest text-[#0D2226]">Subscribe to Stay in the Loop</span>
+        </a>
 
         <div className="space-y-4 pt-8 pb-6">
           <h1 className="font-serif text-3xl sm:text-5xl font-bold text-[#0D2226] leading-tight">
