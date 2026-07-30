@@ -1,6 +1,7 @@
 import React from 'react';
 import { Listing, Neighborhood } from '../types';
 import { ListingCard } from '../components/ListingCard';
+import { ReviewsSection } from '../components/ReviewsSection';
 import {
   ArrowRight, ShieldCheck, TrendingUp, Calculator, Phone, CheckCircle2,
   ChevronRight, Search, Home as HomeIcon, TreePine, Building2, MapPinned, LineChart
@@ -416,12 +417,10 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 10. FINAL CONTACT CTA
-          Note: a "Reviews" section was intentionally left out here - the
-          mock data included three testimonials with named clients and
-          specific dollar figures, but they're fabricated, not real reviews.
-          Once you have real ones (Google/Zillow), this is the natural spot
-          to add them back in. */}
+      {/* Real Google reviews (static, manually added - see src/data/reviews.ts) */}
+      <ReviewsSection />
+
+      {/* 10. FINAL CONTACT CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-[#0D2226] border border-[#C9A96A] text-[#FAF8F5] p-10 sm:p-14 rounded-xs text-center space-y-5 shadow-2xl">
           <ShieldCheck className="w-8 h-8 text-[#C9A96A] mx-auto" />
