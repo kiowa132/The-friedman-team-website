@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { FileText, Download, AlertCircle, CheckCircle2, ShieldCheck, Phone } from 'lucide-react';
 import { GUIDES, BLOG_POSTS } from '../lib/content';
 import { submitLead } from '../lib/leads';
+import { FlipbookViewer } from '../components/FlipbookViewer';
 
 export const GuideDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -81,10 +82,24 @@ export const GuideDetailPage: React.FC = () => {
           <h2 className="font-serif text-3xl font-bold text-[#0D2226]">{guide.title}</h2>
         </div>
 
-        <div
-          className="prose prose-sm max-w-none [&_h2]:font-serif [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#0D2226] [&_h2]:pt-4 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed [&_p]:mb-4"
-          dangerouslySetInnerHTML={{ __html: guide.fullContentHtml }}
-        />
+        {guide.flipbookPages && guide.flipbookPages.length > 0 ? (
+          <FlipbookViewer pages={guide.flipbookPages} title={guide.title} />
+        ) : guide.publuuEmbedUrl ? (
+          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
+            <iframe
+              src={guide.publuuEmbedUrl}
+              className="absolute top-0 left-0 w-full h-full rounded-xs border border-[#C9A96A]/30"
+              allow="clipboard-write; fullscreen"
+              allowFullScreen
+              title={guide.title}
+            />
+          </div>
+        ) : (
+          <div
+            className="prose prose-sm max-w-none [&_h2]:font-serif [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#0D2226] [&_h2]:pt-4 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed [&_p]:mb-4"
+            dangerouslySetInnerHTML={{ __html: guide.fullContentHtml }}
+          />
+        )}
 
         {relatedPost && (
           <div className="text-center text-xs text-[#1C2B2E]/60 pt-4 border-t border-[#C9A96A]/20">

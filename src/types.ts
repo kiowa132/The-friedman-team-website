@@ -21,6 +21,8 @@ export interface Guide {
   relatedPostSlug?: string;
   previewPoints: string[]; // short "what's inside" bullets, shown before the form
   fullContentHtml: string; // the real guide content, unlocked after someone submits their info
+  publuuEmbedUrl?: string; // optional - if set, shows a Publuu flipbook instead of plain text
+  flipbookPages?: string[]; // optional - pre-converted page images for the free in-house flipbook viewer
 }
 
 export interface Listing {

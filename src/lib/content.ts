@@ -90,5 +90,7 @@ export const GUIDES: Guide[] = Object.entries(guideFiles).map(([path, raw]) => {
     relatedPostSlug: data.relatedPostSlug || undefined,
     previewPoints: data.previewPoints || [],
     fullContentHtml: marked.parse(content || '') as string,
+    publuuEmbedUrl: data.publuuEmbedUrl || undefined,
+    flipbookPages: data.flipbookPages || undefined,
   };
 });

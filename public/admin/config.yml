@@ -47,3 +47,13 @@ collections:
         required: false
         hint: "Short, punchy bullets - e.g. 'How Carroll County pricing actually works right now'. Builds trust before the ask."
       - { label: "Full Guide Content (the real content - unlocks on the page right after someone submits their info)", name: "body", widget: "markdown", required: false }
+      - label: "Publuu Flipbook Embed URL (optional - shows an interactive page-flip viewer instead of plain text)"
+        name: "publuuEmbedUrl"
+        widget: "string"
+        required: false
+        hint: "Only fill this in if you've turned this guide into an actual PDF and uploaded it to publuu.com. On Publuu, click EMBED on your flipbook, and from the embed code it gives you, copy just the URL inside the quotes after src= (looks like https://publuu.com/flip-book/1234/5678?embed=1) - paste that whole URL here, not the full <iframe> code."
+      - label: "Flipbook Pages (free in-house page-flip viewer - one image per page, in order)"
+        name: "flipbookPages"
+        widget: "list"
+        required: false
+        hint: "Send Kyle's real PDF over and he'll convert it into these page images for you - once added here, the guide shows a real interactive page-turning book, no third-party service needed."
