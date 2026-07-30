@@ -48,7 +48,7 @@ async function resolvePlaceId() {
   if (json.status !== 'OK' || !json.candidates?.length) {
     const err = new Error(`Could not resolve Place ID for "${BUSINESS_NAME_QUERY}": ${json.status}`);
     err.code = 'REVIEWS_PLACE_LOOKUP_FAILED';
-    err.debugInfo = { status: json.status, businessNameQuery: BUSINESS_NAME_QUERY };
+    err.debugInfo = { status: json.status, errorMessage: json.error_message, businessNameQuery: BUSINESS_NAME_QUERY };
     throw err;
   }
 
