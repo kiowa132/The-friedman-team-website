@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, ArrowRight, Calculator, Phone, FileText, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Calendar, ArrowRight, Calculator, Phone, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BLOG_POSTS, GUIDES } from '../lib/content';
 import { NEIGHBORHOODS } from '../data/mockData';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
@@ -70,13 +70,15 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
     <div className="pt-20 pb-20">
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
 
-      {/* Masthead - editorial newspaper/newsletter feel */}
-      <div className="bg-[#0D2226] py-6 border-b-4 border-[#C9A96A]">
-        <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#FAF8F5] tracking-wide uppercase">
-            The Friedman Report
-          </h2>
-          <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A96A] mt-1">
+      {/* Masthead - real branded image */}
+      <div className="bg-[#0D2226] py-4 border-b-4 border-[#C9A96A]">
+        <div className="max-w-2xl mx-auto px-4">
+          <img
+            src="/images/blog/friedman-report-masthead.png"
+            alt="The Friedman Report"
+            className="w-full h-auto max-w-md mx-auto"
+          />
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A96A] text-center mt-2">
             Weekly Market Intelligence · eXp Realty
           </p>
         </div>
@@ -118,13 +120,17 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
 
         <div className="prose prose-sm max-w-none space-y-5 pt-8 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed [&_p]:font-light" dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
 
-        {/* Pull-quote style callout, in place of a generic banner CTA */}
-        <div className="my-8 border-y border-[#C9A96A]/40 py-6 flex items-start gap-4">
-          <Quote className="w-6 h-6 text-[#C9A96A] shrink-0 mt-1" />
-          <p className="font-serif text-lg italic text-[#0D2226] leading-snug">
-            Curious what this actually means for your own property? Get a real answer, not a guess.
-          </p>
-        </div>
+        {/* Real branded valuation banner, clickable */}
+        <button
+          onClick={onOpenValuation}
+          className="w-full my-8 block hover:opacity-90 transition-opacity"
+        >
+          <img
+            src="/images/blog/know-your-home-value-banner.webp"
+            alt="Know your home's value - free valuation"
+            className="w-full h-auto"
+          />
+        </button>
 
         {/* Image carousel - only renders if photos were actually added.
             Recommended upload size per photo: 1000x1250px, under 400KB. */}
@@ -185,7 +191,12 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
 
         {/* Two-card CTA row - same visual pattern as a subscription-tier
             block, but both options are free actions instead of paid tiers. */}
-        <div className="text-center space-y-2 mb-6">
+        <div className="text-center space-y-3 mb-6">
+          <img
+            src="/images/blog/subscribe-bell-badge.webp"
+            alt="Subscribe to stay in the loop"
+            className="h-8 w-auto mx-auto"
+          />
           <h3 className="font-serif text-2xl font-bold text-[#0D2226]">
             Stay Ahead of the Market
           </h3>
