@@ -106,6 +106,8 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
         setMinBeds={setMinBeds}
         onResetFilters={handleResetFilters}
         totalResultsCount={loadState === 'ok' ? total : 0}
+        suggestions={loadState === 'ok' ? listings : []}
+        onSelectSuggestion={onSelectListing}
       />
 
       {/* Loading state */}

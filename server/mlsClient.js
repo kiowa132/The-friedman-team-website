@@ -26,8 +26,15 @@ export function isMlsConfigured() {
 }
 
 // Lofty's price/beds/baths filters are "min,max" strings, not separate fields.
-function buildFilterConditions({ maxPrice, minBeds, propertyType }) {
+function buildFilterConditions({ maxPrice, minBeds, propertyType, q }) {
   const filterConditions = {};
+
+  // When searching by keyword (address, MLS#, etc.), skip the price/bed/type
+  // filters entirely - searching for a specific property shouldn't be
+  // constrained by whatever the price slider happens to be set to.
+  if (q && q.trim()) {
+    return filterConditions;
+  }
 
   if (maxPrice) {
     filterConditions.price = `,${Number(maxPrice)}`;
@@ -155,7 +162,13 @@ export async function searchListings(params = {}) {
     throw err;
   }
 
-  const pageSize = Math.min(params.top || 24, 50);
+  // When searching by keyword, pull a much bigger batch since we're
+  // searching by substring match across whatever comes back - a small
+  // recent-activity page is unlikely to contain the specific property
+  // someone's typing in an address for.
+  const pageSize = params.q && params.q.trim()
+    ? 100
+    : Math.min(params.top || 24, 50);
 
   const body = {
     searchScope: 'all',

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, Filter, RefreshCw, SlidersHorizontal, MapPin, Building2, DollarSign } from 'lucide-react';
+import { Listing } from '../types';
 
 interface IDXSearchHeaderProps {
   searchQuery: string;
@@ -14,6 +15,8 @@ interface IDXSearchHeaderProps {
   setMinBeds: (beds: number) => void;
   onResetFilters: () => void;
   totalResultsCount: number;
+  suggestions?: Listing[];
+  onSelectSuggestion?: (listing: Listing) => void;
 }
 
 export const IDXSearchHeader: React.FC<IDXSearchHeaderProps> = ({
@@ -28,8 +31,12 @@ export const IDXSearchHeader: React.FC<IDXSearchHeaderProps> = ({
   minBeds,
   setMinBeds,
   onResetFilters,
-  totalResultsCount
+  totalResultsCount,
+  suggestions = [],
+  onSelectSuggestion,
 }) => {
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
   return (
     <div className="bg-[#0D2226] border border-[#C9A96A]/40 p-4 sm:p-6 rounded-xs text-[#FAF8F5] shadow-xl space-y-4">
       
@@ -43,9 +50,34 @@ export const IDXSearchHeader: React.FC<IDXSearchHeaderProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
             placeholder="Search city, MLS #, street or features (e.g. Falls Road)..."
             className="w-full bg-[#1A2E33] border border-[#FAF8F5]/20 pl-10 pr-4 py-2.5 text-xs text-[#FAF8F5] placeholder-[#A8B2A1] focus:border-[#C9A96A] focus:outline-none rounded-xs"
           />
+
+          {/* Address autocomplete dropdown - shows matching listings as you type */}
+          {showSuggestions && searchQuery.trim().length > 0 && suggestions.length > 0 && (
+            <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-[#1A2E33] border border-[#C9A96A]/40 rounded-xs shadow-2xl max-h-72 overflow-y-auto">
+              {suggestions.slice(0, 8).map((listing) => (
+                <button
+                  key={listing.id}
+                  type="button"
+                  onClick={() => {
+                    onSelectSuggestion?.(listing);
+                    setShowSuggestions(false);
+                  }}
+                  className="w-full text-left px-4 py-2.5 hover:bg-[#0D2226] transition-colors border-b border-[#FAF8F5]/5 last:border-b-0 flex items-center justify-between gap-3"
+                >
+                  <div className="min-w-0">
+                    <div className="text-xs text-[#FAF8F5] truncate">{listing.address}</div>
+                    <div className="text-[10px] text-[#A8B2A1]">{listing.city} • {listing.mlsNumber}</div>
+                  </div>
+                  <div className="text-xs font-bold text-[#C9A96A] shrink-0">{listing.formattedPrice}</div>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* County Selector */}
