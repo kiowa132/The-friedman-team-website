@@ -25,7 +25,13 @@ const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 
 // Confirmed exact business name from Kyle's real Google Maps listing.
 const BUSINESS_NAME_QUERY = process.env.GOOGLE_PLACE_NAME_QUERY
-  || 'The Friedman Team by Kyle Friedman, Maryland';
+  || 'The Friedman Team by Kyle Friedman';
+
+// Coordinates confirmed from Kyle's actual Google Maps share link - used as
+// a location bias to help Google's text search disambiguate, since the
+// business name alone returned ZERO_RESULTS on its own.
+const BUSINESS_LAT = 39.2162004;
+const BUSINESS_LNG = -76.9824265;
 
 export function isReviewsConfigured() {
   return Boolean(GOOGLE_PLACES_API_KEY);
@@ -40,20 +46,45 @@ async function resolvePlaceId() {
   url.searchParams.set('input', BUSINESS_NAME_QUERY);
   url.searchParams.set('inputtype', 'textquery');
   url.searchParams.set('fields', 'place_id,name');
+  url.searchParams.set('locationbias', `point:${BUSINESS_LAT},${BUSINESS_LNG}`);
   url.searchParams.set('key', GOOGLE_PLACES_API_KEY);
 
   const res = await fetch(url.toString());
   const json = await res.json();
 
-  if (json.status !== 'OK' || !json.candidates?.length) {
-    const err = new Error(`Could not resolve Place ID for "${BUSINESS_NAME_QUERY}": ${json.status}`);
-    err.code = 'REVIEWS_PLACE_LOOKUP_FAILED';
-    err.debugInfo = { status: json.status, errorMessage: json.error_message, businessNameQuery: BUSINESS_NAME_QUERY };
-    throw err;
+  if (json.status === 'OK' && json.candidates?.length) {
+    cachedPlaceId = json.candidates[0].place_id;
+    return cachedPlaceId;
   }
 
-  cachedPlaceId = json.candidates[0].place_id;
-  return cachedPlaceId;
+  // Fallback: Find Place From Text is strict about exact matches - Text
+  // Search is more forgiving (same style as typing into Google Maps search)
+  // and more likely to find the listing even if the name string isn't a
+  // perfect match.
+  const fallbackUrl = new URL('https://maps.googleapis.com/maps/api/place/textsearch/json');
+  fallbackUrl.searchParams.set('query', BUSINESS_NAME_QUERY);
+  fallbackUrl.searchParams.set('location', `${BUSINESS_LAT},${BUSINESS_LNG}`);
+  fallbackUrl.searchParams.set('radius', '5000');
+  fallbackUrl.searchParams.set('key', GOOGLE_PLACES_API_KEY);
+
+  const fallbackRes = await fetch(fallbackUrl.toString());
+  const fallbackJson = await fallbackRes.json();
+
+  if (fallbackJson.status === 'OK' && fallbackJson.results?.length) {
+    cachedPlaceId = fallbackJson.results[0].place_id;
+    return cachedPlaceId;
+  }
+
+  const err = new Error(`Could not resolve Place ID for "${BUSINESS_NAME_QUERY}": ${json.status} (fallback: ${fallbackJson.status})`);
+  err.code = 'REVIEWS_PLACE_LOOKUP_FAILED';
+  err.debugInfo = {
+    findPlaceStatus: json.status,
+    findPlaceErrorMessage: json.error_message,
+    textSearchStatus: fallbackJson.status,
+    textSearchErrorMessage: fallbackJson.error_message,
+    businessNameQuery: BUSINESS_NAME_QUERY,
+  };
+  throw err;
 }
 
 export async function fetchGoogleReviews() {
