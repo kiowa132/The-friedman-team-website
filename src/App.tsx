@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ListingDetailModal } from './components/ListingDetailModal';
@@ -14,12 +15,55 @@ import { NeighborhoodsPage } from './pages/NeighborhoodsPage';
 import { ListingsPage } from './pages/ListingsPage';
 import { MarketReportPage } from './pages/MarketReportPage';
 import { ContactPage } from './pages/ContactPage';
+import { BlogListPage } from './pages/BlogListPage';
+import { BlogPostPage } from './pages/BlogPostPage';
+import { GuidesListPage } from './pages/GuidesListPage';
+import { GuideDetailPage } from './pages/GuideDetailPage';
 
 import { FEATURED_LISTINGS, NEIGHBORHOODS } from './data/mockData';
 import { Listing } from './types';
 
+// Maps a URL path to the tab name every existing page component already
+// expects (e.g. "/about" -> "about"). This lets every page keep using the
+// exact same activeTab/setActiveTab props they always have - only the
+// underlying navigation mechanism changed (real URLs instead of state).
+const PATH_TO_TAB: Record<string, string> = {
+  '/': 'home',
+  '/about': 'about',
+  '/sell': 'sell',
+  '/buy': 'buy',
+  '/neighborhoods': 'neighborhoods',
+  '/listings': 'listings',
+  '/market-report': 'market-report',
+  '/contact': 'contact',
+  '/blog': 'blog',
+  '/guides': 'guides',
+};
+
+const TAB_TO_PATH: Record<string, string> = {
+  home: '/',
+  about: '/about',
+  sell: '/sell',
+  buy: '/buy',
+  neighborhoods: '/neighborhoods',
+  listings: '/listings',
+  'market-report': '/market-report',
+  contact: '/contact',
+  blog: '/blog',
+  guides: '/guides',
+};
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('home');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const activeTab = PATH_TO_TAB[location.pathname] || 'home';
+
+  // Same function signature every page already used with local state -
+  // now it navigates to a real URL instead. No page component needed to change.
+  const setActiveTab = (tab: string) => {
+    navigate(TAB_TO_PATH[tab] || '/');
+  };
+
   const [savedListings, setSavedListings] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem('friedman_saved_listings');
@@ -34,7 +78,6 @@ export default function App() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [selectedNeighborhoodId, setSelectedNeighborhoodId] = useState('carroll-county');
 
-  // Save/Unsave Handler
   const handleToggleSave = (id: string) => {
     setSavedListings((prev) => {
       const updated = prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
@@ -53,8 +96,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F5F1E8] text-[#1C2B2E] font-sans flex flex-col justify-between selection:bg-[#C9A96A] selection:text-[#0D2226]">
-      
-      {/* Fixed Luxury Navigation Bar */}
+
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -64,89 +106,107 @@ export default function App() {
         onSelectNeighborhood={(id) => setSelectedNeighborhoodId(id)}
       />
 
-      {/* Main Dynamic View Area */}
       <main className="flex-1">
-        {activeTab === 'home' && (
-          <HomePage
-            listings={FEATURED_LISTINGS}
-            neighborhoods={NEIGHBORHOODS}
-            savedListings={savedListings}
-            onToggleSave={handleToggleSave}
-            onSelectListing={(l) => setSelectedListing(l)}
-            onScheduleShowing={handleScheduleShowing}
-            onOpenValuation={() => setIsValuationOpen(true)}
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-            setActiveTab={setActiveTab}
-            onSelectNeighborhood={(id) => setSelectedNeighborhoodId(id)}
-          />
-        )}
+        <Routes>
+          <Route path="/" element={
+            <HomePage
+              listings={FEATURED_LISTINGS}
+              neighborhoods={NEIGHBORHOODS}
+              savedListings={savedListings}
+              onToggleSave={handleToggleSave}
+              onSelectListing={(l) => setSelectedListing(l)}
+              onScheduleShowing={handleScheduleShowing}
+              onOpenValuation={() => setIsValuationOpen(true)}
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+              setActiveTab={setActiveTab}
+              onSelectNeighborhood={(id) => setSelectedNeighborhoodId(id)}
+            />
+          } />
 
-        {activeTab === 'about' && (
-          <AboutPage
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-            setActiveTab={setActiveTab}
-          />
-        )}
+          <Route path="/about" element={
+            <AboutPage
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+              setActiveTab={setActiveTab}
+            />
+          } />
 
-        {activeTab === 'sell' && (
-          <SellPage
-            onOpenValuation={() => setIsValuationOpen(true)}
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-          />
-        )}
+          <Route path="/sell" element={
+            <SellPage
+              onOpenValuation={() => setIsValuationOpen(true)}
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
 
-        {activeTab === 'buy' && (
-          <BuyersPage
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-            setActiveTab={setActiveTab}
-          />
-        )}
+          <Route path="/buy" element={
+            <BuyersPage
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+              setActiveTab={setActiveTab}
+            />
+          } />
 
-        {activeTab === 'neighborhoods' && (
-          <NeighborhoodsPage
-            neighborhoods={NEIGHBORHOODS}
-            listings={FEATURED_LISTINGS}
-            selectedNeighborhoodId={selectedNeighborhoodId}
-            setSelectedNeighborhoodId={setSelectedNeighborhoodId}
-            savedListings={savedListings}
-            onToggleSave={handleToggleSave}
-            onSelectListing={(l) => setSelectedListing(l)}
-            onScheduleShowing={handleScheduleShowing}
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-          />
-        )}
+          <Route path="/neighborhoods" element={
+            <NeighborhoodsPage
+              neighborhoods={NEIGHBORHOODS}
+              listings={FEATURED_LISTINGS}
+              selectedNeighborhoodId={selectedNeighborhoodId}
+              setSelectedNeighborhoodId={setSelectedNeighborhoodId}
+              savedListings={savedListings}
+              onToggleSave={handleToggleSave}
+              onSelectListing={(l) => setSelectedListing(l)}
+              onScheduleShowing={handleScheduleShowing}
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
 
-        {activeTab === 'listings' && (
-          <ListingsPage
-            savedListings={savedListings}
-            onToggleSave={handleToggleSave}
-            onSelectListing={(l) => setSelectedListing(l)}
-            onScheduleShowing={handleScheduleShowing}
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-          />
-        )}
+          <Route path="/listings" element={
+            <ListingsPage
+              savedListings={savedListings}
+              onToggleSave={handleToggleSave}
+              onSelectListing={(l) => setSelectedListing(l)}
+              onScheduleShowing={handleScheduleShowing}
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
 
-        {activeTab === 'market-report' && (
-          <MarketReportPage
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-          />
-        )}
+          <Route path="/market-report" element={
+            <MarketReportPage
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
 
-        {activeTab === 'contact' && (
-          <ContactPage
-            onOpenValuation={() => setIsValuationOpen(true)}
-          />
-        )}
+          <Route path="/contact" element={
+            <ContactPage
+              onOpenValuation={() => setIsValuationOpen(true)}
+            />
+          } />
+
+          {/* Blog - The Friedman Report, now with real per-post URLs */}
+          <Route path="/blog" element={
+            <BlogListPage setActiveTab={setActiveTab} />
+          } />
+          <Route path="/blog/:slug" element={
+            <BlogPostPage
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+              onOpenValuation={() => setIsValuationOpen(true)}
+            />
+          } />
+
+          {/* Guides - gated lead-magnet downloads tied to Follow Up Boss */}
+          <Route path="/guides" element={
+            <GuidesListPage />
+          } />
+          <Route path="/guides/:slug" element={
+            <GuideDetailPage />
+          } />
+        </Routes>
       </main>
 
-      {/* Editorial Footer */}
       <Footer
         setActiveTab={setActiveTab}
         onOpenValuation={() => setIsValuationOpen(true)}
         onOpenConsultation={() => setIsConsultationOpen(true)}
       />
 
-      {/* Listing Details Slide-Over / Modal */}
       <ListingDetailModal
         listing={selectedListing}
         onClose={() => setSelectedListing(null)}
@@ -155,7 +215,6 @@ export default function App() {
         onScheduleConsultation={() => setIsConsultationOpen(true)}
       />
 
-      {/* Complimentary Home Valuation Calculator Modal */}
       <HomeValuationModal
         isOpen={isValuationOpen}
         onClose={() => setIsValuationOpen(false)}
@@ -165,13 +224,11 @@ export default function App() {
         }}
       />
 
-      {/* Strategy Consultation Booking Modal */}
       <StrategyConsultationModal
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
       />
 
-      {/* RealEstateAgent Schema & SEO Inspector */}
       <SEOMetaDrawer />
 
     </div>

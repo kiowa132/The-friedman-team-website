@@ -1,3 +1,26 @@
+export interface BlogPost {
+  slug: string;
+  title: string;
+  metaDescription: string;
+  category: string;
+  publishDate: string; // ISO format, e.g. "2026-07-30"
+  heroImage: string;
+  youtubeVideoId?: string; // just the ID, e.g. "dQw4w9WgXcQ"
+  carouselImages?: string[];
+  body: string[]; // paragraphs
+  relatedGuideSlug?: string;
+  relatedAreaSlug?: string; // links to a neighborhood/county id
+}
+
+export interface Guide {
+  slug: string;
+  title: string;
+  description: string;
+  coverImage: string;
+  pdfUrl?: string; // set once a real PDF is uploaded to /public/guides/
+  relatedPostSlug?: string;
+}
+
 export interface Listing {
   id: string;
   title: string;

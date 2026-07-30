@@ -90,6 +90,14 @@ export const Navbar: React.FC<NavbarProps> = ({
       ],
     },
     {
+      id: 'resources',
+      label: 'Resources',
+      items: [
+        { label: 'The Friedman Report', action: () => goTo('blog') },
+        { label: 'Free Guides', action: () => goTo('guides') },
+      ],
+    },
+    {
       id: 'about',
       label: 'About',
       items: [
@@ -107,6 +115,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     neighborhoods: 'buy',
     sell: 'sell',
     'market-report': 'areas',
+    blog: 'resources',
+    guides: 'resources',
     about: 'about',
     contact: 'about',
   };
