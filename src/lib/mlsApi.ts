@@ -11,9 +11,9 @@ export interface MlsSearchParams {
 }
 
 export type MlsSearchResult =
-  | { status: 'ok'; listings: Listing[]; total: number }
-  | { status: 'not_configured'; message: string }
-  | { status: 'error'; message: string };
+  | { status: 'ok'; listings: Listing[]; total: number; debugInfo?: any }
+  | { status: 'not_configured'; message: string; debugInfo?: any }
+  | { status: 'error'; message: string; debugInfo?: any };
 
 export async function fetchMlsListings(params: MlsSearchParams): Promise<MlsSearchResult> {
   const query = new URLSearchParams();
@@ -30,14 +30,14 @@ export async function fetchMlsListings(params: MlsSearchParams): Promise<MlsSear
     const data = await res.json();
 
     if (res.status === 501 || data?.error === 'MLS_NOT_CONFIGURED') {
-      return { status: 'not_configured', message: data?.message || 'MLS feed not connected yet.' };
+      return { status: 'not_configured', message: data?.message || 'MLS feed not connected yet.', debugInfo: data?.debugInfo };
     }
 
     if (!res.ok || !data.ok) {
-      return { status: 'error', message: data?.message || 'Could not load listings right now.' };
+      return { status: 'error', message: data?.message || 'Could not load listings right now.', debugInfo: data?.debugInfo };
     }
 
-    return { status: 'ok', listings: data.listings, total: data.total };
+    return { status: 'ok', listings: data.listings, total: data.total, debugInfo: data?.debugInfo };
   } catch (err) {
     return { status: 'error', message: 'Could not reach the server. Please check your connection.' };
   }

@@ -34,6 +34,7 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
   const [listings, setListings] = useState<Listing[]>([]);
   const [total, setTotal] = useState(0);
+  const [debugInfo, setDebugInfo] = useState<any>(undefined);
 
   const runSearch = useCallback(async () => {
     setLoadState('loading');
@@ -45,6 +46,8 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
       q: searchQuery.trim() || undefined,
       top: 24,
     });
+
+    setDebugInfo((result as any).debugInfo);
 
     if (result.status === 'ok') {
       setListings(result.listings);
@@ -206,6 +209,21 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
           Submit Confidential Buyer Criteria
         </button>
       </div>
+
+      {/* DEBUG PANEL - only appears when DEBUG_MLS=true on the server.
+          Shows exactly what Lofty's API returned so field-mapping issues
+          can be diagnosed by screenshotting this box directly. Remove or
+          set DEBUG_MLS=false once search is confirmed working. */}
+      {debugInfo && (
+        <div className="bg-yellow-50 border-2 border-yellow-500 rounded-xs p-4 space-y-2">
+          <h4 className="font-bold text-xs uppercase tracking-widest text-yellow-800">
+            Debug Info (DEBUG_MLS is on)
+          </h4>
+          <pre className="text-[10px] leading-relaxed text-yellow-900 whitespace-pre-wrap break-all bg-white p-3 rounded border border-yellow-300 max-h-96 overflow-y-auto">
+            {JSON.stringify(debugInfo, null, 2)}
+          </pre>
+        </div>
+      )}
 
     </div>
   );

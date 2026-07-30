@@ -21,8 +21,6 @@ const LOFTY_API_BASE = 'https://api.lofty.com';
 const LOFTY_API_KEY = process.env.LOFTY_API_KEY;
 const DEBUG_MLS = process.env.DEBUG_MLS === 'true';
 
-let hasLoggedSample = false;
-
 export function isMlsConfigured() {
   return Boolean(LOFTY_API_KEY);
 }
@@ -133,19 +131,11 @@ export async function searchListings(params = {}) {
     const text = await res.text().catch(() => '');
     const err = new Error(`Lofty API request failed: ${res.status} ${text}`);
     err.code = 'MLS_REQUEST_FAILED';
+    err.debugInfo = { httpStatus: res.status, requestBody: body, responseText: text.slice(0, 2000) };
     throw err;
   }
 
   const json = await res.json();
-
-  if (DEBUG_MLS && !hasLoggedSample) {
-    console.log('--- DEBUG_MLS: raw Lofty response (top-level keys) ---');
-    console.log(Object.keys(json));
-    console.log('--- DEBUG_MLS: raw Lofty response (truncated) ---');
-    console.log(JSON.stringify(json).slice(0, 4000));
-    hasLoggedSample = true;
-  }
-
   const rawListings = extractRawListings(json);
 
   let listings = rawListings.map(mapListing);
@@ -169,8 +159,20 @@ export async function searchListings(params = {}) {
     );
   }
 
-  return {
+  const result = {
     listings,
     total: json.total ?? json.totalCount ?? listings.length,
   };
+
+  if (DEBUG_MLS) {
+    result.debugInfo = {
+      httpStatus: res.status,
+      requestBodySent: body,
+      responseTopLevelKeys: Object.keys(json),
+      rawListingsFoundByExtractor: rawListings.length,
+      responseSample: JSON.stringify(json).slice(0, 3000),
+    };
+  }
+
+  return result;
 }

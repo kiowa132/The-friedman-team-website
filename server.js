@@ -109,7 +109,7 @@ app.get('/api/mls/search', async (req, res) => {
 
   try {
     const { county, propertyType, maxPrice, minBeds, q, skip, top } = req.query;
-    const { listings, total } = await searchListings({
+    const { listings, total, debugInfo } = await searchListings({
       county,
       propertyType,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
@@ -118,10 +118,15 @@ app.get('/api/mls/search', async (req, res) => {
       skip: skip ? Number(skip) : undefined,
       top: top ? Number(top) : undefined,
     });
-    return res.json({ ok: true, listings, total });
+    return res.json({ ok: true, listings, total, debugInfo });
   } catch (err) {
     console.error('MLS search failed:', err);
-    return res.status(502).json({ ok: false, error: 'MLS_REQUEST_FAILED', message: 'Could not reach the MLS feed.' });
+    return res.status(502).json({
+      ok: false,
+      error: 'MLS_REQUEST_FAILED',
+      message: 'Could not reach the MLS feed.',
+      debugInfo: err.debugInfo,
+    });
   }
 });
 
