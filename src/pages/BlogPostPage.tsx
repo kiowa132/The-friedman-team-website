@@ -74,7 +74,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
       <div className="bg-[#0D2226] py-4 border-b-4 border-[#C9A96A]">
         <div className="max-w-2xl mx-auto px-4">
           <img
-            src="/images/blog/friedman-report-masthead.png"
+            src="/images/friedman-report-masthead.png"
             alt="The Friedman Report"
             className="w-full h-auto max-w-md mx-auto"
           />
@@ -126,7 +126,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           className="w-full my-8 block hover:opacity-90 transition-opacity"
         >
           <img
-            src="/images/blog/know-your-home-value-banner.webp"
+            src="/images/know-your-home-value-banner.webp"
             alt="Know your home's value - free valuation"
             className="w-full h-auto"
           />
@@ -193,7 +193,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             block, but both options are free actions instead of paid tiers. */}
         <div className="text-center space-y-3 mb-6">
           <img
-            src="/images/blog/subscribe-bell-badge.webp"
+            src="/images/subscribe-bell-badge.webp"
             alt="Subscribe to stay in the loop"
             className="h-8 w-auto mx-auto"
           />
