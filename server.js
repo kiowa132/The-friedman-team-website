@@ -19,6 +19,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { searchListings, isMlsConfigured } from './server/mlsClient.js';
+import { fetchGoogleReviews, isReviewsConfigured } from './server/reviewsClient.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -125,6 +126,32 @@ app.get('/api/mls/search', async (req, res) => {
       ok: false,
       error: 'MLS_REQUEST_FAILED',
       message: 'Could not reach the MLS feed.',
+      debugInfo: err.debugInfo,
+    });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/reviews - real Google reviews for Kyle's Business Profile.
+// ---------------------------------------------------------------------------
+app.get('/api/reviews', async (req, res) => {
+  if (!isReviewsConfigured()) {
+    return res.status(501).json({
+      ok: false,
+      error: 'REVIEWS_NOT_CONFIGURED',
+      message: 'Google reviews are not connected yet. Set GOOGLE_PLACES_API_KEY in .env.',
+    });
+  }
+
+  try {
+    const data = await fetchGoogleReviews();
+    return res.json({ ok: true, ...data });
+  } catch (err) {
+    console.error('Fetching Google reviews failed:', err);
+    return res.status(502).json({
+      ok: false,
+      error: 'REVIEWS_REQUEST_FAILED',
+      message: 'Could not reach Google right now.',
       debugInfo: err.debugInfo,
     });
   }
