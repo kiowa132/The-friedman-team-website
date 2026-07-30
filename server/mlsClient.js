@@ -217,6 +217,7 @@ export async function searchListings(params = {}) {
   let lastJson = {};
   let lastHttpStatus = 0;
   let lastRequestBody = {};
+  let usedExperimentalAddressFilter = false;
 
   if (isKeywordSearch) {
     // Keyword search: scan multiple pages looking for matches, since the
@@ -226,13 +227,33 @@ export async function searchListings(params = {}) {
     const MAX_PAGES = 8; // scans up to 800 raw listings
     const MATCH_TARGET = 30; // stop early once we have enough matches
 
+    // EXPERIMENTAL: try asking Lofty to filter by address server-side too -
+    // undocumented, a guess based on the pattern of the documented `city`
+    // filter. If Lofty rejects this (400 error), we automatically retry
+    // without it rather than breaking keyword search entirely.
+    const experimentalFilterConditions = {
+      ...filterConditions,
+      location: { ...filterConditions.location, address: [params.q.trim()] },
+    };
+
+    let activeFilterConditions = experimentalFilterConditions;
+    usedExperimentalAddressFilter = true;
+
+    try {
+      await fetchLoftyPage({ filterConditions: activeFilterConditions, pageSize: 1, pageNum: 1 });
+    } catch (probeErr) {
+      // Lofty didn't like the experimental filter - fall back to plain state filter.
+      activeFilterConditions = filterConditions;
+      usedExperimentalAddressFilter = false;
+    }
+
     let matchedRaw = [];
     let pagesScanned = 0;
     let ranOutOfData = false;
 
     for (let pageNum = 1; pageNum <= MAX_PAGES; pageNum++) {
       const { json, rawListings, requestBody, httpStatus } = await fetchLoftyPage({
-        filterConditions,
+        filterConditions: activeFilterConditions,
         pageSize: PAGE_SIZE,
         pageNum,
       });
@@ -265,6 +286,7 @@ export async function searchListings(params = {}) {
       debugInfo: {
         mode: 'keyword-multi-page-scan',
         keyword: params.q,
+        usedExperimentalAddressFilter,
         pagesScanned,
         ranOutOfData,
         matchesFound: listings.length,
