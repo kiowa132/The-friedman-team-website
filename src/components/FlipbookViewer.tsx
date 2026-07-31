@@ -54,13 +54,13 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
           <div className="relative" style={{ filter: 'drop-shadow(0 25px 35px rgba(13,34,38,0.35))' }}>
             <HTMLFlipBook
               ref={bookRef}
-              width={620}
-              height={480}
+              width={750}
+              height={560}
               size="stretch"
-              minWidth={320}
-              maxWidth={900}
-              minHeight={260}
-              maxHeight={720}
+              minWidth={340}
+              maxWidth={1100}
+              minHeight={280}
+              maxHeight={820}
               singlePage={isMobile}
               usePortrait={isMobile}
               showCover={true}
@@ -79,19 +79,24 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
               {pages.map((src, i) => (
                 <div key={i} className="bg-white relative">
                   <img src={src} alt={`${title} - page ${i + 1}`} className="w-full h-full object-contain" />
-                  {/* "Click to open" cue - only shows on the cover, only
-                      before the reader has ever opened the book */}
-                  {i === 0 && !hasOpened && (
-                    <button
-                      onClick={goNext}
-                      className="absolute inset-0 flex items-end justify-center pb-6 bg-black/0 hover:bg-black/5 transition-colors cursor-pointer"
-                      aria-label="Open guide"
+                  {/* "Click to open" cue - purely decorative (pointer-events-none)
+                      so it never intercepts the library's own click-to-flip
+                      handling underneath. It fades out via CSS once opened,
+                      rather than being removed from the DOM mid-flip - that
+                      DOM removal during an active flip was what caused the
+                      page to snap back to the cover instead of completing
+                      the turn. */}
+                  {i === 0 && (
+                    <div
+                      className={`absolute inset-0 flex items-end justify-center pb-6 pointer-events-none transition-opacity duration-300 ${
+                        hasOpened ? 'opacity-0' : 'opacity-100'
+                      }`}
                     >
                       <span className="flex items-center gap-2 px-4 py-2 bg-[#0D2226]/90 text-[#C9A96A] text-[11px] font-bold uppercase tracking-widest rounded-full shadow-lg animate-pulse">
                         <Hand className="w-3.5 h-3.5" />
                         Click to Open
                       </span>
-                    </button>
+                    </div>
                   )}
                 </div>
               ))}
