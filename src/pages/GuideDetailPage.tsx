@@ -14,7 +14,13 @@ export const GuideDetailPage: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(() => {
+    try {
+      return localStorage.getItem(`friedman_guide_unlocked_${slug}`) === 'true';
+    } catch {
+      return false;
+    }
+  });
 
   if (!guide) {
     return (
@@ -52,6 +58,11 @@ export const GuideDetailPage: React.FC = () => {
     }
 
     setUnlocked(true);
+    try {
+      localStorage.setItem(`friedman_guide_unlocked_${slug}`, 'true');
+    } catch {
+      // localStorage unavailable - not critical, unlock still works for this page view
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
