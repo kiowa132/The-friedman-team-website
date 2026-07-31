@@ -126,8 +126,8 @@ export const GuideDetailPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
         <div className="lg:col-span-7 space-y-6">
-          <div className="max-h-[340px] aspect-[4/3] rounded-xs overflow-hidden shadow-lg">
-            <img src={guide.coverImage} alt={guide.title} className="w-full h-full object-cover" />
+          <div className="max-h-[340px] aspect-[16/9] rounded-xs overflow-hidden shadow-lg bg-[#FAF8F5]">
+            <img src={guide.coverImage} alt={guide.title} className="w-full h-full object-contain" />
           </div>
 
           <div className="space-y-3">

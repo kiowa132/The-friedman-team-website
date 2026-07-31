@@ -51,7 +51,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
             style={{ background: 'rgba(13,34,38,0.35)' }}
           />
 
-          <div className="relative" style={{ filter: 'drop-shadow(0 25px 35px rgba(13,34,38,0.35))' }}>
+          <div className="relative rounded-xs shadow-2xl">
             <HTMLFlipBook
               ref={bookRef}
               width={750}
