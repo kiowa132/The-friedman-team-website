@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import HTMLFlipBook from 'react-pageflip-enhanced';
 import { ChevronLeft, ChevronRight, Hand } from 'lucide-react';
 
@@ -11,8 +11,7 @@ interface FlipbookViewerProps {
 // of time - never rendered live from a PDF in the visitor's browser, which
 // is what keeps this fast and smooth instead of clunky). The first page
 // acts as a real closed book cover: it displays alone, not paired with page
-// 2, and stays closed until clicked - matching a real book, not just a
-// flat image sequence.
+// 2, and stays closed until clicked.
 export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -26,32 +25,57 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
     return () => window.removeEventListener('resize', checkWidth);
   }, []);
 
+  const goPrev = () => bookRef.current?.pageFlip()?.flipPrev();
+  const goNext = () => bookRef.current?.pageFlip()?.flipNext();
+
+  // Memoized so the children array keeps a stable reference across
+  // re-renders (e.g. when onFlip updates currentPage/hasOpened below).
+  // Without this, every state update created a brand-new children array,
+  // which combined with the library's default re-render behavior was
+  // resetting the whole book back to the cover on every flip - this is
+  // the actual cause of "stuck on page 1."
+  const bookPages = useMemo(
+    () =>
+      pages.map((src, i) => (
+        <div key={i} className="bg-white relative">
+          <img src={src} alt={`${title} - page ${i + 1}`} className="w-full h-full object-contain" />
+          {i === 0 && (
+            <div className="absolute inset-0 flex items-end justify-center pb-6 pointer-events-none">
+              <span
+                className="flex items-center gap-2 px-4 py-2 bg-[#0D2226]/90 text-[#C9A96A] text-[11px] font-bold uppercase tracking-widest rounded-full shadow-lg animate-pulse cover-hint"
+              >
+                <Hand className="w-3.5 h-3.5" />
+                Click to Open
+              </span>
+            </div>
+          )}
+        </div>
+      )),
+    [pages, title]
+  );
+
   if (pages.length === 0) return null;
 
-  const goPrev = () => bookRef.current?.pageFlip()?.flipPrev();
-  const goNext = () => {
-    bookRef.current?.pageFlip()?.flipNext();
-    setHasOpened(true);
-  };
-
   return (
-    <div className="flex flex-col items-center gap-5">
-      {/* Stage - soft radial backdrop so the book feels like an object
-          sitting on a surface, not a flat image floating on the page */}
+    <div className="flex flex-col items-center gap-5 w-full">
+      <style>{`.cover-hint { transition: opacity 300ms; } .book-opened .cover-hint { opacity: 0; }`}</style>
+
+      {/* Stage - soft radial backdrop, full width so "stretch" sizing has
+          an actual container to fill instead of shrink-wrapping to the
+          book's own default size. */}
       <div
         className="w-full flex justify-center py-10 px-4 rounded-xs relative"
         style={{
           background: 'radial-gradient(ellipse at center, rgba(201,169,106,0.14) 0%, rgba(201,169,106,0.04) 55%, transparent 80%)',
         }}
       >
-        <div className="relative">
-          {/* Book shadow - grounds it visually instead of looking flat */}
+        <div className={`relative w-full max-w-[1100px] ${hasOpened ? 'book-opened' : ''}`}>
           <div
             className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
             style={{ background: 'rgba(13,34,38,0.35)' }}
           />
 
-          <div className="relative rounded-xs shadow-2xl">
+          <div className="relative rounded-xs shadow-2xl w-full flex justify-center">
             <HTMLFlipBook
               ref={bookRef}
               width={750}
@@ -64,48 +88,23 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
               singlePage={isMobile}
               usePortrait={isMobile}
               showCover={true}
-              className=""
-              style={{}}
               startPage={0}
               drawShadow={true}
               flippingTime={650}
               maxShadowOpacity={0.6}
               mobileScrollSupport={true}
+              renderOnlyPageLengthChange={true}
               onFlip={(e: any) => {
                 setCurrentPage(e.data);
                 setHasOpened(true);
               }}
             >
-              {pages.map((src, i) => (
-                <div key={i} className="bg-white relative">
-                  <img src={src} alt={`${title} - page ${i + 1}`} className="w-full h-full object-contain" />
-                  {/* "Click to open" cue - purely decorative (pointer-events-none)
-                      so it never intercepts the library's own click-to-flip
-                      handling underneath. It fades out via CSS once opened,
-                      rather than being removed from the DOM mid-flip - that
-                      DOM removal during an active flip was what caused the
-                      page to snap back to the cover instead of completing
-                      the turn. */}
-                  {i === 0 && (
-                    <div
-                      className={`absolute inset-0 flex items-end justify-center pb-6 pointer-events-none transition-opacity duration-300 ${
-                        hasOpened ? 'opacity-0' : 'opacity-100'
-                      }`}
-                    >
-                      <span className="flex items-center gap-2 px-4 py-2 bg-[#0D2226]/90 text-[#C9A96A] text-[11px] font-bold uppercase tracking-widest rounded-full shadow-lg animate-pulse">
-                        <Hand className="w-3.5 h-3.5" />
-                        Click to Open
-                      </span>
-                    </div>
-                  )}
-                </div>
-              ))}
+              {bookPages}
             </HTMLFlipBook>
           </div>
         </div>
       </div>
 
-      {/* Controls + page counter */}
       <div className="flex items-center gap-5">
         <button
           onClick={goPrev}
