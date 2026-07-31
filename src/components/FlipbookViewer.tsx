@@ -81,7 +81,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
         ) : (
           // OPEN: real flip book, normal spreads, full stretch width - no
           // reserved blank half since we're not using cover mode here.
-          <div className="relative w-full max-w-[1300px]">
+          <div className="relative w-full max-w-[1550px]">
             <div
               className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
               style={{ background: 'rgba(13,34,38,0.35)' }}
@@ -89,13 +89,13 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
             <div className="relative rounded-lg shadow-2xl w-full flex justify-center overflow-hidden border-4 border-[#0F5C63]">
               <HTMLFlipBook
                 ref={bookRef}
-                width={820}
-                height={600}
+                width={950}
+                height={700}
                 size="stretch"
                 minWidth={400}
-                maxWidth={1300}
+                maxWidth={1550}
                 minHeight={300}
-                maxHeight={920}
+                maxHeight={1080}
                 singlePage={isMobile}
                 usePortrait={isMobile}
                 showCover={false}

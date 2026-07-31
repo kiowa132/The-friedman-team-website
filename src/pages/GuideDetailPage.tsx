@@ -70,7 +70,7 @@ export const GuideDetailPage: React.FC = () => {
   // narrow sidebar card - this content can genuinely be long-form.
   if (unlocked) {
     return (
-      <div className="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
+      <div className="pt-28 pb-20 max-w-[1600px] mx-auto px-4 sm:px-6 space-y-8">
         <div className="bg-[#0D2226] text-[#FAF8F5] border border-[#C9A96A] rounded-xs p-6 text-center space-y-2">
           <CheckCircle2 className="w-7 h-7 text-[#C9A96A] mx-auto" />
           <h1 className="font-serif text-2xl font-bold">You're In - Here's Your Guide</h1>
