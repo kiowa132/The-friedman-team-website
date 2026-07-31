@@ -9,13 +9,19 @@ interface FlipbookViewerProps {
 
 // Renders pre-converted page images (one per PDF page, generated once ahead
 // of time - never rendered live from a PDF in the visitor's browser, which
-// is what keeps this fast and smooth instead of clunky). The first page
-// acts as a real closed book cover: it displays alone, not paired with page
-// 2, and stays closed until clicked.
+// is what keeps this fast and smooth instead of clunky).
+//
+// Two distinct states, not one component doing both:
+//   1. Closed: a real static, centered cover image with a "click to open"
+//      cue - full control over how it looks, no wasted space.
+//   2. Open: the actual page-flip book, using normal two-page spreads
+//      (not "cover mode", which reserves a matching blank half for a
+//      single cover page - that's what was making everything look small
+//      and lopsided).
 export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [hasOpened, setHasOpened] = useState(false);
   const bookRef = React.useRef<any>(null);
 
   useEffect(() => {
@@ -28,27 +34,14 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
   const goPrev = () => bookRef.current?.pageFlip()?.flipPrev();
   const goNext = () => bookRef.current?.pageFlip()?.flipNext();
 
-  // Memoized so the children array keeps a stable reference across
-  // re-renders (e.g. when onFlip updates currentPage/hasOpened below).
-  // Without this, every state update created a brand-new children array,
-  // which combined with the library's default re-render behavior was
-  // resetting the whole book back to the cover on every flip - this is
-  // the actual cause of "stuck on page 1."
+  // Stable reference across re-renders - without this, updating
+  // currentPage on every flip regenerates this array, which combined with
+  // the library's default behavior can reset the book back to page 1.
   const bookPages = useMemo(
     () =>
       pages.map((src, i) => (
-        <div key={i} className="bg-white relative">
+        <div key={i} className="bg-white">
           <img src={src} alt={`${title} - page ${i + 1}`} className="w-full h-full object-contain" />
-          {i === 0 && (
-            <div className="absolute inset-0 flex items-end justify-center pb-6 pointer-events-none">
-              <span
-                className="flex items-center gap-2 px-4 py-2 bg-[#0D2226]/90 text-[#C9A96A] text-[11px] font-bold uppercase tracking-widest rounded-full shadow-lg animate-pulse cover-hint"
-              >
-                <Hand className="w-3.5 h-3.5" />
-                Click to Open
-              </span>
-            </div>
-          )}
         </div>
       )),
     [pages, title]
@@ -58,72 +51,90 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
 
   return (
     <div className="flex flex-col items-center gap-5 w-full">
-      <style>{`.cover-hint { transition: opacity 300ms; } .book-opened .cover-hint { opacity: 0; }`}</style>
-
-      {/* Stage - soft radial backdrop, full width so "stretch" sizing has
-          an actual container to fill instead of shrink-wrapping to the
-          book's own default size. */}
       <div
         className="w-full flex justify-center py-10 px-4 rounded-xs relative"
         style={{
           background: 'radial-gradient(ellipse at center, rgba(201,169,106,0.14) 0%, rgba(201,169,106,0.04) 55%, transparent 80%)',
         }}
       >
-        <div className={`relative w-full max-w-[1100px] ${hasOpened ? 'book-opened' : ''}`}>
-          <div
-            className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
-            style={{ background: 'rgba(13,34,38,0.35)' }}
-          />
-
-          <div className="relative rounded-xs shadow-2xl w-full flex justify-center">
-            <HTMLFlipBook
-              ref={bookRef}
-              width={750}
-              height={560}
-              size="stretch"
-              minWidth={340}
-              maxWidth={1100}
-              minHeight={280}
-              maxHeight={820}
-              singlePage={isMobile}
-              usePortrait={isMobile}
-              showCover={true}
-              startPage={0}
-              drawShadow={true}
-              flippingTime={650}
-              maxShadowOpacity={0.6}
-              mobileScrollSupport={true}
-              renderOnlyPageLengthChange={true}
-              onFlip={(e: any) => {
-                setCurrentPage(e.data);
-                setHasOpened(true);
-              }}
+        {!isOpen ? (
+          // CLOSED: real static cover, centered, sized generously - looks
+          // like an actual closed book, not a widget waiting to render.
+          <div className="relative w-full max-w-[560px]">
+            <div
+              className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
+              style={{ background: 'rgba(13,34,38,0.35)' }}
+            />
+            <button
+              onClick={() => setIsOpen(true)}
+              className="relative w-full rounded-xs shadow-2xl overflow-hidden block hover:brightness-95 transition-all hover:scale-[1.01]"
             >
-              {bookPages}
-            </HTMLFlipBook>
+              <img src={pages[0]} alt={title} className="w-full h-auto block" />
+              <div className="absolute inset-x-0 bottom-0 pb-6 flex justify-center bg-gradient-to-t from-black/25 to-transparent pt-10">
+                <span className="flex items-center gap-2 px-5 py-2.5 bg-[#0D2226]/90 text-[#C9A96A] text-xs font-bold uppercase tracking-widest rounded-full shadow-lg animate-pulse">
+                  <Hand className="w-4 h-4" />
+                  Click to Open
+                </span>
+              </div>
+            </button>
           </div>
-        </div>
+        ) : (
+          // OPEN: real flip book, normal spreads, full stretch width - no
+          // reserved blank half since we're not using cover mode here.
+          <div className="relative w-full max-w-[1300px]">
+            <div
+              className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
+              style={{ background: 'rgba(13,34,38,0.35)' }}
+            />
+            <div className="relative rounded-xs shadow-2xl w-full flex justify-center">
+              <HTMLFlipBook
+                ref={bookRef}
+                width={820}
+                height={600}
+                size="stretch"
+                minWidth={400}
+                maxWidth={1300}
+                minHeight={300}
+                maxHeight={920}
+                singlePage={isMobile}
+                usePortrait={isMobile}
+                showCover={false}
+                startPage={0}
+                drawShadow={true}
+                flippingTime={650}
+                maxShadowOpacity={0.6}
+                mobileScrollSupport={true}
+                renderOnlyPageLengthChange={true}
+                onFlip={(e: any) => setCurrentPage(e.data)}
+              >
+                {bookPages}
+              </HTMLFlipBook>
+            </div>
+          </div>
+        )}
       </div>
 
-      <div className="flex items-center gap-5">
-        <button
-          onClick={goPrev}
-          aria-label="Previous page"
-          className="w-11 h-11 rounded-full bg-[#0D2226] text-[#C9A96A] flex items-center justify-center shadow-lg hover:bg-[#0F5C63] hover:scale-105 transition-all"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <span className="text-xs text-[#1C2B2E]/60 uppercase tracking-widest min-w-[110px] text-center">
-          {hasOpened ? `Page ${Math.min(currentPage + 1, pages.length)} of ${pages.length}` : 'Tap to Turn Pages'}
-        </span>
-        <button
-          onClick={goNext}
-          aria-label="Next page"
-          className="w-11 h-11 rounded-full bg-[#0D2226] text-[#C9A96A] flex items-center justify-center shadow-lg hover:bg-[#0F5C63] hover:scale-105 transition-all"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
+      {isOpen && (
+        <div className="flex items-center gap-5">
+          <button
+            onClick={goPrev}
+            aria-label="Previous page"
+            className="w-11 h-11 rounded-full bg-[#0D2226] text-[#C9A96A] flex items-center justify-center shadow-lg hover:bg-[#0F5C63] hover:scale-105 transition-all"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <span className="text-xs text-[#1C2B2E]/60 uppercase tracking-widest min-w-[110px] text-center">
+            Page {Math.min(currentPage + 1, pages.length)} of {pages.length}
+          </span>
+          <button
+            onClick={goNext}
+            aria-label="Next page"
+            className="w-11 h-11 rounded-full bg-[#0D2226] text-[#C9A96A] flex items-center justify-center shadow-lg hover:bg-[#0F5C63] hover:scale-105 transition-all"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
