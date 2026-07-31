@@ -40,7 +40,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
   const bookPages = useMemo(
     () =>
       pages.map((src, i) => (
-        <div key={i} className="bg-[#0F5C63]">
+        <div key={i} className="bg-[#0D2226]">
           <img src={src} alt={`${title} - page ${i + 1}`} className="w-full h-full object-contain" />
         </div>
       )),
@@ -67,7 +67,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
             />
             <button
               onClick={() => setIsOpen(true)}
-              className="relative w-full rounded-lg shadow-2xl overflow-hidden block hover:brightness-95 transition-all hover:scale-[1.01]"
+              className="relative w-full rounded-lg shadow-2xl overflow-hidden block hover:brightness-95 transition-all hover:scale-[1.01] border-2 border-[#C9A96A]"
             >
               <img src={pages[0]} alt={title} className="w-full h-auto block" />
               <div className="absolute inset-x-0 bottom-0 pb-6 flex justify-center bg-gradient-to-t from-black/25 to-transparent pt-10">
@@ -86,7 +86,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
               className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
               style={{ background: 'rgba(13,34,38,0.35)' }}
             />
-            <div className="relative rounded-lg shadow-2xl w-full flex justify-center overflow-hidden">
+            <div className="relative rounded-lg shadow-2xl w-full flex justify-center overflow-hidden border-4 border-[#0F5C63]">
               <HTMLFlipBook
                 ref={bookRef}
                 width={820}

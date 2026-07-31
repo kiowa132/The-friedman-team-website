@@ -30,7 +30,7 @@ export const GuidesListPage: React.FC = () => {
               to={`/guides/${guide.slug}`}
               className="group block bg-white border border-[#C9A96A]/30 rounded-xs overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
             >
-              <div className="aspect-[16/9] overflow-hidden bg-[#0F5C63]">
+              <div className="aspect-[16/9] overflow-hidden bg-[#0D2226]">
                 <img
                   src={guide.coverImage}
                   alt={guide.title}
