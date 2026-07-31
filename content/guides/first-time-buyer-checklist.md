@@ -16,6 +16,8 @@ flipbookPages:
   - /images/guides/buyer-checklist/page-4.jpg
   - /images/guides/buyer-checklist/page-5.jpg
   - /images/guides/buyer-checklist/page-6.jpg
+  - /images/guides/buyer-checklist/page-7.jpg
+  - /images/guides/buyer-checklist/page-8.jpg
 ---
 
 You've been scrolling listings for weeks. Maybe it's a rowhome in Baltimore County, a colonial with real yard space in Carroll County, or something in Howard County close enough to Columbia to make the commute work. It's exciting - and it's also a lot. Between pre-approvals, Maryland's specific inspection addendums, and closing paperwork, it's easy to lose track of what actually comes next.
