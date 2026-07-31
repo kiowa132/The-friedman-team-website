@@ -67,7 +67,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
             />
             <button
               onClick={() => setIsOpen(true)}
-              className="relative w-full rounded-xs shadow-2xl overflow-hidden block hover:brightness-95 transition-all hover:scale-[1.01]"
+              className="relative w-full rounded-lg shadow-2xl overflow-hidden block hover:brightness-95 transition-all hover:scale-[1.01]"
             >
               <img src={pages[0]} alt={title} className="w-full h-auto block" />
               <div className="absolute inset-x-0 bottom-0 pb-6 flex justify-center bg-gradient-to-t from-black/25 to-transparent pt-10">
@@ -86,7 +86,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
               className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
               style={{ background: 'rgba(13,34,38,0.35)' }}
             />
-            <div className="relative rounded-xs shadow-2xl w-full flex justify-center">
+            <div className="relative rounded-lg shadow-2xl w-full flex justify-center overflow-hidden">
               <HTMLFlipBook
                 ref={bookRef}
                 width={820}
@@ -109,6 +109,41 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
               >
                 {bookPages}
               </HTMLFlipBook>
+
+              {/* Purely decorative depth cues - pointer-events-none so they
+                  can never interfere with the library's click/flip
+                  detection, which broke once already from a similar overlay. */}
+
+              {/* Center spine/gutter shadow - sells "these are two bound
+                  pages," not two flat images sitting side by side. */}
+              {!isMobile && (
+                <div
+                  className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-16 pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(to right, transparent, rgba(13,34,38,0.16) 45%, rgba(13,34,38,0.22) 50%, rgba(13,34,38,0.16) 55%, transparent)',
+                  }}
+                />
+              )}
+
+              {/* Outer edge depth - suggests a stack of paper, not a single flat sheet */}
+              <div
+                className="absolute top-0 bottom-0 left-0 w-3 pointer-events-none"
+                style={{ background: 'linear-gradient(to right, rgba(13,34,38,0.18), transparent)' }}
+              />
+              <div
+                className="absolute top-0 bottom-0 right-0 w-3 pointer-events-none"
+                style={{ background: 'linear-gradient(to left, rgba(13,34,38,0.18), transparent)' }}
+              />
+
+              {/* Small page-curl hint, bottom-right - an extra invitation to
+                  flip, on top of the arrow buttons */}
+              <div
+                className="absolute bottom-0 right-0 w-8 h-8 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(135deg, transparent 50%, rgba(201,169,106,0.35) 50%, rgba(201,169,106,0.5) 100%)',
+                  borderBottomRightRadius: '0.5rem',
+                }}
+              />
             </div>
           </div>
         )}
