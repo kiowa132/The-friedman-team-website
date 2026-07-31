@@ -40,7 +40,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
   const bookPages = useMemo(
     () =>
       pages.map((src, i) => (
-        <div key={i} className="bg-white">
+        <div key={i} className="bg-[#0F5C63]">
           <img src={src} alt={`${title} - page ${i + 1}`} className="w-full h-full object-contain" />
         </div>
       )),
