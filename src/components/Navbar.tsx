@@ -55,69 +55,54 @@ export const Navbar: React.FC<NavbarProps> = ({
     goTo('neighborhoods');
   };
 
-  // Navigation reorganized around buyer/seller intent instead of a flat list
-  // of every page. Groups only include pages/actions that actually exist on
-  // the site today - no placeholder links to pages that aren't built yet
-  // (e.g. a dedicated Blog or Reviews page), so nothing in the nav is a dead
-  // end. Add those back in as their own group once that content exists.
+  // Restructured to mirror Canopy's top nav bar: Properties | Neighborhoods |
+  // Home Search | Home Valuation | Contact Us | phone number. Everything
+  // that existed before (Buy/Sell strategy pages, Blog, Guides, About,
+  // Luxury) still lives on the site - tucked into Properties/Resources
+  // dropdowns rather than deleted, so nothing built tonight becomes a dead
+  // link.
   const navGroups: NavGroup[] = [
-    { id: 'home', label: 'Home', action: () => goTo('home') },
     {
-      id: 'buy',
-      label: 'Buy',
+      id: 'properties',
+      label: 'Properties',
       items: [
-        { label: 'Search Homes', action: () => goTo('listings') },
+        { label: 'Featured Properties', action: () => goTo('listings') },
         { label: "Buyer's Strategy", action: () => goTo('buy') },
-        { label: 'Neighborhoods', action: () => goTo('neighborhoods') },
+        { label: "Seller's Strategy", action: () => goTo('sell') },
       ],
     },
-    {
-      id: 'sell',
-      label: 'Sell',
-      items: [
-        { label: 'Get Your Home Value', action: () => onOpenValuation() },
-        { label: 'Seller Strategy', action: () => goTo('sell') },
-      ],
-    },
-    {
-      id: 'areas',
-      label: 'Areas',
-      items: [
-        { label: 'Carroll County', action: () => goToNeighborhood('carroll-county') },
-        { label: 'Baltimore County', action: () => goToNeighborhood('baltimore-county') },
-        { label: 'Howard County', action: () => goToNeighborhood('howard-county') },
-        { label: 'Frederick County', action: () => goToNeighborhood('frederick-county') },
-      ],
-    },
+    { id: 'neighborhoods', label: 'Neighborhoods', action: () => goTo('neighborhoods') },
+    { id: 'home-search', label: 'Home Search', action: () => goTo('listings') },
+    { id: 'home-valuation', label: 'Home Valuation', action: () => onOpenValuation() },
     {
       id: 'resources',
       label: 'Resources',
       items: [
-        { label: 'The Friedman Report', action: () => goTo('blog') },
+        { label: 'Meet the Team', action: () => goTo('team') },
+        { label: "The Friedman Report", action: () => goTo('blog') },
         { label: 'Free Guides', action: () => goTo('guides') },
-      ],
-    },
-    {
-      id: 'about',
-      label: 'About',
-      items: [
+        { label: 'Giving Back', action: () => goTo('giving-back') },
+        { label: 'Fine Homes & Estates', action: () => goTo('luxury') },
         { label: 'About Kyle', action: () => goTo('about') },
-        { label: 'Contact', action: () => goTo('contact') },
       ],
     },
+    { id: 'contact', label: 'Contact Us', action: () => goTo('contact') },
   ];
 
   // Which top-level group should show as "active" (for the underline/highlight)
   const groupForTab: Record<string, string> = {
     home: 'home',
-    listings: 'buy',
-    buy: 'buy',
-    neighborhoods: 'buy',
-    sell: 'sell',
+    listings: 'properties',
+    buy: 'properties',
+    sell: 'properties',
+    neighborhoods: 'neighborhoods',
+    team: 'resources',
     blog: 'resources',
     guides: 'resources',
-    about: 'about',
-    contact: 'about',
+    'giving-back': 'resources',
+    luxury: 'resources',
+    about: 'resources',
+    contact: 'contact',
   };
   const activeGroupId = groupForTab[activeTab] || 'home';
 
@@ -208,13 +193,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Actions & Buttons */}
-          <div className="hidden lg:flex items-center space-x-3">
-
-            {/* Favorites Icon */}
+          {/* Actions - simplified to match Canopy's minimal style: a
+              favorites icon and the phone number displayed directly, no
+              large button-styled CTAs cluttering the header. */}
+          <div className="hidden lg:flex items-center space-x-5">
             <button
               onClick={() => goTo('listings')}
-              className="relative p-2 text-[#FAF8F5]/80 hover:text-[#C9A96A] transition-colors focus:outline-none"
+              className="relative p-1 text-[#FAF8F5]/80 hover:text-[#C9A96A] transition-colors focus:outline-none"
               title="Saved Properties"
               id="nav-saved-btn"
             >
@@ -226,25 +211,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </button>
 
-            {/* Valuation Quick CTA */}
-            <button
-              onClick={onOpenValuation}
-              id="nav-home-value-btn"
-              className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#C9A96A] border border-[#C9A96A]/60 hover:bg-[#C9A96A]/10 rounded-xs transition-all flex items-center gap-1.5"
+            <a
+              href="tel:4437893101"
+              id="nav-phone-link"
+              className="text-xs xl:text-sm font-semibold tracking-wide text-[#FAF8F5]/90 hover:text-[#C9A96A] transition-colors"
             >
-              <Calculator className="w-3.5 h-3.5" />
-              <span>Home Value</span>
-            </button>
-
-            {/* Schedule Strategy CTA */}
-            <button
-              onClick={onOpenConsultation}
-              id="nav-consult-btn"
-              className="px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#0D2226] bg-[#C9A96A] hover:bg-[#D4AF37] rounded-xs shadow-md transition-all flex items-center gap-1.5"
-            >
-              <Phone className="w-3.5 h-3.5" />
-              <span>Schedule Consultation</span>
-            </button>
+              (443) 789-3101
+            </a>
           </div>
 
           {/* Mobile Menu Toggle Button */}
