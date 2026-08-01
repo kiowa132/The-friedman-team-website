@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import HTMLFlipBook from 'react-pageflip-enhanced';
-import { ChevronLeft, ChevronRight, Hand } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Hand, X, Maximize2 } from 'lucide-react';
 
 interface FlipbookViewerProps {
   pages: string[];
@@ -22,7 +22,9 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const bookRef = React.useRef<any>(null);
+  const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     const checkWidth = () => setIsMobile(window.innerWidth < 640);
@@ -100,13 +102,20 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
               className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
               style={{ background: 'rgba(13,34,38,0.35)' }}
             />
-            <div className="relative rounded-lg shadow-2xl overflow-hidden border-4 border-[#0F5C63] bg-[#0D2226]">
+            <button
+              onClick={() => setLightboxIndex(currentPage)}
+              className="relative w-full rounded-lg shadow-2xl overflow-hidden border-4 border-[#0F5C63] bg-[#0D2226] block"
+            >
               <img
                 src={pages[currentPage]}
                 alt={`${title} - page ${currentPage + 1}`}
                 className="w-full h-auto block"
               />
-            </div>
+              <div className="absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1.5 bg-[#0D2226]/85 text-[#C9A96A] text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg">
+                <Maximize2 className="w-3 h-3" />
+                Tap to Enlarge
+              </div>
+            </button>
           </div>
         ) : (
           // OPEN, DESKTOP: the real flip book, normal spreads, full
@@ -197,6 +206,80 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
           >
             <ChevronRight className="w-5 h-5" />
           </button>
+        </div>
+      )}
+
+      {/* Fullscreen lightbox - opened by tapping the mobile page image.
+          Swipe left/right to move between pages while enlarged. */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          onClick={() => {
+            setCurrentPage(lightboxIndex);
+            setLightboxIndex(null);
+          }}
+          onTouchStart={(e) => {
+            touchStartX.current = e.touches[0].clientX;
+          }}
+          onTouchEnd={(e) => {
+            if (touchStartX.current === null) return;
+            const delta = e.changedTouches[0].clientX - touchStartX.current;
+            const SWIPE_THRESHOLD = 50;
+            if (delta > SWIPE_THRESHOLD) {
+              setLightboxIndex((i) => (i !== null ? Math.max(0, i - 1) : i));
+            } else if (delta < -SWIPE_THRESHOLD) {
+              setLightboxIndex((i) => (i !== null ? Math.min(pages.length - 1, i + 1) : i));
+            }
+            touchStartX.current = null;
+          }}
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setCurrentPage(lightboxIndex);
+              setLightboxIndex(null);
+            }}
+            aria-label="Close"
+            className="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          <img
+            src={pages[lightboxIndex]}
+            alt={`${title} - page ${lightboxIndex + 1}`}
+            className="max-w-full max-h-[80vh] object-contain px-4"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          {lightboxIndex > 0 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex((i) => (i !== null ? Math.max(0, i - 1) : i));
+              }}
+              aria-label="Previous page"
+              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+          )}
+          {lightboxIndex < pages.length - 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex((i) => (i !== null ? Math.min(pages.length - 1, i + 1) : i));
+              }}
+              aria-label="Next page"
+              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          )}
+
+          <span className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/70 text-xs uppercase tracking-widest">
+            Page {lightboxIndex + 1} of {pages.length}
+          </span>
         </div>
       )}
     </div>
