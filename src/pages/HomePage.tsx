@@ -231,15 +231,9 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 4. WHAT OUR CLIENTS SAY - dark background, matches Canopy's placement */}
-      <section className="bg-[#0D2226] py-20 border-y border-[#C9A96A]/20">
-        <div className="text-center mb-10 px-4">
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#FAF8F5]">
-            What Our Clients Say
-          </h2>
-        </div>
-        <ReviewsSection />
-      </section>
+      {/* 4. WHAT OUR CLIENTS SAY - full-bleed moody carousel, built into the
+          component itself now. */}
+      <ReviewsSection />
 
       {/* 5. FEATURED PROPERTIES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

@@ -1,120 +1,115 @@
-import React, { useRef } from 'react';
-import { Star, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
-import { GOOGLE_REVIEWS, GOOGLE_OVERALL_RATING, GOOGLE_TOTAL_REVIEW_COUNT, GOOGLE_MAPS_URL } from '../data/reviews';
+import React, { useRef, useState } from 'react';
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { GOOGLE_REVIEWS, GOOGLE_MAPS_URL } from '../data/reviews';
 
-function StarRow({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map((n) => (
-        <Star
-          key={n}
-          className={`w-4 h-4 ${n <= Math.round(rating) ? 'fill-[#C9A96A] text-[#C9A96A]' : 'text-[#C9A96A]/20'}`}
-        />
-      ))}
-    </div>
-  );
-}
-
-interface ReviewsSectionProps {
-  // Compact mode shrinks heading size for use on pages like About, where
-  // this section isn't the main homepage hero-adjacent feature.
-  compact?: boolean;
-}
-
-export const ReviewsSection: React.FC<ReviewsSectionProps> = ({ compact = false }) => {
+export const ReviewsSection: React.FC = () => {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  if (GOOGLE_REVIEWS.length === 0) return null;
 
   const scrollByCard = (direction: 'left' | 'right') => {
     const el = scrollerRef.current;
     if (!el) return;
-    const cardWidth = el.querySelector('[data-review-card]')?.clientWidth || 320;
+    const card = el.querySelector('[data-review-card]');
+    const cardWidth = card ? card.clientWidth : 480;
     el.scrollBy({ left: direction === 'left' ? -(cardWidth + 24) : cardWidth + 24, behavior: 'smooth' });
   };
 
-  if (GOOGLE_REVIEWS.length === 0) return null;
-
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
-        <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F5C63]">
-          What Clients Say
-        </span>
-        <h2 className={`font-serif font-bold text-[#0D2226] ${compact ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'}`}>
-          Real Reviews from Google
-        </h2>
-        <div className="flex items-center justify-center gap-2">
-          <StarRow rating={GOOGLE_OVERALL_RATING} />
-          <span className="text-sm font-bold text-[#0D2226]">{GOOGLE_OVERALL_RATING.toFixed(1)}</span>
-          <span className="text-xs text-[#1C2B2E]/60">
-            ({GOOGLE_TOTAL_REVIEW_COUNT} review{GOOGLE_TOTAL_REVIEW_COUNT === 1 ? '' : 's'})
-          </span>
-        </div>
+    <section className="relative py-24 overflow-hidden">
+      {/* Full-bleed moody background photo, matching the reference's dark,
+          textured feel rather than a plain flat color. */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1800&q=80"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#0D2226]/80" />
       </div>
 
-      <div className="relative">
-        {GOOGLE_REVIEWS.length > 1 && (
-          <>
-            <button
-              onClick={() => scrollByCard('left')}
-              aria-label="Previous review"
-              className="hidden sm:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[#0D2226] text-[#C9A96A] items-center justify-center shadow-lg hover:bg-[#0F5C63] transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => scrollByCard('right')}
-              aria-label="Next review"
-              className="hidden sm:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[#0D2226] text-[#C9A96A] items-center justify-center shadow-lg hover:bg-[#0F5C63] transition-colors"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </>
-        )}
+      <div className="relative max-w-[1600px] mx-auto px-6 sm:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
-        <div
-          ref={scrollerRef}
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {GOOGLE_REVIEWS.map((review) => (
+          {/* Left column - headline + view all */}
+          <div className="lg:col-span-3 space-y-6">
+            <h2 className="font-serif text-3xl sm:text-4xl xl:text-5xl font-light uppercase tracking-wide text-[#FAF8F5]">
+              What Our Clients Say
+            </h2>
+            <a
+              href={GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-7 py-3 border border-[#FAF8F5]/50 text-[#FAF8F5] text-xs font-bold uppercase tracking-widest hover:bg-[#FAF8F5]/10 transition-colors"
+            >
+              View All
+            </a>
+          </div>
+
+          {/* Right column - carousel, showing a peek of the next card */}
+          <div className="lg:col-span-9 relative">
             <div
-              key={`${review.authorName}-${review.relativeTime}`}
-              data-review-card
-              className="snap-start shrink-0 w-[85%] sm:w-[360px] bg-[#FAF8F5] border border-[#C9A96A]/30 p-6 rounded-xs shadow-sm space-y-3"
+              ref={scrollerRef}
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              <StarRow rating={review.rating} />
-              {review.text ? (
-                <p className="text-xs text-[#1C2B2E]/80 leading-relaxed line-clamp-6">
-                  {review.text}
-                </p>
-              ) : (
-                <p className="text-xs text-[#1C2B2E]/40 italic">
-                  Left a {review.rating}-star rating
-                </p>
-              )}
-              <div className="flex items-center gap-2 pt-2 border-t border-[#C9A96A]/20">
-                <div className="w-7 h-7 rounded-full bg-[#0F5C63] text-[#C9A96A] flex items-center justify-center text-xs font-bold">
-                  {review.authorName.charAt(0)}
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-[#0D2226]">{review.authorName}</div>
-                  <div className="text-[10px] text-[#1C2B2E]/50">{review.relativeTime} via Google</div>
-                </div>
-              </div>
+              {GOOGLE_REVIEWS.map((review, i) => {
+                const isExpanded = expandedIndex === i;
+                const isLong = review.text.length > 220;
+                return (
+                  <div
+                    key={`${review.authorName}-${i}`}
+                    data-review-card
+                    className="snap-start shrink-0 w-[85%] sm:w-[480px] bg-[#FAF8F5] p-10 sm:p-12 flex flex-col justify-between min-h-[420px]"
+                  >
+                    <div>
+                      <Quote className="w-10 h-10 text-[#C9A96A]/50 fill-[#C9A96A]/50 mb-4" />
+                      <p className={`text-base text-[#1C2B2E]/85 leading-relaxed ${!isExpanded && isLong ? 'line-clamp-6' : ''}`}>
+                        {review.text || `A ${review.rating}-star review, no written comment.`}
+                      </p>
+                      {isLong && (
+                        <button
+                          onClick={() => setExpandedIndex(isExpanded ? null : i)}
+                          className="mt-2 text-xs font-bold text-[#0F5C63] underline hover:text-[#0D2226]"
+                        >
+                          {isExpanded ? 'Show less' : 'Read more'}
+                        </button>
+                      )}
+                    </div>
+                    <div className="pt-8 space-y-0.5">
+                      <div className="text-[11px] uppercase tracking-widest text-[#1C2B2E]/50">
+                        Google Review
+                      </div>
+                      <div className="text-sm font-bold text-[#0D2226]">
+                        {review.authorName}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
-      </div>
 
-      <div className="text-center pt-8">
-        <a
-          href={GOOGLE_MAPS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0F5C63] hover:text-[#C9A96A]"
-        >
-          <span>See All Reviews on Google</span>
-          <ExternalLink className="w-3.5 h-3.5" />
-        </a>
+            {/* Prev/next square buttons, bottom-right, matching reference */}
+            {GOOGLE_REVIEWS.length > 1 && (
+              <div className="flex justify-end gap-0 pt-6">
+                <button
+                  onClick={() => scrollByCard('left')}
+                  aria-label="Previous review"
+                  className="w-12 h-12 border border-[#FAF8F5]/50 text-[#FAF8F5] flex items-center justify-center hover:bg-[#FAF8F5]/10 transition-colors"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => scrollByCard('right')}
+                  aria-label="Next review"
+                  className="w-12 h-12 border border-[#FAF8F5]/50 border-l-0 text-[#FAF8F5] flex items-center justify-center hover:bg-[#FAF8F5]/10 transition-colors"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );

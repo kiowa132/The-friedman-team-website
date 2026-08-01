@@ -213,7 +213,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       </section>
 
       {/* Real Client Reviews */}
-      <ReviewsSection compact />
+      <ReviewsSection />
 
       {/* CTA Footer Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
