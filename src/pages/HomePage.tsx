@@ -147,12 +147,12 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 2. DATA-DRIVEN REAL ESTATE SOLUTIONS - 3-tile grid, matches Canopy's
           exact pattern: three labeled photo tiles linking to Search, Valuation,
           and Contact. */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center space-y-10">
-        <div className="space-y-3">
-          <h2 className="text-xs sm:text-sm font-bold uppercase tracking-[0.3em] text-[#0D2226]">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center space-y-12">
+        <div className="space-y-5">
+          <h2 className="font-serif text-3xl sm:text-5xl font-light uppercase tracking-[0.15em] text-[#0D2226]">
             Data-Driven Real Estate Solutions
           </h2>
-          <p className="text-xs sm:text-sm text-[#1C2B2E]/70 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-[#1C2B2E]/70 max-w-2xl mx-auto leading-relaxed">
             Our team leverages real market data alongside hands-on local experience to guide buyers and sellers across Carroll, Howard, Frederick, and Baltimore County. Discover a smarter approach to real estate, where data-driven insight meets trusted expertise.
           </p>
         </div>
@@ -160,45 +160,45 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-1">
           <button
             onClick={() => setActiveTab('listings')}
-            className="group relative aspect-square overflow-hidden"
+            className="group relative aspect-[4/3] overflow-hidden"
           >
             <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=90"
               alt="Home Search"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-[#0D2226]/40 group-hover:bg-[#0D2226]/55 transition-colors" />
-            <span className="absolute bottom-4 left-4 text-white text-xs font-bold uppercase tracking-widest">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/80 transition-colors" />
+            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest">
               Home Search
             </span>
           </button>
 
           <button
             onClick={onOpenValuation}
-            className="group relative aspect-square overflow-hidden"
+            className="group relative aspect-[4/3] overflow-hidden"
           >
             <img
-              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80"
+              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90"
               alt="Home Valuation"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-[#0D2226]/40 group-hover:bg-[#0D2226]/55 transition-colors" />
-            <span className="absolute bottom-4 left-4 text-white text-xs font-bold uppercase tracking-widest">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/80 transition-colors" />
+            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest">
               Home Valuation
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('contact')}
-            className="group relative aspect-square overflow-hidden"
+            className="group relative aspect-[4/3] overflow-hidden"
           >
             <img
-              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80"
+              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=90"
               alt="Contact Us"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-[#0D2226]/40 group-hover:bg-[#0D2226]/55 transition-colors" />
-            <span className="absolute bottom-4 left-4 text-white text-xs font-bold uppercase tracking-widest">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/80 transition-colors" />
+            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest">
               Contact Us
             </span>
           </button>
@@ -206,24 +206,24 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* 3. AGENT INTRO STRIP - tan/beige, photo-left, matches Canopy's
             exact layout. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 border border-[#C9A96A]/30 text-left">
-          <div className="aspect-[4/3] sm:aspect-auto overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 border border-[#C9A96A]/30 text-left sm:h-[560px]">
+          <div className="h-64 sm:h-full overflow-hidden">
             <img
               src="/images/kyle-portrait.jpg"
               alt="Kyle Friedman"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="bg-[#C9A96A]/20 p-8 sm:p-10 flex flex-col justify-center space-y-4">
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226] leading-tight">
-              The Friedman Team<br />at eXp Realty
+          <div className="bg-[#C9A96A]/20 p-10 sm:p-16 flex flex-col justify-center space-y-6">
+            <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0D2226] leading-tight">
+              The Friedman<br />Team at eXp Realty
             </h3>
-            <p className="text-xs sm:text-sm text-[#1C2B2E]/80 leading-relaxed">
+            <p className="text-sm sm:text-base text-[#1C2B2E]/80 leading-relaxed">
               The Friedman Team at eXp Realty, led by Kyle Friedman, gives you access to a real, data-driven strategy for buying or selling - from your first home to a multi-acre property. Every client gets the same level of preparation and care.
             </p>
             <button
               onClick={() => setActiveTab('team')}
-              className="self-start px-6 py-3 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+              className="self-start px-7 py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
             >
               Meet the Team
             </button>
