@@ -73,8 +73,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               The Friedman Team
             </h2>
             <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[#FAF8F5] leading-none">
-              More Strategy.<br />
-              <span className="italic font-normal gold-gradient-text">Better Outcomes.</span>
+              More Than a Listing.<br />
+              <span className="italic font-normal gold-gradient-text">A Strategy.</span>
             </h1>
           </div>
 
@@ -110,14 +110,14 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* 1.5 INTRO PARAGRAPH - sits below hero, above value props */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-4 text-center">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="text-sm sm:text-base text-[#1C2B2E]/80 leading-relaxed">
           Buying or selling a home is one of the biggest financial decisions you'll make. The Friedman Team treats it that way. We combine hands-on local knowledge of Carroll, Howard, Frederick, and Baltimore County with a disciplined, numbers-first approach to pricing, marketing, and negotiation - so every client, whether it's their first home or their forever home, gets the same level of strategy and care.
         </p>
       </section>
 
       {/* 2. VALUE PILLARS - per brand copy doc section 4 */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 relative z-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-[#0D2226] border border-[#C9A96A]/40 text-[#FAF8F5] p-8 rounded-xs shadow-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
           <div>
             <ShieldCheck className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -59,6 +59,15 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const activeTab = PATH_TO_TAB[location.pathname] || 'home';
+
+  // Scrolls to top on every route change, regardless of how navigation
+  // happened - a setActiveTab() button, a direct <Link>, or the browser's
+  // back/forward buttons. This is the one place that needs to handle it;
+  // individual buttons and links don't need their own scrollTo calls
+  // anymore, and can't forget to include one.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   // Same function signature every page already used with local state -
   // now it navigates to a real URL instead. No page component needed to change.
