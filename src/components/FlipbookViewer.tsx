@@ -31,8 +31,20 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
     return () => window.removeEventListener('resize', checkWidth);
   }, []);
 
-  const goPrev = () => bookRef.current?.pageFlip()?.flipPrev();
-  const goNext = () => bookRef.current?.pageFlip()?.flipNext();
+  const goPrev = () => {
+    if (isMobile) {
+      setCurrentPage((p) => Math.max(0, p - 1));
+    } else {
+      bookRef.current?.pageFlip()?.flipPrev();
+    }
+  };
+  const goNext = () => {
+    if (isMobile) {
+      setCurrentPage((p) => Math.min(pages.length - 1, p + 1));
+    } else {
+      bookRef.current?.pageFlip()?.flipNext();
+    }
+  };
 
   // Stable reference across re-renders - without this, updating
   // currentPage on every flip regenerates this array, which combined with
@@ -78,9 +90,28 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
               </div>
             </button>
           </div>
+        ) : isMobile ? (
+          // OPEN, MOBILE: a plain, full-width single image with tap
+          // navigation - no flip-book library involved at all, so there's
+          // no aspect-ratio math to get wrong. Guaranteed to size correctly
+          // since it's just a normal <img>.
+          <div className="relative w-full max-w-[480px]">
+            <div
+              className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
+              style={{ background: 'rgba(13,34,38,0.35)' }}
+            />
+            <div className="relative rounded-lg shadow-2xl overflow-hidden border-4 border-[#0F5C63] bg-[#0D2226]">
+              <img
+                src={pages[currentPage]}
+                alt={`${title} - page ${currentPage + 1}`}
+                className="w-full h-auto block"
+              />
+            </div>
+          </div>
         ) : (
-          // OPEN: real flip book, normal spreads, full stretch width - no
-          // reserved blank half since we're not using cover mode here.
+          // OPEN, DESKTOP: the real flip book, normal spreads, full
+          // stretch width - no reserved blank half since we're not using
+          // cover mode here.
           <div className="relative w-full max-w-[1550px]">
             <div
               className="absolute left-1/2 -translate-x-1/2 bottom-[-14px] w-[85%] h-5 rounded-full blur-md"
@@ -89,15 +120,15 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
             <div className="relative rounded-lg shadow-2xl w-full flex justify-center overflow-hidden border-4 border-[#0F5C63]">
               <HTMLFlipBook
                 ref={bookRef}
-                width={isMobile ? 380 : 750}
-                height={isMobile ? 214 : 422}
+                width={750}
+                height={422}
                 size="stretch"
-                minWidth={isMobile ? 280 : 500}
-                maxWidth={isMobile ? 520 : 800}
-                minHeight={isMobile ? 158 : 281}
-                maxHeight={isMobile ? 293 : 450}
-                singlePage={isMobile}
-                usePortrait={isMobile}
+                minWidth={500}
+                maxWidth={800}
+                minHeight={281}
+                maxHeight={450}
+                singlePage={false}
+                usePortrait={false}
                 showCover={false}
                 startPage={0}
                 drawShadow={true}
@@ -116,14 +147,12 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
 
               {/* Center spine/gutter shadow - sells "these are two bound
                   pages," not two flat images sitting side by side. */}
-              {!isMobile && (
-                <div
-                  className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-16 pointer-events-none"
-                  style={{
-                    background: 'linear-gradient(to right, transparent, rgba(13,34,38,0.16) 45%, rgba(13,34,38,0.22) 50%, rgba(13,34,38,0.16) 55%, transparent)',
-                  }}
-                />
-              )}
+              <div
+                className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-16 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(to right, transparent, rgba(13,34,38,0.16) 45%, rgba(13,34,38,0.22) 50%, rgba(13,34,38,0.16) 55%, transparent)',
+                }}
+              />
 
               {/* Outer edge depth - suggests a stack of paper, not a single flat sheet */}
               <div
