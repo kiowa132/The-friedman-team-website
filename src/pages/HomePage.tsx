@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Listing, Neighborhood } from '../types';
 import { ListingCard } from '../components/ListingCard';
 import { ReviewsSection } from '../components/ReviewsSection';
 import { usePageMeta } from '../lib/usePageMeta';
+import { submitLead } from '../lib/leads';
 import {
-  ArrowRight, ShieldCheck, TrendingUp, Calculator, Phone, CheckCircle2,
-  ChevronRight, Search, Home as HomeIcon, TreePine, Building2, MapPinned, LineChart
+  ArrowRight, ShieldCheck, Calculator, Phone, Search
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -40,15 +40,50 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   const featuredListings = listings.filter((l) => l.featured).slice(0, 3);
 
-  const specialties = [
-    { icon: TreePine, label: 'Farms & Equestrian', desc: 'Acreage, outbuildings, agricultural preservation' },
-    { icon: HomeIcon, label: 'Luxury Residences', desc: 'Estate homes across Carroll, Baltimore, Howard & Frederick' },
-    { icon: Building2, label: 'Country Estates', desc: 'Privacy, land, and long-term value' },
-    { icon: MapPinned, label: 'Land & Acreage', desc: 'Zoning, easements, and future potential' },
-  ];
+  const [worthAddress, setWorthAddress] = useState('');
+  const [worthSubmitting, setWorthSubmitting] = useState(false);
+  const [worthSubmitted, setWorthSubmitted] = useState(false);
+
+  const [newsName, setNewsName] = useState('');
+  const [newsEmail, setNewsEmail] = useState('');
+  const [newsSubmitting, setNewsSubmitting] = useState(false);
+  const [newsSubmitted, setNewsSubmitted] = useState(false);
+
+  const handleWorthSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!worthAddress.trim()) return;
+    setWorthSubmitting(true);
+    await submitLead({
+      name: 'Homepage Property Worth Lead',
+      email: '',
+      phone: '',
+      type: 'Seller Inquiry',
+      message: `Asked "What's your property worth?" for: ${worthAddress}`,
+    });
+    setWorthSubmitting(false);
+    setWorthSubmitted(true);
+    onOpenValuation();
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsEmail.trim()) return;
+    setNewsSubmitting(true);
+    await submitLead({
+      name: newsName || 'Newsletter Signup',
+      email: newsEmail,
+      phone: '',
+      type: 'General Inquiry',
+      message: 'Subscribed via homepage "Get Exclusive Access" newsletter form',
+    });
+    setNewsSubmitting(false);
+    setNewsSubmitted(true);
+  };
+
+  const neighborhoodScrollItems = [...neighborhoods.slice(0, 4), ...neighborhoods.slice(0, 4)];
 
   return (
-    <div className="space-y-24 pb-20">
+    <div className="pb-0">
 
       {/* 1. HERO */}
       <section className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center justify-center text-[#FAF8F5]">
@@ -109,50 +144,112 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 1.5 INTRO PARAGRAPH - sits below hero, above value props */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p className="text-sm sm:text-base text-[#1C2B2E]/80 leading-relaxed">
-          Buying or selling a home is one of the biggest financial decisions you'll make. The Friedman Team treats it that way. We combine hands-on local knowledge of Carroll, Howard, Frederick, and Baltimore County with a disciplined, numbers-first approach to pricing, marketing, and negotiation - so every client, whether it's their first home or their forever home, gets the same level of strategy and care.
-        </p>
-      </section>
+      {/* 2. DATA-DRIVEN REAL ESTATE SOLUTIONS - 3-tile grid, matches Canopy's
+          exact pattern: three labeled photo tiles linking to Search, Valuation,
+          and Contact. */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center space-y-10">
+        <div className="space-y-3">
+          <h2 className="text-xs sm:text-sm font-bold uppercase tracking-[0.3em] text-[#0D2226]">
+            Data-Driven Real Estate Solutions
+          </h2>
+          <p className="text-xs sm:text-sm text-[#1C2B2E]/70 max-w-2xl mx-auto leading-relaxed">
+            Our team leverages real market data alongside hands-on local experience to guide buyers and sellers across Carroll, Howard, Frederick, and Baltimore County. Discover a smarter approach to real estate, where data-driven insight meets trusted expertise.
+          </p>
+        </div>
 
-      {/* 2. VALUE PILLARS - per brand copy doc section 4 */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#0D2226] border border-[#C9A96A]/40 text-[#FAF8F5] p-8 rounded-xs shadow-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-          <div>
-            <ShieldCheck className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />
-            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Numbers Over Guesswork</div>
-            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">Backed by real comps and demand data, not a gut feeling</div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-1">
+          <button
+            onClick={() => setActiveTab('listings')}
+            className="group relative aspect-square overflow-hidden"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+              alt="Home Search"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-[#0D2226]/40 group-hover:bg-[#0D2226]/55 transition-colors" />
+            <span className="absolute bottom-4 left-4 text-white text-xs font-bold uppercase tracking-widest">
+              Home Search
+            </span>
+          </button>
+
+          <button
+            onClick={onOpenValuation}
+            className="group relative aspect-square overflow-hidden"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80"
+              alt="Home Valuation"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-[#0D2226]/40 group-hover:bg-[#0D2226]/55 transition-colors" />
+            <span className="absolute bottom-4 left-4 text-white text-xs font-bold uppercase tracking-widest">
+              Home Valuation
+            </span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('contact')}
+            className="group relative aspect-square overflow-hidden"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80"
+              alt="Contact Us"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-[#0D2226]/40 group-hover:bg-[#0D2226]/55 transition-colors" />
+            <span className="absolute bottom-4 left-4 text-white text-xs font-bold uppercase tracking-widest">
+              Contact Us
+            </span>
+          </button>
+        </div>
+
+        {/* 3. AGENT INTRO STRIP - tan/beige, photo-left, matches Canopy's
+            exact layout. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 border border-[#C9A96A]/30 text-left">
+          <div className="aspect-[4/3] sm:aspect-auto overflow-hidden">
+            <img
+              src="/images/kyle-portrait.jpg"
+              alt="Kyle Friedman"
+              className="w-full h-full object-cover"
+            />
           </div>
-          <div className="border-l-0 lg:border-l border-[#FAF8F5]/10">
-            <TreePine className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />
-            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Marketing That Actually Sells</div>
-            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">A clear story for every listing, built for where buyers look</div>
-          </div>
-          <div className="border-l-0 lg:border-l border-[#FAF8F5]/10">
-            <LineChart className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />
-            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Negotiation That Protects You</div>
-            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">Every point of the contract, negotiated with your outcome in mind</div>
-          </div>
-          <div className="border-l-0 lg:border-l border-[#FAF8F5]/10">
-            <ShieldCheck className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />
-            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Local, Not General</div>
-            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">Carroll, Howard, Frederick & Baltimore County - not a territory, home</div>
+          <div className="bg-[#C9A96A]/20 p-8 sm:p-10 flex flex-col justify-center space-y-4">
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226] leading-tight">
+              The Friedman Team<br />at eXp Realty
+            </h3>
+            <p className="text-xs sm:text-sm text-[#1C2B2E]/80 leading-relaxed">
+              The Friedman Team at eXp Realty, led by Kyle Friedman, gives you access to a real, data-driven strategy for buying or selling - from your first home to a multi-acre property. Every client gets the same level of preparation and care.
+            </p>
+            <button
+              onClick={() => setActiveTab('team')}
+              className="self-start px-6 py-3 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+            >
+              Meet the Team
+            </button>
           </div>
         </div>
       </section>
 
-      {/* 3. FEATURED LISTINGS
-          Curated set, not live search results - full live MLS search lives
-          on the Listings page. */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 4. WHAT OUR CLIENTS SAY - dark background, matches Canopy's placement */}
+      <section className="bg-[#0D2226] py-20 border-y border-[#C9A96A]/20">
+        <div className="text-center mb-10 px-4">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#FAF8F5]">
+            What Our Clients Say
+          </h2>
+        </div>
+        <ReviewsSection />
+      </section>
+
+      {/* 5. FEATURED PROPERTIES */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-10 pb-4 border-b border-[#C9A96A]/30">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">
               Curated Maryland Estates
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] mt-1">
-              Featured Luxury Properties
+              Featured Properties
             </h2>
           </div>
 
@@ -160,7 +257,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             onClick={() => setActiveTab('listings')}
             className="text-xs font-bold uppercase tracking-widest text-[#0F5C63] hover:text-[#C9A96A] flex items-center gap-1.5 transition-colors"
           >
-            <span>Search All Live Listings</span>
+            <span>View All</span>
             <ArrowRight className="w-4 h-4 text-[#C9A96A]" />
           </button>
         </div>
@@ -191,182 +288,81 @@ export const HomePage: React.FC<HomePageProps> = ({
         )}
       </section>
 
-      {/* 4. SPECIALTIES GRID */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
-          <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F5C63]">
-            What Kyle Specializes In
+      {/* 6. WHAT'S YOUR PROPERTY WORTH? - banner over a repeating background,
+          direct address input matching Canopy's exact widget pattern. */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80"
+            alt=""
+            className="w-full h-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-[#FAF8F5]/70" />
+        </div>
+        <div className="relative max-w-2xl mx-auto px-4 text-center space-y-6">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] uppercase tracking-wide">
+            What's Your Property Worth?
+          </h2>
+          {!worthSubmitted ? (
+            <form onSubmit={handleWorthSubmit} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+              <input
+                type="text"
+                required
+                value={worthAddress}
+                onChange={(e) => setWorthAddress(e.target.value)}
+                placeholder="Enter your address"
+                className="flex-1 bg-white border border-[#0D2226]/20 px-4 py-3.5 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
+              />
+              <button
+                type="submit"
+                disabled={worthSubmitting}
+                className="px-8 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-colors disabled:opacity-60"
+              >
+                {worthSubmitting ? 'Sending...' : 'Get Started'}
+              </button>
+            </form>
+          ) : (
+            <p className="text-sm text-[#0F5C63] font-semibold">
+              Thanks! Kyle will follow up personally with a real comparative market analysis.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* 7. NEIGHBORHOODS - dark background, auto-scrolling strip matching
+          Canopy's marquee pattern. */}
+      <section className="bg-[#0D2226] text-[#FAF8F5] py-20 border-y border-[#C9A96A]/30">
+        <div className="text-center mb-12 px-4">
+          <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#C9A96A]">
+            Maryland Enclaves & Valleys
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
-            Not Just Homes — Land, Farms & Estates
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#FAF8F5] mt-2">
+            Neighborhoods
           </h2>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {specialties.map((s) => (
-            <div key={s.label} className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-6 text-center space-y-2 rounded-xs shadow-sm">
-              <s.icon className="w-7 h-7 text-[#C9A96A] mx-auto" />
-              <h3 className="font-serif font-bold text-[#0D2226] text-sm">{s.label}</h3>
-              <p className="text-[11px] text-[#1C2B2E]/70 leading-snug">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      {/* 5. WHY CHOOSE THE FRIEDMAN TEAM (Kyle bio) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 sm:p-12 rounded-xs shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-xs overflow-hidden border-2 border-[#C9A96A] aspect-[4/5]">
-              <img
-                src="/images/kyle-portrait.jpg"
-                alt="Kyle Friedman Real Estate Advisor"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-4 left-4 right-4 bg-[#0D2226]/90 p-4 border border-[#C9A96A]/40 text-[#FAF8F5]">
-                <div className="font-serif font-bold text-lg">Kyle Friedman</div>
-                <div className="text-xs text-[#C9A96A] font-semibold uppercase tracking-wider">
-                  Principal Advisor • eXp Realty
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 space-y-6">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">
-              Why Choose The Friedman Team
-            </span>
-
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
-              Strategy First. Results That Follow.
-            </h2>
-
-            <p className="text-sm text-[#1C2B2E]/80 leading-relaxed font-normal">
-              Kyle Friedman founded The Friedman Team on a simple idea: every client deserves the same level of preparation, whether they're buying a starter home or selling a multi-acre property. Kyle's background is in direct sales and property transactions, which shaped a practical, detail-driven approach to pricing and negotiation that's become the foundation of how the team operates today.
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-[#0D2226]">
-              <div className="p-3 bg-[#FAF8F5] border border-[#C9A96A]/30">
-                <span className="text-[#0F5C63] block font-bold">Specialization:</span>
-                Homes, Estates & Everything Between
-              </div>
-              <div className="p-3 bg-[#FAF8F5] border border-[#C9A96A]/30">
-                <span className="text-[#0F5C63] block font-bold">Market Reach:</span>
-                Carroll, Howard, Frederick & Baltimore County
-              </div>
-            </div>
-
-            <div className="pt-2 flex items-center gap-4">
-              <button
-                onClick={() => setActiveTab('about')}
-                className="px-6 py-3 bg-[#0F5C63] hover:bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-wider rounded-xs transition-colors"
-              >
-                Read Full Advisory Bio
-              </button>
-              <button
-                onClick={onOpenConsultation}
-                className="px-6 py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-wider rounded-xs transition-colors"
-              >
-                Schedule Private Call
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. SELLER STRATEGY CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-[#0F5C63] via-[#0D2226] to-[#0F5C63] text-[#FAF8F5] border border-[#C9A96A]/50 p-8 sm:p-12 rounded-xs shadow-2xl relative overflow-hidden">
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#C9A96A] bg-[#0D2226] px-3 py-1 border border-[#C9A96A]/30">
-                Thinking of Selling?
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold">
-                Get a Real Read on Your Property's Value
-              </h2>
-              <p className="text-sm text-[#FAF8F5]/90 max-w-2xl leading-relaxed">
-                Tell Kyle a bit about your property, and he'll personally follow up with a comparative market analysis built from real, current comps — not an automated guess.
-              </p>
-            </div>
-
-            <div className="lg:col-span-4 flex flex-col gap-3 items-start lg:items-end">
-              <button
-                onClick={onOpenValuation}
-                id="seller-strategy-valuation-btn"
-                className="px-8 py-4 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-xl transition-all hover:scale-105 flex items-center gap-2"
-              >
-                <Calculator className="w-4 h-4" />
-                <span>Get Your Home Value</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('sell')}
-                className="text-xs font-bold uppercase tracking-wider text-[#FAF8F5]/80 hover:text-[#C9A96A] border-b border-[#FAF8F5]/40 pb-1"
-              >
-                See Full Seller Strategy
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. BUYER RESOURCES CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#FAF8F5] border border-[#C9A96A]/40 p-8 sm:p-12 rounded-xs shadow-lg relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63] bg-[#0F5C63]/10 px-3 py-1 border border-[#0F5C63]/30 inline-block">
-                Thinking of Buying?
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
-                Find Your Next Home With a Plan, Not Just a Search
-              </h2>
-              <p className="text-sm text-[#1C2B2E]/80 max-w-2xl leading-relaxed">
-                Buying a home shouldn't feel like guessing. The Friedman Team walks you through financing, neighborhoods, and timing so you know exactly where you stand before you make an offer.
-              </p>
-            </div>
-            <div className="lg:col-span-4 flex flex-col gap-3 items-start lg:items-end">
-              <button
-                onClick={() => setActiveTab('listings')}
-                className="px-8 py-4 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-xl transition-all hover:scale-105 flex items-center gap-2"
-              >
-                <Search className="w-4 h-4" />
-                <span>Search Homes</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('buy')}
-                className="text-xs font-bold uppercase tracking-wider text-[#0D2226] hover:text-[#C9A96A] border-b border-[#0D2226] pb-1"
-              >
-                See Buyer's Strategy
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 8. NEIGHBORHOOD GUIDES */}
-      <section className="bg-[#0D2226] text-[#FAF8F5] py-20 border-y border-[#C9A96A]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#C9A96A]">
-              Maryland Enclaves & Valleys
-            </span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#FAF8F5]">
-              Explore Distinctive Neighborhoods
-            </h2>
-            <p className="text-sm text-[#A8B2A1] font-light">
-              Deep local roots across Carroll, Baltimore, Howard, and Frederick County's most distinctive communities.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {neighborhoods.slice(0, 4).map((n) => (
+        <style>{`
+          @keyframes neighborhood-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+          }
+          .neighborhood-track {
+            animation: neighborhood-scroll 40s linear infinite;
+          }
+          .neighborhood-track:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+        <div className="overflow-hidden">
+          <div className="flex neighborhood-track w-max gap-6 px-6">
+            {neighborhoodScrollItems.map((n, i) => (
               <div
-                key={n.id}
+                key={`${n.id}-${i}`}
                 onClick={() => {
                   onSelectNeighborhood(n.id);
                   setActiveTab('neighborhoods');
                 }}
-                className="group relative h-96 rounded-xs overflow-hidden cursor-pointer border border-[#C9A96A]/30 shadow-xl"
+                className="group relative w-72 h-80 shrink-0 rounded-xs overflow-hidden cursor-pointer border border-[#C9A96A]/30 shadow-xl"
               >
                 <img
                   src={n.heroImage}
@@ -374,91 +370,100 @@ export const HomePage: React.FC<HomePageProps> = ({
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226] via-[#0D2226]/40 to-transparent" />
-
-                <div className="absolute bottom-6 left-6 right-6 space-y-2">
+                <div className="absolute bottom-5 left-5 right-5 space-y-1">
                   <span className="text-[10px] uppercase font-bold text-[#C9A96A] tracking-widest">
                     {n.county}
                   </span>
-                  <h3 className="font-serif text-2xl font-bold text-[#FAF8F5]">
+                  <h3 className="font-serif text-xl font-bold text-[#FAF8F5]">
                     {n.name}
                   </h3>
-                  <p className="text-xs text-[#FAF8F5]/80 line-clamp-2">
-                    {n.tagline}
-                  </p>
-                  <div className="pt-2 text-xs font-bold uppercase tracking-wider text-[#C9A96A] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                    <span>Explore Market Guide</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </div>
                 </div>
               </div>
             ))}
           </div>
+        </div>
 
-          <div className="text-center pt-4">
-            <button
-              onClick={() => setActiveTab('neighborhoods')}
-              className="px-8 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
-            >
-              View All Neighborhood Guides
-            </button>
-          </div>
+        <div className="text-center pt-10">
+          <button
+            onClick={() => setActiveTab('neighborhoods')}
+            className="px-8 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+          >
+            View All Neighborhoods
+          </button>
         </div>
       </section>
 
-      {/* 9. MARKET REPORTS CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 sm:p-10 rounded-xs shadow-md">
-          <div className="lg:col-span-8 space-y-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">
-              Stay Informed
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226]">
-              Weekly Market Reports for Carroll, Baltimore, Howard & Frederick County
-            </h2>
-            <p className="text-sm text-[#1C2B2E]/70">
-              Local pricing trends, inventory data, and straight talk — no fluff.
-            </p>
-          </div>
-          <div className="lg:col-span-4 flex lg:justify-end">
-            <button
-              onClick={() => setActiveTab('blog')}
-              className="px-8 py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all flex items-center gap-2"
-            >
-              <span>See Market Reports</span>
-              <ArrowRight className="w-4 h-4 text-[#C9A96A]" />
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Real Google reviews (static, manually added - see src/data/reviews.ts) */}
-      <ReviewsSection />
-
-      {/* 10. FINAL CONTACT CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#0D2226] border border-[#C9A96A] text-[#FAF8F5] p-10 sm:p-14 rounded-xs text-center space-y-5 shadow-2xl">
-          <ShieldCheck className="w-8 h-8 text-[#C9A96A] mx-auto" />
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold">
-            Let's Talk Strategy — No Pressure, Just a Plan.
+      {/* 8. GET EXCLUSIVE ACCESS - newsletter, matches Canopy's opt-in
+          consent pattern (standard for real estate lead-gen forms). */}
+      <section className="bg-[#C9A96A]/25 py-16">
+        <div className="max-w-xl mx-auto px-4 text-center space-y-5">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226] uppercase tracking-wide">
+            Get Exclusive Access
           </h2>
-          <p className="text-sm text-[#A8B2A1] max-w-xl mx-auto">
-            Whether you're buying, selling, or just curious what your options look like, Kyle will give you a straight answer.
+          <p className="text-xs sm:text-sm text-[#1C2B2E]/70">
+            Don't let your dream home slip away. Subscribe today to receive curated listings, market updates, and insider tips straight to your inbox.
           </p>
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={onOpenConsultation}
-              className="px-8 py-4 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg flex items-center gap-2"
-            >
-              <Phone className="w-4 h-4" />
-              <span>Schedule a Consultation</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('contact')}
-              className="px-8 py-4 border border-[#C9A96A] text-[#C9A96A] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#C9A96A]/10 transition-colors"
-            >
-              Contact Kyle Directly
-            </button>
-          </div>
+
+          {!newsSubmitted ? (
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="text"
+                  value={newsName}
+                  onChange={(e) => setNewsName(e.target.value)}
+                  placeholder="Name"
+                  className="flex-1 bg-white border border-[#0D2226]/20 px-4 py-3 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
+                />
+                <input
+                  type="email"
+                  required
+                  value={newsEmail}
+                  onChange={(e) => setNewsEmail(e.target.value)}
+                  placeholder="Email"
+                  className="flex-1 bg-white border border-[#0D2226]/20 px-4 py-3 text-sm rounded-xs focus:outline-none focus:border-[#C9A96A]"
+                />
+                <button
+                  type="submit"
+                  disabled={newsSubmitting}
+                  className="px-6 py-3 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors disabled:opacity-60"
+                >
+                  {newsSubmitting ? '...' : 'Submit'}
+                </button>
+              </div>
+              <p className="text-[10px] text-[#1C2B2E]/60 leading-relaxed">
+                I agree to be contacted by Kyle Friedman via call, email, and text for real estate services. To opt out, you can reply "stop" at any time or reply "help" for assistance. Message and data rates may apply. Message frequency may vary.
+              </p>
+            </form>
+          ) : (
+            <p className="text-sm text-[#0F5C63] font-semibold">You're subscribed! Watch your inbox for The Friedman Report.</p>
+          )}
+        </div>
+      </section>
+
+      {/* 9. YOUR JOURNEY STARTS HERE - closing CTA over a photo */}
+      <section className="relative py-28 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=80"
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#0D2226]/70" />
+        </div>
+        <div className="relative max-w-2xl mx-auto px-4 text-center space-y-6">
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#FAF8F5] uppercase tracking-wide">
+            Your Journey Starts Here
+          </h2>
+          <p className="text-sm text-[#F5F1E8]/90 max-w-md mx-auto leading-relaxed">
+            Collaboration is at the heart of everything we do. By working together, we bring clarity, strategy, and precision to your home journey.
+          </p>
+          <button
+            onClick={onOpenConsultation}
+            className="px-8 py-4 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-colors flex items-center gap-2 mx-auto"
+          >
+            <Phone className="w-4 h-4" />
+            Reach Out Today
+          </button>
         </div>
       </section>
 
