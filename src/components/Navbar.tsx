@@ -31,10 +31,33 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectNeighborhood,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [fullMenuOpen, setFullMenuOpen] = useState(false);
+  // Two states, not one: fullMenuMounted controls whether the overlay
+  // exists in the DOM at all, fullMenuVisible controls the actual
+  // opacity/transform transition. Using just one boolean meant the overlay
+  // could only snap instantly in and out - React unmounts the element the
+  // same render it disappears, so there's no chance for a CSS transition
+  // to play on the way out. Splitting them gives a brief window where the
+  // element is still mounted but transitioning to its closed state.
+  const [fullMenuMounted, setFullMenuMounted] = useState(false);
+  const [fullMenuVisible, setFullMenuVisible] = useState(false);
   const [expandedFullMenuGroup, setExpandedFullMenuGroup] = useState<string | null>(null);
   const [openDesktopGroup, setOpenDesktopGroup] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openFullMenu = () => {
+    setFullMenuMounted(true);
+    // Mount first with visible=false, then flip to true on the next frame
+    // so the browser actually registers the "before" state and animates
+    // to the "after" state, instead of both happening in the same paint.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setFullMenuVisible(true));
+    });
+  };
+
+  const closeFullMenu = () => {
+    setFullMenuVisible(false);
+    setTimeout(() => setFullMenuMounted(false), 300);
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -44,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const goTo = (tab: string) => {
     setActiveTab(tab);
-    setFullMenuOpen(false);
+    closeFullMenu();
     setExpandedFullMenuGroup(null);
     setOpenDesktopGroup(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -115,7 +138,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     [
       { id: 'home', label: 'Home', action: () => goTo('home') },
       { id: 'team', label: 'Meet the Team', action: () => goTo('team') },
-      { id: 'home-valuation-full', label: 'Home Valuation', action: () => { onOpenValuation(); setFullMenuOpen(false); } },
+      { id: 'home-valuation-full', label: 'Home Valuation', action: () => { onOpenValuation(); closeFullMenu(); } },
       { id: 'neighborhoods-full', label: 'Neighborhoods', action: () => goTo('neighborhoods') },
       { id: 'blog-full', label: 'The Friedman Report', action: () => goTo('blog') },
       { id: 'giving-back-full', label: 'Giving Back', action: () => goTo('giving-back') },
@@ -258,7 +281,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </a>
 
             <button
-              onClick={() => setFullMenuOpen(true)}
+              onClick={openFullMenu}
               className="p-1.5 border border-[#FAF8F5]/30 hover:border-[#C9A96A] text-[#FAF8F5]/80 hover:text-[#C9A96A] transition-colors focus:outline-none"
               aria-label="Open full menu"
               id="nav-full-menu-btn"
@@ -276,7 +299,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               Consult
             </button>
             <button
-              onClick={() => setFullMenuOpen(true)}
+              onClick={openFullMenu}
               className="p-2 text-[#FAF8F5] focus:outline-none"
               id="nav-mobile-toggle"
               aria-label="Toggle navigation menu"
@@ -292,9 +315,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           matches Canopy's exact pattern. Used by both the desktop square
           icon and the mobile hamburger, so there's one menu to maintain
           instead of two different navigation experiences. */}
-      {fullMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-[#FAF8F5] overflow-y-auto">
-          <div className="max-w-5xl mx-auto px-6 sm:px-10 py-8">
+      {fullMenuMounted && (
+        <div
+          className={`fixed inset-0 z-[60] bg-[#FAF8F5] overflow-y-auto transition-opacity duration-300 ease-out ${
+            fullMenuVisible ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={(e) => e.target === e.currentTarget && closeFullMenu()}
+        >
+          <div
+            className={`max-w-5xl mx-auto px-6 sm:px-10 py-8 transition-all duration-300 ease-out ${
+              fullMenuVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+            }`}
+          >
             <div className="flex items-center justify-between pb-6 border-b border-[#0D2226]/15">
               <button
                 onClick={() => goTo('home')}
@@ -308,7 +340,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
               </button>
               <button
-                onClick={() => setFullMenuOpen(false)}
+                onClick={closeFullMenu}
                 aria-label="Close menu"
                 className="p-2 text-[#0D2226] hover:text-[#0F5C63] transition-colors"
               >
