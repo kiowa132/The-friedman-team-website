@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Key, Search, Compass, MapPin, Building2, Phone, CheckCircle2, ArrowRight } from 'lucide-react';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface BuyersPageProps {
   onOpenConsultation: () => void;
@@ -10,26 +11,31 @@ export const BuyersPage: React.FC<BuyersPageProps> = ({
   onOpenConsultation,
   setActiveTab
 }) => {
+  usePageMeta(
+    'Find a Home in Carroll or Baltimore County, MD | The Friedman Team',
+    'Searching for a home in Carroll, Howard, Frederick, or Baltimore County? The Friedman Team helps buyers find the right property with a real strategy - not just a search.'
+  );
+
   const buyerPillars = [
     {
-      icon: <Key className="w-6 h-6 text-[#C9A96A]" />,
-      title: 'Private Off-Market Access',
-      description: 'Nearly 30% of high-end estates in Maryland trade off-market. Our private network grants clients access to confidential listings before public MLS broadcast.'
-    },
-    {
-      icon: <Search className="w-6 h-6 text-[#C9A96A]" />,
-      title: 'Hyper-Local Market Expertise',
-      description: 'Deep knowledge of Carroll, Baltimore, and Howard county enclaves, school clusters, zoning regulations, and agricultural preservation easements.'
-    },
-    {
       icon: <ShieldCheck className="w-6 h-6 text-[#C9A96A]" />,
-      title: 'Fiduciary Negotiation Protection',
-      description: 'Rigorous protection during contract drafting, contingency management, structural inspections, and appraisal negotiations.'
+      title: 'Straight Answers on Affordability',
+      description: "Real numbers on what you can afford and what it actually costs to own - not just a pre-approval figure, the full picture."
+    },
+    {
+      icon: <Key className="w-6 h-6 text-[#C9A96A]" />,
+      title: 'Off-Market & Coming-Soon Access',
+      description: 'Opportunities before they hit the public market, so you\'re not just competing with every other buyer refreshing the same listing.'
     },
     {
       icon: <Compass className="w-6 h-6 text-[#C9A96A]" />,
-      title: 'Relocation Advisory Services',
-      description: 'Tailored transition guidance for executives, physician groups, and families relocating to Maryland wealth corridors.'
+      title: 'A Real Negotiation Strategy',
+      description: 'Every offer gets a strategy for terms, not just a number - protecting you on contingencies, timelines, and price alike.'
+    },
+    {
+      icon: <Search className="w-6 h-6 text-[#C9A96A]" />,
+      title: 'Local Guidance, Four Counties',
+      description: 'Straight talk on towns, commutes, schools, and neighborhoods across Carroll, Howard, Frederick, and Baltimore County.'
     }
   ];
 
@@ -39,15 +45,15 @@ export const BuyersPage: React.FC<BuyersPageProps> = ({
       {/* Hero Header */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F5C63] bg-[#0F5C63]/10 px-4 py-1.5 border border-[#0F5C63]/30 inline-block">
-          Bespoke Buyer Advisory
+          For Buyers
         </span>
 
         <h1 className="font-serif text-4xl sm:text-6xl font-bold text-[#0D2226] max-w-4xl mx-auto leading-tight">
-          Unlocking Maryland’s Most Distinctive Properties.
+          Find Your Next Home With a Plan, Not Just a Search
         </h1>
 
         <p className="text-sm sm:text-base text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal leading-relaxed">
-          Acquiring a luxury residence, horse farm, or historic estate requires seasoned advisory, off-market network access, and precise negotiation advocacy.
+          Buying a home shouldn't feel like guessing. The Friedman Team walks you through financing, neighborhoods, and timing so you know exactly where you stand before you make an offer - and negotiates hard once you find the right property. Whether you're looking for your first house, more space for a growing family, or a property with room to spread out, we build a search strategy around what actually matters to you.
         </p>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -75,7 +81,7 @@ export const BuyersPage: React.FC<BuyersPageProps> = ({
             The Buyer Advantage
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
-            Why Discerning Buyers Partner with Kyle Friedman
+            Why Buyers Partner With The Friedman Team
           </h2>
         </div>
 
@@ -103,19 +109,19 @@ export const BuyersPage: React.FC<BuyersPageProps> = ({
       <section className="bg-[#0D2226] text-[#FAF8F5] py-16 border-y border-[#C9A96A]/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#C9A96A]">
-            Confidential Representation
+            Off-Market & Coming-Soon
           </span>
           <h2 className="font-serif text-3xl sm:text-5xl font-bold max-w-3xl mx-auto">
-            Seeking Off-Market Farms or Luxury Estates in Carroll or Baltimore County?
+            Looking for the Right Home in Carroll, Howard, Frederick, or Baltimore County?
           </h2>
           <p className="text-xs sm:text-sm text-[#A8B2A1] max-w-2xl mx-auto leading-relaxed">
-            Many of Maryland’s finest properties are never broadcast to public real estate portals. Register your confidential purchasing criteria to receive private placement notifications.
+            Some of the best opportunities never make it to the public portals. Register your buying criteria to hear about off-market and coming-soon properties first.
           </p>
           <button
             onClick={onOpenConsultation}
             className="px-8 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
           >
-            Register Private Buyer Profile
+            Start Your Search
           </button>
         </div>
       </section>

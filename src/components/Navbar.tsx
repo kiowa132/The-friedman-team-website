@@ -86,6 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         { label: 'Carroll County', action: () => goToNeighborhood('carroll-county') },
         { label: 'Baltimore County', action: () => goToNeighborhood('baltimore-county') },
         { label: 'Howard County', action: () => goToNeighborhood('howard-county') },
+        { label: 'Frederick County', action: () => goToNeighborhood('frederick-county') },
       ],
     },
     {

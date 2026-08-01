@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({
                 Subscribe to The Friedman Report
               </h3>
               <p className="text-[#A8B2A1] text-sm mt-2 max-w-xl">
-                Local market data, new listings, and straight talk about buying and selling in Carroll, Baltimore, and Howard counties — every week.
+                Local market data, new listings, and straight talk about buying and selling in Carroll, Baltimore, Howard, and Frederick counties — every week.
               </p>
             </div>
             
@@ -76,13 +76,13 @@ export const Footer: React.FC<FooterProps> = ({
                   THE FRIEDMAN TEAM
                 </h4>
                 <p className="text-xs text-[#C9A96A] uppercase tracking-widest font-medium">
-                  eXp Realty Maryland
+                  More Strategy. Better Outcomes.
                 </p>
               </div>
             </div>
 
             <p className="text-xs text-[#A8B2A1] leading-relaxed max-w-sm">
-              "The trusted advisor for strategic home sales, luxury properties, farms, estates, and distinctive Maryland homes."
+              The Friedman Team is a Maryland real estate team serving Carroll, Howard, Frederick, and Baltimore County. Licensed with eXp Realty.
             </p>
 
             <div className="pt-2 text-xs text-[#FAF8F5]/80 space-y-1.5">
@@ -96,7 +96,7 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div className="flex items-center gap-2 text-xs">
                 <MapPin className="w-3.5 h-3.5 text-[#C9A96A]" />
-                <span>Serving Carroll, Baltimore & Howard Counties</span>
+                <span>Serving Carroll, Baltimore, Howard & Frederick Counties</span>
               </div>
             </div>
           </div>
@@ -163,6 +163,11 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button onClick={() => { setActiveTab('neighborhoods'); window.scrollTo(0,0); }} className="hover:text-[#C9A96A] transition-colors">
+                  Frederick County Homes
+                </button>
+              </li>
+              <li>
+                <button onClick={() => { setActiveTab('neighborhoods'); window.scrollTo(0,0); }} className="hover:text-[#C9A96A] transition-colors">
                   Fulton & Maple Lawn
                 </button>
               </li>
@@ -174,6 +179,11 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button onClick={() => { setActiveTab('neighborhoods'); window.scrollTo(0,0); }} className="hover:text-[#C9A96A] transition-colors">
                   Mount Airy Farms
+                </button>
+              </li>
+              <li>
+                <button onClick={() => { setActiveTab('luxury'); window.scrollTo(0,0); }} className="hover:text-[#C9A96A] transition-colors">
+                  Fine Homes & Estates
                 </button>
               </li>
             </ul>

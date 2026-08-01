@@ -91,6 +91,7 @@ export const IDXSearchHeader: React.FC<IDXSearchHeaderProps> = ({
             <option value="Carroll County">Carroll County</option>
             <option value="Baltimore County">Baltimore County</option>
             <option value="Howard County">Howard County</option>
+            <option value="Frederick County">Frederick County</option>
           </select>
         </div>
 

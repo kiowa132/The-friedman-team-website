@@ -66,7 +66,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           
           <div className="lg:col-span-7 space-y-6 z-10">
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#C9A96A] bg-[#0F5C63] px-3.5 py-1 border border-[#C9A96A]/30 inline-block">
-              Baltimore & Carroll County Real Estate
+              Carroll, Howard, Frederick & Baltimore County Real Estate
             </span>
 
             <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[#FAF8F5]">
@@ -78,7 +78,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </p>
 
             <p className="text-xs sm:text-sm text-[#FAF8F5]/90 leading-relaxed font-normal pt-2">
-              "I got my start in sales the hard way — door to door, then wholesaling deals across Baltimore and Carroll County. That background means I price homes off real comps and real numbers, not a guess, and I'll tell you the truth about what your property is actually worth, even when it's not what you were hoping to hear."
+              Kyle Friedman founded The Friedman Team on a simple idea: every client deserves the same level of preparation, whether they're buying a starter home or selling a multi-acre property. Kyle's background is in direct sales and property transactions, which shaped a practical, detail-driven approach to pricing and negotiation that's become the foundation of how the team operates today. Based in Taneytown and serving Carroll, Howard, Frederick, and Baltimore County, The Friedman Team works with first-time buyers, growing families, move-up sellers, and owners of larger properties with acreage, outbuildings, or equestrian facilities - bringing the same strategy and standard of service to every price point.
             </p>
 
             <div className="pt-4 flex flex-wrap items-center gap-4">
@@ -150,36 +150,36 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               Our Guiding Principles
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#FAF8F5]">
-              Mission & Fiduciary Commitment
+              Strategy First. Results That Follow.
             </h2>
             <p className="text-sm sm:text-base text-[#A8B2A1] font-light leading-relaxed">
-              "To advise every client with the same rigour, privacy, and dedication required for a major corporate transaction. We treat your property equity as our absolute fiduciary responsibility."
+              Every client, whether it's their first home or a multi-acre property, gets the same level of preparation, strategy, and care.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             <div className="p-6 bg-[#1A2E33] border border-[#FAF8F5]/10 rounded-xs space-y-2">
               <ShieldCheck className="w-8 h-8 text-[#C9A96A] mx-auto" />
-              <h4 className="font-serif font-bold text-lg text-[#FAF8F5]">Fiduciary Duty</h4>
-              <p className="text-xs text-[#A8B2A1]">Unwavering loyalty to client financial interests above all else.</p>
+              <h4 className="font-serif font-bold text-lg text-[#FAF8F5]">Numbers Over Guesswork</h4>
+              <p className="text-xs text-[#A8B2A1]">Backed by real comps and demand data, not a gut feeling.</p>
             </div>
 
             <div className="p-6 bg-[#1A2E33] border border-[#FAF8F5]/10 rounded-xs space-y-2">
               <Landmark className="w-8 h-8 text-[#C9A96A] mx-auto" />
-              <h4 className="font-serif font-bold text-lg text-[#FAF8F5]">Discreet Privacy</h4>
-              <p className="text-xs text-[#A8B2A1]">Protecting public exposure for high-profile estate sales.</p>
+              <h4 className="font-serif font-bold text-lg text-[#FAF8F5]">Marketing That Sells</h4>
+              <p className="text-xs text-[#A8B2A1]">A clear story for every listing, built for where buyers look.</p>
             </div>
 
             <div className="p-6 bg-[#1A2E33] border border-[#FAF8F5]/10 rounded-xs space-y-2">
               <Award className="w-8 h-8 text-[#C9A96A] mx-auto" />
-              <h4 className="font-serif font-bold text-lg text-[#FAF8F5]">Market Rigour</h4>
-              <p className="text-xs text-[#A8B2A1]">Wall Street-grade analysis of historical comps & micro-trends.</p>
+              <h4 className="font-serif font-bold text-lg text-[#FAF8F5]">Negotiation That Protects</h4>
+              <p className="text-xs text-[#A8B2A1]">Every point of the contract, negotiated with your outcome in mind.</p>
             </div>
 
             <div className="p-6 bg-[#1A2E33] border border-[#FAF8F5]/10 rounded-xs space-y-2">
               <Compass className="w-8 h-8 text-[#C9A96A] mx-auto" />
-              <h4 className="font-serif font-bold text-lg text-[#FAF8F5]">Local Mastery</h4>
-              <p className="text-xs text-[#A8B2A1]">Deep ties to Carroll, Baltimore, and Howard county communities.</p>
+              <h4 className="font-serif font-bold text-lg text-[#FAF8F5]">Local, Not General</h4>
+              <p className="text-xs text-[#A8B2A1]">Deep ties to Carroll, Baltimore, Howard, and Frederick County.</p>
             </div>
           </div>
 

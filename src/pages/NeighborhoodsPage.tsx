@@ -45,7 +45,7 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
           Maryland Luxury Enclaves & Communities
         </h1>
         <p className="text-sm text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal">
-          Explore hyper-local market profiles, lifestyle guides, average home values, and featured luxury listings across Carroll, Baltimore, and Howard Counties.
+          Explore hyper-local market profiles, lifestyle guides, average home values, and featured listings across Carroll, Baltimore, Howard, and Frederick Counties.
         </p>
 
         {/* Neighborhood Filter Buttons Horizontal Strip */}

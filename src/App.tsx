@@ -17,6 +17,8 @@ import { ContactPage } from './pages/ContactPage';
 import { BlogListPage } from './pages/BlogListPage';
 import { BlogPostPage } from './pages/BlogPostPage';
 import { GuidesListPage } from './pages/GuidesListPage';
+import { LuxuryPage } from './pages/LuxuryPage';
+import { SellerProcessPage } from './pages/SellerProcessPage';
 import { GuideDetailPage } from './pages/GuideDetailPage';
 
 import { FEATURED_LISTINGS, NEIGHBORHOODS } from './data/mockData';
@@ -30,12 +32,14 @@ const PATH_TO_TAB: Record<string, string> = {
   '/': 'home',
   '/about': 'about',
   '/sell': 'sell',
+  '/sell/marketing-strategy': 'sell',
   '/buy': 'buy',
   '/neighborhoods': 'neighborhoods',
   '/listings': 'listings',
   '/contact': 'contact',
   '/blog': 'blog',
   '/guides': 'guides',
+  '/luxury': 'luxury',
 };
 
 const TAB_TO_PATH: Record<string, string> = {
@@ -48,6 +52,7 @@ const TAB_TO_PATH: Record<string, string> = {
   contact: '/contact',
   blog: '/blog',
   guides: '/guides',
+  luxury: '/luxury',
 };
 
 export default function App() {
@@ -134,6 +139,13 @@ export default function App() {
             />
           } />
 
+          <Route path="/sell/marketing-strategy" element={
+            <SellerProcessPage
+              onOpenValuation={() => setIsValuationOpen(true)}
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
+
           <Route path="/buy" element={
             <BuyersPage
               onOpenConsultation={() => setIsConsultationOpen(true)}
@@ -188,6 +200,12 @@ export default function App() {
           } />
           <Route path="/guides/:slug" element={
             <GuideDetailPage />
+          } />
+
+          <Route path="/luxury" element={
+            <LuxuryPage
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
           } />
         </Routes>
       </main>

@@ -18,7 +18,7 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
           Market Reports & Local Insights
         </h1>
         <p className="text-sm text-[#1C2B2E]/80 max-w-2xl mx-auto">
-          Weekly, straight-talk market data for Carroll County, Baltimore County, and Howard County - no fluff, no generic national trends that don't apply here.
+          Weekly, straight-talk market data for Carroll, Baltimore, Howard, and Frederick County - no fluff, no generic national trends that don't apply here.
         </p>
       </div>
 

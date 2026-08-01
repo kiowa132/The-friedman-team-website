@@ -118,7 +118,7 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
           Luxury Homes, Farms & Estates
         </h1>
         <p className="text-sm text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal">
-          Search live listings across Carroll County, Baltimore County, and Howard County.
+          Search live listings across Carroll, Baltimore, Howard, and Frederick County.
         </p>
       </div>
 

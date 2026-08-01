@@ -202,6 +202,31 @@ export const FEATURED_LISTINGS: Listing[] = [
 
 export const NEIGHBORHOODS: Neighborhood[] = [
   {
+    id: 'frederick-county',
+    name: 'Frederick County',
+    county: 'Frederick County',
+    tagline: 'Historic Downtown Charm, Mountain Views & Small-Town Character',
+    avgHomeValue: '$450,000 - $1,800,000+',
+    medianDaysOnMarket: 13,
+    heroImage: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1600&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80'
+    ],
+    marketOverview: 'Frederick County pairs a genuinely walkable, historic downtown with easy access to the mountains and quick commutes toward Baltimore, DC, and Carroll County. From in-town rowhomes to acreage on the county\'s western edge, it offers a range most nearby counties can\'t match at the same price point.',
+    lifestyle: 'Downtown Frederick\'s restaurant and arts scene, Catoctin Mountain hiking and orchards, small-town main streets in Thurmont, Walkersville, and Middletown, and easy commuter access via Route 15 and I-70.',
+    localAttractions: [
+      'Historic Downtown Frederick',
+      'Catoctin Mountain Park',
+      'Carroll Creek Linear Park',
+      'Sugarloaf Mountain',
+      'Thurmont & Emmitsburg Main Streets'
+    ],
+    schoolsRating: '8/10 Strong Public School System',
+    featuredListingIds: [],
+    seoKeywords: ['Frederick County MD real estate', 'Downtown Frederick homes for sale', 'Frederick County land for sale', 'Walkersville MD homes']
+  },
+  {
     id: 'carroll-county',
     name: 'Carroll County',
     county: 'Carroll County',

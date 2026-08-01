@@ -98,6 +98,17 @@ const CITY_TO_COUNTY = {
   clarksville: 'Howard County',
   fulton: 'Howard County',
   highland: 'Howard County',
+  frederick: 'Frederick County',
+  brunswick: 'Frederick County',
+  emmitsburg: 'Frederick County',
+  middletown: 'Frederick County',
+  myersville: 'Frederick County',
+  'new market': 'Frederick County',
+  thurmont: 'Frederick County',
+  walkersville: 'Frederick County',
+  urbana: 'Frederick County',
+  'point of rocks': 'Frederick County',
+  ijamsville: 'Frederick County',
 };
 
 function guessCounty(city) {

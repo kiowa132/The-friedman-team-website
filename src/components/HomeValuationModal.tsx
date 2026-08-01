@@ -116,7 +116,7 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
               2. Features & Contact
             </span>
             <span className={step >= 3 ? 'text-[#C9A96A] font-bold' : 'text-[#A8B2A1]'}>
-              3. Strategic Estimate
+              3. Confirmation
             </span>
           </div>
 
@@ -128,7 +128,7 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
                   Where is your Maryland property located?
                 </h4>
                 <p className="text-xs text-[#1C2B2E]/70 max-w-md mx-auto">
-                  Get a quick, rough estimate below — then Kyle will follow up personally with a full comparative market analysis built from live MLS comps in Carroll, Baltimore, and Howard counties.
+                  Tell Kyle a bit about your property below — he'll follow up personally with a full comparative market analysis built from live MLS comps in Carroll, Baltimore, Howard, and Frederick counties.
                 </p>
               </div>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Listing, Neighborhood } from '../types';
 import { ListingCard } from '../components/ListingCard';
 import { ReviewsSection } from '../components/ReviewsSection';
+import { usePageMeta } from '../lib/usePageMeta';
 import {
   ArrowRight, ShieldCheck, TrendingUp, Calculator, Phone, CheckCircle2,
   ChevronRight, Search, Home as HomeIcon, TreePine, Building2, MapPinned, LineChart
@@ -32,11 +33,16 @@ export const HomePage: React.FC<HomePageProps> = ({
   setActiveTab,
   onSelectNeighborhood,
 }) => {
+  usePageMeta(
+    'The Friedman Team | Carroll & Baltimore County Realtor | Homes & Estates',
+    'Buying or selling in Carroll, Howard, Frederick, or Baltimore County? The Friedman Team combines local expertise and data-driven pricing to get results. Homes, estates, and everything between.'
+  );
+
   const featuredListings = listings.filter((l) => l.featured).slice(0, 3);
 
   const specialties = [
     { icon: TreePine, label: 'Farms & Equestrian', desc: 'Acreage, outbuildings, agricultural preservation' },
-    { icon: HomeIcon, label: 'Luxury Residences', desc: 'Estate homes across Carroll, Baltimore & Howard' },
+    { icon: HomeIcon, label: 'Luxury Residences', desc: 'Estate homes across Carroll, Baltimore, Howard & Frederick' },
     { icon: Building2, label: 'Country Estates', desc: 'Privacy, land, and long-term value' },
     { icon: MapPinned, label: 'Land & Acreage', desc: 'Zoning, easements, and future potential' },
   ];
@@ -67,13 +73,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               The Friedman Team
             </h2>
             <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[#FAF8F5] leading-none">
-              More Than a Listing.<br />
-              <span className="italic font-normal gold-gradient-text">A Strategy.</span>
+              More Strategy.<br />
+              <span className="italic font-normal gold-gradient-text">Better Outcomes.</span>
             </h1>
           </div>
 
           <p className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-[#F5F1E8]/90 font-light leading-relaxed">
-            Strategic real estate representation for Maryland homeowners who expect exceptional results. Specializing in luxury homes, farms, estates, and distinctive properties in Carroll, Baltimore, and Howard counties.
+            The Friedman Team helps buyers and sellers across Carroll, Howard, Frederick, and Baltimore County move with confidence - from first homes to estate properties - backed by real market data and a strategy built around your goals.
           </p>
 
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -83,7 +89,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="w-full sm:w-auto px-8 py-4 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-[0.2em] rounded-xs shadow-2xl transition-all hover:scale-105 flex items-center justify-center gap-2"
             >
               <Search className="w-4 h-4" />
-              <span>Search Homes</span>
+              <span>Start Your Search</span>
             </button>
 
             <button
@@ -92,38 +98,46 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="w-full sm:w-auto px-8 py-4 bg-[#0F5C63]/90 hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-[0.2em] border border-[#C9A96A]/60 rounded-xs shadow-2xl transition-all hover:scale-105 flex items-center justify-center gap-2 backdrop-blur-md"
             >
               <Calculator className="w-4 h-4 text-[#C9A96A]" />
-              <span>What's Your Home Worth?</span>
+              <span>Get Your Home's Value</span>
             </button>
           </div>
 
           <div className="pt-12 text-[10px] uppercase tracking-[0.3em] text-[#A8B2A1] flex items-center justify-center gap-2">
-            <span>Explore Maryland Luxury Estates</span>
+            <span>Carroll · Baltimore · Howard · Frederick County</span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#C9A96A] animate-ping" />
           </div>
         </div>
       </section>
 
-      {/* 2. VALUE PROPS
-          Replaced fabricated stats ("$150M+ career sales," "99.4% list-to-sale
-          ratio," etc.) with honest, non-numeric value props. If you have real
-          verified numbers you want to show here instead, send them over and
-          I'll swap these back to numbers. */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
-        <div className="bg-[#0D2226] border border-[#C9A96A]/40 text-[#FAF8F5] p-8 rounded-xs shadow-2xl grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+      {/* 1.5 INTRO PARAGRAPH - sits below hero, above value props */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-4 text-center">
+        <p className="text-sm sm:text-base text-[#1C2B2E]/80 leading-relaxed">
+          Buying or selling a home is one of the biggest financial decisions you'll make. The Friedman Team treats it that way. We combine hands-on local knowledge of Carroll, Howard, Frederick, and Baltimore County with a disciplined, numbers-first approach to pricing, marketing, and negotiation - so every client, whether it's their first home or their forever home, gets the same level of strategy and care.
+        </p>
+      </section>
+
+      {/* 2. VALUE PILLARS - per brand copy doc section 4 */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 relative z-20">
+        <div className="bg-[#0D2226] border border-[#C9A96A]/40 text-[#FAF8F5] p-8 rounded-xs shadow-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
           <div>
             <ShieldCheck className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />
-            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Real Comps, Real Numbers</div>
-            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">Priced from live MLS data, not guesswork</div>
+            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Numbers Over Guesswork</div>
+            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">Backed by real comps and demand data, not a gut feeling</div>
           </div>
-          <div className="border-l-0 sm:border-l border-[#FAF8F5]/10">
+          <div className="border-l-0 lg:border-l border-[#FAF8F5]/10">
             <TreePine className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />
-            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Farm & Land Expertise</div>
-            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">Acreage, zoning, and agricultural preservation</div>
+            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Marketing That Actually Sells</div>
+            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">A clear story for every listing, built for where buyers look</div>
           </div>
-          <div className="border-l-0 sm:border-l border-[#FAF8F5]/10">
+          <div className="border-l-0 lg:border-l border-[#FAF8F5]/10">
             <LineChart className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />
-            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Investor's Perspective</div>
-            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">A wholesaling background applied to every deal</div>
+            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Negotiation That Protects You</div>
+            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">Every point of the contract, negotiated with your outcome in mind</div>
+          </div>
+          <div className="border-l-0 lg:border-l border-[#FAF8F5]/10">
+            <ShieldCheck className="w-6 h-6 text-[#C9A96A] mx-auto mb-2" />
+            <div className="text-sm font-serif font-bold text-[#FAF8F5]">Local, Not General</div>
+            <div className="text-[11px] uppercase tracking-wider text-[#A8B2A1] mt-1">Carroll, Howard, Frederick & Baltimore County - not a territory, home</div>
           </div>
         </div>
       </section>
@@ -223,21 +237,21 @@ export const HomePage: React.FC<HomePageProps> = ({
             </span>
 
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
-              A Wholesaler's Instincts, Now Working for You as a Buyer or Seller.
+              Strategy First. Results That Follow.
             </h2>
 
             <p className="text-sm text-[#1C2B2E]/80 leading-relaxed font-normal">
-              Kyle Friedman started in door-to-door sales, then spent years wholesaling deals across Baltimore and Carroll County before becoming a REALTOR®. That means every listing gets priced off real comps and real numbers — not a guess — and every deal gets negotiated by someone who's actually sat across the table from motivated sellers and serious investors alike.
+              Kyle Friedman founded The Friedman Team on a simple idea: every client deserves the same level of preparation, whether they're buying a starter home or selling a multi-acre property. Kyle's background is in direct sales and property transactions, which shaped a practical, detail-driven approach to pricing and negotiation that's become the foundation of how the team operates today.
             </p>
 
             <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-[#0D2226]">
               <div className="p-3 bg-[#FAF8F5] border border-[#C9A96A]/30">
                 <span className="text-[#0F5C63] block font-bold">Specialization:</span>
-                Farms, Estates & Luxury Residences
+                Homes, Estates & Everything Between
               </div>
               <div className="p-3 bg-[#FAF8F5] border border-[#C9A96A]/30">
                 <span className="text-[#0F5C63] block font-bold">Market Reach:</span>
-                Carroll, Baltimore & Howard Counties
+                Carroll, Howard, Frederick & Baltimore County
               </div>
             </div>
 
@@ -304,10 +318,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                 Thinking of Buying?
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
-                Find the Right Property, With Someone Who Knows Land
+                Find Your Next Home With a Plan, Not Just a Search
               </h2>
               <p className="text-sm text-[#1C2B2E]/80 max-w-2xl leading-relaxed">
-                From first homes to farms and investment properties, Kyle helps you understand real comps, real risk, and real opportunity before you make an offer.
+                Buying a home shouldn't feel like guessing. The Friedman Team walks you through financing, neighborhoods, and timing so you know exactly where you stand before you make an offer.
               </p>
             </div>
             <div className="lg:col-span-4 flex flex-col gap-3 items-start lg:items-end">
@@ -340,12 +354,12 @@ export const HomePage: React.FC<HomePageProps> = ({
               Explore Distinctive Neighborhoods
             </h2>
             <p className="text-sm text-[#A8B2A1] font-light">
-              Deep local roots across Carroll County, Baltimore County, and Howard County's most prestigious communities.
+              Deep local roots across Carroll, Baltimore, Howard, and Frederick County's most distinctive communities.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {neighborhoods.slice(0, 3).map((n) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {neighborhoods.slice(0, 4).map((n) => (
               <div
                 key={n.id}
                 onClick={() => {
@@ -399,7 +413,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               Stay Informed
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226]">
-              Weekly Market Reports for Carroll, Baltimore & Howard Counties
+              Weekly Market Reports for Carroll, Baltimore, Howard & Frederick County
             </h2>
             <p className="text-sm text-[#1C2B2E]/70">
               Local pricing trends, inventory data, and straight talk — no fluff.

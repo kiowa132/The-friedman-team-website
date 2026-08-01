@@ -53,7 +53,7 @@ export interface Listing {
 export interface Neighborhood {
   id: string;
   name: string;
-  county: 'Carroll County' | 'Baltimore County' | 'Howard County';
+  county: 'Carroll County' | 'Baltimore County' | 'Howard County' | 'Frederick County';
   tagline: string;
   avgHomeValue: string;
   medianDaysOnMarket: number;

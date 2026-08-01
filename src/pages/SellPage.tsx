@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Calculator, ShieldCheck, Camera, Sparkles, Globe, DollarSign, BarChart3, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface SellPageProps {
   onOpenValuation: () => void;
@@ -10,42 +12,47 @@ export const SellPage: React.FC<SellPageProps> = ({
   onOpenValuation,
   onOpenConsultation
 }) => {
+  usePageMeta(
+    'Sell Your Home in Carroll or Baltimore County, MD | The Friedman Team',
+    'Get a data-driven pricing strategy and marketing plan to sell your home for more in Carroll, Howard, Frederick, or Baltimore County.'
+  );
+
   const pillars = [
     {
       num: '01',
-      title: 'Strategic Pricing Analysis',
+      title: 'Data-Backed Pricing Strategy',
       icon: <BarChart3 className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'We go beyond basic MLS comps. Our valuation model evaluates hyper-local absorption rates, land preservation easements, equestrian capital value, and historical seasonal buyers.'
+      description: 'A pricing strategy built from real comparable sales and current market trends, with scenarios laid out so you know your actual options - not a single guess.'
     },
     {
       num: '02',
-      title: 'Professional Cinema & Drone Production',
+      title: 'Professional Photography & Marketing',
       icon: <Camera className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'High-net-worth buyers purchase narratives. We deploy architectural cinema, twilight photography, 4K aerial drone mapping, and Matterport 3D virtual walkthroughs.'
+      description: 'Professional photography and a marketing plan built for how buyers actually search today - not just an MLS entry and a sign in the yard.'
     },
     {
       num: '03',
-      title: 'Luxury Marketing Campaign',
+      title: 'Multi-Platform Launch',
       icon: <Sparkles className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'Bespoke print editorial brochures, targeted architectural publications, and custom social storytelling designed to showcase your home like a fine art collectible.'
+      description: 'Coordinated launch across the MLS, Zillow, Redfin, and a dedicated property website built specifically for your home.'
     },
     {
       num: '04',
-      title: 'Targeted Digital & Private Network Exposure',
+      title: 'Network & Targeted Reach',
       icon: <Globe className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'Algorithmic digital targeting reaches high-earning relocations from D.C., New York, and international wealth corridors, alongside discrete off-market previews.'
+      description: 'A targeted email campaign to our network of past clients and active buyers, paired with digital reach designed to put your home in front of the right people.'
     },
     {
       num: '05',
-      title: 'Negotiation Strategy & Asset Protection',
+      title: 'Negotiation That Protects You',
       icon: <ShieldCheck className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'Fiduciary advocacy designed to protect your purchase price, minimize inspection vulnerabilities, and secure non-refundable earnest deposits.'
+      description: 'Every point of the contract - price, terms, and contingencies - negotiated with your equity and your outcome in mind.'
     },
     {
       num: '06',
-      title: 'Real-Time Market Intelligence',
+      title: 'Clear, Responsive Communication',
       icon: <DollarSign className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'Continuous monitoring of competing inventory, interest rate shifts, and local market sentiment to adjust positioning dynamically during launch windows.'
+      description: "Straightforward updates from listing to closing, so you always know exactly where things stand - no guessing, no silence."
     }
   ];
 
@@ -55,15 +62,15 @@ export const SellPage: React.FC<SellPageProps> = ({
       {/* Hero Header */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F5C63] bg-[#0F5C63]/10 px-4 py-1.5 border border-[#0F5C63]/30 inline-block">
-          Fiduciary Seller Advisory
+          For Sellers
         </span>
 
         <h1 className="font-serif text-4xl sm:text-6xl font-bold text-[#0D2226] max-w-4xl mx-auto leading-tight">
-          The Difference Between Listing a Home and Selling It Strategically.
+          Sell for More, With a Strategy Behind Every Decision
         </h1>
 
         <p className="text-sm sm:text-base text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal leading-relaxed">
-          In Maryland’s luxury and rural estate markets, maximum net proceeds are achieved through strategic launch timing, architectural narrative, and targeted high-net-worth exposure.
+          Pricing a home isn't a formula - it's a strategy. The Friedman Team starts with real comparable data and market trends, then builds a marketing plan and negotiation approach designed to bring the right buyers and the strongest offers. From condos and townhomes to single-family homes and larger properties with acreage, every listing gets professional photography, a clear pricing strategy, and a plan for where buyers are actually looking.
         </p>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -73,7 +80,7 @@ export const SellPage: React.FC<SellPageProps> = ({
             className="w-full sm:w-auto px-8 py-4 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-xl transition-all flex items-center justify-center gap-2"
           >
             <Calculator className="w-4 h-4" />
-            <span>Request Your Complimentary Home Valuation</span>
+            <span>Get Your Free Home Valuation</span>
           </button>
 
           <button
@@ -89,10 +96,10 @@ export const SellPage: React.FC<SellPageProps> = ({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">
-            Our Seller Framework
+            How We Sell Your Home
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">
-            The 6 Pillars of Strategic Home Representation
+            A Strategy Behind Every Step
           </h2>
         </div>
 
@@ -121,6 +128,16 @@ export const SellPage: React.FC<SellPageProps> = ({
             </div>
           ))}
         </div>
+
+        <div className="text-center pt-2">
+          <Link
+            to="/sell/marketing-strategy"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#0F5C63] hover:text-[#C9A96A] transition-colors border-b border-[#0F5C63]/40 pb-1"
+          >
+            <span>See Exactly What Happens, Step by Step, When You List With Us</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </section>
 
       {/* Comparison Section: Traditional vs. Friedman Strategic */}
@@ -146,7 +163,7 @@ export const SellPage: React.FC<SellPageProps> = ({
               <ul className="space-y-3 text-xs text-[#A8B2A1]">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 font-bold">✕</span>
-                  <span>Basic iPhone photos or low-budget photography</span>
+                  <span>Basic phone photos or low-budget photography</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 font-bold">✕</span>
@@ -154,7 +171,7 @@ export const SellPage: React.FC<SellPageProps> = ({
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 font-bold">✕</span>
-                  <span>Passive reliance on standard MLS syndication</span>
+                  <span>Passive reliance on standard MLS syndication alone</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 font-bold">✕</span>
@@ -162,7 +179,7 @@ export const SellPage: React.FC<SellPageProps> = ({
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 font-bold">✕</span>
-                  <span>Standard reactive negotiation during inspection phases</span>
+                  <span>Reactive negotiation only once an offer comes in</span>
                 </li>
               </ul>
             </div>
@@ -174,28 +191,28 @@ export const SellPage: React.FC<SellPageProps> = ({
               </span>
 
               <h3 className="font-serif text-xl font-bold text-[#FAF8F5] border-b border-[#C9A96A]/30 pb-3">
-                Friedman Strategic Representation
+                The Friedman Team Approach
               </h3>
               <ul className="space-y-3 text-xs text-[#FAF8F5]">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#C9A96A] shrink-0 mt-0.5" />
-                  <span>Cinematic 4K drone, Matterport 3D & twilight architectural photography</span>
+                  <span>Professional photography built for how buyers search today</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#C9A96A] shrink-0 mt-0.5" />
-                  <span>Custom land easement & equestrian valuation modeling</span>
+                  <span>Pricing grounded in real comps, not a ZIP-code average</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#C9A96A] shrink-0 mt-0.5" />
-                  <span>Targeted digital placement reaching out-of-state wealth migration</span>
+                  <span>Coordinated launch across MLS, Zillow, Redfin, and your own property site</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#C9A96A] shrink-0 mt-0.5" />
-                  <span>Pre-vetted private previews & discrete off-market placement option</span>
+                  <span>Off-market and coming-soon exposure where it makes sense</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#C9A96A] shrink-0 mt-0.5" />
-                  <span>Fiduciary negotiation strategy driving structured competitive offer windows</span>
+                  <span>A negotiation strategy in place before an offer ever comes in</span>
                 </li>
               </ul>
             </div>
@@ -209,16 +226,16 @@ export const SellPage: React.FC<SellPageProps> = ({
       <section className="max-w-5xl mx-auto px-4 text-center space-y-6">
         <div className="bg-[#FAF8F5] border border-[#C9A96A] p-10 rounded-xs shadow-xl space-y-4">
           <h2 className="font-serif text-3xl font-bold text-[#0D2226]">
-            Ready to Discover Your Home’s Strategic Market Valuation?
+            Curious What Your Home Is Worth in Today's Market?
           </h2>
           <p className="text-xs sm:text-sm text-[#1C2B2E]/80 max-w-xl mx-auto">
-            Take 2 minutes to enter your property details for an instant preliminary market calculation and request a 1-on-1 confidential valuation review with Kyle Friedman.
+            Tell Kyle a bit about your property, and he'll personally follow up with a real comparative market analysis built from current comps - not an automated guess.
           </p>
           <button
             onClick={onOpenValuation}
             className="px-8 py-4 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-colors"
           >
-            Request Complimentary Home Valuation
+            Get Your Free Home Valuation
           </button>
         </div>
       </section>

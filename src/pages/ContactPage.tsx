@@ -297,7 +297,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => 
                 <Building2 className="w-4 h-4 text-[#C9A96A] shrink-0 mt-0.5" />
                 <div>
                   <span className="text-[#A8B2A1] block text-[10px] font-bold uppercase">Primary Service Markets</span>
-                  <span className="font-semibold text-xs">Carroll County • Baltimore County • Howard County</span>
+                  <span className="font-semibold text-xs">Carroll County • Baltimore County • Howard County • Frederick County</span>
                 </div>
               </div>
             </div>

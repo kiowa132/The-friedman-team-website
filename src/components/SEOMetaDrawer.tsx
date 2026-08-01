@@ -25,21 +25,23 @@ export const SEOMetaDrawer: React.FC = () => {
       { "@type": "AdministrativeArea", "name": "Carroll County, MD" },
       { "@type": "AdministrativeArea", "name": "Baltimore County, MD" },
       { "@type": "AdministrativeArea", "name": "Howard County, MD" },
+      { "@type": "AdministrativeArea", "name": "Frederick County, MD" },
       { "@type": "City", "name": "Fulton" },
       { "@type": "City", "name": "Westminster" },
       { "@type": "City", "name": "Sykesville" },
-      { "@type": "City", "name": "Mount Airy" }
+      { "@type": "City", "name": "Mount Airy" },
+      { "@type": "City", "name": "Frederick" }
     ],
     "founder": {
       "@type": "Person",
       "name": "Kyle Friedman",
-      "jobTitle": "Principal Luxury Real Estate Advisor"
+      "jobTitle": "Principal Advisor"
     },
     "knowsAbout": [
-      "Luxury Home Representation",
-      "Equestrian Farms & Land Preservation",
-      "Strategic Pricing Analysis",
-      "Off-Market Private Placements"
+      "Residential Real Estate",
+      "Farms & Land Sales",
+      "Data-Driven Pricing Strategy",
+      "Off-Market & Coming-Soon Listings"
     ]
   };
 

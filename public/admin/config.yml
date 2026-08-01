@@ -27,7 +27,7 @@ collections:
       - { label: "YouTube Video ID (just the ID, not the full URL)", name: "youtubeVideoId", widget: "string", required: false, hint: "From youtube.com/watch?v=THIS_PART. Leave blank if this post has no video - it won't show anything if empty." }
       - { label: "Carousel Images", name: "carouselImages", widget: "list", required: false, hint: "Recommended size: 1000x1250px (4:5 portrait ratio) per photo, under 400KB each.", field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Related Guide (slug)", name: "relatedGuideSlug", widget: "string", required: false, hint: "Must match a guide's filename exactly, e.g. carroll-county-seller-guide" }
-      - { label: "Related Area (slug)", name: "relatedAreaSlug", widget: "select", required: false, options: ["carroll-county", "baltimore-county", "howard-county"] }
+      - { label: "Related Area (slug)", name: "relatedAreaSlug", widget: "select", required: false, options: ["carroll-county", "baltimore-county", "howard-county", "frederick-county"] }
       - { label: "Body", name: "body", widget: "markdown", hint: "Use the image button in this editor's toolbar to insert photos right where you want them in the text - they'll appear inline, in that exact spot, styled automatically." }
 
   - name: "guides"
