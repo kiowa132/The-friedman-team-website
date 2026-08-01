@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Building2, Phone, Menu, X, Heart, Calculator, ChevronRight, ChevronDown, Compass, ShieldCheck, Grid2x2, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 interface NavDropdownItem {
@@ -176,6 +177,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
+    <>
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
@@ -310,12 +312,23 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         </div>
       </div>
+    </header>
 
-      {/* Full-screen overlay menu - light theme, two-column link grid,
-          matches Canopy's exact pattern. Used by both the desktop square
-          icon and the mobile hamburger, so there's one menu to maintain
-          instead of two different navigation experiences. */}
-      {fullMenuMounted && (
+    {/* Full-screen overlay menu - light theme, two-column link grid,
+        matches Canopy's exact pattern. Used by both the desktop square
+        icon and the mobile hamburger, so there's one menu to maintain
+        instead of two different navigation experiences.
+
+        Rendered via a portal directly into document.body, NOT nested
+        inside <header> - the header gets a backdrop-blur effect once
+        scrolled, and CSS backdrop-filter creates a new containing block
+        for any fixed-position descendants. That was silently trapping
+        this "fixed inset-0" overlay inside the header's own small box
+        instead of the full viewport whenever the page was scrolled,
+        which is exactly why it only worked correctly at the top of the
+        page. Portaling it out avoids that entirely. */}
+    {fullMenuMounted && createPortal(
+      (
         <div
           className={`fixed inset-0 z-[60] bg-[#FAF8F5] overflow-y-auto transition-opacity duration-300 ease-out ${
             fullMenuVisible ? 'opacity-100' : 'opacity-0'
@@ -409,7 +422,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
         </div>
-      )}
-    </header>
+      ),
+      document.body
+    )}
+    </>
   );
 };
