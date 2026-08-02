@@ -410,13 +410,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <div className="flex items-center justify-center sm:justify-end gap-3 pt-6 border-t border-[#0D2226]/10">
-              <a href="#" aria-label="Facebook" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
+              <a href="https://www.facebook.com/kyle.friedman132" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
+              <a href="https://www.instagram.com/keysbykyle/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="#" aria-label="LinkedIn" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
+              <a href="https://www.linkedin.com/in/kyle-friedman-415029168/?skipRedirect=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
                 <Linkedin className="w-4 h-4" />
               </a>
             </div>

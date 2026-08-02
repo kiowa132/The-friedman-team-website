@@ -19,6 +19,15 @@ export const Footer: React.FC<FooterProps> = ({
     <footer className="bg-[#FAF8F5] text-[#0D2226] border-t border-[#0D2226]/10 pt-16 pb-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
+        {/* eXp Realty logo, matching Canopy's prominent footer treatment */}
+        <div className="flex justify-center sm:justify-start pb-8">
+          <img
+            src="/images/brand/exp-realty-logo.png"
+            alt="eXp Realty"
+            className="h-14 w-auto object-contain"
+          />
+        </div>
+
         {/* Top row: brand mark + address + contact details, matching
             Canopy's 3-part footer header */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 pb-10">
@@ -67,13 +76,13 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Connect With Us */}
         <div className="flex items-center justify-center sm:justify-start gap-3 py-6 border-t border-[#0D2226]/10">
           <span className="text-[11px] font-bold uppercase tracking-widest text-[#0F5C63] mr-2">Connect With Us</span>
-          <a href="#" aria-label="Facebook" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
+          <a href="https://www.facebook.com/kyle.friedman132" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
             <Facebook className="w-4 h-4" />
           </a>
-          <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
+          <a href="https://www.instagram.com/keysbykyle/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
             <Instagram className="w-4 h-4" />
           </a>
-          <a href="#" aria-label="LinkedIn" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
+          <a href="https://www.linkedin.com/in/kyle-friedman-415029168/?skipRedirect=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
             <Linkedin className="w-4 h-4" />
           </a>
         </div>
