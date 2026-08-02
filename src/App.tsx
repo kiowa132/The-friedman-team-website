@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { ListingDetailModal } from './components/ListingDetailModal';
+import { ListingDetailPage } from './pages/ListingDetailPage';
 import { HomeValuationModal } from './components/HomeValuationModal';
 import { StrategyConsultationModal } from './components/StrategyConsultationModal';
 import { SEOMetaDrawer } from './components/SEOMetaDrawer';
@@ -64,7 +64,9 @@ const TAB_TO_PATH: Record<string, string> = {
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  const activeTab = PATH_TO_TAB[location.pathname] || 'home';
+  const activeTab = location.pathname.startsWith('/listings/')
+    ? 'listings'
+    : PATH_TO_TAB[location.pathname] || 'home';
 
   // Scrolls to top on every route change, regardless of how navigation
   // happened - a setActiveTab() button, a direct <Link>, or the browser's
@@ -90,7 +92,6 @@ export default function App() {
     }
   });
 
-  const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
   const [isValuationOpen, setIsValuationOpen] = useState(false);
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [selectedNeighborhoodId, setSelectedNeighborhoodId] = useState('carroll-county');
@@ -108,7 +109,7 @@ export default function App() {
   };
 
   const handleScheduleShowing = (listing: Listing) => {
-    setSelectedListing(listing);
+    navigate(`/listings/${encodeURIComponent(listing.mlsNumber || listing.id)}`, { state: { listing } });
   };
 
   return (
@@ -131,7 +132,7 @@ export default function App() {
               neighborhoods={NEIGHBORHOODS}
               savedListings={savedListings}
               onToggleSave={handleToggleSave}
-              onSelectListing={(l) => setSelectedListing(l)}
+              onSelectListing={(l) => navigate(`/listings/${encodeURIComponent(l.mlsNumber || l.id)}`, { state: { listing: l } })}
               onScheduleShowing={handleScheduleShowing}
               onOpenValuation={() => setIsValuationOpen(true)}
               onOpenConsultation={() => setIsConsultationOpen(true)}
@@ -176,7 +177,7 @@ export default function App() {
               setSelectedNeighborhoodId={setSelectedNeighborhoodId}
               savedListings={savedListings}
               onToggleSave={handleToggleSave}
-              onSelectListing={(l) => setSelectedListing(l)}
+              onSelectListing={(l) => navigate(`/listings/${encodeURIComponent(l.mlsNumber || l.id)}`, { state: { listing: l } })}
               onScheduleShowing={handleScheduleShowing}
               onOpenConsultation={() => setIsConsultationOpen(true)}
             />
@@ -186,9 +187,17 @@ export default function App() {
             <ListingsPage
               savedListings={savedListings}
               onToggleSave={handleToggleSave}
-              onSelectListing={(l) => setSelectedListing(l)}
+              onSelectListing={(l) => navigate(`/listings/${encodeURIComponent(l.mlsNumber || l.id)}`, { state: { listing: l } })}
               onScheduleShowing={handleScheduleShowing}
               onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
+
+          <Route path="/listings/:mlsNumber" element={
+            <ListingDetailPage
+              savedListings={savedListings}
+              onToggleSave={handleToggleSave}
+              onScheduleShowing={handleScheduleShowing}
             />
           } />
 
@@ -239,14 +248,6 @@ export default function App() {
         setActiveTab={setActiveTab}
         onOpenValuation={() => setIsValuationOpen(true)}
         onOpenConsultation={() => setIsConsultationOpen(true)}
-      />
-
-      <ListingDetailModal
-        listing={selectedListing}
-        onClose={() => setSelectedListing(null)}
-        isSaved={selectedListing ? savedListings.includes(selectedListing.id) : false}
-        onToggleSave={handleToggleSave}
-        onScheduleConsultation={() => setIsConsultationOpen(true)}
       />
 
       <HomeValuationModal
