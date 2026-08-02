@@ -64,7 +64,7 @@ export const ReviewsSection: React.FC = () => {
                   >
                     <div>
                       <Quote className="w-10 h-10 text-[#C9A96A]/50 fill-[#C9A96A]/50 mb-4" />
-                      <p className={`text-base text-[#1C2B2E]/85 leading-relaxed ${!isExpanded && isLong ? 'line-clamp-6' : ''}`}>
+                      <p className={`text-base text-[#1C2B2E]/85 leading-relaxed whitespace-pre-line ${!isExpanded && isLong ? 'line-clamp-6' : ''}`}>
                         {review.text || `A ${review.rating}-star review, no written comment.`}
                       </p>
                       {isLong && (

@@ -11,8 +11,8 @@
 // To add a new review later: copy the reviewer name and review text from
 // your Google Business Profile dashboard and add a new entry below.
 //
-// The overall profile rating (5.0 stars, all 7 reviews) is confirmed
-// directly from Kyle's Google Business Profile page.
+// The overall profile rating (5.0 stars, 9 reviews as of 2026-08-01) is
+// confirmed directly from Kyle's Google Business Profile page.
 
 export interface StaticReview {
   authorName: string;
@@ -22,6 +22,18 @@ export interface StaticReview {
 }
 
 export const GOOGLE_REVIEWS: StaticReview[] = [
+  {
+    authorName: 'Jess P.',
+    rating: 5,
+    text: "Working with Kyle was such a great experience. He made the whole buying/selling process so much easier than I expected. He was always quick to respond, kept me updated every step of the way, and was happy to answer all of my questions.\n\nKyle really knows the Maryland real estate market, and his knowledge gave me a lot of confidence throughout the process. I never felt pressured, and he always took the time to explain my options and make sure I was comfortable with every decision.\n\nIf you're looking to buy or sell a home, I definitely recommend Kyle. He's easy to work with, communicates well, and genuinely cares about helping his clients. I'd happily work with him again and wouldn't hesitate to recommend him to family and friends.",
+    relativeTime: '8 hours ago',
+  },
+  {
+    authorName: 'Troy Godwin',
+    rating: 5,
+    text: '',
+    relativeTime: '4 hours ago',
+  },
   {
     authorName: 'Kelly Allen',
     rating: 5,
@@ -67,7 +79,7 @@ export const GOOGLE_REVIEWS: StaticReview[] = [
 ];
 
 export const GOOGLE_OVERALL_RATING: number = 5.0;
-export const GOOGLE_TOTAL_REVIEW_COUNT: number = 7;
+export const GOOGLE_TOTAL_REVIEW_COUNT: number = 9;
 
 // Confirmed real link to Kyle's actual Google Maps listing.
 export const GOOGLE_MAPS_URL =
