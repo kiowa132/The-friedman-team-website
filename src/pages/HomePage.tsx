@@ -39,21 +39,27 @@ export const HomePage: React.FC<HomePageProps> = ({
     'Buying or selling in Carroll, Howard, Frederick, or Baltimore County? The Friedman Team combines local expertise and data-driven pricing to get results. Homes, estates, and everything between.'
   );
 
-  // Live Carroll County, $1M+ listings for the Featured Properties section -
+  // Live $1M+ listings across all 4 counties for the Featured Properties section -
   // real MLS data, not the static mock listings. Falls back to a friendly
   // "not configured" or "no matches right now" state rather than silently
   // showing nothing or fabricating listings.
   const [featuredListings, setFeaturedListings] = useState<Listing[]>([]);
   const [featuredStatus, setFeaturedStatus] = useState<'loading' | 'ok' | 'empty' | 'not_configured' | 'error'>('loading');
 
+  const TARGET_COUNTIES = ['Carroll County', 'Baltimore County', 'Howard County', 'Frederick County'];
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const result = await fetchMlsListings({ county: 'Carroll County', minPrice: 1000000, top: 3 });
+      // The MLS search API only supports filtering by one county at a time,
+      // so instead of 4 separate requests, fetch a larger batch with no
+      // county filter and narrow it down to just these 4 counties here.
+      const result = await fetchMlsListings({ minPrice: 1000000, top: 30 });
       if (cancelled) return;
       if (result.status === 'ok') {
-        setFeaturedListings(result.listings);
-        setFeaturedStatus(result.listings.length > 0 ? 'ok' : 'empty');
+        const matches = result.listings.filter((l) => TARGET_COUNTIES.includes(l.county)).slice(0, 3);
+        setFeaturedListings(matches);
+        setFeaturedStatus(matches.length > 0 ? 'ok' : 'empty');
       } else if (result.status === 'not_configured') {
         setFeaturedStatus('not_configured');
       } else {
@@ -263,7 +269,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-10 pb-4 border-b border-[#C9A96A]/30">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">
-              Carroll County, $1M+
+              Carroll, Baltimore, Howard & Frederick, $1M+
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] mt-1">
               Featured Properties
@@ -300,7 +306,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {featuredStatus === 'empty' && (
           <div className="text-center py-12 border border-[#C9A96A]/30 bg-[#FAF8F5]">
-            <p className="text-sm text-[#1C2B2E]/70 mb-4">No Carroll County listings over $1M are currently live - check back soon, or search all live inventory now.</p>
+            <p className="text-sm text-[#1C2B2E]/70 mb-4">No listings over $1M are currently live across Carroll, Baltimore, Howard, or Frederick County - check back soon, or search all live inventory now.</p>
             <button
               onClick={() => setActiveTab('listings')}
               className="px-6 py-3 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs"
