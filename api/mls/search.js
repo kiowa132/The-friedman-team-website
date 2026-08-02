@@ -18,11 +18,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { county, propertyType, maxPrice, minBeds, q, skip, top } = req.query;
+    const { county, propertyType, maxPrice, minPrice, minBeds, q, skip, top } = req.query;
     const { listings, total, hasMore, nextSkip, debugInfo } = await searchListings({
       county,
       propertyType,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
+      minPrice: minPrice ? Number(minPrice) : undefined,
       minBeds: minBeds ? Number(minBeds) : undefined,
       q,
       skip: skip ? Number(skip) : undefined,

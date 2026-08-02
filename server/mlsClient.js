@@ -26,7 +26,7 @@ export function isMlsConfigured() {
 }
 
 // Lofty's price/beds/baths filters are "min,max" strings, not separate fields.
-function buildFilterConditions({ maxPrice, minBeds, propertyType, q }) {
+function buildFilterConditions({ maxPrice, minPrice, minBeds, propertyType, q }) {
   const filterConditions = {};
 
   // When searching by keyword (address, MLS#, etc.), skip the price/bed/type
@@ -36,7 +36,15 @@ function buildFilterConditions({ maxPrice, minBeds, propertyType, q }) {
     return filterConditions;
   }
 
-  if (maxPrice) {
+  // Lofty's range syntax: value before the comma = minimum, value after =
+  // maximum, either side can be left blank for "no bound." minBeds already
+  // used the "value," (min-only) form below - minPrice follows the same
+  // pattern. If both are set, combine into one "min,max" range string.
+  if (minPrice && maxPrice) {
+    filterConditions.price = `${Number(minPrice)},${Number(maxPrice)}`;
+  } else if (minPrice) {
+    filterConditions.price = `${Number(minPrice)},`;
+  } else if (maxPrice) {
     filterConditions.price = `,${Number(maxPrice)}`;
   }
   if (minBeds) {
@@ -164,7 +172,7 @@ function mapListing(raw) {
 
 /**
  * Search live MLS listings via Lofty's V2 search endpoint.
- * @param {{ county?: string, propertyType?: string, maxPrice?: number, minBeds?: number, q?: string, skip?: number, top?: number }} params
+ * @param {{ county?: string, propertyType?: string, maxPrice?: number, minPrice?: number, minBeds?: number, q?: string, skip?: number, top?: number }} params
  */
 async function fetchLoftyPage({ filterConditions, pageSize, pageNum }) {
   const body = {

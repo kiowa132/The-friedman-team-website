@@ -93,7 +93,7 @@ app.post('/api/leads', async (req, res) => {
 
 // ---------------------------------------------------------------------------
 // GET /api/mls/search
-// Query params: county, propertyType, maxPrice, minBeds, q, skip, top
+// Query params: county, propertyType, maxPrice, minPrice, minBeds, q, skip, top
 // Returns: { ok: true, listings: [...], total } once LOFTY_API_KEY is set in
 // .env. Until then, returns a 501 with a clear "not configured" message so
 // the frontend can show a friendly state instead of pretending to have live
@@ -109,11 +109,12 @@ app.get('/api/mls/search', async (req, res) => {
   }
 
   try {
-    const { county, propertyType, maxPrice, minBeds, q, skip, top } = req.query;
+    const { county, propertyType, maxPrice, minPrice, minBeds, q, skip, top } = req.query;
     const { listings, total, hasMore, nextSkip, debugInfo } = await searchListings({
       county,
       propertyType,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
+      minPrice: minPrice ? Number(minPrice) : undefined,
       minBeds: minBeds ? Number(minBeds) : undefined,
       q,
       skip: skip ? Number(skip) : undefined,

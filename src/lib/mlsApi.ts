@@ -4,6 +4,7 @@ export interface MlsSearchParams {
   county?: string;
   propertyType?: string;
   maxPrice?: number;
+  minPrice?: number;
   minBeds?: number;
   q?: string;
   skip?: number;
@@ -20,6 +21,7 @@ export async function fetchMlsListings(params: MlsSearchParams): Promise<MlsSear
   if (params.county) query.set('county', params.county);
   if (params.propertyType) query.set('propertyType', params.propertyType);
   if (params.maxPrice) query.set('maxPrice', String(params.maxPrice));
+  if (params.minPrice) query.set('minPrice', String(params.minPrice));
   if (params.minBeds) query.set('minBeds', String(params.minBeds));
   if (params.q) query.set('q', params.q);
   if (params.skip) query.set('skip', String(params.skip));
