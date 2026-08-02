@@ -235,11 +235,16 @@ async function fetchLoftyPage({ filterConditions, pageSize, pageNum }) {
 
 /**
  * Fetches full listing detail (multiple photos, description, and whatever
- * else Lofty's richer detail view includes) for a single listing, using
- * the /listings/details endpoint - confirmed to exist via Lofty support,
- * but its exact response shape was NOT confirmed before this was written.
- * Enable DEBUG_MLS to see the raw response the first time this runs and
- * adjust the extraction below if it doesn't match.
+ * else Lofty's richer detail view includes) for a single listing.
+ *
+ * The exact endpoint URL/method was NOT confirmed - Lofty support confirmed
+ * a "details" endpoint with a listingId param exists, but the first guess
+ * (POST /v2.0/listings/details) came back with a real, unambiguous 404
+ * from Lofty itself: {"code":200121,"message":"The requested API endpoint
+ * does not exist"}. Rather than guess once and fail again, this tries
+ * several likely real variations in order and uses whichever one actually
+ * responds successfully. Enable DEBUG_MLS to see which candidate worked
+ * (or that all of them failed) in the server console.
  */
 export async function getListingDetails(listingId) {
   if (!isMlsConfigured()) {
@@ -248,37 +253,58 @@ export async function getListingDetails(listingId) {
     throw err;
   }
 
-  const body = { listingId };
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `token ${LOFTY_API_KEY}`,
+  };
 
-  const res = await fetch(`${LOFTY_API_BASE}/v2.0/listings/details`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `token ${LOFTY_API_KEY}`,
-    },
-    body: JSON.stringify(body),
-  });
+  const candidates = [
+    { method: 'POST', url: `${LOFTY_API_BASE}/v2.0/listing/details`, body: { listingId } },
+    { method: 'GET', url: `${LOFTY_API_BASE}/v2.0/listings/detail?listingId=${encodeURIComponent(listingId)}` },
+    { method: 'GET', url: `${LOFTY_API_BASE}/v2.0/listing/detail?listingId=${encodeURIComponent(listingId)}` },
+    { method: 'GET', url: `${LOFTY_API_BASE}/v2.0/listings/${encodeURIComponent(listingId)}` },
+    { method: 'GET', url: `${LOFTY_API_BASE}/v2.0/listing/${encodeURIComponent(listingId)}` },
+    { method: 'POST', url: `${LOFTY_API_BASE}/v2.0/listings/details`, body: { listingId } },
+  ];
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    const err = new Error(`Lofty details API request failed: ${res.status} ${text}`);
+  const attempts = [];
+  let json = null;
+  let workingCandidate = null;
+
+  for (const candidate of candidates) {
+    try {
+      const res = await fetch(candidate.url, {
+        method: candidate.method,
+        headers,
+        body: candidate.body ? JSON.stringify(candidate.body) : undefined,
+      });
+      const text = await res.text().catch(() => '');
+      attempts.push({ candidate, httpStatus: res.status, responseSnippet: text.slice(0, 300) });
+
+      if (res.ok) {
+        json = JSON.parse(text);
+        workingCandidate = candidate;
+        break;
+      }
+    } catch (e) {
+      attempts.push({ candidate, error: String(e) });
+    }
+  }
+
+  if (DEBUG_MLS) {
+    console.log('[DEBUG_MLS] getListingDetails attempts:', JSON.stringify(attempts, null, 2));
+    if (json) console.log('[DEBUG_MLS] Working endpoint:', workingCandidate, 'Response:', JSON.stringify(json, null, 2));
+  }
+
+  if (!json) {
+    const err = new Error('None of the candidate listing-details endpoints worked.');
     err.code = 'MLS_REQUEST_FAILED';
-    err.debugInfo = { httpStatus: res.status, requestBody: body, responseText: text.slice(0, 2000) };
+    err.debugInfo = { attempts };
     throw err;
   }
 
-  const json = await res.json();
-
-  if (DEBUG_MLS) {
-    console.log('[DEBUG_MLS] Raw /listings/details response:', JSON.stringify(json, null, 2));
-  }
-
-  // Response shape not confirmed ahead of time - try the most likely
-  // possibilities defensively rather than assuming one.
   const raw = json.listing || json.data || json.result || json;
 
-  // Photos - try several likely shapes, same defensive approach as the
-  // search endpoint mapping, since this is genuinely unconfirmed.
   let gallery = [];
   const photoCandidates = raw.photos || raw.media || raw.pictures || raw.images || raw.photoUrls;
   if (Array.isArray(photoCandidates) && photoCandidates.length > 0) {
@@ -294,8 +320,8 @@ export async function getListingDetails(listingId) {
   return {
     gallery,
     description,
-    raw, // full raw object included so any other useful fields (tax, garage, etc.) can be checked and mapped once confirmed
-    debugInfo: { httpStatus: res.status, requestBody: body, responseTopLevelKeys: Object.keys(json) },
+    raw,
+    debugInfo: { workingCandidate, attempts, responseTopLevelKeys: Object.keys(json) },
   };
 }
 
