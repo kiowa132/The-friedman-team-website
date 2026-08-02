@@ -133,7 +133,7 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
     setShowingSubmitted(true);
   };
 
-  const galleryPreview = listing.gallery.slice(0, 4);
+  const galleryPreview = listing.gallery.filter((img) => img !== listing.heroImage).slice(0, 4);
 
   // Additional Information rows - only fields actually present, never a
   // fabricated placeholder for missing data.
@@ -159,9 +159,13 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
         <span className="text-[#0D2226] font-medium">{listing.title}</span>
       </div>
 
-      {/* Photo Grid */}
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-2 rounded-xs overflow-hidden mb-8">
-        <div className="sm:row-span-2 aspect-[4/3] sm:aspect-auto overflow-hidden">
+      {/* Photo Grid - Lofty's search feed currently only ever returns one
+          photo per listing (confirmed against real raw output), so this
+          gracefully shows a single clean photo rather than faking a grid
+          with the same image repeated. If Lofty's feed ever returns
+          additional photos, the grid below will use them automatically. */}
+      <div className={`relative grid grid-cols-1 ${galleryPreview.length > 0 ? 'sm:grid-cols-2' : ''} gap-2 rounded-xs overflow-hidden mb-8`}>
+        <div className={`${galleryPreview.length > 0 ? 'sm:row-span-2' : ''} aspect-[16/9] sm:aspect-auto overflow-hidden`}>
           <img src={listing.heroImage} alt={listing.title} className="w-full h-full object-cover" />
         </div>
         {galleryPreview.map((imgUrl, idx) => (

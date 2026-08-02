@@ -144,40 +144,19 @@ function mapListing(raw) {
     status = 'Pending';
   }
 
-  // Photo gallery - try several likely field names/shapes defensively,
-  // since only "previewPicture" (a single image) was confirmed against
-  // Lofty's docs while this was built. This was the actual bug behind
-  // every listing only ever showing one photo. If Lofty returns a real
-  // photo array under a different field name, enable DEBUG_MLS (see top
-  // of file) to see the raw listing and adjust the field names checked
-  // below.
-  let gallery = [];
-  const photoCandidates = raw.photos || raw.media || raw.pictures || raw.images || raw.photoUrls;
-  if (Array.isArray(photoCandidates) && photoCandidates.length > 0) {
-    gallery = photoCandidates
-      .map((p) => (typeof p === 'string' ? p : p?.url || p?.uri || p?.href || ''))
-      .filter(Boolean);
-  } else if (raw.previewPicture) {
-    gallery = [raw.previewPicture];
-  }
-  const heroImage = gallery[0] || raw.previewPicture || '';
-
-  // Additional property details, RESO-standard field names attempted since
-  // Bright MLS is a RESO-compliant feed - but these specific names were
-  // NOT confirmed against actual Lofty output, only against typical RESO
-  // Data Dictionary conventions. Each falls back to undefined (not shown
-  // in the UI) rather than a fabricated value if the field isn't present.
-  const taxAnnualAmount = raw.taxAnnualAmount ?? raw.TaxAnnualAmount ?? undefined;
-  const daysOnMarket = raw.daysOnMarket ?? raw.DaysOnMarket ?? undefined;
-  const garageSpaces = raw.garageSpaces ?? raw.GarageSpaces ?? undefined;
-  const subdivisionName = raw.subdivisionName ?? raw.SubdivisionName ?? undefined;
-  const associationFee = raw.associationFee ?? raw.AssociationFee ?? undefined;
-  const architecturalStyle = raw.architecturalStyle ?? raw.ArchitecturalStyle ?? undefined;
-  const waterSource = raw.waterSource ?? raw.WaterSource ?? undefined;
-  const sewer = raw.sewer ?? raw.Sewer ?? undefined;
-  const zoning = raw.zoning ?? raw.Zoning ?? undefined;
-  const listAgentName = raw.listAgentFullName ?? raw.ListAgentFullName ?? undefined;
-  const listOfficeName = raw.listOfficeName ?? raw.ListOfficeName ?? undefined;
+  // CONFIRMED against a real raw response on 2026-08-02 (see rawSampleListing
+  // in debugInfo when DEBUG_MLS=true): Lofty's /v2.0/listings/search endpoint
+  // is a lightweight summary view. It does NOT include a photo array
+  // (only one "previewPicture"), no description/remarks field, and none of
+  // tax amount, garage spaces, subdivision, HOA fee, architectural style,
+  // water source, sewer, or zoning. Those all either come from a separate
+  // "get single listing" endpoint (if Lofty's API has one - worth checking
+  // their docs or asking their support directly) or aren't available via
+  // this API at all. Do not guess at these again without a confirmed
+  // sample - showing "-" or omitting the field entirely is correct;
+  // fabricating a value is not.
+  const gallery = raw.previewPicture ? [raw.previewPicture] : [];
+  const heroImage = raw.previewPicture || '';
 
   return {
     id: String(raw.id ?? raw.mlsListingId),
@@ -202,17 +181,20 @@ function mapListing(raw) {
     mlsNumber: raw.mlsListingId || '',
     virtualTourUrl: raw.virtualTourUrl || undefined,
     featured: false,
-    taxAnnualAmount,
-    daysOnMarket,
-    garageSpaces,
-    subdivisionName,
-    associationFee,
-    architecturalStyle,
-    waterSource,
-    sewer,
-    zoning,
-    listAgentName,
-    listOfficeName,
+    // Confirmed real fields:
+    daysOnMarket: typeof raw.daysOnList === 'number' ? raw.daysOnList : undefined,
+    listAgentName: raw.agentName || undefined,
+    listOfficeName: raw.agentOrganizationName || undefined,
+    // Confirmed NOT present in this endpoint's response - left undefined
+    // on purpose rather than guessed:
+    taxAnnualAmount: undefined,
+    garageSpaces: undefined,
+    subdivisionName: undefined,
+    associationFee: undefined,
+    architecturalStyle: undefined,
+    waterSource: undefined,
+    sewer: undefined,
+    zoning: undefined,
   };
 }
 
