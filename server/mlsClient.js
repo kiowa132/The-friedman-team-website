@@ -144,6 +144,41 @@ function mapListing(raw) {
     status = 'Pending';
   }
 
+  // Photo gallery - try several likely field names/shapes defensively,
+  // since only "previewPicture" (a single image) was confirmed against
+  // Lofty's docs while this was built. This was the actual bug behind
+  // every listing only ever showing one photo. If Lofty returns a real
+  // photo array under a different field name, enable DEBUG_MLS (see top
+  // of file) to see the raw listing and adjust the field names checked
+  // below.
+  let gallery = [];
+  const photoCandidates = raw.photos || raw.media || raw.pictures || raw.images || raw.photoUrls;
+  if (Array.isArray(photoCandidates) && photoCandidates.length > 0) {
+    gallery = photoCandidates
+      .map((p) => (typeof p === 'string' ? p : p?.url || p?.uri || p?.href || ''))
+      .filter(Boolean);
+  } else if (raw.previewPicture) {
+    gallery = [raw.previewPicture];
+  }
+  const heroImage = gallery[0] || raw.previewPicture || '';
+
+  // Additional property details, RESO-standard field names attempted since
+  // Bright MLS is a RESO-compliant feed - but these specific names were
+  // NOT confirmed against actual Lofty output, only against typical RESO
+  // Data Dictionary conventions. Each falls back to undefined (not shown
+  // in the UI) rather than a fabricated value if the field isn't present.
+  const taxAnnualAmount = raw.taxAnnualAmount ?? raw.TaxAnnualAmount ?? undefined;
+  const daysOnMarket = raw.daysOnMarket ?? raw.DaysOnMarket ?? undefined;
+  const garageSpaces = raw.garageSpaces ?? raw.GarageSpaces ?? undefined;
+  const subdivisionName = raw.subdivisionName ?? raw.SubdivisionName ?? undefined;
+  const associationFee = raw.associationFee ?? raw.AssociationFee ?? undefined;
+  const architecturalStyle = raw.architecturalStyle ?? raw.ArchitecturalStyle ?? undefined;
+  const waterSource = raw.waterSource ?? raw.WaterSource ?? undefined;
+  const sewer = raw.sewer ?? raw.Sewer ?? undefined;
+  const zoning = raw.zoning ?? raw.Zoning ?? undefined;
+  const listAgentName = raw.listAgentFullName ?? raw.ListAgentFullName ?? undefined;
+  const listOfficeName = raw.listOfficeName ?? raw.ListOfficeName ?? undefined;
+
   return {
     id: String(raw.id ?? raw.mlsListingId),
     title: raw.address || raw.fullAddress || `${raw.streetAddress || ''} ${raw.city || ''}`.trim() || 'Property',
@@ -159,14 +194,25 @@ function mapListing(raw) {
     acres,
     propertyType: raw.propertyTypePrimary || raw.primaryType || raw.propertyType || 'Residential',
     status,
-    heroImage: raw.previewPicture || '',
-    gallery: raw.previewPicture ? [raw.previewPicture] : [],
+    heroImage,
+    gallery,
     description: raw.remarks || raw.description || raw.publicRemarks || '',
     highlights: [],
     yearBuilt: raw.builtYear || 0,
     mlsNumber: raw.mlsListingId || '',
     virtualTourUrl: raw.virtualTourUrl || undefined,
     featured: false,
+    taxAnnualAmount,
+    daysOnMarket,
+    garageSpaces,
+    subdivisionName,
+    associationFee,
+    architecturalStyle,
+    waterSource,
+    sewer,
+    zoning,
+    listAgentName,
+    listOfficeName,
   };
 }
 
@@ -331,6 +377,18 @@ export async function searchListings(params = {}) {
   const marylandRaw = rawListings.filter((l) => (l.state || '').toUpperCase() === 'MD');
   let listings = marylandRaw.map(mapListing);
 
+  // Logs one real raw listing object so the actual field names Lofty
+  // returns can be confirmed and compared against the guesses in
+  // mapListing() above (tax, garage, subdivision, HOA, photos, etc. were
+  // never confirmed against real output - only typical RESO naming
+  // conventions). Set DEBUG_MLS=true in .env, run one search, then check
+  // the server console (or this response's debugInfo.rawSampleListing if
+  // this endpoint is hit directly) and adjust field names in mapListing()
+  // to match reality.
+  if (DEBUG_MLS && marylandRaw.length > 0) {
+    console.log('[DEBUG_MLS] Raw listing sample - full field list:', JSON.stringify(marylandRaw[0], null, 2));
+  }
+
   if (params.county && params.county !== 'All') {
     const wanted = params.county.toLowerCase();
     listings = listings.filter((l) => l.county.toLowerCase() === wanted);
@@ -354,6 +412,7 @@ export async function searchListings(params = {}) {
       responseMetadata: json.metadata,
       rawListingsFoundByExtractor: rawListings.length,
       marylandListingsAfterStateFilter: marylandRaw.length,
+      rawSampleListing: DEBUG_MLS && marylandRaw.length > 0 ? marylandRaw[0] : undefined,
       responseSample: JSON.stringify(json).slice(0, 3000),
     },
   };

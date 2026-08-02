@@ -48,6 +48,21 @@ export interface Listing {
   mlsNumber: string;
   virtualTourUrl?: string;
   featured?: boolean;
+  // Additional detail-page fields - all optional since availability
+  // depends on what Lofty's feed actually returns (see server/mlsClient.js
+  // for the field-name caveats). UI should only render these when present,
+  // never show a placeholder as if it were real data.
+  taxAnnualAmount?: number;
+  daysOnMarket?: number;
+  garageSpaces?: number;
+  subdivisionName?: string;
+  associationFee?: number;
+  architecturalStyle?: string;
+  waterSource?: string;
+  sewer?: string;
+  zoning?: string;
+  listAgentName?: string;
+  listOfficeName?: string;
 }
 
 export interface Neighborhood {
