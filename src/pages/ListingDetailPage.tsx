@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import { Listing } from '../types';
-import { fetchMlsListings } from '../lib/mlsApi';
+import { fetchMlsListings, fetchMlsListingDetails } from '../lib/mlsApi';
 import { ListingCard } from '../components/ListingCard';
 import { usePageMeta } from '../lib/usePageMeta';
 import {
@@ -57,6 +57,30 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
     })();
     return () => { cancelled = true; };
   }, [mlsNumber, stateListing]);
+
+  // Fetch full listing details (real photo gallery + description) using
+  // the /listings/details endpoint, and merge it into the base listing
+  // data once it arrives. Doesn't overwrite what we already have if this
+  // call fails or comes back empty - the page still works fine with just
+  // the summary data in that case.
+  useEffect(() => {
+    if (!listing) return;
+    let cancelled = false;
+    (async () => {
+      const details = await fetchMlsListingDetails(listing.id);
+      if (cancelled || details.status !== 'ok') return;
+      setListing((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          gallery: details.gallery.length > 0 ? details.gallery : prev.gallery,
+          heroImage: details.gallery.length > 0 ? details.gallery[0] : prev.heroImage,
+          description: details.description || prev.description,
+        };
+      });
+    })();
+    return () => { cancelled = true; };
+  }, [listing?.id]);
 
   // Similar properties - same county, nearby price range, excluding this listing
   useEffect(() => {

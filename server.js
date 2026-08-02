@@ -18,7 +18,7 @@ import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { searchListings, isMlsConfigured } from './server/mlsClient.js';
+import { searchListings, getListingDetails, isMlsConfigured } from './server/mlsClient.js';
 import { fetchGoogleReviews, isReviewsConfigured } from './server/reviewsClient.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -127,6 +127,35 @@ app.get('/api/mls/search', async (req, res) => {
       ok: false,
       error: 'MLS_REQUEST_FAILED',
       message: 'Could not reach the MLS feed.',
+      debugInfo: err.debugInfo,
+    });
+  }
+});
+
+// GET /api/mls/details - full listing detail (photos, description) for one listing
+app.get('/api/mls/details', async (req, res) => {
+  if (!isMlsConfigured()) {
+    return res.status(501).json({
+      ok: false,
+      error: 'MLS_NOT_CONFIGURED',
+      message: 'No live MLS feed is connected yet. Set LOFTY_API_KEY in .env.',
+    });
+  }
+
+  const { listingId } = req.query;
+  if (!listingId) {
+    return res.status(400).json({ ok: false, error: 'MISSING_LISTING_ID', message: 'listingId query param is required.' });
+  }
+
+  try {
+    const result = await getListingDetails(listingId);
+    return res.json({ ok: true, ...result });
+  } catch (err) {
+    console.error('MLS listing details failed:', err);
+    return res.status(502).json({
+      ok: false,
+      error: 'MLS_REQUEST_FAILED',
+      message: 'Could not reach the MLS feed for listing details.',
       debugInfo: err.debugInfo,
     });
   }

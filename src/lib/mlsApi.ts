@@ -51,3 +51,28 @@ export async function fetchMlsListings(params: MlsSearchParams): Promise<MlsSear
     return { status: 'error', message: 'Could not reach the server. Please check your connection.' };
   }
 }
+
+export type MlsDetailsResult =
+  | { status: 'ok'; gallery: string[]; description: string; raw?: any }
+  | { status: 'not_configured'; message: string }
+  | { status: 'error'; message: string };
+
+// Fetches full listing detail (multiple photos, full description) for a
+// single listing, using the /listings/details endpoint (confirmed via
+// Lofty support to exist, separate from the lightweight /search endpoint).
+export async function fetchMlsListingDetails(listingId: string): Promise<MlsDetailsResult> {
+  try {
+    const res = await fetch(`/api/mls/details?listingId=${encodeURIComponent(listingId)}`);
+    const data = await res.json();
+
+    if (res.status === 501 || data?.error === 'MLS_NOT_CONFIGURED') {
+      return { status: 'not_configured', message: data?.message || 'MLS feed not connected yet.' };
+    }
+    if (!res.ok || !data.ok) {
+      return { status: 'error', message: data?.message || 'Could not load full listing details right now.' };
+    }
+    return { status: 'ok', gallery: data.gallery || [], description: data.description || '', raw: data.raw };
+  } catch (err) {
+    return { status: 'error', message: 'Could not reach the server. Please check your connection.' };
+  }
+}

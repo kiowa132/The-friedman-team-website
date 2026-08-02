@@ -233,6 +233,72 @@ async function fetchLoftyPage({ filterConditions, pageSize, pageNum }) {
   return { json, rawListings: extractRawListings(json), requestBody: body, httpStatus: res.status };
 }
 
+/**
+ * Fetches full listing detail (multiple photos, description, and whatever
+ * else Lofty's richer detail view includes) for a single listing, using
+ * the /listings/details endpoint - confirmed to exist via Lofty support,
+ * but its exact response shape was NOT confirmed before this was written.
+ * Enable DEBUG_MLS to see the raw response the first time this runs and
+ * adjust the extraction below if it doesn't match.
+ */
+export async function getListingDetails(listingId) {
+  if (!isMlsConfigured()) {
+    const err = new Error('MLS feed is not configured (LOFTY_API_KEY missing).');
+    err.code = 'MLS_NOT_CONFIGURED';
+    throw err;
+  }
+
+  const body = { listingId };
+
+  const res = await fetch(`${LOFTY_API_BASE}/v2.0/listings/details`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `token ${LOFTY_API_KEY}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    const err = new Error(`Lofty details API request failed: ${res.status} ${text}`);
+    err.code = 'MLS_REQUEST_FAILED';
+    err.debugInfo = { httpStatus: res.status, requestBody: body, responseText: text.slice(0, 2000) };
+    throw err;
+  }
+
+  const json = await res.json();
+
+  if (DEBUG_MLS) {
+    console.log('[DEBUG_MLS] Raw /listings/details response:', JSON.stringify(json, null, 2));
+  }
+
+  // Response shape not confirmed ahead of time - try the most likely
+  // possibilities defensively rather than assuming one.
+  const raw = json.listing || json.data || json.result || json;
+
+  // Photos - try several likely shapes, same defensive approach as the
+  // search endpoint mapping, since this is genuinely unconfirmed.
+  let gallery = [];
+  const photoCandidates = raw.photos || raw.media || raw.pictures || raw.images || raw.photoUrls;
+  if (Array.isArray(photoCandidates) && photoCandidates.length > 0) {
+    gallery = photoCandidates
+      .map((p) => (typeof p === 'string' ? p : p?.url || p?.uri || p?.href || ''))
+      .filter(Boolean);
+  } else if (raw.previewPicture) {
+    gallery = [raw.previewPicture];
+  }
+
+  const description = raw.remarks || raw.description || raw.publicRemarks || raw.remarksPublic || '';
+
+  return {
+    gallery,
+    description,
+    raw, // full raw object included so any other useful fields (tax, garage, etc.) can be checked and mapped once confirmed
+    debugInfo: { httpStatus: res.status, requestBody: body, responseTopLevelKeys: Object.keys(json) },
+  };
+}
+
 function matchesKeyword(listing, q) {
   const query = q.trim().toLowerCase();
   return (
