@@ -91,12 +91,12 @@ export const Navbar: React.FC<NavbarProps> = ({
       label: 'Properties',
       items: [
         { label: 'Featured Properties', action: () => goTo('listings') },
+        { label: 'Home Search', action: () => goTo('listings') },
         { label: "Buyer's Strategy", action: () => goTo('buy') },
         { label: "Seller's Strategy", action: () => goTo('sell') },
       ],
     },
     { id: 'neighborhoods', label: 'Neighborhoods', action: () => goTo('neighborhoods') },
-    { id: 'home-search', label: 'Home Search', action: () => goTo('listings') },
     { id: 'home-valuation', label: 'Home Valuation', action: () => onOpenValuation() },
     {
       id: 'resources',
@@ -150,11 +150,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         label: 'Properties',
         items: [
           { label: 'Featured Properties', action: () => goTo('listings') },
+          { label: 'Home Search', action: () => goTo('listings') },
           { label: "Buyer's Strategy", action: () => goTo('buy') },
           { label: "Seller's Strategy", action: () => goTo('sell') },
         ],
       },
-      { id: 'home-search-full', label: 'Home Search', action: () => goTo('listings') },
       {
         id: 'resources-full',
         label: 'Resources',
