@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { BLOG_POSTS } from '../lib/content';
+import { formatDisplayDate } from '../lib/formatDate';
 
 interface BlogListPageProps {
   setActiveTab: (tab: string) => void;
@@ -54,7 +55,7 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
                 <div className="flex items-center justify-between pt-2">
                   <span className="text-[10px] text-[#1C2B2E]/50 flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
-                    {new Date(post.publishDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    {formatDisplayDate(post.publishDate)}
                   </span>
                   <span className="text-xs font-bold text-[#0F5C63] flex items-center gap-1 group-hover:text-[#C9A96A] transition-colors">
                     Read <ArrowRight className="w-3 h-3" />

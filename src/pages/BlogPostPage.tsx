@@ -4,6 +4,7 @@ import { Calendar, ArrowRight, Calculator, Phone, FileText } from 'lucide-react'
 import { BLOG_POSTS, GUIDES } from '../lib/content';
 import { NEIGHBORHOODS } from '../data/mockData';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
+import { formatDisplayDate } from '../lib/formatDate';
 import { ScrollSubscribePrompt } from '../components/ScrollSubscribePrompt';
 
 interface BlogPostPageProps {
@@ -124,7 +125,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           </Link>
           <span className="flex items-center gap-1.5">
             <Calendar className="w-3 h-3" />
-            {new Date(post.publishDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+            {formatDisplayDate(post.publishDate)}
           </span>
         </div>
 
