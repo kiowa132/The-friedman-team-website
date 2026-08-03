@@ -122,6 +122,27 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
         </p>
       </div>
 
+      {/* Concierge banner - frames direct contact as the premium, complete
+          path (which is genuinely true: search here only reflects a
+          portion of live inventory), rather than looking like an apology
+          for a limited feature. */}
+      <div className="bg-[#0D2226] border border-[#C9A96A]/40 rounded-xs px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto text-center sm:text-left">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-[#C9A96A] mb-1">
+            White-Glove Search
+          </p>
+          <p className="text-sm text-[#FAF8F5]/90">
+            For the full, up-to-the-minute inventory across Carroll, Baltimore, Howard & Frederick County - including off-market opportunities not shown below - reach out to Kyle directly.
+          </p>
+        </div>
+        <button
+          onClick={onOpenConsultation}
+          className="shrink-0 px-6 py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors whitespace-nowrap"
+        >
+          Talk to Kyle
+        </button>
+      </div>
+
       {/* IDX Search Header Filter Bar */}
       <IDXSearchHeader
         searchQuery={searchQuery}

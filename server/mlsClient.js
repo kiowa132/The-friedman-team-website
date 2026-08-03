@@ -363,31 +363,22 @@ export async function searchListings(params = {}) {
     // target property could be anywhere in a large multi-state feed, not
     // just the most recent page. Capped to avoid excessive requests/timeouts.
     const PAGE_SIZE = 100;
-    const MAX_PAGES = 8; // scans up to 800 raw listings
+    const MAX_PAGES = 20; // scans up to 2,000 raw listings (up from 800) -
+    // still a fraction of the full ~34,000 listing feed, but meaningfully
+    // better coverage without excessive request time. The address filter
+    // above didn't pan out (Lofty silently ignores it rather than
+    // filtering), so this scan is still the only real mechanism finding
+    // matches - not a full fix, but a genuine improvement.
     const MATCH_TARGET = 30; // stop early once we have enough matches
 
-    // Server-side address filter using "streetAddress" as the field name -
-    // confirmed real from Lofty's own hosted site (kylefriedman.expportal.com)
-    // URL query params, which use exactly this shape:
-    // condition={"location":{"streetAddress":["424 BAILIFF RD..."]}}
-    // This replaces an earlier guess ("address") that was never confirmed
-    // and likely never actually worked server-side, silently falling back
-    // to the slow multi-page scan below every time.
-    const experimentalFilterConditions = {
-      ...filterConditions,
-      location: { ...filterConditions.location, streetAddress: [params.q.trim()] },
-    };
-
-    let activeFilterConditions = experimentalFilterConditions;
-    usedExperimentalAddressFilter = true;
-
-    try {
-      await fetchLoftyPage({ filterConditions: activeFilterConditions, pageSize: 1, pageNum: 1 });
-    } catch (probeErr) {
-      // Lofty didn't like the experimental filter - fall back to plain state filter.
-      activeFilterConditions = filterConditions;
-      usedExperimentalAddressFilter = false;
-    }
+    // NOTE: previously tried an experimental server-side "streetAddress"
+    // filter here (confirmed as a real field name from Lofty's own hosted
+    // site URLs), but testing showed Lofty silently ignores it rather than
+    // filtering - every page still came back as the full unfiltered
+    // dataset. Removed the probe call and fallback logic since it added a
+    // wasted round-trip with no actual benefit; the scan below is
+    // currently the only real mechanism that works.
+    const activeFilterConditions = filterConditions;
 
     let matchedRaw = [];
     let pagesScanned = 0;
