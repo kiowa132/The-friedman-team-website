@@ -2,7 +2,7 @@
 title: Curb Appeal Isn’t Staging. It’s Math.
 metaDescription: My wife grabbed one of those bargain power washers over the
   weekend, and I figured I’d handle the deck myself before we stained it
-category: Market Reports
+category: Sell Your Home
 publishDate: 2026-07-30
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-3-.png
 youtubeVideoId: ""
