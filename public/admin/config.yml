@@ -22,7 +22,7 @@ collections:
         name: "category"
         widget: "select"
         options: ["Market Reports", "Sell Your Home", "Buy a Home"]
-      - { label: "Publish Date", name: "publishDate", widget: "date" }
+      - { label: "Publish Date", name: "publishDate", widget: "date", required: true, default: "{{now}}" }
       - { label: "Hero Image", name: "heroImage", widget: "image", hint: "Recommended size: 1600x900px (16:9 ratio). Keep file size under 500KB for fast loading." }
       - { label: "YouTube Video ID (just the ID, not the full URL)", name: "youtubeVideoId", widget: "string", required: false, hint: "From youtube.com/watch?v=THIS_PART. Leave blank if this post has no video - it won't show anything if empty." }
       - { label: "Carousel Images", name: "carouselImages", widget: "list", required: false, hint: "Recommended size: 1000x1250px (4:5 portrait ratio) per photo, under 400KB each.", field: { label: "Image", name: "image", widget: "image" } }
