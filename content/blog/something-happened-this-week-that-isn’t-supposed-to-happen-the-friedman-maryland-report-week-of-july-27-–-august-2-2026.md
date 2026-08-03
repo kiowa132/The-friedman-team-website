@@ -5,7 +5,7 @@ metaDescription: "Mortgage rates climbed for the fifth week in a row. The 30
   year fixed hit 6.66%, according to Freddie Mac, the highest it’s been in this
   entire run. "
 category: Market Reports
-publishDate: "2026-08-02
+publishDate: "2026-08-02"
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-15-.png
 carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-16-.png
