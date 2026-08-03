@@ -129,17 +129,17 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
       <div className="bg-[#0D2226] border border-[#C9A96A]/40 rounded-xs px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto text-center sm:text-left">
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-[#C9A96A] mb-1">
-            White-Glove Search
+            White Glove Search
           </p>
           <p className="text-sm text-[#FAF8F5]/90">
-            For the full, up-to-the-minute inventory across Carroll, Baltimore, Howard & Frederick County - including off-market opportunities not shown below - reach out to Kyle directly.
+            Reach out to Kyle Friedman directly for the most current inventory across Carroll, Baltimore, Howard & Frederick County, including opportunities not publicly listed below.
           </p>
         </div>
         <button
           onClick={onOpenConsultation}
           className="shrink-0 px-6 py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors whitespace-nowrap"
         >
-          Talk to Kyle
+          Talk to Kyle Friedman
         </button>
       </div>
 
