@@ -3,6 +3,7 @@ title: The Most Important Number This Week Wasn't a Home Price
 metaDescription: Mortgage rates climbed for a fourth straight week as buyer
   demand cooled and Maryland's market shifted into a more balanced phase.
 category: Market Reports
+publishDate: "2026-07-26"
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-5-.png
 carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-6-.png

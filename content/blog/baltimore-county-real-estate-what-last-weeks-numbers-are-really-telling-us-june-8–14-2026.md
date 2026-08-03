@@ -4,6 +4,7 @@ title: "Baltimore County Real Estate: What Last Week's Numbers Are Really
 metaDescription: Published by Kyle Friedman | Owner, Founder / The Friedman Team
   By Kyle Friedman at EXP Realty
 category: Market Reports
+publishDate: "2026-06-08"
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-11-.png
 carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-12-.png

@@ -3,6 +3,7 @@ title: "Baltimore County Maryland Real Estate Market Report: Week of June 1–7,
 metaDescription: |
   Published by Kyle Friedman | Owner, Founder / The Friedman Team at EXP Realty
 category: Market Reports
+publishDate: "2026-06-01
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-8-.png
 carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-9-.png
