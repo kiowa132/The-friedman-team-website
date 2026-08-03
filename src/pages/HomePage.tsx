@@ -117,10 +117,13 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 1. HERO */}
       <section className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center justify-center text-[#FAF8F5]">
         <div className="absolute inset-0 bg-[#0D2226]">
-          <img
-            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80"
-            alt="Maryland Luxury Estate - The Friedman Team"
-            className="w-full h-full object-cover animate-kenburns opacity-70"
+          <video
+            src="/videos/hero-video.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-70"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226] via-[#0D2226]/40 to-[#0D2226]/60" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#0D2226]/30 to-[#0D2226]" />
