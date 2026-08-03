@@ -366,13 +366,16 @@ export async function searchListings(params = {}) {
     const MAX_PAGES = 8; // scans up to 800 raw listings
     const MATCH_TARGET = 30; // stop early once we have enough matches
 
-    // EXPERIMENTAL: try asking Lofty to filter by address server-side too -
-    // undocumented, a guess based on the pattern of the documented `city`
-    // filter. If Lofty rejects this (400 error), we automatically retry
-    // without it rather than breaking keyword search entirely.
+    // Server-side address filter using "streetAddress" as the field name -
+    // confirmed real from Lofty's own hosted site (kylefriedman.expportal.com)
+    // URL query params, which use exactly this shape:
+    // condition={"location":{"streetAddress":["424 BAILIFF RD..."]}}
+    // This replaces an earlier guess ("address") that was never confirmed
+    // and likely never actually worked server-side, silently falling back
+    // to the slow multi-page scan below every time.
     const experimentalFilterConditions = {
       ...filterConditions,
-      location: { ...filterConditions.location, address: [params.q.trim()] },
+      location: { ...filterConditions.location, streetAddress: [params.q.trim()] },
     };
 
     let activeFilterConditions = experimentalFilterConditions;
