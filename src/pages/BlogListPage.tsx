@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { BLOG_POSTS } from '../lib/content';
@@ -8,7 +8,18 @@ interface BlogListPageProps {
   setActiveTab: (tab: string) => void;
 }
 
+// Matches the exact category values used in the CMS (public/admin/config.yml)
+// and set on individual posts - keep these in sync if categories ever change.
+const FILTERS = ['All', 'Market Reports', 'Sell Your Home', 'Buy a Home'] as const;
+type Filter = (typeof FILTERS)[number];
+
 export const BlogListPage: React.FC<BlogListPageProps> = () => {
+  const [activeFilter, setActiveFilter] = useState<Filter>('All');
+
+  const filteredPosts = activeFilter === 'All'
+    ? BLOG_POSTS
+    : BLOG_POSTS.filter((post) => post.category === activeFilter);
+
   return (
     <div className="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       <div className="text-center space-y-3">
@@ -23,13 +34,30 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
         </p>
       </div>
 
-      {BLOG_POSTS.length === 0 ? (
+      {/* Filter tabs */}
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        {FILTERS.map((filter) => (
+          <button
+            key={filter}
+            onClick={() => setActiveFilter(filter)}
+            className={`px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-full border transition-colors ${
+              activeFilter === filter
+                ? 'bg-[#0D2226] text-[#FAF8F5] border-[#0D2226]'
+                : 'bg-transparent text-[#0D2226]/70 border-[#C9A96A]/40 hover:border-[#0F5C63] hover:text-[#0F5C63]'
+            }`}
+          >
+            {filter}
+          </button>
+        ))}
+      </div>
+
+      {filteredPosts.length === 0 ? (
         <div className="text-center py-20 text-sm text-[#1C2B2E]/60">
-          New posts coming soon.
+          No posts in this category yet - check back soon.
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {BLOG_POSTS.map((post) => (
+          {filteredPosts.map((post) => (
             <Link
               key={post.slug}
               to={`/blog/${post.slug}`}
