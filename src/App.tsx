@@ -182,6 +182,7 @@ export default function App() {
               savedListings={savedListings}
               onToggleSave={handleToggleSave}
               onScheduleShowing={handleScheduleShowing}
+              onOpenConsultation={() => setIsConsultationOpen(true)}
             />
           } />
 
