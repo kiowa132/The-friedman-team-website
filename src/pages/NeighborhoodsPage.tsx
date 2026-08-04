@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { TOWNS } from '../data/towns';
 import { usePageMeta } from '../lib/usePageMeta';
-import { Phone } from 'lucide-react';
+import { Phone, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 interface NeighborhoodsPageProps {
   onOpenConsultation: () => void;
@@ -17,16 +17,39 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
   );
 
   return (
-    <div className="pt-28 pb-20 space-y-16">
+    <div className="pb-20 space-y-16">
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F5C63] bg-[#0F5C63]/10 px-4 py-1.5 border border-[#0F5C63]/30 inline-block">
-          Local Market Intelligence
-        </span>
-        <h1 className="font-serif text-4xl sm:text-6xl font-bold text-[#0D2226]">
-          Maryland Neighborhoods & Towns
-        </h1>
-        <p className="text-sm text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal">
+      {/* Full-bleed hero, matching Canopy's neighborhoods page header */}
+      <div className="relative h-[420px] w-full overflow-hidden flex flex-col items-center justify-center text-center">
+        <img
+          src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=2000&q=80"
+          alt="Maryland Neighborhoods"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#0D2226]/45" />
+        <div className="relative z-10 px-4">
+          <h1 className="font-serif text-4xl sm:text-6xl font-light uppercase tracking-[0.2em] text-[#FAF8F5]">
+            Neighborhoods
+          </h1>
+          <div className="flex items-center justify-center gap-3 mt-6">
+            <a href="https://www.facebook.com/kyle.friedman132" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-[#FAF8F5]/50 flex items-center justify-center text-[#FAF8F5] hover:bg-[#FAF8F5]/10 transition-colors">
+              <Facebook className="w-4 h-4" />
+            </a>
+            <a href="https://www.instagram.com/keysbykyle/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-[#FAF8F5]/50 flex items-center justify-center text-[#FAF8F5] hover:bg-[#FAF8F5]/10 transition-colors">
+              <Instagram className="w-4 h-4" />
+            </a>
+            <a href="https://www.linkedin.com/in/kyle-friedman-415029168/?skipRedirect=true" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-[#FAF8F5]/50 flex items-center justify-center text-[#FAF8F5] hover:bg-[#FAF8F5]/10 transition-colors">
+              <Linkedin className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226] mb-2">
+          Areas of Expertise
+        </h2>
+        <p className="text-sm text-[#1C2B2E]/70">
           Real local data - demographics, walkability, schools, and live listings - for towns across Carroll, Baltimore, Howard, and Frederick County.
         </p>
       </section>
