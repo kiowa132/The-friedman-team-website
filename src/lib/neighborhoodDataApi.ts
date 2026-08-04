@@ -29,7 +29,12 @@ export interface NeighborhoodDataResult {
   nearbyPlaces: {
     status: 'ok' | 'error' | 'not_configured';
     data?: {
-      places: Array<{ name: string; address: string; types: string[] }>;
+      places: Array<{
+        placeId: string;
+        name: string;
+        address: string;
+        category: 'Restaurants' | 'Shopping' | 'Health' | 'Lodging';
+      }>;
     };
   };
   schools: {

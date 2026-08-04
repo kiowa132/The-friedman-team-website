@@ -62,17 +62,6 @@ const SnapshotStat: React.FC<{ icon: React.ReactNode; value: string; label: stri
 const POI_CATEGORIES = ['All', 'Restaurants', 'Shopping', 'Health', 'Lodging'] as const;
 type PoiCategory = (typeof POI_CATEGORIES)[number];
 
-function matchesPoiCategory(types: string[], category: PoiCategory): boolean {
-  if (category === 'All') return true;
-  const map: Record<Exclude<PoiCategory, 'All'>, string[]> = {
-    Restaurants: ['restaurant', 'food', 'cafe', 'bakery'],
-    Shopping: ['store', 'shopping_mall', 'clothing_store', 'department_store', 'home_goods_store', 'furniture_store', 'electronics_store'],
-    Health: ['hospital', 'doctor', 'health', 'pharmacy'],
-    Lodging: ['lodging'],
-  };
-  return types.some((t) => map[category as Exclude<PoiCategory, 'All'>]?.includes(t));
-}
-
 const SCHOOL_LEVEL_CATEGORIES = ['All', 'Elementary', 'Middle', 'High'] as const;
 type SchoolLevelCategory = (typeof SCHOOL_LEVEL_CATEGORIES)[number];
 
@@ -129,7 +118,8 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
 
   const filteredPlaces = useMemo(() => {
     const places = data?.nearbyPlaces?.status === 'ok' ? data.nearbyPlaces.data?.places || [] : [];
-    return places.filter((p) => matchesPoiCategory(p.types, poiCategory));
+    if (poiCategory === 'All') return places;
+    return places.filter((p) => p.category === poiCategory);
   }, [data, poiCategory]);
 
   const filteredSchools = useMemo(() => {
@@ -166,11 +156,14 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
 
   return (
     <div>
-      {/* Hero */}
-      <div className="relative h-[460px] w-full overflow-hidden flex items-end">
+      {/* Hero - min-height (not fixed height) with generous top padding
+          guarantees the content block never gets crowded under the fixed
+          nav, regardless of how many lines the title/overview wrap to for
+          a given town name/viewport width. */}
+      <div className="relative min-h-[540px] w-full overflow-hidden flex items-end">
         <img src={town.image} alt={town.name} className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226] via-[#0D2226]/55 to-[#0D2226]/20" />
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pb-10 w-full">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-10 w-full">
           <div className="flex items-center gap-2 text-xs text-[#FAF8F5]/70 mb-3">
             <Link to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Neighborhoods</Link>
             <ChevronRight className="w-3 h-3" />
@@ -179,7 +172,7 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
           <div className="text-[11px] uppercase tracking-[0.25em] text-[#C9A96A] font-semibold mb-2">
             {town.county}, Maryland
           </div>
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-[#FAF8F5] uppercase tracking-wide max-w-3xl">
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#FAF8F5] uppercase tracking-wide max-w-3xl">
             {town.name} Real Estate &amp; Neighborhood Guide
           </h1>
           <p className="text-sm text-[#F5F1E8]/90 max-w-2xl mt-4 leading-relaxed">
@@ -353,13 +346,22 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
                 ) : (
                   <div className="border-t border-[#C9A96A]/20">
                     {filteredPlaces.map((p, i) => (
-                      <div key={i} className="flex items-center justify-between py-3 border-b border-[#C9A96A]/20 text-sm">
-                        <div className="flex items-center gap-2">
+                      <a
+                        key={i}
+                        href={`https://www.google.com/maps/place/?q=place_id:${p.placeId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center justify-between py-3 border-b border-[#C9A96A]/20 text-sm hover:bg-[#C9A96A]/5 transition-colors -mx-2 px-2"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
                           <MapPin className="w-3.5 h-3.5 text-[#C9A96A] shrink-0" />
-                          <span className="font-semibold text-[#0D2226]">{p.name}</span>
+                          <span className="font-semibold text-[#0D2226] group-hover:text-[#0F5C63] transition-colors truncate">{p.name}</span>
                         </div>
-                        <span className="text-xs text-[#1C2B2E]/60">{p.address}</span>
-                      </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="text-xs text-[#1C2B2E]/60">{p.address}</span>
+                          <ExternalLink className="w-3.5 h-3.5 text-[#C9A96A] opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      </a>
                     ))}
                   </div>
                 )}

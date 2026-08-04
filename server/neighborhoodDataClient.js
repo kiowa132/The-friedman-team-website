@@ -182,10 +182,52 @@ export async function getWalkScore(address, lat, lng) {
 }
 
 // ---------------------------------------------------------------------------
-// 3. GOOGLE PLACES (legacy) - real nearby points of interest, names/
-// addresses/categories only (no ratings/reviews requested, to stay clear
-// of the pricier SKU tier and keep this comfortably within free usage).
+// 3. GOOGLE PLACES (legacy) - real nearby points of interest.
+//
+// Previous approach: one generic type=point_of_interest search, then
+// client-side filtered into UI categories by matching Google's `types`
+// array against a hand-built keyword list. That produced wrong results in
+// practice - Google's legacy API tags many big-box retailers and pharmacies
+// with the generic "food" type (they sell groceries/snacks), which was
+// also in the "Restaurants" keyword list, so e.g. Target showed up under
+// Restaurants while genuine restaurants - never actually fetched, since a
+// single generic point_of_interest search close to a town center often
+// doesn't surface them in the first 12-20 results - didn't show at all.
+//
+// Fixed approach: run one targeted Nearby Search per real UI category,
+// using Google's actual typed categories, and tag each result with the
+// category that fetched it (no fragile string matching after the fact).
+// Each result also carries placeId so the frontend can link straight to
+// the real Google Maps listing for that business.
 // ---------------------------------------------------------------------------
+
+const CATEGORY_QUERIES = [
+  { category: 'Restaurants', type: 'restaurant' },
+  { category: 'Shopping', type: 'shopping_mall' },
+  { category: 'Shopping', type: 'store' },
+  { category: 'Health', type: 'hospital' },
+  { category: 'Health', type: 'pharmacy' },
+  { category: 'Lodging', type: 'lodging' },
+];
+
+async function nearbySearchByType(lat, lng, radiusMeters, type) {
+  const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json');
+  url.searchParams.set('location', `${lat},${lng}`);
+  url.searchParams.set('radius', String(radiusMeters));
+  url.searchParams.set('type', type);
+  url.searchParams.set('key', GOOGLE_PLACES_API_KEY);
+
+  const res = await fetch(url.toString());
+  const json = await res.json();
+
+  if (json.status !== 'OK' && json.status !== 'ZERO_RESULTS') {
+    const err = new Error(`Google Places request failed for type=${type}: ${json.status}`);
+    err.debugInfo = { type, status: json.status, errorMessage: json.error_message };
+    throw err;
+  }
+
+  return json.results || [];
+}
 
 export async function getNearbyPlaces(lat, lng, radiusMeters = 3200) {
   if (!isGooglePlacesConfigured()) {
@@ -194,28 +236,43 @@ export async function getNearbyPlaces(lat, lng, radiusMeters = 3200) {
     throw err;
   }
 
-  const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json');
-  url.searchParams.set('location', `${lat},${lng}`);
-  url.searchParams.set('radius', String(radiusMeters));
-  url.searchParams.set('type', 'point_of_interest');
-  url.searchParams.set('key', GOOGLE_PLACES_API_KEY);
+  const seenPlaceIds = new Set();
+  const places = [];
+  const perCategoryCounts = {};
+  const errors = [];
 
-  const res = await fetch(url.toString());
-  const json = await res.json();
+  for (const { category, type } of CATEGORY_QUERIES) {
+    // Cap each real category to 6 results so one category (e.g. two
+    // Shopping sub-queries) can't crowd out the others.
+    const alreadyForCategory = perCategoryCounts[category] || 0;
+    if (alreadyForCategory >= 6) continue;
 
-  if (json.status !== 'OK' && json.status !== 'ZERO_RESULTS') {
-    const err = new Error(`Google Places request failed: ${json.status}`);
-    err.debugInfo = { status: json.status, errorMessage: json.error_message };
-    throw err;
+    let results;
+    try {
+      results = await nearbySearchByType(lat, lng, radiusMeters, type);
+    } catch (err) {
+      errors.push({ type, message: err.message });
+      continue;
+    }
+
+    for (const p of results) {
+      if (seenPlaceIds.has(p.place_id)) continue;
+      if ((perCategoryCounts[category] || 0) >= 6) break;
+      seenPlaceIds.add(p.place_id);
+      perCategoryCounts[category] = (perCategoryCounts[category] || 0) + 1;
+      places.push({
+        placeId: p.place_id,
+        name: p.name,
+        address: p.vicinity,
+        category,
+      });
+    }
   }
 
-  const places = (json.results || []).slice(0, 12).map((p) => ({
-    name: p.name,
-    address: p.vicinity,
-    types: p.types,
-  }));
-
-  return { places, debugInfo: { resultCount: places.length, status: json.status } };
+  return {
+    places,
+    debugInfo: { resultCount: places.length, perCategoryCounts, errors },
+  };
 }
 
 // ---------------------------------------------------------------------------
