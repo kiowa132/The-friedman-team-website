@@ -45,7 +45,7 @@ export const TOWNS: Town[] = [
     countyFips: '24013',
     lat: 39.575,
     lng: -76.996,
-    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90',
+    image: '/images/towns/westminster.jpg',
     content: {
       overview: "Westminster is the seat of Carroll County and one of Maryland's Nationally Accredited Main Street communities, with a walkable historic downtown built up along Main Street since the city was laid out in 1764. It's home to McDaniel College, and sits within easy reach of Baltimore (about 45 minutes), Washington D.C. (about 90 minutes), and Gettysburg (about 35 minutes).",
       restaurantsRetail: "Main Street is lined with locally-owned restaurants, shops, and galleries rather than national chains - it's a genuine small-town commercial strip, not a shopping center. The Downtown Westminster Farmers' Market has run every spring, summer, and fall since 1994.",
@@ -61,11 +61,11 @@ export const TOWNS: Town[] = [
       schoolsResourceLabel: 'Carroll County Public Schools',
     },
   },
-  { slug: 'eldersburg', name: 'Eldersburg', county: 'Carroll County', countyFips: '24013', lat: 39.4109, lng: -76.9483, image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80' },
+  { slug: 'eldersburg', name: 'Eldersburg', county: 'Carroll County', countyFips: '24013', lat: 39.4109, lng: -76.9483, image: '/images/towns/eldersburg.jpg' },
   { slug: 'sykesville', name: 'Sykesville', county: 'Carroll County', countyFips: '24013', lat: 39.3712, lng: -76.9691, image: '/images/towns/sykesville.jpg' },
   { slug: 'mount-airy', name: 'Mount Airy', county: 'Carroll County', countyFips: '24013', lat: 39.3765, lng: -77.1522, image: '/images/towns/mount-airy.jpg' },
-  { slug: 'taneytown', name: 'Taneytown', county: 'Carroll County', countyFips: '24013', lat: 39.6587, lng: -77.1697, image: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'hampstead', name: 'Hampstead', county: 'Carroll County', countyFips: '24013', lat: 39.6062, lng: -76.8508, image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80' },
+  { slug: 'taneytown', name: 'Taneytown', county: 'Carroll County', countyFips: '24013', lat: 39.6587, lng: -77.1697, image: '/images/towns/taneytown.jpg' },
+  { slug: 'hampstead', name: 'Hampstead', county: 'Carroll County', countyFips: '24013', lat: 39.6062, lng: -76.8508, image: '/images/towns/hampstead.jpg' },
   { slug: 'manchester', name: 'Manchester', county: 'Carroll County', countyFips: '24013', lat: 39.6668, lng: -76.8838, image: '/images/towns/manchester.jpg' },
   { slug: 'new-windsor', name: 'New Windsor', county: 'Carroll County', countyFips: '24013', lat: 39.5387, lng: -77.0716, image: '/images/towns/new-windsor.jpg' },
 
