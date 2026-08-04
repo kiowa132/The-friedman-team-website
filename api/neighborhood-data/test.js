@@ -56,7 +56,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    results.schools = { status: 'ok', data: await getNearbySchools(null, '24') };
+    // Carroll County, MD FIPS = 24013 (state 24 + county 013)
+    results.schools = { status: 'ok', data: await getNearbySchools('24013', '24') };
   } catch (err) {
     results.schools = { status: 'error', message: err.message, debugInfo: err.debugInfo };
   }

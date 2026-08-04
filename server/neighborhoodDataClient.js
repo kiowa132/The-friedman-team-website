@@ -254,5 +254,15 @@ export async function getNearbySchools(countyFips, stateFips = '24') {
       enrollment: s.enrollment,
     }));
 
-  return { schools: results, debugInfo: { totalReturned: (json.results || []).length, filteredCount: results.length } };
+  return {
+    schools: results,
+    debugInfo: {
+      totalReturned: (json.results || []).length,
+      filteredCount: results.length,
+      // If filteredCount is 0 despite a real countyFips being passed, this
+      // sample record shows the actual raw field names/values to check
+      // "county_code" against - it may have a different name or format.
+      sampleRawRecord: json.results?.[0],
+    },
+  };
 }
