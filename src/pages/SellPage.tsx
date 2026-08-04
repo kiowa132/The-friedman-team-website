@@ -22,13 +22,13 @@ export const SellPage: React.FC<SellPageProps> = ({
       num: '01',
       title: 'Data-Backed Pricing Strategy',
       icon: <BarChart3 className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'A pricing strategy built from real comparable sales and current market trends, with scenarios laid out so you know your actual options - not a single guess.'
+      description: 'A pricing strategy built from real comparable sales and current market trends, with scenarios laid out so you know your actual options, not a single guess.'
     },
     {
       num: '02',
       title: 'Professional Photography & Marketing',
       icon: <Camera className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'Professional photography and a marketing plan built for how buyers actually search today - not just an MLS entry and a sign in the yard.'
+      description: 'Professional photography and a marketing plan built for how buyers actually search today, not just an MLS entry and a sign in the yard.'
     },
     {
       num: '03',
@@ -46,13 +46,13 @@ export const SellPage: React.FC<SellPageProps> = ({
       num: '05',
       title: 'Negotiation That Protects You',
       icon: <ShieldCheck className="w-6 h-6 text-[#C9A96A]" />,
-      description: 'Every point of the contract - price, terms, and contingencies - negotiated with your equity and your outcome in mind.'
+      description: 'Every point of the contract, including price, terms, and contingencies, negotiated with your equity and your outcome in mind.'
     },
     {
       num: '06',
       title: 'Clear, Responsive Communication',
       icon: <DollarSign className="w-6 h-6 text-[#C9A96A]" />,
-      description: "Straightforward updates from listing to closing, so you always know exactly where things stand - no guessing, no silence."
+      description: "Straightforward updates from listing to closing, so you always know exactly where things stand. No guessing, no silence."
     }
   ];
 
@@ -70,7 +70,7 @@ export const SellPage: React.FC<SellPageProps> = ({
         </h1>
 
         <p className="text-sm sm:text-base text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal leading-relaxed">
-          Pricing a home isn't a formula - it's a strategy. The Friedman Team starts with real comparable data and market trends, then builds a marketing plan and negotiation approach designed to bring the right buyers and the strongest offers. From condos and townhomes to single-family homes and larger properties with acreage, every listing gets professional photography, a clear pricing strategy, and a plan for where buyers are actually looking.
+          Pricing a home isn't a formula. It's a strategy. The Friedman Team starts with real comparable data and market trends, then builds a marketing plan and negotiation approach designed to bring the right buyers and the strongest offers. From condos and townhomes to single-family homes and larger properties with acreage, every listing gets professional photography, a clear pricing strategy, and a plan for where buyers are actually looking.
         </p>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -229,7 +229,7 @@ export const SellPage: React.FC<SellPageProps> = ({
             Curious What Your Home Is Worth in Today's Market?
           </h2>
           <p className="text-xs sm:text-sm text-[#1C2B2E]/80 max-w-xl mx-auto">
-            Tell Kyle a bit about your property, and he'll personally follow up with a real comparative market analysis built from current comps - not an automated guess.
+            Tell Kyle a bit about your property, and he'll personally follow up with a real comparative market analysis built from current comps, not an automated guess.
           </p>
           <button
             onClick={onOpenValuation}

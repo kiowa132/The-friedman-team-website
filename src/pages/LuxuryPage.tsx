@@ -12,7 +12,7 @@ interface LuxuryPageProps {
 export const LuxuryPage: React.FC<LuxuryPageProps> = ({ onOpenConsultation }) => {
   usePageMeta(
     'Fine Homes & Estate Properties | The Friedman Team',
-    'Distinctive homes and estate properties across Carroll, Howard, Frederick, and Baltimore County - marketed and represented with the presentation they deserve.'
+    'Distinctive homes and estate properties across Carroll, Howard, Frederick, and Baltimore County, marketed and represented with the presentation they deserve.'
   );
 
   return (
@@ -31,7 +31,7 @@ export const LuxuryPage: React.FC<LuxuryPageProps> = ({ onOpenConsultation }) =>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-12">
         <p className="text-base sm:text-lg text-[#1C2B2E]/80 leading-relaxed text-center font-light">
-          A different kind of property calls for a different kind of representation. The Friedman Team's estate division is built for distinctive homes across Carroll, Howard, Frederick, and Baltimore County - properties with architectural character, acreage, equestrian facilities, or simply more to offer. Every listing is presented with the photography, marketing, and discretion it deserves.
+          A different kind of property calls for a different kind of representation. The Friedman Team's estate division is built for distinctive homes across Carroll, Howard, Frederick, and Baltimore County, covering properties with architectural character, acreage, equestrian facilities, or simply more to offer. Every listing is presented with the photography, marketing, and discretion it deserves.
         </p>
       </div>
 

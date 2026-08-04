@@ -10,7 +10,7 @@ interface SellerProcessPageProps {
 export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValuation, onOpenConsultation }) => {
   usePageMeta(
     "What Actually Happens When You List | The Friedman Team",
-    "Step by step, here's exactly what happens when you list your home with The Friedman Team - from pre-launch prep to closing day."
+    "Step by step, here's exactly what happens when you list your home with The Friedman Team, from pre-launch prep to closing day."
   );
 
   return (
@@ -24,7 +24,7 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
           What Actually Happens When You List With Us
         </h1>
         <p className="text-sm sm:text-base text-[#1C2B2E]/80 max-w-2xl mx-auto leading-relaxed">
-          Most agents talk about marketing in buzzwords. Here's what actually happens, step by step, when you list your home with The Friedman Team - so you know exactly what you're getting.
+          Most agents talk about marketing in buzzwords. Here's what actually happens, step by step, when you list your home with The Friedman Team, so you know exactly what you're getting.
         </p>
       </section>
 
@@ -33,21 +33,21 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
         <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 rounded-xs space-y-3">
           <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Before We Go Live</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            Every listing starts with a "Coming Soon" phase to build early buzz and, when useful, test pricing - paired with a targeted print postcard campaign, professional signage with a QR code for instant lead capture, and a full staging consultation covering decluttering, furniture placement, and virtual staging where it helps a room show better.
+            Every listing starts with a "Coming Soon" phase to build early buzz and, when useful, test pricing, paired with a targeted print postcard campaign, professional signage with a QR code for instant lead capture, and a full staging consultation covering decluttering, furniture placement, and virtual staging where it helps a room show better.
           </p>
         </div>
 
         <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 rounded-xs space-y-3">
           <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Imagery & Launch</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            Professional daytime photography, a full 3D virtual tour, walkthrough video, and floor plans - followed by a coordinated launch across the MLS, Zillow, Redfin, and a dedicated property website built specifically for your home.
+            Professional daytime photography, a full 3D virtual tour, walkthrough video, and floor plans, followed by a coordinated launch across the MLS, Zillow, Redfin, and a dedicated property website built specifically for your home.
           </p>
         </div>
 
         <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 rounded-xs space-y-3">
           <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Getting the Word Out</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            A targeted email campaign goes to our full network - past clients, active buyers, and agents across surrounding brokerages - along with a Brokers Open where local agents tour the home in person and receive a social media kit to help push it to their own buyers.
+            A targeted email campaign goes to our full network, including past clients, active buyers, and agents across surrounding brokerages, along with a Brokers Open where local agents tour the home in person and receive a social media kit to help push it to their own buyers.
           </p>
         </div>
 
@@ -61,7 +61,7 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
         <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 rounded-xs space-y-3">
           <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Zillow Showcase</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            Zillow's premium, AI-powered listing placement gives your home an elevated, immersive design with an interactive floor plan and virtual tour - and it isn't available on every listing.{' '}
+            Zillow's premium, AI-powered listing placement gives your home an elevated, immersive design with an interactive floor plan and virtual tour, and it isn't available on every listing.{' '}
             <a href="https://www.zillow.com/premier-agent/showcase/" target="_blank" rel="noopener noreferrer" className="text-[#0F5C63] font-bold underline hover:text-[#C9A96A]">
               See how it works →
             </a>
@@ -82,7 +82,7 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
         <div className="bg-[#0D2226] text-[#FAF8F5] border border-[#C9A96A]/40 p-8 rounded-xs space-y-4">
           <h2 className="font-serif text-2xl font-bold">The Numbers That Matter</h2>
           <p className="text-sm text-[#A8B2A1] leading-relaxed">
-            Real performance data from recent listings - ask Kyle directly for current, verified numbers on list-to-sale ratio, average days on market, and listing reach, sourced from Bright MLS for the most recent reporting period.
+            Real performance data from recent listings. Ask Kyle directly for current, verified numbers on list to sale ratio, average days on market, and listing reach, sourced from Bright MLS for the most recent reporting period.
           </p>
           <ul className="space-y-2 text-sm">
             <li className="flex items-start gap-2">
@@ -103,7 +103,7 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
         <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 rounded-xs space-y-3">
           <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Our Communication Guarantee</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            Poor communication is the #1 complaint sellers have about their agent. So we guarantee: feedback within 48 hours of every showing, a weekly call to review activity and pricing, availability for your calls Monday through Saturday, and same-day returned calls and emails - often within the hour.
+            Poor communication is the #1 complaint sellers have about their agent. So we guarantee: feedback within 48 hours of every showing, a weekly call to review activity and pricing, availability for your calls Monday through Saturday, and same day returned calls and emails, often within the hour.
           </p>
         </div>
 
@@ -117,7 +117,7 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
         <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 rounded-xs space-y-3">
           <h2 className="font-serif text-2xl font-bold text-[#0D2226]">We Never Miss a Buyer Call</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            Every sign includes a QR code and a 24-hour info line. Buyers can reach us any time, day or night, and their contact information is captured immediately - so no interested buyer slips through the cracks.
+            Every sign includes a QR code and a 24-hour info line. Buyers can reach us any time, day or night, and their contact information is captured immediately, so no interested buyer slips through the cracks.
           </p>
         </div>
 
@@ -127,7 +127,7 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
         <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 rounded-xs space-y-3">
           <h2 className="font-serif text-2xl font-bold text-[#0D2226]">The Easy Exit Guarantee</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            If you're ever not fully satisfied, you can cancel the listing agreement - no lengthy contract, no risk. Ask Kyle for the full details.
+            If you're ever not fully satisfied, you can cancel the listing agreement. No lengthy contract, no risk. Ask Kyle for the full details.
           </p>
         </div>
 

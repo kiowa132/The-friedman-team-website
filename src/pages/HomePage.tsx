@@ -146,7 +146,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <p className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-[#F5F1E8]/90 font-light leading-relaxed">
-            The Friedman Team helps buyers and sellers across Carroll, Howard, Frederick, and Baltimore County move with confidence - from first homes to estate properties - backed by real market data and a strategy built around your goals.
+            The Friedman Team helps buyers and sellers across Carroll, Howard, Frederick, and Baltimore County move with confidence, from first homes to estate properties, backed by real market data and a strategy built around your goals.
           </p>
 
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -251,7 +251,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               The Friedman<br />Team at eXp Realty
             </h3>
             <p className="text-sm sm:text-base text-[#1C2B2E]/80 leading-relaxed">
-              The Friedman Team at eXp Realty, led by Kyle Friedman, gives you access to a real, data-driven strategy for buying or selling - from your first home to a multi-acre property. Every client gets the same level of preparation and care.
+              The Friedman Team at eXp Realty, led by Kyle Friedman, gives you access to a real, data-driven strategy for buying or selling, from your first home to a multi-acre property. Every client gets the same level of preparation and care.
             </p>
             <button
               onClick={() => setActiveTab('team')}
@@ -309,7 +309,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {featuredStatus === 'empty' && (
           <div className="text-center py-12 border border-[#C9A96A]/30 bg-[#FAF8F5]">
-            <p className="text-sm text-[#1C2B2E]/70 mb-4">No listings over $1M are currently live across Carroll, Baltimore, Howard, or Frederick County - check back soon, or search all live inventory now.</p>
+            <p className="text-sm text-[#1C2B2E]/70 mb-4">No listings over $1M are currently live across Carroll, Baltimore, Howard, or Frederick County. Check back soon, or search all live inventory now.</p>
             <button
               onClick={() => setActiveTab('listings')}
               className="px-6 py-3 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs"

@@ -51,7 +51,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       description: 'Partnered with eXp Realty to leverage cloud technology, international buyer networks, and proprietary digital tools.'
     },
     {
-      year: '2025 - Present',
+      year: '2025 to Present',
       title: '$150M+ Sales Volume Milestone',
       description: 'Recognized among top 1% luxury advisors in Maryland, representing generational horse farms, historic manors, and luxury estates.'
     }
@@ -78,7 +78,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </p>
 
             <p className="text-xs sm:text-sm text-[#FAF8F5]/90 leading-relaxed font-normal pt-2">
-              Kyle Friedman founded The Friedman Team on a simple idea: every client deserves the same level of preparation, whether they're buying a starter home or selling a multi-acre property. Kyle's background is in direct sales and property transactions, which shaped a practical, detail-driven approach to pricing and negotiation that's become the foundation of how the team operates today. Based in Taneytown and serving Carroll, Howard, Frederick, and Baltimore County, The Friedman Team works with first-time buyers, growing families, move-up sellers, and owners of larger properties with acreage, outbuildings, or equestrian facilities - bringing the same strategy and standard of service to every price point.
+              Kyle Friedman founded The Friedman Team on a simple idea: every client deserves the same level of preparation, whether they're buying a starter home or selling a multi-acre property. Kyle's background is in direct sales and property transactions, which shaped a practical, detail-driven approach to pricing and negotiation that's become the foundation of how the team operates today. Based in Taneytown and serving Carroll, Howard, Frederick, and Baltimore County, The Friedman Team works with first-time buyers, growing families, move-up sellers, and owners of larger properties with acreage, outbuildings, or equestrian facilities, all getting the same strategy and standard of service at every price point.
             </p>
 
             <div className="pt-4 flex flex-wrap items-center gap-4">

@@ -9,7 +9,7 @@ interface TeamPageProps {
 export const TeamPage: React.FC<TeamPageProps> = ({ onOpenConsultation }) => {
   usePageMeta(
     'Meet the Team | The Friedman Team',
-    'Your Listing Agent, Home Prep Advisor, and Transaction Coordinator - the full team behind every Friedman Team sale.'
+    'Your Listing Agent, Home Prep Advisor, and Transaction Coordinator: the full team behind every Friedman Team sale.'
   );
 
   return (
@@ -54,7 +54,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onOpenConsultation }) => {
           <div className="sm:col-span-9 space-y-2">
             <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Home Prep Advisor</h2>
             <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-              Your Home Prep Advisor makes recommendations for preparing your home for the market. An initial impression is a lasting one - your Home Prep Advisor helps your home show its best to create a genuine emotional response from buyers.
+              Your Home Prep Advisor makes recommendations for preparing your home for the market. An initial impression is a lasting one, and your Home Prep Advisor helps your home show its best to create a genuine emotional response from buyers.
             </p>
           </div>
         </div>

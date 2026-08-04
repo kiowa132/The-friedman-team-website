@@ -73,7 +73,7 @@ export const GuideDetailPage: React.FC = () => {
       <div className="pt-28 pb-20 max-w-[1600px] mx-auto px-4 sm:px-6 space-y-8">
         <div className="bg-[#0D2226] text-[#FAF8F5] border border-[#C9A96A] rounded-xs p-6 text-center space-y-2">
           <CheckCircle2 className="w-7 h-7 text-[#C9A96A] mx-auto" />
-          <h1 className="font-serif text-2xl font-bold">You're In - Here's Your Guide</h1>
+          <h1 className="font-serif text-2xl font-bold">You're In. Here's Your Guide</h1>
           {guide.pdfUrl && (
             <a
               href={guide.pdfUrl}
@@ -175,7 +175,7 @@ export const GuideDetailPage: React.FC = () => {
           <div className="lg:sticky lg:top-28">
             <form onSubmit={handleSubmit} className="bg-[#0D2226] border border-[#C9A96A] p-6 sm:p-8 rounded-xs space-y-4 shadow-xl">
               <h2 className="font-serif text-lg font-bold text-[#FAF8F5] text-center">Get Instant Access</h2>
-              <p className="text-[11px] text-[#A8B2A1] text-center">Enter your info below - unlocks immediately, no waiting.</p>
+              <p className="text-[11px] text-[#A8B2A1] text-center">Enter your info below. Unlocks immediately, no waiting.</p>
 
               <input
                 type="text"
@@ -219,7 +219,7 @@ export const GuideDetailPage: React.FC = () => {
 
               <p className="text-[10px] text-[#A8B2A1] text-center flex items-center justify-center gap-1.5 pt-1">
                 <ShieldCheck className="w-3 h-3 text-[#C9A96A]" />
-                Your info goes straight to Kyle - never sold or shared.
+                Your info goes straight to Kyle. Never sold or shared.
               </p>
             </form>
           </div>

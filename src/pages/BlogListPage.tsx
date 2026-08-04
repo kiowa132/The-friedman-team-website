@@ -30,7 +30,7 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
           Market Reports & Local Insights
         </h1>
         <p className="text-sm text-[#1C2B2E]/80 max-w-2xl mx-auto">
-          Weekly, straight-talk market data for Carroll, Baltimore, Howard, and Frederick County - no fluff, no generic national trends that don't apply here.
+          Weekly, straight-talk market data for Carroll, Baltimore, Howard, and Frederick County, no fluff, no generic national trends that don't apply here.
         </p>
       </div>
 
@@ -53,7 +53,7 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
 
       {filteredPosts.length === 0 ? (
         <div className="text-center py-20 text-sm text-[#1C2B2E]/60">
-          No posts in this category yet - check back soon.
+          No posts in this category yet. Check back soon.
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

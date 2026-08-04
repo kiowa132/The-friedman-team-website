@@ -174,7 +174,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
               <img
                 key={i}
                 src={block.value}
-                alt={`${post.title} - photo`}
+                alt={`${post.title} photo`}
                 className="w-full rounded-xs my-2"
               />
             )
@@ -189,7 +189,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
         >
           <img
             src="/images/know-your-home-value-banner.webp"
-            alt="Know your home's value - free valuation"
+            alt="Know your home's value, free valuation"
             className="w-full h-auto"
           />
         </button>
@@ -223,7 +223,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           <h3 className="font-serif text-2xl font-bold text-[#0D2226]">
             Stay Ahead of the Market
           </h3>
-          <p className="text-xs text-[#1C2B2E]/60">Two ways to get real, local insight - both completely free.</p>
+          <p className="text-xs text-[#1C2B2E]/60">Two ways to get real, local insight, both completely free.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
@@ -253,7 +253,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           <div className="border border-[#C9A96A] rounded-xs p-6 text-center space-y-3 bg-[#0D2226] text-[#FAF8F5]">
             <div className="text-xs font-bold uppercase tracking-widest text-[#C9A96A]">Thinking of Selling?</div>
             <div className="font-serif text-lg font-bold">Free Market Evaluation</div>
-            <p className="text-[11px] text-[#A8B2A1]">Kyle personally reviews your property - no automated guess.</p>
+            <p className="text-[11px] text-[#A8B2A1]">Kyle personally reviews your property. No automated guess.</p>
             <button
               onClick={onOpenValuation}
               className="w-full py-3 bg-[#C9A96A] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#D4AF37] transition-colors flex items-center justify-center gap-2"
@@ -299,7 +299,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             </p>
             <p>8115 Maple Lawn Blvd. #350, Fulton, MD 20759</p>
           </div>
-          <img src="/images/kyle-signature.png" alt="Kyle Friedman - The Friedman Team - eXp Realty" className="w-40 h-40 object-contain mx-auto" />
+          <img src="/images/kyle-signature.png" alt="Kyle Friedman, The Friedman Team, eXp Realty" className="w-40 h-40 object-contain mx-auto" />
           <button
             onClick={onOpenConsultation}
             className="px-8 py-3.5 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs flex items-center gap-2 mx-auto"

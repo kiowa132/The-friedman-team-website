@@ -251,9 +251,9 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                       <div>
                         <label className="block text-xs font-semibold text-[#C9A96A] uppercase mb-1">Preferred Time of Day</label>
                         <select value={showingTime} onChange={(e) => setShowingTime(e.target.value)} className="w-full bg-[#1A2E33] border border-[#FAF8F5]/20 p-2.5 text-xs text-[#FAF8F5] focus:border-[#C9A96A] focus:outline-none">
-                          <option value="Morning">Morning (9:00 AM - 12:00 PM)</option>
-                          <option value="Afternoon">Afternoon (12:00 PM - 4:00 PM)</option>
-                          <option value="Evening">Evening (4:00 PM - 7:00 PM)</option>
+                          <option value="Morning">Morning (9:00 AM to 12:00 PM)</option>
+                          <option value="Afternoon">Afternoon (12:00 PM to 4:00 PM)</option>
+                          <option value="Evening">Evening (4:00 PM to 7:00 PM)</option>
                         </select>
                       </div>
                       <div>

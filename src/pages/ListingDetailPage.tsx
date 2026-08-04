@@ -103,7 +103,7 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
 
   usePageMeta(
     listing ? `${listing.title} | The Friedman Team` : 'Listing | The Friedman Team',
-    listing ? `${listing.formattedPrice} - ${listing.beds} bed, ${listing.baths} bath, ${listing.sqft.toLocaleString()} sq.ft. in ${listing.city}, MD.` : 'View this listing with The Friedman Team.'
+    listing ? `${listing.formattedPrice}: ${listing.beds} bed, ${listing.baths} bath, ${listing.sqft.toLocaleString()} sq.ft. in ${listing.city}, MD.` : 'View this listing with The Friedman Team.'
   );
 
   const [copied, setCopied] = useState(false);
@@ -125,7 +125,7 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
   if (loadStatus === 'not_found' || loadStatus === 'error' || !listing) {
     return (
       <div className="pt-32 pb-20 text-center space-y-4">
-        <p className="text-sm text-[#1C2B2E]/70">We couldn't find that listing - it may have sold or come off the market.</p>
+        <p className="text-sm text-[#1C2B2E]/70">We couldn't find that listing. It may have sold or come off the market.</p>
         <Link to="/listings" className="inline-block px-6 py-3 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs">
           Search Live Listings
         </Link>
@@ -351,9 +351,9 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
                 <div>
                   <label className="block text-xs font-semibold text-[#C9A96A] uppercase mb-1">Preferred Time of Day</label>
                   <select value={showingTime} onChange={(e) => setShowingTime(e.target.value)} className="w-full bg-[#1A2E33] border border-[#FAF8F5]/20 p-2.5 text-xs text-[#FAF8F5] focus:border-[#C9A96A] focus:outline-none">
-                    <option value="Morning">Morning (9:00 AM - 12:00 PM)</option>
-                    <option value="Afternoon">Afternoon (12:00 PM - 4:00 PM)</option>
-                    <option value="Evening">Evening (4:00 PM - 7:00 PM)</option>
+                    <option value="Morning">Morning (9:00 AM to 12:00 PM)</option>
+                    <option value="Afternoon">Afternoon (12:00 PM to 4:00 PM)</option>
+                    <option value="Evening">Evening (4:00 PM to 7:00 PM)</option>
                   </select>
                 </div>
                 <div>

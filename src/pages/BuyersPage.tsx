@@ -13,14 +13,14 @@ export const BuyersPage: React.FC<BuyersPageProps> = ({
 }) => {
   usePageMeta(
     'Find a Home in Carroll or Baltimore County, MD | The Friedman Team',
-    'Searching for a home in Carroll, Howard, Frederick, or Baltimore County? The Friedman Team helps buyers find the right property with a real strategy - not just a search.'
+    'Searching for a home in Carroll, Howard, Frederick, or Baltimore County? The Friedman Team helps buyers find the right property with a real strategy, not just a search.'
   );
 
   const buyerPillars = [
     {
       icon: <ShieldCheck className="w-6 h-6 text-[#C9A96A]" />,
       title: 'Straight Answers on Affordability',
-      description: "Real numbers on what you can afford and what it actually costs to own - not just a pre-approval figure, the full picture."
+      description: "Real numbers on what you can afford and what it actually costs to own, not just a pre-approval figure. The full picture."
     },
     {
       icon: <Key className="w-6 h-6 text-[#C9A96A]" />,
@@ -30,7 +30,7 @@ export const BuyersPage: React.FC<BuyersPageProps> = ({
     {
       icon: <Compass className="w-6 h-6 text-[#C9A96A]" />,
       title: 'A Real Negotiation Strategy',
-      description: 'Every offer gets a strategy for terms, not just a number - protecting you on contingencies, timelines, and price alike.'
+      description: 'Every offer gets a strategy for terms, not just a number, protecting you on contingencies, timelines, and price alike.'
     },
     {
       icon: <Search className="w-6 h-6 text-[#C9A96A]" />,
@@ -53,7 +53,7 @@ export const BuyersPage: React.FC<BuyersPageProps> = ({
         </h1>
 
         <p className="text-sm sm:text-base text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal leading-relaxed">
-          Buying a home shouldn't feel like guessing. The Friedman Team walks you through financing, neighborhoods, and timing so you know exactly where you stand before you make an offer - and negotiates hard once you find the right property. Whether you're looking for your first house, more space for a growing family, or a property with room to spread out, we build a search strategy around what actually matters to you.
+          Buying a home shouldn't feel like guessing. The Friedman Team walks you through financing, neighborhoods, and timing so you know exactly where you stand before you make an offer, and negotiates hard once you find the right property. Whether you're looking for your first house, more space for a growing family, or a property with room to spread out, we build a search strategy around what actually matters to you.
         </p>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">

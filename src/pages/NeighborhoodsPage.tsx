@@ -13,7 +13,7 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
 }) => {
   usePageMeta(
     'Maryland Neighborhoods & Towns | The Friedman Team',
-    'Explore real, local neighborhood guides across Carroll, Baltimore, Howard, and Frederick County - real demographics, walkability, schools, and live listings for every town.'
+    'Explore real, local neighborhood guides across Carroll, Baltimore, Howard, and Frederick County, with real demographics, walkability, schools, and live listings for every town.'
   );
 
   return (
@@ -50,7 +50,7 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
           Areas of Expertise
         </h2>
         <p className="text-sm text-[#1C2B2E]/70">
-          Real local data - demographics, walkability, schools, and live listings - for towns across Carroll, Baltimore, Howard, and Frederick County.
+          Real local data, including demographics, walkability, schools, and live listings, for towns across Carroll, Baltimore, Howard, and Frederick County.
         </p>
       </section>
 
@@ -93,7 +93,7 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
             Don't See Your Town?
           </h2>
           <p className="text-xs text-[#A8B2A1]">
-            The Friedman Team covers all of Carroll, Baltimore, Howard, and Frederick County - reach out directly for a full picture of any specific area, including off-market opportunities.
+            The Friedman Team covers all of Carroll, Baltimore, Howard, and Frederick County. Reach out directly for a full picture of any specific area, including off-market opportunities.
           </p>
           <button
             onClick={onOpenConsultation}

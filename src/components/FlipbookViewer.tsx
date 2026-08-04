@@ -55,7 +55,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
     () =>
       pages.map((src, i) => (
         <div key={i} className="bg-[#0D2226]">
-          <img src={src} alt={`${title} - page ${i + 1}`} className="w-full h-full object-contain" />
+          <img src={src} alt={`${title} page ${i + 1}`} className="w-full h-full object-contain" />
         </div>
       )),
     [pages, title]
@@ -108,7 +108,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
             >
               <img
                 src={pages[currentPage]}
-                alt={`${title} - page ${currentPage + 1}`}
+                alt={`${title} page ${currentPage + 1}`}
                 className="w-full h-auto block"
               />
               <div className="absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1.5 bg-[#0D2226]/85 text-[#C9A96A] text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg">
@@ -247,7 +247,7 @@ export const FlipbookViewer: React.FC<FlipbookViewerProps> = ({ pages, title }) 
 
           <img
             src={pages[lightboxIndex]}
-            alt={`${title} - page ${lightboxIndex + 1}`}
+            alt={`${title} page ${lightboxIndex + 1}`}
             className="max-w-full max-h-[80vh] object-contain px-4"
             onClick={(e) => e.stopPropagation()}
           />

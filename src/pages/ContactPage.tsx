@@ -197,8 +197,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => 
                     className="w-full bg-[#FAF8F5] border border-[#0D2226]/20 p-3 text-xs text-[#0D2226] focus:border-[#C9A96A] focus:outline-none"
                   >
                     <option value="Immediate">Immediate / Under 30 Days</option>
-                    <option value="1-3 Months">1 - 3 Months</option>
-                    <option value="3-6 Months">3 - 6 Months</option>
+                    <option value="1-3 Months">1 to 3 Months</option>
+                    <option value="3-6 Months">3 to 6 Months</option>
                     <option value="Planning">Planning Phase</option>
                   </select>
                 </div>

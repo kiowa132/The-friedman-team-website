@@ -14,7 +14,7 @@ export const GuidesListPage: React.FC = () => {
           Buyer & Seller Guides
         </h1>
         <p className="text-sm text-[#1C2B2E]/80 max-w-2xl mx-auto">
-          Real, local guides - not generic national advice.
+          Real, local guides, not generic national advice.
         </p>
       </div>
 
