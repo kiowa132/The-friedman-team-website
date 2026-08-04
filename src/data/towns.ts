@@ -62,12 +62,12 @@ export const TOWNS: Town[] = [
     },
   },
   { slug: 'eldersburg', name: 'Eldersburg', county: 'Carroll County', countyFips: '24013', lat: 39.4109, lng: -76.9483, image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'sykesville', name: 'Sykesville', county: 'Carroll County', countyFips: '24013', lat: 39.3712, lng: -76.9691, image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'mount-airy', name: 'Mount Airy', county: 'Carroll County', countyFips: '24013', lat: 39.3765, lng: -77.1522, image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1200&q=80' },
+  { slug: 'sykesville', name: 'Sykesville', county: 'Carroll County', countyFips: '24013', lat: 39.3712, lng: -76.9691, image: '/images/towns/sykesville.jpg' },
+  { slug: 'mount-airy', name: 'Mount Airy', county: 'Carroll County', countyFips: '24013', lat: 39.3765, lng: -77.1522, image: '/images/towns/mount-airy.jpg' },
   { slug: 'taneytown', name: 'Taneytown', county: 'Carroll County', countyFips: '24013', lat: 39.6587, lng: -77.1697, image: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=1200&q=80' },
   { slug: 'hampstead', name: 'Hampstead', county: 'Carroll County', countyFips: '24013', lat: 39.6062, lng: -76.8508, image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'manchester', name: 'Manchester', county: 'Carroll County', countyFips: '24013', lat: 39.6668, lng: -76.8838, image: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'new-windsor', name: 'New Windsor', county: 'Carroll County', countyFips: '24013', lat: 39.5387, lng: -77.0716, image: 'https://images.unsplash.com/photo-1580216643062-cf460548a66a?auto=format&fit=crop&w=1200&q=80' },
+  { slug: 'manchester', name: 'Manchester', county: 'Carroll County', countyFips: '24013', lat: 39.6668, lng: -76.8838, image: '/images/towns/manchester.jpg' },
+  { slug: 'new-windsor', name: 'New Windsor', county: 'Carroll County', countyFips: '24013', lat: 39.5387, lng: -77.0716, image: '/images/towns/new-windsor.jpg' },
 
   // ------------------------- Howard County -------------------------
   {
@@ -77,7 +77,7 @@ export const TOWNS: Town[] = [
     countyFips: '24027',
     lat: 39.2037,
     lng: -76.8610,
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/towns/columbia.jpg',
     content: {
       overview: "Columbia is a large planned community that makes up much of Howard County, built around a series of self-contained villages surrounding Lake Kittamaqundi and the Downtown Columbia Lakefront. It's centered on the Merriweather District, home to Merriweather Post Pavilion - the Frank Gehry-designed outdoor amphitheater that's hosted touring music acts for over four decades.",
       restaurantsRetail: "The Mall in Columbia anchors traditional retail, while the Lakefront and Merriweather District have grown into Columbia's dining and nightlife center, with restaurants and bars like Blackwall Barn & Lodge and Smashing Grapes set right along the water.",
@@ -93,12 +93,12 @@ export const TOWNS: Town[] = [
       schoolsResourceLabel: 'Howard County Public School System',
     },
   },
-  { slug: 'ellicott-city', name: 'Ellicott City', county: 'Howard County', countyFips: '24027', lat: 39.2673, lng: -76.7983, image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'elkridge', name: 'Elkridge', county: 'Howard County', countyFips: '24027', lat: 39.2126, lng: -76.7105, image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'clarksville', name: 'Clarksville', county: 'Howard County', countyFips: '24027', lat: 39.2181, lng: -76.9550, image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'fulton', name: 'Fulton', county: 'Howard County', countyFips: '24027', lat: 39.1651, lng: -76.9077, image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'highland', name: 'Highland', county: 'Howard County', countyFips: '24027', lat: 39.1704, lng: -76.9666, image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'savage', name: 'Savage', county: 'Howard County', countyFips: '24027', lat: 39.1373, lng: -76.8236, image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=90' },
+  { slug: 'ellicott-city', name: 'Ellicott City', county: 'Howard County', countyFips: '24027', lat: 39.2673, lng: -76.7983, image: '/images/towns/ellicott-city.jpg' },
+  { slug: 'elkridge', name: 'Elkridge', county: 'Howard County', countyFips: '24027', lat: 39.2126, lng: -76.7105, image: '/images/towns/elkridge.jpg' },
+  { slug: 'clarksville', name: 'Clarksville', county: 'Howard County', countyFips: '24027', lat: 39.2181, lng: -76.9550, image: '/images/towns/clarksville.jpg' },
+  { slug: 'fulton', name: 'Fulton', county: 'Howard County', countyFips: '24027', lat: 39.1651, lng: -76.9077, image: '/images/towns/fulton.jpg' },
+  { slug: 'highland', name: 'Highland', county: 'Howard County', countyFips: '24027', lat: 39.1704, lng: -76.9666, image: '/images/towns/highland.jpg' },
+  { slug: 'savage', name: 'Savage', county: 'Howard County', countyFips: '24027', lat: 39.1373, lng: -76.8236, image: '/images/towns/savage.jpg' },
 
   // ------------------------- Baltimore County -------------------------
   {
@@ -108,7 +108,7 @@ export const TOWNS: Town[] = [
     countyFips: '24005',
     lat: 39.4015,
     lng: -76.6019,
-    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/towns/towson.jpg',
     content: {
       overview: 'Towson is the seat of Baltimore County, a college town about 8 miles north of downtown Baltimore built around Towson University. Landmarks include the Baltimore County Courthouse, which dates back to 1854, and Towson Town Center, one of the largest shopping malls in Maryland.',
       restaurantsRetail: 'Towson Town Center is the retail anchor, with over 180 stores spanning mainstream brands, specialty shops, and international dining. Downtown Towson itself has a walkable mix of restaurants, bookstores, and a Cinemark movie theater within reach of the university.',
@@ -124,13 +124,13 @@ export const TOWNS: Town[] = [
       schoolsResourceLabel: 'Baltimore County Public Schools',
     },
   },
-  { slug: 'timonium', name: 'Timonium', county: 'Baltimore County', countyFips: '24005', lat: 39.4515, lng: -76.6383, image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'cockeysville', name: 'Cockeysville', county: 'Baltimore County', countyFips: '24005', lat: 39.4762, lng: -76.6427, image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'owings-mills', name: 'Owings Mills', county: 'Baltimore County', countyFips: '24005', lat: 39.4198, lng: -76.7805, image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'reisterstown', name: 'Reisterstown', county: 'Baltimore County', countyFips: '24005', lat: 39.4707, lng: -76.8266, image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'hunt-valley', name: 'Hunt Valley', county: 'Baltimore County', countyFips: '24005', lat: 39.4954, lng: -76.6455, image: 'https://images.unsplash.com/photo-1520531158340-44015069e78e?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'catonsville', name: 'Catonsville', county: 'Baltimore County', countyFips: '24005', lat: 39.2721, lng: -76.7319, image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'parkville', name: 'Parkville', county: 'Baltimore County', countyFips: '24005', lat: 39.3801, lng: -76.5461, image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1200&q=80' },
+  { slug: 'timonium', name: 'Timonium', county: 'Baltimore County', countyFips: '24005', lat: 39.4515, lng: -76.6383, image: '/images/towns/timonium.jpg' },
+  { slug: 'cockeysville', name: 'Cockeysville', county: 'Baltimore County', countyFips: '24005', lat: 39.4762, lng: -76.6427, image: '/images/towns/cockeysville.jpg' },
+  { slug: 'owings-mills', name: 'Owings Mills', county: 'Baltimore County', countyFips: '24005', lat: 39.4198, lng: -76.7805, image: '/images/towns/owings-mills.jpg' },
+  { slug: 'reisterstown', name: 'Reisterstown', county: 'Baltimore County', countyFips: '24005', lat: 39.4707, lng: -76.8266, image: '/images/towns/reisterstown.jpg' },
+  { slug: 'hunt-valley', name: 'Hunt Valley', county: 'Baltimore County', countyFips: '24005', lat: 39.4954, lng: -76.6455, image: '/images/towns/hunt-valley.jpg' },
+  { slug: 'catonsville', name: 'Catonsville', county: 'Baltimore County', countyFips: '24005', lat: 39.2721, lng: -76.7319, image: '/images/towns/catonsville.jpg' },
+  { slug: 'parkville', name: 'Parkville', county: 'Baltimore County', countyFips: '24005', lat: 39.3801, lng: -76.5461, image: '/images/towns/parkville.jpg' },
 
   // ------------------------- Frederick County -------------------------
   {
@@ -140,7 +140,7 @@ export const TOWNS: Town[] = [
     countyFips: '24021',
     lat: 39.4143,
     lng: -77.4105,
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/towns/downtown-frederick.jpg',
     content: {
       overview: 'Downtown Frederick is a genuinely walkable historic district of well-preserved 18th- and 19th-century architecture, built around Carroll Creek Linear Park - a 1.3-mile park built atop a former flood-control channel through the center of town, now lined with public art, water features, and restaurants.',
       restaurantsRetail: "Downtown Frederick has an eclectic, mostly independent mix of boutiques, antique shops, breweries, and restaurants, many facing directly onto Carroll Creek Park. McClintock Distilling is one of several craft producers along the creek.",
@@ -156,12 +156,12 @@ export const TOWNS: Town[] = [
       schoolsResourceLabel: 'Frederick County Public Schools',
     },
   },
-  { slug: 'urbana', name: 'Urbana', county: 'Frederick County', countyFips: '24021', lat: 39.3204, lng: -77.3552, image: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'new-market', name: 'New Market', county: 'Frederick County', countyFips: '24021', lat: 39.3862, lng: -77.2769, image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'walkersville', name: 'Walkersville', county: 'Frederick County', countyFips: '24021', lat: 39.4854, lng: -77.3488, image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'middletown', name: 'Middletown', county: 'Frederick County', countyFips: '24021', lat: 39.4437, lng: -77.5461, image: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'brunswick', name: 'Brunswick', county: 'Frederick County', countyFips: '24021', lat: 39.3143, lng: -77.6280, image: 'https://images.unsplash.com/photo-1580216643062-cf460548a66a?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'emmitsburg', name: 'Emmitsburg', county: 'Frederick County', countyFips: '24021', lat: 39.7051, lng: -77.3241, image: 'https://images.unsplash.com/photo-1520531158340-44015069e78e?auto=format&fit=crop&w=1200&q=80' },
+  { slug: 'urbana', name: 'Urbana', county: 'Frederick County', countyFips: '24021', lat: 39.3204, lng: -77.3552, image: '/images/towns/urbana.jpg' },
+  { slug: 'new-market', name: 'New Market', county: 'Frederick County', countyFips: '24021', lat: 39.3862, lng: -77.2769, image: '/images/towns/new-market.jpg' },
+  { slug: 'walkersville', name: 'Walkersville', county: 'Frederick County', countyFips: '24021', lat: 39.4854, lng: -77.3488, image: '/images/towns/walkersville.jpg' },
+  { slug: 'middletown', name: 'Middletown', county: 'Frederick County', countyFips: '24021', lat: 39.4437, lng: -77.5461, image: '/images/towns/middletown.jpg' },
+  { slug: 'brunswick', name: 'Brunswick', county: 'Frederick County', countyFips: '24021', lat: 39.3143, lng: -77.6280, image: '/images/towns/brunswick.jpg' },
+  { slug: 'emmitsburg', name: 'Emmitsburg', county: 'Frederick County', countyFips: '24021', lat: 39.7051, lng: -77.3241, image: '/images/towns/emmitsburg.jpg' },
 ];
 
 export function getTownBySlug(slug: string): Town | undefined {
