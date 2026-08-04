@@ -154,8 +154,55 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
     typeof census.data.medianHouseholdIncome === 'number'
   );
 
+  // Place + BreadcrumbList schema, built from the same real town data
+  // (name, county, lat/lng, image, overview) the page itself renders from,
+  // so the two can never drift out of sync. This is genuinely new
+  // structured data going live on the site: the "SEO & Schema Inspector"
+  // drawer elsewhere in the app displays a RealEstateAgent schema in a
+  // copyable text box, but never actually injects it into the page as a
+  // real <script> tag, so nothing schema-wise has been live before this.
+  const SITE_URL = 'https://www.friedmanreteam.com';
+  const pageUrl = `${SITE_URL}/neighborhoods/${town.slug}`;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Neighborhoods', item: `${SITE_URL}/neighborhoods` },
+          { '@type': 'ListItem', position: 2, name: town.name, item: pageUrl },
+        ],
+      },
+      {
+        '@type': 'Place',
+        name: `${town.name}, MD`,
+        description: content
+          ? content.overview
+          : `Real estate, demographics, walkability, and schools information for ${town.name}, ${town.county}, Maryland.`,
+        url: pageUrl,
+        image: town.image.startsWith('http') ? town.image : `${SITE_URL}${town.image}`,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: town.name,
+          addressRegion: 'MD',
+          addressCountry: 'US',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: town.lat,
+          longitude: town.lng,
+        },
+        containedInPlace: {
+          '@type': 'AdministrativeArea',
+          name: town.county,
+        },
+      },
+    ],
+  };
+
   return (
     <div>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
       {/* Hero - min-height (not fixed height) with generous top padding
           guarantees the content block never gets crowded under the fixed
           nav, regardless of how many lines the title/overview wrap to for
@@ -178,7 +225,7 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
           <p className="text-sm text-[#F5F1E8]/90 max-w-2xl mt-4 leading-relaxed">
             {content
               ? content.overview
-              : `Real, local data on ${town.name} - live listings, demographics, walkability, and schools - for buyers and sellers evaluating ${town.county}.`}
+              : `Real, local data on ${town.name}, including live listings, demographics, walkability, and schools, for buyers and sellers evaluating ${town.county}.`}
           </p>
           <div className="flex flex-wrap items-center gap-3 mt-6">
             <a href="#listings" className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors">
@@ -240,7 +287,7 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
           )}
           {(listingsStatus === 'empty' || listingsStatus === 'unavailable') && (
             <div className="border border-[#C9A96A]/30 bg-[#FAF8F5] p-6 text-center">
-              <p className="text-sm text-[#1C2B2E]/70 mb-3">No live listings in {town.name} right now - check back soon.</p>
+              <p className="text-sm text-[#1C2B2E]/70 mb-3">No live listings in {town.name} right now. Check back soon.</p>
               <Link to="/listings" className="inline-block px-6 py-2.5 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs">
                 Search Live Listings
               </Link>
@@ -482,7 +529,7 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
             Thinking About {town.name}?
           </h2>
           <p className="text-xs text-[#A8B2A1]">
-            Get a real, investor-grade read on the {town.name} market - pricing, inventory, and what's actually worth pursuing right now.
+            Get a real, investor-grade read on the {town.name} market, including pricing, inventory, and what's actually worth pursuing right now.
           </p>
           <button
             onClick={onOpenConsultation}
