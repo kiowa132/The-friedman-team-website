@@ -22,7 +22,7 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
       {/* Full-bleed hero, matching Canopy's neighborhoods page header */}
       <div className="relative h-[420px] w-full overflow-hidden flex flex-col items-center justify-center text-center">
         <img
-          src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=2000&q=80"
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80"
           alt="Maryland Neighborhoods"
           className="absolute inset-0 w-full h-full object-cover"
         />
