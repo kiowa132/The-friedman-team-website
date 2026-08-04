@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Neighborhood, Listing } from '../types';
 import { ListingCard } from '../components/ListingCard';
+import { TOWNS } from '../data/towns';
 import { MapPin, TrendingUp, Compass, Award, Building2, CheckCircle2, ChevronRight, Phone } from 'lucide-react';
 
 interface NeighborhoodsPageProps {
@@ -193,20 +195,29 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
         )}
       </section>
 
-      {/* Local SEO Keywords Tag Cloud */}
+      {/* Areas of Expertise - real towns, grouped by county */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#0D2226] p-6 rounded-xs border border-[#C9A96A]/30 text-xs text-[#A8B2A1] space-y-2">
-          <span className="text-[#C9A96A] font-bold uppercase text-[10px] tracking-wider block">
-            Maryland SEO & Local Market Metadata
-          </span>
-          <div className="flex flex-wrap gap-2 pt-1">
-            {currentNeighborhood.seoKeywords.map((kw, i) => (
-              <span key={i} className="bg-[#1A2E33] text-[#FAF8F5] px-2.5 py-1 text-[11px] border border-[#FAF8F5]/10">
-                #{kw}
-              </span>
-            ))}
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226] mb-8 text-center">
+          Areas of Expertise
+        </h2>
+        {(['Carroll County', 'Baltimore County', 'Howard County', 'Frederick County'] as const).map((county) => (
+          <div key={county} className="mb-8">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#0F5C63] mb-3 border-b border-[#C9A96A]/20 pb-2">
+              {county}
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+              {TOWNS.filter((t) => t.county === county).map((town) => (
+                <Link
+                  key={town.slug}
+                  to={`/neighborhoods/${town.slug}`}
+                  className="px-4 py-3 bg-white border border-[#C9A96A]/25 hover:border-[#0F5C63] text-sm text-[#0D2226] hover:text-[#0F5C63] transition-colors rounded-xs"
+                >
+                  {town.name}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        ))}
       </section>
 
     </div>

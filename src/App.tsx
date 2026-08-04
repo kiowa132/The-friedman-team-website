@@ -12,6 +12,7 @@ import { AboutPage } from './pages/AboutPage';
 import { SellPage } from './pages/SellPage';
 import { BuyersPage } from './pages/BuyersPage';
 import { NeighborhoodsPage } from './pages/NeighborhoodsPage';
+import { NeighborhoodDetailPage } from './pages/NeighborhoodDetailPage';
 import { ListingsPage } from './pages/ListingsPage';
 import { ContactPage } from './pages/ContactPage';
 import { BlogListPage } from './pages/BlogListPage';
@@ -66,6 +67,8 @@ export default function App() {
   const location = useLocation();
   const activeTab = location.pathname.startsWith('/listings/')
     ? 'listings'
+    : location.pathname.startsWith('/neighborhoods/')
+    ? 'neighborhoods'
     : PATH_TO_TAB[location.pathname] || 'home';
 
   // Scrolls to top on every route change, regardless of how navigation
@@ -180,6 +183,14 @@ export default function App() {
               onSelectListing={(l) => navigate(`/listings/${encodeURIComponent(l.mlsNumber || l.id)}`, { state: { listing: l } })}
               onScheduleShowing={handleScheduleShowing}
               onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
+
+          <Route path="/neighborhoods/:slug" element={
+            <NeighborhoodDetailPage
+              savedListings={savedListings}
+              onToggleSave={handleToggleSave}
+              onScheduleShowing={handleScheduleShowing}
             />
           } />
 
