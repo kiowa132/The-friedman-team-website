@@ -45,7 +45,7 @@ export const TOWNS: Town[] = [
     countyFips: '24013',
     lat: 39.575,
     lng: -76.996,
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90',
     content: {
       overview: "Westminster is the seat of Carroll County and one of Maryland's Nationally Accredited Main Street communities, with a walkable historic downtown built up along Main Street since the city was laid out in 1764. It's home to McDaniel College, and sits within easy reach of Baltimore (about 45 minutes), Washington D.C. (about 90 minutes), and Gettysburg (about 35 minutes).",
       restaurantsRetail: "Main Street is lined with locally-owned restaurants, shops, and galleries rather than national chains - it's a genuine small-town commercial strip, not a shopping center. The Downtown Westminster Farmers' Market has run every spring, summer, and fall since 1994.",
@@ -98,7 +98,7 @@ export const TOWNS: Town[] = [
   { slug: 'clarksville', name: 'Clarksville', county: 'Howard County', countyFips: '24027', lat: 39.2181, lng: -76.9550, image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80' },
   { slug: 'fulton', name: 'Fulton', county: 'Howard County', countyFips: '24027', lat: 39.1651, lng: -76.9077, image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80' },
   { slug: 'highland', name: 'Highland', county: 'Howard County', countyFips: '24027', lat: 39.1704, lng: -76.9666, image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80' },
-  { slug: 'savage', name: 'Savage', county: 'Howard County', countyFips: '24027', lat: 39.1373, lng: -76.8236, image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80' },
+  { slug: 'savage', name: 'Savage', county: 'Howard County', countyFips: '24027', lat: 39.1373, lng: -76.8236, image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=90' },
 
   // ------------------------- Baltimore County -------------------------
   {
