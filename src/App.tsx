@@ -97,7 +97,6 @@ export default function App() {
 
   const [isValuationOpen, setIsValuationOpen] = useState(false);
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
-  const [selectedNeighborhoodId, setSelectedNeighborhoodId] = useState('carroll-county');
 
   const handleToggleSave = (id: string) => {
     setSavedListings((prev) => {
@@ -124,7 +123,7 @@ export default function App() {
         savedCount={savedListings.length}
         onOpenValuation={() => setIsValuationOpen(true)}
         onOpenConsultation={() => setIsConsultationOpen(true)}
-        onSelectNeighborhood={(id) => setSelectedNeighborhoodId(id)}
+        onSelectNeighborhood={() => navigate('/neighborhoods')}
       />
 
       <main className="flex-1">
@@ -140,7 +139,7 @@ export default function App() {
               onOpenValuation={() => setIsValuationOpen(true)}
               onOpenConsultation={() => setIsConsultationOpen(true)}
               setActiveTab={setActiveTab}
-              onSelectNeighborhood={(id) => setSelectedNeighborhoodId(id)}
+              onSelectNeighborhood={() => navigate('/neighborhoods')}
             />
           } />
 
@@ -174,14 +173,6 @@ export default function App() {
 
           <Route path="/neighborhoods" element={
             <NeighborhoodsPage
-              neighborhoods={NEIGHBORHOODS}
-              listings={FEATURED_LISTINGS}
-              selectedNeighborhoodId={selectedNeighborhoodId}
-              setSelectedNeighborhoodId={setSelectedNeighborhoodId}
-              savedListings={savedListings}
-              onToggleSave={handleToggleSave}
-              onSelectListing={(l) => navigate(`/listings/${encodeURIComponent(l.mlsNumber || l.id)}`, { state: { listing: l } })}
-              onScheduleShowing={handleScheduleShowing}
               onOpenConsultation={() => setIsConsultationOpen(true)}
             />
           } />
