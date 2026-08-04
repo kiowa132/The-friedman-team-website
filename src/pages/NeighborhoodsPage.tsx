@@ -31,22 +31,31 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
         </p>
       </section>
 
-      {/* Areas of Expertise - real towns, grouped by county, linking to
-          real per-town data pages */}
+      {/* Areas of Expertise - real towns, grouped by county, photo cards
+          with hover "Learn More" prompt matching Canopy's pattern */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {(['Carroll County', 'Baltimore County', 'Howard County', 'Frederick County'] as const).map((county) => (
-          <div key={county} className="mb-10">
-            <h2 className="font-serif text-xl font-bold text-[#0D2226] mb-3 border-b border-[#C9A96A]/20 pb-2">
+          <div key={county} className="mb-14">
+            <h2 className="font-serif text-xl font-bold text-[#0D2226] mb-6 border-b border-[#C9A96A]/20 pb-2">
               {county}
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10">
               {TOWNS.filter((t) => t.county === county).map((town) => (
-                <Link
-                  key={town.slug}
-                  to={`/neighborhoods/${town.slug}`}
-                  className="px-4 py-3 bg-white border border-[#C9A96A]/25 hover:border-[#0F5C63] text-sm text-[#0D2226] hover:text-[#0F5C63] transition-colors rounded-xs text-center"
-                >
-                  {town.name}
+                <Link key={town.slug} to={`/neighborhoods/${town.slug}`} className="group block">
+                  <div className="relative aspect-[3/2] overflow-hidden">
+                    <img
+                      src={town.image}
+                      alt={town.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-[#0D2226]/0 group-hover:bg-[#0D2226]/25 transition-colors" />
+                    <span className="absolute bottom-4 right-4 px-4 py-2 border border-[#FAF8F5] text-[#FAF8F5] text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity bg-[#0D2226]/60">
+                      Learn More
+                    </span>
+                  </div>
+                  <h3 className="text-center mt-4 text-lg font-light uppercase tracking-[0.15em] text-[#0D2226] group-hover:text-[#0F5C63] transition-colors">
+                    {town.name}
+                  </h3>
                 </Link>
               ))}
             </div>
