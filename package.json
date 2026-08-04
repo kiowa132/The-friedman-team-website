@@ -7,6 +7,7 @@
     "dev": "vite --port=3000 --host=0.0.0.0",
     "server": "node server.js",
     "dev:all": "concurrently -n vite,api -c blue,green \"npm:dev\" \"npm:server\"",
+    "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "vite build",
     "start": "node server.js",
     "preview": "vite preview",
