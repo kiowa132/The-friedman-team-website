@@ -10,6 +10,54 @@
     <meta property="og:title" content="The Friedman Team | Luxury Maryland Estates & Strategic Home Sales" />
     <meta property="og:description" content="The trusted advisor for strategic home sales, luxury properties, farms, estates, and distinctive Maryland homes." />
     <meta property="og:type" content="website" />
+
+    <!-- RealEstateAgent structured data - real, live JSON-LD (this replaces
+         the old "SEO & Schema Inspector" drawer, which only displayed this
+         same schema in a copy-paste UI panel and never actually injected it
+         into the page, despite labeling it "Active"). Static business info
+         like this belongs here rather than per-page, since it doesn't
+         change from page to page. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "The Friedman Team | eXp Realty",
+      "image": "https://www.friedmanreteam.com/images/kyle-portrait.jpg",
+      "url": "https://www.friedmanreteam.com/",
+      "telephone": "+1-443-789-3101",
+      "priceRange": "$$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "8115 Maple Lawn Blvd #350",
+        "addressLocality": "Fulton",
+        "addressRegion": "MD",
+        "postalCode": "20759",
+        "addressCountry": "US"
+      },
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Carroll County, MD" },
+        { "@type": "AdministrativeArea", "name": "Baltimore County, MD" },
+        { "@type": "AdministrativeArea", "name": "Howard County, MD" },
+        { "@type": "AdministrativeArea", "name": "Frederick County, MD" },
+        { "@type": "City", "name": "Fulton" },
+        { "@type": "City", "name": "Westminster" },
+        { "@type": "City", "name": "Sykesville" },
+        { "@type": "City", "name": "Mount Airy" },
+        { "@type": "City", "name": "Frederick" }
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Kyle Friedman",
+        "jobTitle": "Principal Advisor"
+      },
+      "knowsAbout": [
+        "Residential Real Estate",
+        "Farms & Land Sales",
+        "Data-Driven Pricing Strategy",
+        "Off-Market & Coming-Soon Listings"
+      ]
+    }
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

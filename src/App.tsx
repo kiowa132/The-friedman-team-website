@@ -5,7 +5,6 @@ import { Footer } from './components/Footer';
 import { ListingDetailPage } from './pages/ListingDetailPage';
 import { HomeValuationModal } from './components/HomeValuationModal';
 import { StrategyConsultationModal } from './components/StrategyConsultationModal';
-import { SEOMetaDrawer } from './components/SEOMetaDrawer';
 
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
@@ -266,8 +265,6 @@ export default function App() {
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
       />
-
-      <SEOMetaDrawer />
 
     </div>
   );
