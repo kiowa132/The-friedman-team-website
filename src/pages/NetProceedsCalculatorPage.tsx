@@ -102,12 +102,26 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
                 ]}
               />
             </div>
-            <div className="pt-5 mt-5 border-t border-[#FAF8F5]/15 space-y-1 text-xs text-[#A8B2A1] w-full">
-              <div className="font-bold text-[#C9A96A] uppercase tracking-widest text-[10px] mb-1">{county.name} Tax Detail</div>
-              <div className="flex justify-between"><span>State transfer tax (0.5%)</span><span>{formatCurrency(result.deedTax.stateTransferTax)}</span></div>
-              <div className="flex justify-between"><span>County transfer tax</span><span>{formatCurrency(result.deedTax.localTransferTax)}</span></div>
-              <div className="flex justify-between"><span>Recordation tax</span><span>{formatCurrency(result.deedTax.recordationTax)}</span></div>
-              <div className="flex justify-between font-semibold text-[#FAF8F5]"><span>Total (before split)</span><span>{formatCurrency(result.deedTax.total)}</span></div>
+            <div className="pt-5 mt-5 border-t border-[#FAF8F5]/15 w-full space-y-3">
+              <div className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold">{county.name} Tax Detail</div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-[#0F5C63]/25 border border-[#0F5C63]/50 p-3.5">
+                  <div className="text-[10px] uppercase tracking-widest text-[#7FBFC4] font-bold mb-1">State Transfer Tax</div>
+                  <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(result.deedTax.stateTransferTax)}</div>
+                </div>
+                <div className="bg-[#0F5C63]/25 border border-[#0F5C63]/50 p-3.5">
+                  <div className="text-[10px] uppercase tracking-widest text-[#7FBFC4] font-bold mb-1">County Transfer Tax</div>
+                  <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(result.deedTax.localTransferTax)}</div>
+                </div>
+                <div className="bg-[#0F5C63]/25 border border-[#0F5C63]/50 p-3.5">
+                  <div className="text-[10px] uppercase tracking-widest text-[#7FBFC4] font-bold mb-1">Recordation Tax</div>
+                  <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(result.deedTax.recordationTax)}</div>
+                </div>
+                <div className="bg-[#C9A96A]/25 border border-[#C9A96A]/60 p-3.5">
+                  <div className="text-[10px] uppercase tracking-widest text-[#E4CFA0] font-bold mb-1">Total (Before Split)</div>
+                  <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(result.deedTax.total)}</div>
+                </div>
+              </div>
             </div>
             <button
               onClick={onOpenConsultation}

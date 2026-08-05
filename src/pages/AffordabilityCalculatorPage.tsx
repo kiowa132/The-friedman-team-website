@@ -199,10 +199,24 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
 
             <div className="w-full pt-5 mt-5 border-t border-[#FAF8F5]/15 space-y-3">
               <div className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold">Estimated Cash Needed to Close</div>
-              <div className="flex justify-between text-sm"><span className="text-[#A8B2A1]">Down Payment ({downPaymentPct.toFixed(1)}%)</span><span className="font-semibold">{formatCurrency(downPayment)}</span></div>
-              <div className="flex justify-between text-sm"><span className="text-[#A8B2A1]">Your Share of Transfer/Recordation Tax</span><span className="font-semibold">{formatCurrency(result.buyerShareOfDeedTax)}</span></div>
-              <div className="flex justify-between text-sm"><span className="text-[#A8B2A1]">Lender & Title Fees</span><span className="font-semibold">{formatCurrency(lenderTitleFees)}</span></div>
-              <div className="flex justify-between text-base font-bold pt-2 border-t border-[#FAF8F5]/10"><span>Total Cash to Close</span><span>{formatCurrency(result.cashToClose)}</span></div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-[#0F5C63]/25 border border-[#0F5C63]/50 p-3.5">
+                  <div className="text-[10px] uppercase tracking-widest text-[#7FBFC4] font-bold mb-1">Down Payment ({downPaymentPct.toFixed(1)}%)</div>
+                  <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(downPayment)}</div>
+                </div>
+                <div className="bg-[#0F5C63]/25 border border-[#0F5C63]/50 p-3.5">
+                  <div className="text-[10px] uppercase tracking-widest text-[#7FBFC4] font-bold mb-1">Transfer/Recordation Tax</div>
+                  <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(result.buyerShareOfDeedTax)}</div>
+                </div>
+                <div className="bg-[#0F5C63]/25 border border-[#0F5C63]/50 p-3.5">
+                  <div className="text-[10px] uppercase tracking-widest text-[#7FBFC4] font-bold mb-1">Lender & Title Fees</div>
+                  <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(lenderTitleFees)}</div>
+                </div>
+                <div className="bg-[#C9A96A]/25 border border-[#C9A96A]/60 p-3.5">
+                  <div className="text-[10px] uppercase tracking-widest text-[#E4CFA0] font-bold mb-1">Total Cash to Close</div>
+                  <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(result.cashToClose)}</div>
+                </div>
+              </div>
               {isFirstTimeBuyer && (
                 <div className="flex gap-2 text-[11px] text-[#A8B2A1] bg-[#FAF8F5]/5 p-2.5">
                   <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />

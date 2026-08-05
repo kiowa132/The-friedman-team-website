@@ -22,7 +22,7 @@ export const PaymentBreakdownChart: React.FC<PaymentBreakdownChartProps> = ({ to
   const data = visibleSlices.map((s) => ({ name: s.label, value: s.value }));
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       <div className="relative w-[200px] h-[200px]">
         <PieChart width={200} height={200}>
           <Pie

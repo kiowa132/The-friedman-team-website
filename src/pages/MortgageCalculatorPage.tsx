@@ -138,9 +138,23 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
                 { label: 'Estimated PMI', value: monthlyPmi, color: '#8B7355' },
               ]}
             />
-            <div className="w-full pt-5 mt-5 border-t border-[#FAF8F5]/15 space-y-2 text-sm">
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Loan Amount</span><span className="font-semibold">{formatCurrency(loanAmount)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Total Interest Over {termYears} Years</span><span className="font-semibold">{formatCurrency(totalInterest)}</span></div>
+            <div className="w-full pt-5 mt-5 border-t border-[#FAF8F5]/15 grid grid-cols-2 gap-3">
+              <div className="bg-[#0F5C63]/25 border border-[#0F5C63]/50 p-3.5">
+                <div className="text-[10px] uppercase tracking-widest text-[#7FBFC4] font-bold mb-1">Loan Amount</div>
+                <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(loanAmount)}</div>
+              </div>
+              <div className="bg-[#C9A96A]/20 border border-[#C9A96A]/50 p-3.5">
+                <div className="text-[10px] uppercase tracking-widest text-[#E4CFA0] font-bold mb-1">Down Payment</div>
+                <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(downPayment)}</div>
+              </div>
+              <div className="bg-[#0F5C63]/25 border border-[#0F5C63]/50 p-3.5">
+                <div className="text-[10px] uppercase tracking-widest text-[#7FBFC4] font-bold mb-1">Total Interest ({termYears}yr)</div>
+                <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(totalInterest)}</div>
+              </div>
+              <div className="bg-[#C9A96A]/20 border border-[#C9A96A]/50 p-3.5">
+                <div className="text-[10px] uppercase tracking-widest text-[#E4CFA0] font-bold mb-1">Total Cost of Loan</div>
+                <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(loanAmount + totalInterest)}</div>
+              </div>
             </div>
             <button
               onClick={onOpenConsultation}
