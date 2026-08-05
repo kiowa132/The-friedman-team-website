@@ -35,7 +35,7 @@ export const Footer: React.FC<FooterProps> = ({
                 Subscribe to The Friedman Report
               </h3>
               <p className="text-[#A8B2A1] text-sm mt-2 max-w-xl">
-                Local market data, new listings, and straight talk about buying and selling in Carroll, Baltimore, Howard, and Frederick counties — every week.
+                Local market data, new listings, and straight talk about buying and selling in Carroll, Baltimore, Howard, and Frederick counties, every week.
               </p>
             </div>
 
@@ -64,9 +64,11 @@ export const Footer: React.FC<FooterProps> = ({
 
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#0F5C63] border border-[#C9A96A] flex items-center justify-center text-[#C9A96A] font-serif font-bold text-xl">
-                F
-              </div>
+              <img
+                src="/images/brand/friedman-f-mark.png"
+                alt="The Friedman Team"
+                className="h-12 w-auto drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)]"
+              />
               <div>
                 <h4 className="font-serif text-xl font-bold tracking-wider text-[#FAF8F5]">
                   THE FRIEDMAN TEAM

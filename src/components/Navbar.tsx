@@ -216,9 +216,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center gap-3 text-left group focus:outline-none"
             id="nav-logo-btn"
           >
-            <div className="w-10 h-10 rounded-sm bg-[#0F5C63] border border-[#C9A96A] flex items-center justify-center text-[#C9A96A] font-serif font-bold text-xl shadow-lg group-hover:border-[#F5F1E8] transition-all">
-              F
-            </div>
+            <img
+              src="/images/brand/friedman-f-mark.png"
+              alt="The Friedman Team"
+              className="h-11 w-auto drop-shadow-[0_4px_10px_rgba(0,0,0,0.35)] group-hover:drop-shadow-[0_4px_14px_rgba(201,169,106,0.45)] transition-all"
+            />
             <div>
               <div className="font-serif text-lg sm:text-xl font-bold tracking-wider text-[#FAF8F5] uppercase group-hover:text-[#C9A96A] transition-colors leading-tight">
                 Friedman
