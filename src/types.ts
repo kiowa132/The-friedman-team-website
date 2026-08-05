@@ -20,6 +20,7 @@ export interface Guide {
   pdfUrl?: string; // optional - if set, also offers a real PDF download alongside on-page content
   relatedPostSlug?: string;
   previewPoints: string[]; // short "what's inside" bullets, shown before the form
+  previewHtml?: string; // optional - richer HTML "what's inside" preview, shown instead of/alongside previewPoints if set
   fullContentHtml: string; // the real guide content, unlocked after someone submits their info
   publuuEmbedUrl?: string; // optional - if set, shows a Publuu flipbook instead of plain text
   flipbookPages?: string[]; // optional - pre-converted page images for the free in-house flipbook viewer
