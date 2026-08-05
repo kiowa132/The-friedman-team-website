@@ -99,13 +99,21 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'neighborhoods', label: 'Neighborhoods', action: () => goTo('neighborhoods') },
     { id: 'home-valuation', label: 'Home Valuation', action: () => onOpenValuation() },
     {
+      id: 'calculators',
+      label: 'Calculators',
+      items: [
+        { label: 'Mortgage Calculator', action: () => goTo('calculators-mortgage') },
+        { label: 'Affordability Calculator', action: () => goTo('calculators-affordability') },
+        { label: 'Net Proceeds Calculator', action: () => goTo('calculators-net-proceeds') },
+      ],
+    },
+    {
       id: 'resources',
       label: 'Resources',
       items: [
         { label: 'Meet the Team', action: () => goTo('team') },
         { label: "The Friedman Report", action: () => goTo('blog') },
         { label: 'Free Guides', action: () => goTo('guides') },
-        { label: 'Calculators', action: () => goTo('calculators') },
         { label: 'Giving Back', action: () => goTo('giving-back') },
         { label: 'Fine Homes & Estates', action: () => goTo('luxury') },
         { label: 'About Kyle', action: () => goTo('about') },
@@ -127,10 +135,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     'giving-back': 'resources',
     luxury: 'resources',
     about: 'resources',
-    calculators: 'resources',
-    'calculators-mortgage': 'resources',
-    'calculators-affordability': 'resources',
-    'calculators-net-proceeds': 'resources',
+    calculators: 'calculators',
+    'calculators-mortgage': 'calculators',
+    'calculators-affordability': 'calculators',
+    'calculators-net-proceeds': 'calculators',
     contact: 'contact',
   };
   const activeGroupId = groupForTab[activeTab] || 'home';
@@ -161,11 +169,19 @@ export const Navbar: React.FC<NavbarProps> = ({
         ],
       },
       {
+        id: 'calculators-full',
+        label: 'Calculators',
+        items: [
+          { label: 'Mortgage Calculator', action: () => goTo('calculators-mortgage') },
+          { label: 'Affordability Calculator', action: () => goTo('calculators-affordability') },
+          { label: 'Net Proceeds Calculator', action: () => goTo('calculators-net-proceeds') },
+        ],
+      },
+      {
         id: 'resources-full',
         label: 'Resources',
         items: [
           { label: 'Free Guides', action: () => goTo('guides') },
-          { label: 'Calculators', action: () => goTo('calculators') },
           { label: 'Fine Homes & Estates', action: () => goTo('luxury') },
           { label: 'About Kyle', action: () => goTo('about') },
         ],

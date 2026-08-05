@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Calculator, Phone } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
-import { formatCurrency, monthlyPrincipalAndInterest, totalInterestPaid } from '../lib/calculators';
+import { formatCurrency, monthlyPrincipalAndInterest, totalInterestPaid, estimateMonthlyPmi } from '../lib/calculators';
 
 interface MortgageCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -30,7 +30,8 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
   const monthlyPI = useMemo(() => monthlyPrincipalAndInterest(loanAmount, rate, termYears), [loanAmount, rate, termYears]);
   const monthlyTax = annualPropertyTax / 12;
   const monthlyInsurance = annualInsurance / 12;
-  const totalMonthly = monthlyPI + monthlyTax + monthlyInsurance + monthlyHoa;
+  const monthlyPmi = estimateMonthlyPmi(loanAmount, downPaymentPct);
+  const totalMonthly = monthlyPI + monthlyTax + monthlyInsurance + monthlyHoa + monthlyPmi;
   const totalInterest = useMemo(() => totalInterestPaid(monthlyPI, termYears, loanAmount), [monthlyPI, termYears, loanAmount]);
 
   return (
@@ -98,6 +99,9 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
               {monthlyHoa > 0 && (
                 <div className="flex justify-between"><span className="text-[#A8B2A1]">HOA / Condo Fee</span><span className="font-semibold">{formatCurrency(monthlyHoa)}</span></div>
               )}
+              {monthlyPmi > 0 && (
+                <div className="flex justify-between"><span className="text-[#A8B2A1]">Estimated PMI</span><span className="font-semibold">{formatCurrency(monthlyPmi)}</span></div>
+              )}
             </div>
             <div className="pt-4 border-t border-[#FAF8F5]/15 space-y-2 text-sm">
               <div className="flex justify-between"><span className="text-[#A8B2A1]">Loan Amount</span><span className="font-semibold">{formatCurrency(loanAmount)}</span></div>
@@ -114,7 +118,7 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
         </div>
 
         <p className="text-xs text-[#1C2B2E]/50 text-center mt-8 max-w-xl mx-auto">
-          This is an estimate for general informational purposes only, not a loan offer or pre-approval. Actual rates, taxes, insurance, and PMI vary by lender, property, and buyer. Talk to a licensed loan officer for exact figures.
+          This is an estimate for general informational purposes only, not a loan offer or pre-approval. PMI is auto-estimated at a common rate when your down payment is under 20% and removed automatically at 20%+; actual PMI varies by lender, credit score, and loan type. Actual rates, taxes, and insurance also vary by lender and property. Talk to a licensed loan officer for exact figures.
         </p>
       </div>
     </div>

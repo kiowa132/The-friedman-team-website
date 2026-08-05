@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Phone } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
-import { formatCurrency, MARYLAND_COUNTY_TAX_RATES, combinedDeedTaxPct } from '../lib/calculators';
+import { formatCurrency, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
 
 interface NetProceedsCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -13,26 +13,25 @@ const labelClass = 'block text-xs font-bold uppercase tracking-widest text-[#1C2
 export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps> = ({ onOpenConsultation }) => {
   usePageMeta(
     'Home Sale Net Proceeds Calculator | The Friedman Team',
-    'Estimate what you could walk away with after selling your Maryland home.'
+    'Estimate what you could walk away with after selling your Maryland home, in any county.'
   );
 
   const [salePrice, setSalePrice] = useState(500000);
-  const [countyIndex, setCountyIndex] = useState(0);
+  const [countyIndex, setCountyIndex] = useState(() => MARYLAND_COUNTIES.findIndex((c) => c.name === 'Carroll County'));
   const [mortgagePayoff, setMortgagePayoff] = useState(250000);
   const [commissionPct, setCommissionPct] = useState(5.5);
   const [sellerTaxSharePct, setSellerTaxSharePct] = useState(50); // customary 50/50 split, editable
   const [otherClosingCosts, setOtherClosingCosts] = useState(2500);
 
-  const county = MARYLAND_COUNTY_TAX_RATES[countyIndex];
+  const county = MARYLAND_COUNTIES[countyIndex];
 
   const result = useMemo(() => {
     const commission = salePrice * (commissionPct / 100);
-    const combinedTaxPct = combinedDeedTaxPct(county);
-    const totalDeedTax = salePrice * (combinedTaxPct / 100);
-    const sellerTaxShare = totalDeedTax * (sellerTaxSharePct / 100);
+    const deedTax = calculateDeedTax(county, salePrice);
+    const sellerTaxShare = deedTax.total * (sellerTaxSharePct / 100);
     const totalCosts = commission + sellerTaxShare + otherClosingCosts + mortgagePayoff;
     const netProceeds = salePrice - totalCosts;
-    return { commission, combinedTaxPct, totalDeedTax, sellerTaxShare, netProceeds };
+    return { commission, deedTax, sellerTaxShare, netProceeds };
   }, [salePrice, county, commissionPct, sellerTaxSharePct, otherClosingCosts, mortgagePayoff]);
 
   return (
@@ -42,7 +41,7 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
           <span className="text-[11px] uppercase tracking-[0.25em] text-[#C9A96A] font-bold">Free Tool</span>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#0D2226] mt-2">Home Sale Net Proceeds Calculator</h1>
           <p className="text-sm text-[#1C2B2E]/70 mt-3 max-w-xl mx-auto">
-            Estimate what you could walk away with, using real Maryland county transfer and recordation tax rates.
+            Estimate what you could walk away with, using real transfer and recordation tax rates for all 23 Maryland counties and Baltimore City.
           </p>
         </div>
 
@@ -56,8 +55,8 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
             <div>
               <label className={labelClass}>County</label>
               <select className={inputClass} value={countyIndex} onChange={(e) => setCountyIndex(Number(e.target.value))}>
-                {MARYLAND_COUNTY_TAX_RATES.map((c, i) => (
-                  <option key={c.county} value={i}>{c.county}</option>
+                {MARYLAND_COUNTIES.map((c, i) => (
+                  <option key={c.name} value={i}>{c.name}</option>
                 ))}
               </select>
             </div>
@@ -73,7 +72,7 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
               <label className={labelClass}>Your Share of Transfer/Recordation Tax (%)</label>
               <input type="number" step="1" className={inputClass} value={sellerTaxSharePct} onChange={(e) => setSellerTaxSharePct(Number(e.target.value) || 0)} />
               <p className="text-[11px] text-[#1C2B2E]/50 mt-1">
-                Customarily split 50/50 with the buyer in Maryland, but this is negotiable per contract.
+                Customarily split 50/50 with the buyer in most Maryland counties, but this is negotiable per contract (Montgomery County commonly shifts more of this to the buyer).
               </p>
             </div>
             <div>
@@ -96,8 +95,12 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
               <div className="flex justify-between"><span className="text-[#A8B2A1]">Transfer/Recordation Tax (your share)</span><span className="font-semibold">−{formatCurrency(result.sellerTaxShare)}</span></div>
               <div className="flex justify-between"><span className="text-[#A8B2A1]">Other Closing Costs</span><span className="font-semibold">−{formatCurrency(otherClosingCosts)}</span></div>
             </div>
-            <div className="pt-4 border-t border-[#FAF8F5]/15 text-xs text-[#A8B2A1]">
-              {county.county}: combined state + county transfer tax and recordation tax on the deed is {result.combinedTaxPct.toFixed(2)}% of sale price.
+            <div className="pt-4 border-t border-[#FAF8F5]/15 space-y-1 text-xs text-[#A8B2A1]">
+              <div className="font-bold text-[#C9A96A] uppercase tracking-widest text-[10px] mb-1">{county.name} Tax Detail</div>
+              <div className="flex justify-between"><span>State transfer tax (0.5%)</span><span>{formatCurrency(result.deedTax.stateTransferTax)}</span></div>
+              <div className="flex justify-between"><span>County transfer tax</span><span>{formatCurrency(result.deedTax.localTransferTax)}</span></div>
+              <div className="flex justify-between"><span>Recordation tax</span><span>{formatCurrency(result.deedTax.recordationTax)}</span></div>
+              <div className="flex justify-between font-semibold text-[#FAF8F5]"><span>Total (before split)</span><span>{formatCurrency(result.deedTax.total)}</span></div>
             </div>
             <button
               onClick={onOpenConsultation}
