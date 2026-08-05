@@ -41,8 +41,12 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {PAST_TRANSACTIONS.map((t, i) => (
               <div key={i} className="bg-white border border-[#C9A96A]/25 overflow-hidden shadow-md">
-                <div className="relative aspect-[16/10] overflow-hidden bg-[#0D2226]">
-                  <img src={t.image} alt={t.address} className="w-full h-full object-cover" />
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#0D2226] flex items-center justify-center">
+                  {t.image ? (
+                    <img src={t.image} alt={t.address} className="w-full h-full object-cover" />
+                  ) : (
+                    <img src="/images/brand/friedman-f-mark.png" alt="" className="h-16 w-auto opacity-40" />
+                  )}
                   <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
                     Sold
                   </div>
