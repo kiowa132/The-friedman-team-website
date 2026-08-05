@@ -23,18 +23,4 @@ export interface PastTransaction {
   sqft?: number;
 }
 
-export const PAST_TRANSACTIONS: PastTransaction[] = [
-  {
-    address: '147 Union Bridge Rd',
-    city: 'Union Bridge',
-    county: 'Carroll County',
-    priceDisplay: '$285,900',
-    soldDate: 'February 2026',
-    role: "Buyer's Agent",
-    beds: 2,
-    baths: 2,
-    sqft: 1464,
-    // No photo yet - send a real listing photo you have rights to use and
-    // I'll add it. The page shows a neutral placeholder until then.
-  },
-];
+export const PAST_TRANSACTIONS: PastTransaction[] = [];
