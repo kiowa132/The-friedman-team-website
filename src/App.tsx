@@ -26,6 +26,9 @@ import { CalculatorsPage } from './pages/CalculatorsPage';
 import { MortgageCalculatorPage } from './pages/MortgageCalculatorPage';
 import { AffordabilityCalculatorPage } from './pages/AffordabilityCalculatorPage';
 import { NetProceedsCalculatorPage } from './pages/NetProceedsCalculatorPage';
+import { PastTransactionsPage } from './pages/PastTransactionsPage';
+import { VideosPage } from './pages/VideosPage';
+import { FinancingOptionsPage } from './pages/FinancingOptionsPage';
 import { SellerProcessPage } from './pages/SellerProcessPage';
 import { GuideDetailPage } from './pages/GuideDetailPage';
 
@@ -56,6 +59,9 @@ const PATH_TO_TAB: Record<string, string> = {
   '/calculators/mortgage': 'calculators-mortgage',
   '/calculators/affordability': 'calculators-affordability',
   '/calculators/net-proceeds': 'calculators-net-proceeds',
+  '/past-transactions': 'past-transactions',
+  '/videos': 'videos',
+  '/financing-options': 'financing-options',
 };
 
 const TAB_TO_PATH: Record<string, string> = {
@@ -77,6 +83,9 @@ const TAB_TO_PATH: Record<string, string> = {
   'calculators-mortgage': '/calculators/mortgage',
   'calculators-affordability': '/calculators/affordability',
   'calculators-net-proceeds': '/calculators/net-proceeds',
+  'past-transactions': '/past-transactions',
+  'videos': '/videos',
+  'financing-options': '/financing-options',
 };
 
 export default function App() {
@@ -284,6 +293,18 @@ export default function App() {
 
           <Route path="/calculators/net-proceeds" element={
             <NetProceedsCalculatorPage onOpenConsultation={() => setIsConsultationOpen(true)} />
+          } />
+
+          <Route path="/past-transactions" element={
+            <PastTransactionsPage onOpenConsultation={() => setIsConsultationOpen(true)} />
+          } />
+
+          <Route path="/videos" element={
+            <VideosPage />
+          } />
+
+          <Route path="/financing-options" element={
+            <FinancingOptionsPage onOpenConsultation={() => setIsConsultationOpen(true)} />
           } />
         </Routes>
       </main>

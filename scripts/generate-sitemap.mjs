@@ -44,6 +44,9 @@ const STATIC_ROUTES = [
   { path: '/calculators/mortgage', changefreq: 'monthly', priority: '0.6' },
   { path: '/calculators/affordability', changefreq: 'monthly', priority: '0.6' },
   { path: '/calculators/net-proceeds', changefreq: 'monthly', priority: '0.6' },
+  { path: '/past-transactions', changefreq: 'monthly', priority: '0.6' },
+  { path: '/videos', changefreq: 'monthly', priority: '0.5' },
+  { path: '/financing-options', changefreq: 'monthly', priority: '0.6' },
 ];
 
 // --- Neighborhood pages, from the same data the site itself renders from -

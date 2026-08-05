@@ -90,6 +90,11 @@ export const SellPage: React.FC<SellPageProps> = ({
             Schedule Seller Strategy Session
           </button>
         </div>
+
+        <div className="pt-4 flex items-center justify-center gap-2 text-xs text-[#1C2B2E]/60">
+          <ShieldCheck className="w-4 h-4 text-[#0F5C63]" />
+          <span>Cancel your listing agreement any time. No lengthy contract, no risk.</span>
+        </div>
       </section>
 
       {/* 6 Strategic Pillars Grid */}
