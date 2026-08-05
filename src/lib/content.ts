@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 import { marked } from 'marked';
 import { BlogPost, Guide } from '../types';
+import { normalizePublishDate } from './formatDate';
 
 // gray-matter (a common frontmatter-parsing library) relies on Node.js's
 // Buffer internally, which doesn't exist in the browser and crashes the
@@ -111,7 +112,7 @@ export const BLOG_POSTS: BlogPost[] = Object.entries(blogFiles)
       title: data.title || 'Untitled',
       metaDescription: data.metaDescription || '',
       category: data.category || 'Market Reports',
-      publishDate: data.publishDate || new Date().toISOString().slice(0, 10),
+      publishDate: normalizePublishDate(data.publishDate),
       heroImage: data.heroImage || '',
       youtubeVideoId: data.youtubeVideoId || '',
       carouselImages: data.carouselImages || [],
