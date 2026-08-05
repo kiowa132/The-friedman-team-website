@@ -105,6 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         { label: 'Meet the Team', action: () => goTo('team') },
         { label: "The Friedman Report", action: () => goTo('blog') },
         { label: 'Free Guides', action: () => goTo('guides') },
+        { label: 'Calculators', action: () => goTo('calculators') },
         { label: 'Giving Back', action: () => goTo('giving-back') },
         { label: 'Fine Homes & Estates', action: () => goTo('luxury') },
         { label: 'About Kyle', action: () => goTo('about') },
@@ -126,6 +127,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     'giving-back': 'resources',
     luxury: 'resources',
     about: 'resources',
+    calculators: 'resources',
+    'calculators-mortgage': 'resources',
+    'calculators-affordability': 'resources',
+    'calculators-net-proceeds': 'resources',
     contact: 'contact',
   };
   const activeGroupId = groupForTab[activeTab] || 'home';
@@ -160,6 +165,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         label: 'Resources',
         items: [
           { label: 'Free Guides', action: () => goTo('guides') },
+          { label: 'Calculators', action: () => goTo('calculators') },
           { label: 'Fine Homes & Estates', action: () => goTo('luxury') },
           { label: 'About Kyle', action: () => goTo('about') },
         ],

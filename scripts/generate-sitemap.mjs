@@ -38,6 +38,12 @@ const STATIC_ROUTES = [
   { path: '/luxury', changefreq: 'monthly', priority: '0.6' },
   { path: '/team', changefreq: 'monthly', priority: '0.5' },
   { path: '/giving-back', changefreq: 'yearly', priority: '0.4' },
+  { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
+  { path: '/terms-of-use', changefreq: 'yearly', priority: '0.3' },
+  { path: '/calculators', changefreq: 'monthly', priority: '0.6' },
+  { path: '/calculators/mortgage', changefreq: 'monthly', priority: '0.6' },
+  { path: '/calculators/affordability', changefreq: 'monthly', priority: '0.6' },
+  { path: '/calculators/net-proceeds', changefreq: 'monthly', priority: '0.6' },
 ];
 
 // --- Neighborhood pages, from the same data the site itself renders from -

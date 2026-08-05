@@ -22,6 +22,10 @@ import { TeamPage } from './pages/TeamPage';
 import { GivingBackPage } from './pages/GivingBackPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { TermsOfUsePage } from './pages/TermsOfUsePage';
+import { CalculatorsPage } from './pages/CalculatorsPage';
+import { MortgageCalculatorPage } from './pages/MortgageCalculatorPage';
+import { AffordabilityCalculatorPage } from './pages/AffordabilityCalculatorPage';
+import { NetProceedsCalculatorPage } from './pages/NetProceedsCalculatorPage';
 import { SellerProcessPage } from './pages/SellerProcessPage';
 import { GuideDetailPage } from './pages/GuideDetailPage';
 
@@ -48,6 +52,10 @@ const PATH_TO_TAB: Record<string, string> = {
   '/giving-back': 'giving-back',
   '/privacy-policy': 'privacy-policy',
   '/terms-of-use': 'terms-of-use',
+  '/calculators': 'calculators',
+  '/calculators/mortgage': 'calculators-mortgage',
+  '/calculators/affordability': 'calculators-affordability',
+  '/calculators/net-proceeds': 'calculators-net-proceeds',
 };
 
 const TAB_TO_PATH: Record<string, string> = {
@@ -65,6 +73,10 @@ const TAB_TO_PATH: Record<string, string> = {
   'giving-back': '/giving-back',
   'privacy-policy': '/privacy-policy',
   'terms-of-use': '/terms-of-use',
+  'calculators': '/calculators',
+  'calculators-mortgage': '/calculators/mortgage',
+  'calculators-affordability': '/calculators/affordability',
+  'calculators-net-proceeds': '/calculators/net-proceeds',
 };
 
 export default function App() {
@@ -256,6 +268,22 @@ export default function App() {
 
           <Route path="/terms-of-use" element={
             <TermsOfUsePage />
+          } />
+
+          <Route path="/calculators" element={
+            <CalculatorsPage />
+          } />
+
+          <Route path="/calculators/mortgage" element={
+            <MortgageCalculatorPage onOpenConsultation={() => setIsConsultationOpen(true)} />
+          } />
+
+          <Route path="/calculators/affordability" element={
+            <AffordabilityCalculatorPage onOpenConsultation={() => setIsConsultationOpen(true)} />
+          } />
+
+          <Route path="/calculators/net-proceeds" element={
+            <NetProceedsCalculatorPage onOpenConsultation={() => setIsConsultationOpen(true)} />
           } />
         </Routes>
       </main>
