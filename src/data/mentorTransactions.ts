@@ -17,7 +17,7 @@ export interface MentorTransaction {
 }
 
 export const MENTOR_NAME = 'James Buckley';
-export const MENTOR_AFFILIATION = 'Canopy Real Estate';
+export const MENTOR_AFFILIATION = 'Canopy Real Estate Group, eXp Realty';
 
 export const MENTOR_TRANSACTIONS: MentorTransaction[] = [
   { address: '4327 16th St N', cityStateZip: 'Arlington, VA 22207', priceDisplay: '$2,100,000', beds: 5, baths: 5, sqft: 4500 },
