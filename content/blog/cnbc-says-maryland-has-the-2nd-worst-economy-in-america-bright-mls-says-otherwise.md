@@ -5,7 +5,7 @@ metaDescription: "My phone hasn’t stopped buzzing this week. Clients, past
   clients, my own mother everyone’s sending me the same headline: CNBC just
   ranked Maryland the 2nd worst economy in America."
 category: Sell Your Home
-publishDate: "{{now}}"
+publishDate: "2026-07-30"
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-18-.png
 carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-20-.png
