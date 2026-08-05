@@ -92,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       items: [
         { label: 'Featured Properties', action: () => goTo('listings') },
         { label: 'Home Search', action: () => goTo('listings') },
-        { label: 'Past Transactions', action: () => goTo('past-transactions') },
+        { label: 'Our System', action: () => goTo('past-transactions') },
         { label: "Buyer's Strategy", action: () => goTo('buy') },
         { label: "Seller's Strategy", action: () => goTo('sell') },
       ],
@@ -170,7 +170,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         items: [
           { label: 'Featured Properties', action: () => goTo('listings') },
           { label: 'Home Search', action: () => goTo('listings') },
-          { label: 'Past Transactions', action: () => goTo('past-transactions') },
+          { label: 'Our System', action: () => goTo('past-transactions') },
           { label: "Buyer's Strategy", action: () => goTo('buy') },
           { label: "Seller's Strategy", action: () => goTo('sell') },
         ],
