@@ -34,6 +34,10 @@ export const CalculatorsPage: React.FC = () => {
     <div className="pt-28 pb-20 bg-[#FAF8F5]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <div className="mb-12 text-center">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <img src="/images/brand/friedman-f-mark.png" alt="" className="h-6 w-auto" />
+            <span className="text-xs uppercase tracking-widest text-[#1C2B2E]/60 font-semibold">The Friedman Team</span>
+          </div>
           <span className="text-[11px] uppercase tracking-[0.25em] text-[#C9A96A] font-bold">Free Tools</span>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#0D2226] mt-2">Calculators</h1>
           <p className="text-sm text-[#1C2B2E]/70 mt-3 max-w-xl mx-auto">

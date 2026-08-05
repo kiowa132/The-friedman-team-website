@@ -39,6 +39,10 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
     <div className="pt-28 pb-20 bg-[#FAF8F5]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <div className="mb-10 text-center">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <img src="/images/brand/friedman-f-mark.png" alt="" className="h-6 w-auto" />
+            <span className="text-xs uppercase tracking-widest text-[#1C2B2E]/60 font-semibold">The Friedman Team</span>
+          </div>
           <span className="text-[11px] uppercase tracking-[0.25em] text-[#C9A96A] font-bold">Free Tool</span>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#0D2226] mt-2">Home Sale Net Proceeds Calculator</h1>
           <p className="text-sm text-[#1C2B2E]/70 mt-3 max-w-xl mx-auto">
@@ -123,9 +127,16 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
                 </div>
               </div>
             </div>
+<div className="flex items-center gap-3 mt-6 mb-3">
+              <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-11 h-11 rounded-full object-cover border-2 border-[#C9A96A]" />
+              <div>
+                <div className="text-sm font-bold text-[#FAF8F5] leading-tight">Kyle Friedman</div>
+                <div className="text-[11px] text-[#A8B2A1]">The Friedman Team, eXp Realty</div>
+              </div>
+            </div>
             <button
               onClick={onOpenConsultation}
-              className="w-full mt-6 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4" />
               Get a Real Net Proceeds Estimate
