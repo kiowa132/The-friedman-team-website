@@ -1,14 +1,37 @@
 import React, { useMemo, useState } from 'react';
-import { Calculator, Phone } from 'lucide-react';
+import { Phone, RotateCcw } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, monthlyPrincipalAndInterest, totalInterestPaid, estimateMonthlyPmi } from '../lib/calculators';
+import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
 
 interface MortgageCalculatorPageProps {
   onOpenConsultation: () => void;
 }
 
 const inputClass = 'w-full bg-[#FAF8F5] border border-[#0D2226]/20 p-2.5 text-sm text-[#0D2226] focus:border-[#C9A96A] focus:outline-none';
-const labelClass = 'block text-xs font-bold uppercase tracking-widest text-[#1C2B2E]/70 mb-1.5';
+const labelClass = 'flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#1C2B2E]/70 mb-1.5';
+
+// Small "(i)" info dot with a native title tooltip - no extra JS/positioning
+// logic needed, and it's keyboard/screen-reader accessible for free since
+// it's just a title attribute on a real element.
+const InfoDot: React.FC<{ text: string }> = ({ text }) => (
+  <span
+    title={text}
+    className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border border-[#1C2B2E]/30 text-[9px] text-[#1C2B2E]/50 cursor-help shrink-0 normal-case font-normal"
+  >
+    i
+  </span>
+);
+
+const DEFAULTS = {
+  homePrice: 450000,
+  downPayment: 90000,
+  rate: 6.5,
+  termYears: 30,
+  annualPropertyTax: 4500,
+  annualInsurance: 1500,
+  monthlyHoa: 0,
+};
 
 export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ onOpenConsultation }) => {
   usePageMeta(
@@ -16,13 +39,23 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
     'Estimate your monthly mortgage payment, including principal, interest, taxes, and insurance.'
   );
 
-  const [homePrice, setHomePrice] = useState(450000);
-  const [downPayment, setDownPayment] = useState(90000);
-  const [rate, setRate] = useState(6.5);
-  const [termYears, setTermYears] = useState(30);
-  const [annualPropertyTax, setAnnualPropertyTax] = useState(4500);
-  const [annualInsurance, setAnnualInsurance] = useState(1500);
-  const [monthlyHoa, setMonthlyHoa] = useState(0);
+  const [homePrice, setHomePrice] = useState(DEFAULTS.homePrice);
+  const [downPayment, setDownPayment] = useState(DEFAULTS.downPayment);
+  const [rate, setRate] = useState(DEFAULTS.rate);
+  const [termYears, setTermYears] = useState(DEFAULTS.termYears);
+  const [annualPropertyTax, setAnnualPropertyTax] = useState(DEFAULTS.annualPropertyTax);
+  const [annualInsurance, setAnnualInsurance] = useState(DEFAULTS.annualInsurance);
+  const [monthlyHoa, setMonthlyHoa] = useState(DEFAULTS.monthlyHoa);
+
+  const resetDefaults = () => {
+    setHomePrice(DEFAULTS.homePrice);
+    setDownPayment(DEFAULTS.downPayment);
+    setRate(DEFAULTS.rate);
+    setTermYears(DEFAULTS.termYears);
+    setAnnualPropertyTax(DEFAULTS.annualPropertyTax);
+    setAnnualInsurance(DEFAULTS.annualInsurance);
+    setMonthlyHoa(DEFAULTS.monthlyHoa);
+  };
 
   const loanAmount = Math.max(homePrice - downPayment, 0);
   const downPaymentPct = homePrice > 0 ? (downPayment / homePrice) * 100 : 0;
@@ -49,16 +82,16 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
           {/* Inputs */}
           <div className="bg-white border border-[#C9A96A]/30 p-6 sm:p-8 space-y-5">
             <div>
-              <label className={labelClass}>Home Price</label>
+              <label className={labelClass}>Home Price <InfoDot text="The total purchase price of the home." /></label>
               <input type="number" className={inputClass} value={homePrice} onChange={(e) => setHomePrice(Number(e.target.value) || 0)} />
             </div>
             <div>
-              <label className={labelClass}>Down Payment ({downPaymentPct.toFixed(1)}%)</label>
+              <label className={labelClass}>Down Payment ({downPaymentPct.toFixed(1)}%) <InfoDot text="Cash paid upfront, reducing your loan amount. 20%+ avoids PMI." /></label>
               <input type="number" className={inputClass} value={downPayment} onChange={(e) => setDownPayment(Number(e.target.value) || 0)} />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Interest Rate (%)</label>
+                <label className={labelClass}>Interest Rate (%) <InfoDot text="Your loan's annual interest rate, set by your lender." /></label>
                 <input type="number" step="0.01" className={inputClass} value={rate} onChange={(e) => setRate(Number(e.target.value) || 0)} />
               </div>
               <div>
@@ -72,44 +105,46 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Annual Property Tax</label>
+                <label className={labelClass}>Annual Property Tax <InfoDot text="Set by your county; varies by assessed value and local rate." /></label>
                 <input type="number" className={inputClass} value={annualPropertyTax} onChange={(e) => setAnnualPropertyTax(Number(e.target.value) || 0)} />
               </div>
               <div>
-                <label className={labelClass}>Annual Insurance</label>
+                <label className={labelClass}>Annual Insurance <InfoDot text="Homeowner's insurance, required by most lenders." /></label>
                 <input type="number" className={inputClass} value={annualInsurance} onChange={(e) => setAnnualInsurance(Number(e.target.value) || 0)} />
               </div>
             </div>
             <div>
-              <label className={labelClass}>Monthly HOA / Condo Fee</label>
+              <label className={labelClass}>Monthly HOA / Condo Fee <InfoDot text="Only applies if the property is in an HOA or condo association." /></label>
               <input type="number" className={inputClass} value={monthlyHoa} onChange={(e) => setMonthlyHoa(Number(e.target.value) || 0)} />
             </div>
+            <button
+              onClick={resetDefaults}
+              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1C2B2E]/50 hover:text-[#0F5C63] transition-colors"
+            >
+              <RotateCcw className="w-3 h-3" /> Reset
+            </button>
           </div>
 
           {/* Results */}
-          <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 space-y-6">
-            <div className="text-center pb-6 border-b border-[#FAF8F5]/15">
-              <div className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-1">Estimated Monthly Payment</div>
-              <div className="font-serif text-4xl sm:text-5xl font-bold">{formatCurrency(totalMonthly)}</div>
-            </div>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Principal & Interest</span><span className="font-semibold">{formatCurrency(monthlyPI)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Property Tax</span><span className="font-semibold">{formatCurrency(monthlyTax)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Insurance</span><span className="font-semibold">{formatCurrency(monthlyInsurance)}</span></div>
-              {monthlyHoa > 0 && (
-                <div className="flex justify-between"><span className="text-[#A8B2A1]">HOA / Condo Fee</span><span className="font-semibold">{formatCurrency(monthlyHoa)}</span></div>
-              )}
-              {monthlyPmi > 0 && (
-                <div className="flex justify-between"><span className="text-[#A8B2A1]">Estimated PMI</span><span className="font-semibold">{formatCurrency(monthlyPmi)}</span></div>
-              )}
-            </div>
-            <div className="pt-4 border-t border-[#FAF8F5]/15 space-y-2 text-sm">
+          <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
+            <PaymentBreakdownChart
+              total={totalMonthly}
+              totalLabel="Your Monthly Payment"
+              slices={[
+                { label: 'Principal & Interest', value: monthlyPI, color: '#0F5C63' },
+                { label: 'Property Tax', value: monthlyTax, color: '#C9A96A' },
+                { label: 'Insurance', value: monthlyInsurance, color: '#A8B2A1' },
+                { label: 'HOA / Condo Fee', value: monthlyHoa, color: '#7A8A87' },
+                { label: 'Estimated PMI', value: monthlyPmi, color: '#8B7355' },
+              ]}
+            />
+            <div className="w-full pt-5 mt-5 border-t border-[#FAF8F5]/15 space-y-2 text-sm">
               <div className="flex justify-between"><span className="text-[#A8B2A1]">Loan Amount</span><span className="font-semibold">{formatCurrency(loanAmount)}</span></div>
               <div className="flex justify-between"><span className="text-[#A8B2A1]">Total Interest Over {termYears} Years</span><span className="font-semibold">{formatCurrency(totalInterest)}</span></div>
             </div>
             <button
               onClick={onOpenConsultation}
-              className="w-full py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
+              className="w-full mt-6 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4" />
               Talk to Kyle About Financing

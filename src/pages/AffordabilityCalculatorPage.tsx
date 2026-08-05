@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Phone, Info } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, monthlyPrincipalAndInterest, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
+import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
 
 interface AffordabilityCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -179,19 +180,24 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
           </div>
 
           {/* Results */}
-          <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 space-y-6">
-            <div className="text-center pb-6 border-b border-[#FAF8F5]/15">
+          <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
+            <div className="text-center pb-2">
               <div className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-1">Estimated Affordable Home Price</div>
-              <div className="font-serif text-4xl sm:text-5xl font-bold">{formatCurrency(result.maxHomePrice)}</div>
+              <div className="font-serif text-3xl sm:text-4xl font-bold">{formatCurrency(result.maxHomePrice)}</div>
             </div>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Max Monthly Housing Payment</span><span className="font-semibold">{formatCurrency(result.maxHousingPayment)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Principal & Interest</span><span className="font-semibold">{formatCurrency(result.monthlyPI)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Property Tax</span><span className="font-semibold">{formatCurrency(result.monthlyTax)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Insurance</span><span className="font-semibold">{formatCurrency(result.monthlyInsurance)}</span></div>
+            <div className="w-full pt-4">
+              <PaymentBreakdownChart
+                total={result.maxHousingPayment}
+                totalLabel="Max Monthly Payment"
+                slices={[
+                  { label: 'Principal & Interest', value: result.monthlyPI, color: '#0F5C63' },
+                  { label: 'Property Tax', value: result.monthlyTax, color: '#C9A96A' },
+                  { label: 'Insurance', value: result.monthlyInsurance, color: '#A8B2A1' },
+                ]}
+              />
             </div>
 
-            <div className="pt-4 border-t border-[#FAF8F5]/15 space-y-3">
+            <div className="w-full pt-5 mt-5 border-t border-[#FAF8F5]/15 space-y-3">
               <div className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold">Estimated Cash Needed to Close</div>
               <div className="flex justify-between text-sm"><span className="text-[#A8B2A1]">Down Payment ({downPaymentPct.toFixed(1)}%)</span><span className="font-semibold">{formatCurrency(downPayment)}</span></div>
               <div className="flex justify-between text-sm"><span className="text-[#A8B2A1]">Your Share of Transfer/Recordation Tax</span><span className="font-semibold">{formatCurrency(result.buyerShareOfDeedTax)}</span></div>
@@ -210,7 +216,7 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
 
             <button
               onClick={onOpenConsultation}
-              className="w-full py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
+              className="w-full mt-6 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4" />
               Talk to Kyle About Buying

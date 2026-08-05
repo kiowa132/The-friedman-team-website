@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Phone } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
+import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
 
 interface NetProceedsCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -83,19 +84,25 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
           </div>
 
           {/* Results */}
-          <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 space-y-6">
-            <div className="text-center pb-6 border-b border-[#FAF8F5]/15">
+          <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
+            <div className="text-center pb-6 border-b border-[#FAF8F5]/15 w-full">
               <div className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-1">Estimated Net Proceeds</div>
               <div className="font-serif text-4xl sm:text-5xl font-bold">{formatCurrency(result.netProceeds)}</div>
             </div>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Sale Price</span><span className="font-semibold">{formatCurrency(salePrice)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Mortgage Payoff</span><span className="font-semibold">−{formatCurrency(mortgagePayoff)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Agent Commission</span><span className="font-semibold">−{formatCurrency(result.commission)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Transfer/Recordation Tax (your share)</span><span className="font-semibold">−{formatCurrency(result.sellerTaxShare)}</span></div>
-              <div className="flex justify-between"><span className="text-[#A8B2A1]">Other Closing Costs</span><span className="font-semibold">−{formatCurrency(otherClosingCosts)}</span></div>
+            <div className="pt-4 w-full">
+              <PaymentBreakdownChart
+                total={salePrice}
+                totalLabel="Sale Price"
+                slices={[
+                  { label: 'Net Proceeds (You Keep)', value: Math.max(result.netProceeds, 0), color: '#0F5C63' },
+                  { label: 'Mortgage Payoff', value: mortgagePayoff, color: '#8B7355' },
+                  { label: 'Agent Commission', value: result.commission, color: '#C9A96A' },
+                  { label: 'Transfer/Recordation Tax', value: result.sellerTaxShare, color: '#A8B2A1' },
+                  { label: 'Other Closing Costs', value: otherClosingCosts, color: '#7A8A87' },
+                ]}
+              />
             </div>
-            <div className="pt-4 border-t border-[#FAF8F5]/15 space-y-1 text-xs text-[#A8B2A1]">
+            <div className="pt-5 mt-5 border-t border-[#FAF8F5]/15 space-y-1 text-xs text-[#A8B2A1] w-full">
               <div className="font-bold text-[#C9A96A] uppercase tracking-widest text-[10px] mb-1">{county.name} Tax Detail</div>
               <div className="flex justify-between"><span>State transfer tax (0.5%)</span><span>{formatCurrency(result.deedTax.stateTransferTax)}</span></div>
               <div className="flex justify-between"><span>County transfer tax</span><span>{formatCurrency(result.deedTax.localTransferTax)}</span></div>
@@ -104,7 +111,7 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
             </div>
             <button
               onClick={onOpenConsultation}
-              className="w-full py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
+              className="w-full mt-6 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4" />
               Get a Real Net Proceeds Estimate
