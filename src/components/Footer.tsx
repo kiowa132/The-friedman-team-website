@@ -200,6 +200,10 @@ export const Footer: React.FC<FooterProps> = ({
 
           <div className="text-center md:text-left text-[10px] text-[#A8B2A1]/60 pt-2 border-t border-[#FAF8F5]/5">
             © {new Date().getFullYear()} The Friedman Team | eXp Realty. All Rights Reserved.
+            {' · '}
+            <button onClick={() => goTo('privacy-policy')} className="hover:text-[#C9A96A] transition-colors underline">Privacy Policy</button>
+            {' · '}
+            <button onClick={() => goTo('terms-of-use')} className="hover:text-[#C9A96A] transition-colors underline">Terms of Use</button>
           </div>
 
           {/* Bottom mini nav row */}

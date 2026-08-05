@@ -20,6 +20,8 @@ import { GuidesListPage } from './pages/GuidesListPage';
 import { LuxuryPage } from './pages/LuxuryPage';
 import { TeamPage } from './pages/TeamPage';
 import { GivingBackPage } from './pages/GivingBackPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { TermsOfUsePage } from './pages/TermsOfUsePage';
 import { SellerProcessPage } from './pages/SellerProcessPage';
 import { GuideDetailPage } from './pages/GuideDetailPage';
 
@@ -44,6 +46,8 @@ const PATH_TO_TAB: Record<string, string> = {
   '/luxury': 'luxury',
   '/team': 'team',
   '/giving-back': 'giving-back',
+  '/privacy-policy': 'privacy-policy',
+  '/terms-of-use': 'terms-of-use',
 };
 
 const TAB_TO_PATH: Record<string, string> = {
@@ -59,6 +63,8 @@ const TAB_TO_PATH: Record<string, string> = {
   luxury: '/luxury',
   team: '/team',
   'giving-back': '/giving-back',
+  'privacy-policy': '/privacy-policy',
+  'terms-of-use': '/terms-of-use',
 };
 
 export default function App() {
@@ -242,6 +248,14 @@ export default function App() {
 
           <Route path="/giving-back" element={
             <GivingBackPage />
+          } />
+
+          <Route path="/privacy-policy" element={
+            <PrivacyPolicyPage />
+          } />
+
+          <Route path="/terms-of-use" element={
+            <TermsOfUsePage />
           } />
         </Routes>
       </main>
