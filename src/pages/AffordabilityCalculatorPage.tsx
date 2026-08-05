@@ -233,7 +233,7 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
             </div>
 
 <div className="flex items-center gap-3 mt-6 mb-3">
-              <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-11 h-11 rounded-full object-cover border-2 border-[#C9A96A]" />
+              <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-11 h-11 rounded-full object-cover object-top border-2 border-[#C9A96A]" />
               <div>
                 <div className="text-sm font-bold text-[#FAF8F5] leading-tight">Kyle Friedman</div>
                 <div className="text-[11px] text-[#A8B2A1]">The Friedman Team, eXp Realty</div>

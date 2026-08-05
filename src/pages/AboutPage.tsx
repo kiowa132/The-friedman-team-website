@@ -98,7 +98,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <img
                 src="/images/kyle-portrait.jpg"
                 alt="Kyle Friedman Real Estate Advisor"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/80 via-transparent to-transparent" />
             </div>

@@ -243,7 +243,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <img
               src="/images/kyle-portrait.jpg"
               alt="Kyle Friedman"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
           </div>
           <div className="bg-[#C9A96A]/20 p-10 sm:p-16 flex flex-col justify-center space-y-6">
