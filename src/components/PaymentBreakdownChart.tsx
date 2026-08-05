@@ -23,13 +23,13 @@ export const PaymentBreakdownChart: React.FC<PaymentBreakdownChartProps> = ({ to
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="relative w-[200px] h-[200px]">
-        <PieChart width={200} height={200}>
+      <div className="relative w-[220px] h-[220px]">
+        <PieChart width={220} height={220}>
           <Pie
             data={data}
             dataKey="value"
-            innerRadius={62}
-            outerRadius={92}
+            innerRadius={70}
+            outerRadius={100}
             paddingAngle={data.length > 1 ? 2 : 0}
             startAngle={90}
             endAngle={-270}
@@ -40,9 +40,9 @@ export const PaymentBreakdownChart: React.FC<PaymentBreakdownChartProps> = ({ to
             ))}
           </Pie>
         </PieChart>
-        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="font-serif text-2xl font-bold text-[#FAF8F5]">{formatCurrency(total)}</span>
-          <span className="text-[10px] uppercase tracking-widest text-[#A8B2A1] mt-1 text-center px-4">{totalLabel}</span>
+        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2">
+          <span className="font-serif text-xl font-bold text-[#FAF8F5] text-center leading-tight">{formatCurrency(total)}</span>
+          <span className="text-[9px] uppercase tracking-wide text-[#A8B2A1] mt-1.5 text-center leading-tight max-w-[100px]">{totalLabel}</span>
         </div>
       </div>
       <div className="w-full mt-6 space-y-2.5">
