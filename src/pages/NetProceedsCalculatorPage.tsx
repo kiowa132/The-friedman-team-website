@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Phone } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
@@ -17,7 +18,10 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
     'Estimate what you could walk away with after selling your Maryland home, in any county.'
   );
 
-  const [salePrice, setSalePrice] = useState(500000);
+  const [searchParams] = useSearchParams();
+  const priceParam = Number(searchParams.get('price'));
+
+  const [salePrice, setSalePrice] = useState(priceParam > 0 ? priceParam : 500000);
   const [countyIndex, setCountyIndex] = useState(() => MARYLAND_COUNTIES.findIndex((c) => c.name === 'Carroll County'));
   const [mortgagePayoff, setMortgagePayoff] = useState(250000);
   const [commissionPct, setCommissionPct] = useState(5.5);

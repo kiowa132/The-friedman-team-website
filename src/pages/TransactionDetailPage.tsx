@@ -2,11 +2,19 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { usePageMeta } from '../lib/usePageMeta';
 import { MENTOR_TRANSACTIONS, MENTOR_NAME, MENTOR_AFFILIATION } from '../data/mentorTransactions';
-import { Bed, Bath, Maximize2, ChevronRight, Phone } from 'lucide-react';
+import { Bed, Bath, Maximize2, ChevronRight, Phone, Calculator, TrendingUp } from 'lucide-react';
 
 interface TransactionDetailPageProps {
   onOpenConsultation: () => void;
 }
+
+const Stat: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) =>
+  value === undefined || value === null || value === '' ? null : (
+    <div className="flex justify-between py-2 border-b border-[#C9A96A]/15 text-sm">
+      <span className="text-[#1C2B2E]/60">{label}</span>
+      <span className="font-semibold text-[#0D2226] text-right">{value}</span>
+    </div>
+  );
 
 export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ onOpenConsultation }) => {
   const { slug } = useParams<{ slug: string }>();
@@ -31,7 +39,14 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
 
   const t = transaction;
   const gallery = t.image ? [t.image, ...(t.images || [])] : (t.images || []);
-  const pricePerSqft = t.sqft > 0 ? Math.round(parseFloat(t.priceDisplay.replace(/[$,]/g, '')) / t.sqft) : null;
+  const pricePerSqft = t.pricePerSqft ?? (t.sqft > 0 ? Math.round(parseFloat(t.priceDisplay.replace(/[$,]/g, '')) / t.sqft) : null);
+  const priceParam = t.priceDisplay.replace(/[$,]/g, '');
+  const hasSchoolInfo = t.schoolDistrict || t.elementarySchool || t.middleSchool || t.highSchool;
+  const hasAreaLot = t.mlsId || t.yearBuilt || t.architectureStyle || t.lotSizeDisplay || t.county || t.subdivision || t.propertyType;
+  const hasInterior = t.fullBaths || t.halfBaths || t.interiorFeatures;
+  const hasExterior = t.stories || t.waterSource || t.parking || t.heatType || t.airConditioning || t.sewer || t.exteriorFeatures;
+  const hasFinancial = t.taxAnnualDisplay || t.hoaFeeDisplay || pricePerSqft;
+  const hasListingInfo = t.listingAgentName || t.closeDate || t.daysOnMarket;
 
   return (
     <div className="pt-28 pb-20 bg-[#FAF8F5]">
@@ -55,7 +70,7 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
           </div>
         </div>
         {gallery.length > 1 && (
-          <div className="flex gap-2 mt-2">
+          <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
             {gallery.map((img, i) => (
               <button
                 key={i}
@@ -78,32 +93,93 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
         </div>
 
         {/* Property overview */}
-        <div className="flex items-center gap-6 mt-6 py-6 border-y border-[#C9A96A]/25 text-sm text-[#1C2B2E]/80 font-semibold">
+        <div className="flex flex-wrap items-center gap-6 mt-6 py-6 border-y border-[#C9A96A]/25 text-sm text-[#1C2B2E]/80 font-semibold">
           <span className="flex items-center gap-2"><Bed className="w-4 h-4 text-[#C9A96A]" /> {t.beds} Beds</span>
           <span className="flex items-center gap-2"><Bath className="w-4 h-4 text-[#C9A96A]" /> {t.baths} Baths</span>
           <span className="flex items-center gap-2"><Maximize2 className="w-4 h-4 text-[#C9A96A]" /> {t.sqft.toLocaleString()} Sq.Ft.</span>
+          {t.yearBuilt && <span>Built {t.yearBuilt}</span>}
         </div>
 
-        {/* Market snapshot - only real, directly computed figures (price
-            per sqft from the actual sale price and sqft above), never a
-            fabricated trend or narrative for a market outside where Kyle
-            actually tracks data. */}
-        {pricePerSqft && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
-            <div className="bg-white border border-[#C9A96A]/30 p-4">
-              <div className="text-[10px] uppercase tracking-widest text-[#1C2B2E]/50 font-bold mb-1">Sale Price</div>
-              <div className="font-serif text-lg font-bold text-[#0D2226]">{t.priceDisplay}</div>
-            </div>
-            <div className="bg-white border border-[#C9A96A]/30 p-4">
-              <div className="text-[10px] uppercase tracking-widest text-[#1C2B2E]/50 font-bold mb-1">Price / Sq.Ft.</div>
-              <div className="font-serif text-lg font-bold text-[#0D2226]">${pricePerSqft.toLocaleString()}</div>
-            </div>
-            <div className="bg-white border border-[#C9A96A]/30 p-4">
-              <div className="text-[10px] uppercase tracking-widest text-[#1C2B2E]/50 font-bold mb-1">Status</div>
-              <div className="font-serif text-lg font-bold text-[#0D2226]">Sold</div>
-            </div>
+        {/* Description */}
+        {t.description && (
+          <div className="mt-8">
+            <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-3">About This Home</h2>
+            <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">{t.description}</p>
           </div>
         )}
+
+        {/* Area & Lot / Interior / Exterior / Financial - each only renders
+            if real data exists for it. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 mt-10">
+          {hasAreaLot && (
+            <div>
+              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Area &amp; Lot</h2>
+              <Stat label="Status" value="Sold" />
+              <Stat label="Living Space" value={`${t.sqft.toLocaleString()} Sq.Ft.`} />
+              <Stat label="Lot Size" value={t.lotSizeDisplay} />
+              <Stat label="MLS ID" value={t.mlsId} />
+              <Stat label="Type" value={t.propertyType} />
+              <Stat label="Structure" value={t.structureType} />
+              <Stat label="Year Built" value={t.yearBuilt} />
+              <Stat label="Architecture Style" value={t.architectureStyle} />
+              <Stat label="County" value={t.county} />
+              <Stat label="Subdivision" value={t.subdivision} />
+            </div>
+          )}
+
+          {hasSchoolInfo && (
+            <div>
+              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Schools</h2>
+              <Stat label="School District" value={t.schoolDistrict} />
+              <Stat label="Elementary School" value={t.elementarySchool} />
+              <Stat label="Middle School" value={t.middleSchool} />
+              <Stat label="High School" value={t.highSchool} />
+            </div>
+          )}
+
+          {hasInterior && (
+            <div>
+              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Interior</h2>
+              <Stat label="Total Bedrooms" value={t.beds} />
+              <Stat label="Full Bathrooms" value={t.fullBaths} />
+              <Stat label="Half Bathrooms" value={t.halfBaths} />
+              <Stat label="Interior Features" value={t.interiorFeatures} />
+            </div>
+          )}
+
+          {hasExterior && (
+            <div>
+              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Exterior</h2>
+              <Stat label="Stories" value={t.stories} />
+              <Stat label="Water Source" value={t.waterSource} />
+              <Stat label="Sewer" value={t.sewer} />
+              <Stat label="Parking" value={t.parking} />
+              <Stat label="Heat Type" value={t.heatType} />
+              <Stat label="Air Conditioning" value={t.airConditioning} />
+              <Stat label="Exterior Features" value={t.exteriorFeatures} />
+            </div>
+          )}
+
+          {hasFinancial && (
+            <div>
+              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Financial</h2>
+              <Stat label="Sale Price" value={t.priceDisplay} />
+              <Stat label="Price / Sq.Ft." value={pricePerSqft ? `$${pricePerSqft.toLocaleString()}` : undefined} />
+              <Stat label="Real Estate Taxes" value={t.taxAnnualDisplay ? `${t.taxAnnualDisplay}${t.taxYear ? ` (${t.taxYear})` : ''}` : undefined} />
+              <Stat label="HOA Fee" value={t.hoaFeeDisplay} />
+            </div>
+          )}
+
+          {hasListingInfo && (
+            <div>
+              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Listing Details</h2>
+              <Stat label="Listing Agent" value={t.listingAgentName} />
+              <Stat label="Listing Office" value={t.listingOfficeName} />
+              <Stat label="Close Date" value={t.closeDate} />
+              <Stat label="Days on Market" value={t.daysOnMarket} />
+            </div>
+          )}
+        </div>
 
         {/* Transaction history - explicit, accurate attribution */}
         <div className="mt-10 bg-white border border-[#C9A96A]/30 p-6 sm:p-8">
@@ -111,6 +187,31 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
             Represented by {MENTOR_NAME}, {MENTOR_AFFILIATION}.
           </p>
+        </div>
+
+        {/* Cross-link to Kyle's own calculators, using this property's real
+            sale price as the starting point. */}
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Link
+            to={`/calculators/mortgage?price=${priceParam}`}
+            className="flex items-center gap-3 bg-white border border-[#C9A96A]/30 p-5 hover:border-[#0F5C63] transition-colors"
+          >
+            <Calculator className="w-6 h-6 text-[#0F5C63] shrink-0" />
+            <div>
+              <div className="font-semibold text-sm text-[#0D2226]">What Would This Cost Today?</div>
+              <div className="text-xs text-[#1C2B2E]/60">Estimate a monthly payment at this price</div>
+            </div>
+          </Link>
+          <Link
+            to={`/calculators/net-proceeds?price=${priceParam}`}
+            className="flex items-center gap-3 bg-white border border-[#C9A96A]/30 p-5 hover:border-[#0F5C63] transition-colors"
+          >
+            <TrendingUp className="w-6 h-6 text-[#0F5C63] shrink-0" />
+            <div>
+              <div className="font-semibold text-sm text-[#0D2226]">Selling at This Price?</div>
+              <div className="text-xs text-[#1C2B2E]/60">See what you could walk away with</div>
+            </div>
+          </Link>
         </div>
 
         <div className="mt-10 bg-[#0D2226] text-[#FAF8F5] p-8 text-center">

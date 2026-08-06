@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Phone, RotateCcw } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, monthlyPrincipalAndInterest, totalInterestPaid, estimateMonthlyPmi } from '../lib/calculators';
@@ -39,7 +40,11 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
     'Estimate your monthly mortgage payment, including principal, interest, taxes, and insurance.'
   );
 
-  const [homePrice, setHomePrice] = useState(DEFAULTS.homePrice);
+  const [searchParams] = useSearchParams();
+  const priceParam = Number(searchParams.get('price'));
+  const initialHomePrice = priceParam > 0 ? priceParam : DEFAULTS.homePrice;
+
+  const [homePrice, setHomePrice] = useState(initialHomePrice);
   const [downPayment, setDownPayment] = useState(DEFAULTS.downPayment);
   const [rate, setRate] = useState(DEFAULTS.rate);
   const [termYears, setTermYears] = useState(DEFAULTS.termYears);
