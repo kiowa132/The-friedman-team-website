@@ -62,7 +62,7 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
                 onClick={() => setActiveImage(i)}
                 className={`w-16 h-16 shrink-0 overflow-hidden border-2 transition-colors ${i === activeImage ? 'border-[#C9A96A]' : 'border-transparent'}`}
               >
-                <img src={img} alt="" className="w-full h-full object-cover" />
+                <img src={img} alt="" loading="lazy" className="w-full h-full object-cover" />
               </button>
             ))}
           </div>

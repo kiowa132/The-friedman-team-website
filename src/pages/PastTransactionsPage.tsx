@@ -91,7 +91,7 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
             <Link key={i} to={`/transactions/${t.slug}`} className="group block bg-white border border-[#C9A96A]/25 overflow-hidden shadow-md">
               <div className="relative aspect-[4/3] overflow-hidden bg-[#0D2226]/10 flex items-center justify-center">
                 {t.image ? (
-                  <img src={t.image} alt={t.address} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={t.image} alt={t.address} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 ) : (
                   <span className="text-[#1C2B2E]/30 text-xs uppercase tracking-widest">No photo yet</span>
                 )}
