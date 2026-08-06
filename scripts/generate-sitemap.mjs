@@ -18,7 +18,6 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SITE_URL = 'https://www.friedmanreteam.com';
@@ -54,6 +53,11 @@ function getTownSlugs() {
   const townsSrc = fs.readFileSync(path.join(ROOT, 'src/data/towns.ts'), 'utf-8');
   const slugs = [...townsSrc.matchAll(/slug:\s*'([a-z0-9-]+)'/g)].map((m) => m[1]);
   return [...new Set(slugs)];
+}
+
+function getMentorTransactionSlugs() {
+  const src = fs.readFileSync(path.join(ROOT, 'src/data/mentorTransactions.ts'), 'utf-8');
+  return [...src.matchAll(/slug:\s*'([a-z0-9-]+)'/g)].map((m) => m[1]);
 }
 
 // --- Blog posts and guides, straight off disk (mirrors slugFromPath in
@@ -106,6 +110,12 @@ function generate() {
   for (const slug of getTownSlugs()) {
     entries.push(
       urlEntry({ loc: `${SITE_URL}/neighborhoods/${slug}`, lastmod: today, changefreq: 'weekly', priority: '0.8' })
+    );
+  }
+
+  for (const slug of getMentorTransactionSlugs()) {
+    entries.push(
+      urlEntry({ loc: `${SITE_URL}/transactions/${slug}`, lastmod: today, changefreq: 'yearly', priority: '0.3' })
     );
   }
 

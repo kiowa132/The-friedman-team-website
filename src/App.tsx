@@ -27,6 +27,7 @@ import { MortgageCalculatorPage } from './pages/MortgageCalculatorPage';
 import { AffordabilityCalculatorPage } from './pages/AffordabilityCalculatorPage';
 import { NetProceedsCalculatorPage } from './pages/NetProceedsCalculatorPage';
 import { PastTransactionsPage } from './pages/PastTransactionsPage';
+import { TransactionDetailPage } from './pages/TransactionDetailPage';
 import { VideosPage } from './pages/VideosPage';
 import { FinancingOptionsPage } from './pages/FinancingOptionsPage';
 import { SellerProcessPage } from './pages/SellerProcessPage';
@@ -297,6 +298,10 @@ export default function App() {
 
           <Route path="/past-transactions" element={
             <PastTransactionsPage onOpenConsultation={() => setIsConsultationOpen(true)} />
+          } />
+
+          <Route path="/transactions/:slug" element={
+            <TransactionDetailPage onOpenConsultation={() => setIsConsultationOpen(true)} />
           } />
 
           <Route path="/videos" element={
