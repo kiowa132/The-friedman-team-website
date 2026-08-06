@@ -109,7 +109,9 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
                   <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>
                 </div>
                 <div className="text-[11px] text-[#1C2B2E]/45 mt-3">
-                  Transaction completed by {MENTOR_NAME} | {MENTOR_AFFILIATION}
+                  {t.mentorRole && t.mentorOfficeAtSale
+                    ? `${t.mentorRole === 'Listing Agent' ? "Seller's" : "Buyer's"} agent: ${MENTOR_NAME} | ${t.mentorOfficeAtSale}`
+                    : `Transaction completed by ${MENTOR_NAME} | ${MENTOR_AFFILIATION}`}
                 </div>
               </div>
             </Link>

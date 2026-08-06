@@ -181,11 +181,16 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
           )}
         </div>
 
-        {/* Transaction history - explicit, accurate attribution */}
+        {/* Transaction history - explicit, accurate attribution, using the
+            specific role and brokerage for this exact deal when known
+            (these vary transaction to transaction), falling back to the
+            general mentorship line when they aren't. */}
         <div className="mt-10 bg-white border border-[#C9A96A]/30 p-6 sm:p-8">
           <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-3">Transaction History</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            Represented by {MENTOR_NAME}, {MENTOR_AFFILIATION}.
+            {t.mentorRole && t.mentorOfficeAtSale
+              ? `Represented as ${t.mentorRole === 'Listing Agent' ? "the seller's" : "the buyer's"} agent by ${MENTOR_NAME}, ${t.mentorOfficeAtSale}.`
+              : `Represented by ${MENTOR_NAME}, ${MENTOR_AFFILIATION}.`}
           </p>
         </div>
 
