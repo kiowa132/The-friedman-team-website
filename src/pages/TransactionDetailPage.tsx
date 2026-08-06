@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { usePageMeta } from '../lib/usePageMeta';
 import { MENTOR_TRANSACTIONS, MENTOR_NAME, MENTOR_AFFILIATION } from '../data/mentorTransactions';
-import { Bed, Bath, Maximize2, ChevronRight, Phone, Calculator, TrendingUp } from 'lucide-react';
+import { MARYLAND_COUNTIES } from '../lib/calculators';
+import { EmbeddedMortgageEstimate } from '../components/EmbeddedMortgageEstimate';
+import { EmbeddedNetProceedsEstimate } from '../components/EmbeddedNetProceedsEstimate';
+import { Bed, Bath, Maximize2, ChevronRight, Phone, MapPin } from 'lucide-react';
 
 interface TransactionDetailPageProps {
   onOpenConsultation: () => void;
@@ -40,13 +43,23 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
   const t = transaction;
   const gallery = t.image ? [t.image, ...(t.images || [])] : (t.images || []);
   const pricePerSqft = t.pricePerSqft ?? (t.sqft > 0 ? Math.round(parseFloat(t.priceDisplay.replace(/[$,]/g, '')) / t.sqft) : null);
-  const priceParam = t.priceDisplay.replace(/[$,]/g, '');
+  const numericPrice = parseFloat(t.priceDisplay.replace(/[$,]/g, ''));
   const hasSchoolInfo = t.schoolDistrict || t.elementarySchool || t.middleSchool || t.highSchool;
   const hasAreaLot = t.mlsId || t.yearBuilt || t.architectureStyle || t.lotSizeDisplay || t.county || t.subdivision || t.propertyType;
   const hasInterior = t.fullBaths || t.halfBaths || t.interiorFeatures;
   const hasExterior = t.stories || t.waterSource || t.parking || t.heatType || t.airConditioning || t.sewer || t.exteriorFeatures;
   const hasFinancial = t.taxAnnualDisplay || t.hoaFeeDisplay || pricePerSqft;
   const hasListingInfo = t.listingAgentName || t.closeDate || t.daysOnMarket;
+
+  // The Net Proceeds estimate uses real Maryland county tax data, so it
+  // only makes sense - and is only accurate - for properties actually in
+  // Maryland. Several of James's transactions are in Virginia or DC, which
+  // have entirely different transfer tax systems this site doesn't have
+  // data for, so that widget simply doesn't render for those.
+  const mdCountyName = t.county?.replace(', MD', '').trim();
+  const matchingMdCounty = MARYLAND_COUNTIES.find((c) => c.name === mdCountyName);
+
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${t.address}, ${t.cityStateZip}`)}`;
 
   return (
     <div className="pt-28 pb-20 bg-[#FAF8F5]">
@@ -87,7 +100,10 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
         <div className="mt-8 flex flex-wrap items-start justify-between gap-4">
           <div>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">{t.address}</h1>
-            <p className="text-sm text-[#1C2B2E]/60 mt-1">{t.cityStateZip}</p>
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-[#1C2B2E]/60 hover:text-[#0F5C63] mt-1 transition-colors">
+              <MapPin className="w-3.5 h-3.5" />
+              {t.cityStateZip}
+            </a>
           </div>
           <div className="text-3xl font-bold text-[#0F5C63] font-serif">{t.priceDisplay}</div>
         </div>
@@ -194,29 +210,14 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
           </p>
         </div>
 
-        {/* Cross-link to Kyle's own calculators, using this property's real
-            sale price as the starting point. */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Link
-            to={`/calculators/mortgage?price=${priceParam}`}
-            className="flex items-center gap-3 bg-white border border-[#C9A96A]/30 p-5 hover:border-[#0F5C63] transition-colors"
-          >
-            <Calculator className="w-6 h-6 text-[#0F5C63] shrink-0" />
-            <div>
-              <div className="font-semibold text-sm text-[#0D2226]">What Would This Cost Today?</div>
-              <div className="text-xs text-[#1C2B2E]/60">Estimate a monthly payment at this price</div>
-            </div>
-          </Link>
-          <Link
-            to={`/calculators/net-proceeds?price=${priceParam}`}
-            className="flex items-center gap-3 bg-white border border-[#C9A96A]/30 p-5 hover:border-[#0F5C63] transition-colors"
-          >
-            <TrendingUp className="w-6 h-6 text-[#0F5C63] shrink-0" />
-            <div>
-              <div className="font-semibold text-sm text-[#0D2226]">Selling at This Price?</div>
-              <div className="text-xs text-[#1C2B2E]/60">See what you could walk away with</div>
-            </div>
-          </Link>
+        {/* Live, embedded calculators pre-filled with this property's real
+            price - Net Proceeds only renders for actual Maryland
+            properties, since that's the only tax data this site has. */}
+        <div className="mt-10">
+          <EmbeddedMortgageEstimate initialPrice={numericPrice} />
+          {matchingMdCounty && (
+            <EmbeddedNetProceedsEstimate initialPrice={numericPrice} countyName={matchingMdCounty.name} />
+          )}
         </div>
 
         <div className="mt-10 bg-[#0D2226] text-[#FAF8F5] p-8 text-center">
