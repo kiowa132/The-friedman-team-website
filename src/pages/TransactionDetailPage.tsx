@@ -5,6 +5,7 @@ import { MENTOR_TRANSACTIONS, MENTOR_NAME, MENTOR_AFFILIATION } from '../data/me
 import { MARYLAND_COUNTIES } from '../lib/calculators';
 import { EmbeddedHomeSaleEstimate } from '../components/EmbeddedHomeSaleEstimate';
 import { EmbeddedAffordabilityEstimate } from '../components/EmbeddedAffordabilityEstimate';
+import { KyleContactCard } from '../components/KyleContactCard';
 import { Bed, Bath, Maximize2, ChevronRight, ChevronLeft, Phone, MapPin } from 'lucide-react';
 
 interface TransactionDetailPageProps {
@@ -252,18 +253,13 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
           <EmbeddedAffordabilityEstimate />
         </div>
 
-        <div className="mt-10 bg-[#0D2226] text-[#FAF8F5] p-8 text-center">
-          <h2 className="font-serif text-2xl font-bold mb-3">Thinking About Buying or Selling?</h2>
-          <p className="text-sm text-[#A8B2A1] max-w-lg mx-auto mb-6">
-            Talk to Kyle directly about strategy, pricing, and what it takes to get a deal like this done.
-          </p>
-          <button
-            onClick={onOpenConsultation}
-            className="inline-flex items-center gap-2 px-8 py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest transition-colors"
-          >
-            <Phone className="w-4 h-4" />
-            Talk to Kyle
-          </button>
+        {/* Kyle's own contact card - standard lead-capture practice on any
+            property page, including ones representing another agent's
+            deal. Kept clearly separate from the "Deal Context" section
+            above, which is the part that answers who actually handled
+            this specific transaction. */}
+        <div className="mt-16">
+          <KyleContactCard onCtaClick={onOpenConsultation} ctaLabel="Talk to Kyle" />
         </div>
 
       </div>
