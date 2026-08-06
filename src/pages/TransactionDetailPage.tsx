@@ -116,9 +116,10 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
         )}
 
         {/* Description - sized to actually read as the lead editorial
-            copy on the page, not a small caption. */}
+            copy on the page, and centered as its own block (left-aligned
+            text within it for readability), matching the reference. */}
         {t.description && (
-          <div className="mt-10 max-w-3xl">
+          <div className="mt-10 max-w-3xl mx-auto">
             <p className="text-base sm:text-lg text-[#1C2B2E]/85 leading-relaxed">{t.description}</p>
           </div>
         )}
@@ -164,8 +165,11 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
         {/* Features & Amenities - big, spacious, matching the reference's
             scale, with Area & Lot and Interior as the two primary columns
             and any additional real data (Schools, Exterior, Financial,
-            Listing Details) following underneath. */}
-        <div className="mt-16">
+            Listing Details) following underneath. Set on its own light
+            background panel, same as the reference, to visually separate
+            it from the page above and below. */}
+        <div className="mt-16 -mx-4 sm:-mx-6 px-4 sm:px-6 py-16 bg-[#EFEBE2]">
+          <div className="max-w-5xl mx-auto">
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] mb-10">Features &amp; Amenities</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16">
@@ -235,6 +239,7 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
               )}
             </div>
           )}
+          </div>
         </div>
 
         {/* Live, embedded calculators - Home Sale and Affordability, the
