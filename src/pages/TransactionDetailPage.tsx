@@ -3,19 +3,22 @@ import { useParams, Link } from 'react-router-dom';
 import { usePageMeta } from '../lib/usePageMeta';
 import { MENTOR_TRANSACTIONS, MENTOR_NAME, MENTOR_AFFILIATION } from '../data/mentorTransactions';
 import { MARYLAND_COUNTIES } from '../lib/calculators';
-import { EmbeddedMortgageEstimate } from '../components/EmbeddedMortgageEstimate';
-import { EmbeddedNetProceedsEstimate } from '../components/EmbeddedNetProceedsEstimate';
-import { Bed, Bath, Maximize2, ChevronRight, Phone, MapPin } from 'lucide-react';
+import { EmbeddedHomeSaleEstimate } from '../components/EmbeddedHomeSaleEstimate';
+import { EmbeddedAffordabilityEstimate } from '../components/EmbeddedAffordabilityEstimate';
+import { Bed, Bath, Maximize2, ChevronRight, ChevronLeft, Phone, MapPin } from 'lucide-react';
 
 interface TransactionDetailPageProps {
   onOpenConsultation: () => void;
 }
 
+// A single stat row, spacious and editorial like the reference - bold caps
+// label on the left, plain value on the right, a hairline divider under
+// each. Only renders when the value is actually present.
 const Stat: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) =>
   value === undefined || value === null || value === '' ? null : (
-    <div className="flex justify-between py-2 border-b border-[#C9A96A]/15 text-sm">
-      <span className="text-[#1C2B2E]/60">{label}</span>
-      <span className="font-semibold text-[#0D2226] text-right">{value}</span>
+    <div className="flex justify-between items-baseline py-3.5 border-b border-[#C9A96A]/20">
+      <span className="text-xs font-bold uppercase tracking-widest text-[#1C2B2E]/70">{label}</span>
+      <span className="text-sm text-[#0D2226] text-right">{value}</span>
     </div>
   );
 
@@ -45,25 +48,20 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
   const pricePerSqft = t.pricePerSqft ?? (t.sqft > 0 ? Math.round(parseFloat(t.priceDisplay.replace(/[$,]/g, '')) / t.sqft) : null);
   const numericPrice = parseFloat(t.priceDisplay.replace(/[$,]/g, ''));
   const hasSchoolInfo = t.schoolDistrict || t.elementarySchool || t.middleSchool || t.highSchool;
-  const hasAreaLot = t.mlsId || t.yearBuilt || t.architectureStyle || t.lotSizeDisplay || t.county || t.subdivision || t.propertyType;
-  const hasInterior = t.fullBaths || t.halfBaths || t.interiorFeatures;
   const hasExterior = t.stories || t.waterSource || t.parking || t.heatType || t.airConditioning || t.sewer || t.exteriorFeatures;
   const hasFinancial = t.taxAnnualDisplay || t.hoaFeeDisplay || pricePerSqft;
   const hasListingInfo = t.listingAgentName || t.closeDate || t.daysOnMarket;
 
-  // The Net Proceeds estimate uses real Maryland county tax data, so it
-  // only makes sense - and is only accurate - for properties actually in
-  // Maryland. Several of James's transactions are in Virginia or DC, which
-  // have entirely different transfer tax systems this site doesn't have
-  // data for, so that widget simply doesn't render for those.
   const mdCountyName = t.county?.replace(', MD', '').trim();
   const matchingMdCounty = MARYLAND_COUNTIES.find((c) => c.name === mdCountyName);
-
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${t.address}, ${t.cityStateZip}`)}`;
+
+  const nextImage = () => setActiveImage((i) => (i + 1) % gallery.length);
+  const prevImage = () => setActiveImage((i) => (i - 1 + gallery.length) % gallery.length);
 
   return (
     <div className="pt-28 pb-20 bg-[#FAF8F5]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
 
         <div className="flex items-center gap-2 text-xs text-[#1C2B2E]/60 mb-6">
           <Link to="/past-transactions" className="hover:text-[#0F5C63] transition-colors">Experience &amp; Transactions</Link>
@@ -71,65 +69,115 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
           <span>{t.address}</span>
         </div>
 
-        {/* Photo gallery */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-[#0D2226]/10 border border-[#C9A96A]/20 flex items-center justify-center">
+        {/* Header: address/price/photo navigation sit above the photo,
+            matching the reference's layout, rather than being buried
+            below a small boxed image. */}
+        <div className="flex flex-wrap items-start justify-between gap-6 mb-4">
+          <div>
+            <p className="text-xs uppercase tracking-widest text-[#1C2B2E]/50 mb-1">{t.address}, {t.cityStateZip}</p>
+            <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#0D2226] leading-none">{t.address}</h1>
+            {gallery.length > 1 && (
+              <div className="flex items-center gap-3 mt-4">
+                <button onClick={prevImage} className="w-9 h-9 rounded-full bg-[#0D2226] text-[#FAF8F5] flex items-center justify-center hover:bg-[#0F5C63] transition-colors">
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-sm text-[#1C2B2E]/60 tabular-nums">{activeImage + 1} / {gallery.length}</span>
+                <button onClick={nextImage} className="w-9 h-9 rounded-full bg-[#0D2226] text-[#FAF8F5] flex items-center justify-center hover:bg-[#0F5C63] transition-colors">
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="text-right">
+            <div className="text-3xl sm:text-4xl font-bold text-[#0F5C63] font-serif">{t.priceDisplay}</div>
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-[#1C2B2E]/60 hover:text-[#0F5C63] mt-2 transition-colors">
+              <MapPin className="w-3.5 h-3.5" />
+              View on map
+            </a>
+          </div>
+        </div>
+
+        {/* Large, full-bleed photo */}
+        <div className="relative aspect-[16/10] overflow-hidden bg-[#0D2226]/10">
           {gallery.length > 0 ? (
             <img src={gallery[activeImage]} alt={t.address} className="w-full h-full object-cover" />
           ) : (
-            <span className="text-[#1C2B2E]/30 text-sm uppercase tracking-widest">No photo yet</span>
+            <div className="w-full h-full flex items-center justify-center">
+              <span className="text-[#1C2B2E]/30 text-sm uppercase tracking-widest">No photo yet</span>
+            </div>
           )}
           <div className="absolute bottom-4 right-4 px-3 py-1.5 bg-[#C9A96A] text-[#0D2226] text-xs font-bold uppercase tracking-widest">
             Sold
           </div>
         </div>
-        {gallery.length > 1 && (
-          <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
-            {gallery.map((img, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveImage(i)}
-                className={`w-16 h-16 shrink-0 overflow-hidden border-2 transition-colors ${i === activeImage ? 'border-[#C9A96A]' : 'border-transparent'}`}
-              >
-                <img src={img} alt="" loading="lazy" className="w-full h-full object-cover" />
-              </button>
-            ))}
-          </div>
+        {t.listingOfficeName && (
+          <p className="text-xs text-[#1C2B2E]/40 mt-2">Courtesy of {t.listingOfficeName}</p>
         )}
-
-        {/* Address & price */}
-        <div className="mt-8 flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">{t.address}</h1>
-            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-[#1C2B2E]/60 hover:text-[#0F5C63] mt-1 transition-colors">
-              <MapPin className="w-3.5 h-3.5" />
-              {t.cityStateZip}
-            </a>
-          </div>
-          <div className="text-3xl font-bold text-[#0F5C63] font-serif">{t.priceDisplay}</div>
-        </div>
-
-        {/* Property overview */}
-        <div className="flex flex-wrap items-center gap-6 mt-6 py-6 border-y border-[#C9A96A]/25 text-sm text-[#1C2B2E]/80 font-semibold">
-          <span className="flex items-center gap-2"><Bed className="w-4 h-4 text-[#C9A96A]" /> {t.beds} Beds</span>
-          <span className="flex items-center gap-2"><Bath className="w-4 h-4 text-[#C9A96A]" /> {t.baths} Baths</span>
-          <span className="flex items-center gap-2"><Maximize2 className="w-4 h-4 text-[#C9A96A]" /> {t.sqft.toLocaleString()} Sq.Ft.</span>
-          {t.yearBuilt && <span>Built {t.yearBuilt}</span>}
-        </div>
 
         {/* Description */}
         {t.description && (
-          <div className="mt-8">
-            <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-3">About This Home</h2>
-            <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">{t.description}</p>
+          <div className="mt-10 max-w-3xl">
+            <p className="text-sm sm:text-base text-[#1C2B2E]/80 leading-relaxed">{t.description}</p>
           </div>
         )}
 
-        {/* Area & Lot / Interior / Exterior / Financial - each only renders
-            if real data exists for it. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 mt-10">
-          {hasAreaLot && (
+        {/* Big, spacious stat rows, matching the reference's scale */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-x-8 border-t border-[#C9A96A]/25">
+          <div className="flex items-center gap-2 py-4 border-b border-[#C9A96A]/25 text-sm font-semibold text-[#0D2226]">
+            <Bed className="w-4 h-4 text-[#C9A96A]" /> {t.beds} Beds
+          </div>
+          <div className="flex items-center gap-2 py-4 border-b border-[#C9A96A]/25 text-sm font-semibold text-[#0D2226] sm:border-l sm:pl-8">
+            <Bath className="w-4 h-4 text-[#C9A96A]" /> {t.fullBaths || t.baths} Full Baths{t.halfBaths ? `, ${t.halfBaths} Half` : ''}
+          </div>
+          <div className="flex items-center gap-2 py-4 border-b border-[#C9A96A]/25 text-sm font-semibold text-[#0D2226] sm:border-l sm:pl-8">
+            <Maximize2 className="w-4 h-4 text-[#C9A96A]" /> {t.sqft.toLocaleString()} Sq.Ft.
+          </div>
+          <div className="py-4 border-b border-[#C9A96A]/25 text-sm font-semibold text-[#0D2226]">Sold</div>
+          <div className="py-4 border-b border-[#C9A96A]/25 text-sm font-semibold text-[#0D2226] sm:border-l sm:pl-8">
+            {t.yearBuilt ? `${t.yearBuilt} Built` : '\u2014'}
+          </div>
+          <div className="py-4 border-b border-[#C9A96A]/25 text-sm font-semibold text-[#0D2226] sm:border-l sm:pl-8">
+            {t.lotSizeDisplay || '\u2014'}
+          </div>
+        </div>
+
+        {/* Who handled this deal - the honest equivalent of an agent card.
+            James's real name, role, and brokerage, prominently presented,
+            but no fabricated photo or contact details, and the actual
+            call to action points to Kyle, since that's the point of this
+            page existing on Kyle's site at all. */}
+        <div className="mt-10 bg-[#0D2226] text-[#FAF8F5] p-8 sm:p-10">
+          <span className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold">Deal Context</span>
+          <h2 className="font-serif text-3xl font-bold mt-2 mb-1">{MENTOR_NAME}</h2>
+          <p className="text-sm text-[#A8B2A1] mb-6">
+            {t.mentorRole && t.mentorOfficeAtSale
+              ? `${t.mentorRole} \u00b7 ${t.mentorOfficeAtSale}`
+              : MENTOR_AFFILIATION}
+          </p>
+          <p className="text-sm text-[#FAF8F5]/85 leading-relaxed max-w-2xl mb-8">
+            {t.mentorRole && t.mentorOfficeAtSale
+              ? `${MENTOR_NAME} represented ${t.mentorRole === 'Listing Agent' ? 'the seller' : 'the buyer'} on this transaction. Kyle Friedman trained directly under ${MENTOR_NAME}, and this deal is shown as context for that mentorship, not as part of Kyle's or The Friedman Team's own sales record.`
+              : `Kyle Friedman trained directly under ${MENTOR_NAME}. This deal is shown as context for that mentorship, not as part of Kyle's or The Friedman Team's own sales record.`}
+          </p>
+          <button
+            onClick={onOpenConsultation}
+            className="inline-flex items-center gap-2 px-8 py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest transition-colors"
+          >
+            <Phone className="w-4 h-4" />
+            Talk to Kyle
+          </button>
+        </div>
+
+        {/* Features & Amenities - big, spacious, matching the reference's
+            scale, with Area & Lot and Interior as the two primary columns
+            and any additional real data (Schools, Exterior, Financial,
+            Listing Details) following underneath. */}
+        <div className="mt-16">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] mb-10">Features &amp; Amenities</h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16">
             <div>
-              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Area &amp; Lot</h2>
+              <h3 className="text-lg font-serif font-bold text-[#0D2226] mb-3">Area &amp; Lot</h3>
               <Stat label="Status" value="Sold" />
               <Stat label="Living Space" value={`${t.sqft.toLocaleString()} Sq.Ft.`} />
               <Stat label="Lot Size" value={t.lotSizeDisplay} />
@@ -140,84 +188,68 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
               <Stat label="Architecture Style" value={t.architectureStyle} />
               <Stat label="County" value={t.county} />
               <Stat label="Subdivision" value={t.subdivision} />
+              {hasSchoolInfo && (
+                <>
+                  <Stat label="School District" value={t.schoolDistrict} />
+                  <Stat label="Elementary School" value={t.elementarySchool} />
+                  <Stat label="Middle School" value={t.middleSchool} />
+                  <Stat label="High School" value={t.highSchool} />
+                </>
+              )}
             </div>
-          )}
 
-          {hasSchoolInfo && (
             <div>
-              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Schools</h2>
-              <Stat label="School District" value={t.schoolDistrict} />
-              <Stat label="Elementary School" value={t.elementarySchool} />
-              <Stat label="Middle School" value={t.middleSchool} />
-              <Stat label="High School" value={t.highSchool} />
-            </div>
-          )}
-
-          {hasInterior && (
-            <div>
-              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Interior</h2>
+              <h3 className="text-lg font-serif font-bold text-[#0D2226] mb-3 mt-10 sm:mt-0">Interior</h3>
               <Stat label="Total Bedrooms" value={t.beds} />
               <Stat label="Full Bathrooms" value={t.fullBaths} />
               <Stat label="Half Bathrooms" value={t.halfBaths} />
               <Stat label="Interior Features" value={t.interiorFeatures} />
-            </div>
-          )}
 
-          {hasExterior && (
-            <div>
-              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Exterior</h2>
-              <Stat label="Stories" value={t.stories} />
-              <Stat label="Water Source" value={t.waterSource} />
-              <Stat label="Sewer" value={t.sewer} />
-              <Stat label="Parking" value={t.parking} />
-              <Stat label="Heat Type" value={t.heatType} />
-              <Stat label="Air Conditioning" value={t.airConditioning} />
-              <Stat label="Exterior Features" value={t.exteriorFeatures} />
+              {hasExterior && (
+                <>
+                  <h3 className="text-lg font-serif font-bold text-[#0D2226] mb-3 mt-10">Exterior</h3>
+                  <Stat label="Stories" value={t.stories} />
+                  <Stat label="Water Source" value={t.waterSource} />
+                  <Stat label="Sewer" value={t.sewer} />
+                  <Stat label="Parking" value={t.parking} />
+                  <Stat label="Heat Type" value={t.heatType} />
+                  <Stat label="Air Conditioning" value={t.airConditioning} />
+                  <Stat label="Exterior Features" value={t.exteriorFeatures} />
+                </>
+              )}
             </div>
-          )}
+          </div>
 
-          {hasFinancial && (
-            <div>
-              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Financial</h2>
-              <Stat label="Sale Price" value={t.priceDisplay} />
-              <Stat label="Price / Sq.Ft." value={pricePerSqft ? `$${pricePerSqft.toLocaleString()}` : undefined} />
-              <Stat label="Real Estate Taxes" value={t.taxAnnualDisplay ? `${t.taxAnnualDisplay}${t.taxYear ? ` (${t.taxYear})` : ''}` : undefined} />
-              <Stat label="HOA Fee" value={t.hoaFeeDisplay} />
-            </div>
-          )}
-
-          {hasListingInfo && (
-            <div>
-              <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-2">Listing Details</h2>
-              <Stat label="Listing Agent" value={t.listingAgentName} />
-              <Stat label="Listing Office" value={t.listingOfficeName} />
-              <Stat label="Close Date" value={t.closeDate} />
-              <Stat label="Days on Market" value={t.daysOnMarket} />
+          {(hasFinancial || hasListingInfo) && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 mt-10">
+              {hasFinancial && (
+                <div>
+                  <h3 className="text-lg font-serif font-bold text-[#0D2226] mb-3">Financial</h3>
+                  <Stat label="Sale Price" value={t.priceDisplay} />
+                  <Stat label="Price / Sq.Ft." value={pricePerSqft ? `$${pricePerSqft.toLocaleString()}` : undefined} />
+                  <Stat label="Real Estate Taxes" value={t.taxAnnualDisplay ? `${t.taxAnnualDisplay}${t.taxYear ? ` (${t.taxYear})` : ''}` : undefined} />
+                  <Stat label="HOA Fee" value={t.hoaFeeDisplay} />
+                </div>
+              )}
+              {hasListingInfo && (
+                <div>
+                  <h3 className="text-lg font-serif font-bold text-[#0D2226] mb-3 mt-10 sm:mt-0">Listing Details</h3>
+                  <Stat label="Listing Agent" value={t.listingAgentName} />
+                  <Stat label="Listing Office" value={t.listingOfficeName} />
+                  <Stat label="Close Date" value={t.closeDate} />
+                  <Stat label="Days on Market" value={t.daysOnMarket} />
+                </div>
+              )}
             </div>
           )}
         </div>
 
-        {/* Transaction history - explicit, accurate attribution, using the
-            specific role and brokerage for this exact deal when known
-            (these vary transaction to transaction), falling back to the
-            general mentorship line when they aren't. */}
-        <div className="mt-10 bg-white border border-[#C9A96A]/30 p-6 sm:p-8">
-          <h2 className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-3">Transaction History</h2>
-          <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            {t.mentorRole && t.mentorOfficeAtSale
-              ? `Represented as ${t.mentorRole === 'Listing Agent' ? "the seller's" : "the buyer's"} agent by ${MENTOR_NAME}, ${t.mentorOfficeAtSale}.`
-              : `Represented by ${MENTOR_NAME}, ${MENTOR_AFFILIATION}.`}
-          </p>
-        </div>
-
-        {/* Live, embedded calculators pre-filled with this property's real
-            price - Net Proceeds only renders for actual Maryland
-            properties, since that's the only tax data this site has. */}
-        <div className="mt-10">
-          <EmbeddedMortgageEstimate initialPrice={numericPrice} />
-          {matchingMdCounty && (
-            <EmbeddedNetProceedsEstimate initialPrice={numericPrice} countyName={matchingMdCounty.name} />
-          )}
+        {/* Live, embedded calculators - Home Sale and Affordability, the
+            same pairing shown on comparable sites, pre-filled with this
+            property's real price where relevant. */}
+        <div className="mt-16">
+          <EmbeddedHomeSaleEstimate initialPrice={numericPrice} mdCountyName={matchingMdCounty?.name} />
+          <EmbeddedAffordabilityEstimate />
         </div>
 
         <div className="mt-10 bg-[#0D2226] text-[#FAF8F5] p-8 text-center">
