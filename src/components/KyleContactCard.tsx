@@ -5,6 +5,7 @@ interface KyleContactCardProps {
   ctaHref?: string; // where the button links/scrolls to
   ctaLabel?: string;
   onCtaClick?: () => void;
+  dealContextText?: string; // optional per-transaction attribution note
 }
 
 // Kyle's real contact card - photo, name, title, real phone/email/office/
@@ -15,7 +16,7 @@ interface KyleContactCardProps {
 // different agent capture the buyer-side inquiry. Kept as its own
 // component so it's identical everywhere it appears rather than
 // duplicated and potentially drifting between pages.
-export const KyleContactCard: React.FC<KyleContactCardProps> = ({ ctaHref = '#', ctaLabel = 'Contact Kyle', onCtaClick }) => {
+export const KyleContactCard: React.FC<KyleContactCardProps> = ({ ctaHref = '#', ctaLabel = 'Contact Kyle', onCtaClick, dealContextText }) => {
   const Cta = onCtaClick ? (
     <button
       onClick={onCtaClick}
@@ -72,6 +73,13 @@ export const KyleContactCard: React.FC<KyleContactCardProps> = ({ ctaHref = '#',
             <Linkedin className="w-4 h-4" />
           </a>
         </div>
+
+        {dealContextText && (
+          <div className="border border-[#C9A96A]/30 bg-[#FAF8F5]/5 p-4 mb-8">
+            <div className="text-[10px] uppercase tracking-widest text-[#C9A96A] font-bold mb-1.5">Deal Context</div>
+            <p className="text-xs text-[#A8B2A1] leading-relaxed">{dealContextText}</p>
+          </div>
+        )}
 
         {Cta}
       </div>

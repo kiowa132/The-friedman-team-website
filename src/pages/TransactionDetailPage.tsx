@@ -115,10 +115,11 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
           <p className="text-xs text-[#1C2B2E]/40 mt-2">Courtesy of {t.listingOfficeName}</p>
         )}
 
-        {/* Description */}
+        {/* Description - sized to actually read as the lead editorial
+            copy on the page, not a small caption. */}
         {t.description && (
           <div className="mt-10 max-w-3xl">
-            <p className="text-sm sm:text-base text-[#1C2B2E]/80 leading-relaxed">{t.description}</p>
+            <p className="text-base sm:text-lg text-[#1C2B2E]/85 leading-relaxed">{t.description}</p>
           </div>
         )}
 
@@ -142,31 +143,22 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
           </div>
         </div>
 
-        {/* Who handled this deal - the honest equivalent of an agent card.
-            James's real name, role, and brokerage, prominently presented,
-            but no fabricated photo or contact details, and the actual
-            call to action points to Kyle, since that's the point of this
-            page existing on Kyle's site at all. */}
-        <div className="mt-10 bg-[#0D2226] text-[#FAF8F5] p-8 sm:p-10">
-          <span className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold">Deal Context</span>
-          <h2 className="font-serif text-3xl font-bold mt-2 mb-1">{MENTOR_NAME}</h2>
-          <p className="text-sm text-[#A8B2A1] mb-6">
-            {t.mentorRole && t.mentorOfficeAtSale
-              ? `${t.mentorRole} \u00b7 ${t.mentorOfficeAtSale}`
-              : MENTOR_AFFILIATION}
-          </p>
-          <p className="text-sm text-[#FAF8F5]/85 leading-relaxed max-w-2xl mb-8">
-            {t.mentorRole && t.mentorOfficeAtSale
-              ? `${MENTOR_NAME} represented ${t.mentorRole === 'Listing Agent' ? 'the seller' : 'the buyer'} on this transaction. Kyle Friedman trained directly under ${MENTOR_NAME}, and this deal is shown as context for that mentorship, not as part of Kyle's or The Friedman Team's own sales record.`
-              : `Kyle Friedman trained directly under ${MENTOR_NAME}. This deal is shown as context for that mentorship, not as part of Kyle's or The Friedman Team's own sales record.`}
-          </p>
-          <button
-            onClick={onOpenConsultation}
-            className="inline-flex items-center gap-2 px-8 py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest transition-colors"
-          >
-            <Phone className="w-4 h-4" />
-            Talk to Kyle
-          </button>
+        {/* Kyle's own contact card - standard lead-capture practice on any
+            property page, including ones representing another agent's
+            deal. The per-transaction attribution (who actually handled
+            this specific deal) is folded into the card itself as a
+            distinct labeled block, rather than a separate section, since
+            the card already covers it. */}
+        <div className="mt-10">
+          <KyleContactCard
+            onCtaClick={onOpenConsultation}
+            ctaLabel="Talk to Kyle"
+            dealContextText={
+              t.mentorRole && t.mentorOfficeAtSale
+                ? `${MENTOR_NAME} represented ${t.mentorRole === 'Listing Agent' ? 'the seller' : 'the buyer'} on this transaction. Kyle Friedman trained directly under ${MENTOR_NAME}, and this deal is shown as context for that mentorship, not as part of Kyle's or The Friedman Team's own sales record.`
+                : `Kyle Friedman trained directly under ${MENTOR_NAME}. This deal is shown as context for that mentorship, not as part of Kyle's or The Friedman Team's own sales record.`
+            }
+          />
         </div>
 
         {/* Features & Amenities - big, spacious, matching the reference's
@@ -251,15 +243,6 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
         <div className="mt-16">
           <EmbeddedHomeSaleEstimate initialPrice={numericPrice} mdCountyName={matchingMdCounty?.name} />
           <EmbeddedAffordabilityEstimate />
-        </div>
-
-        {/* Kyle's own contact card - standard lead-capture practice on any
-            property page, including ones representing another agent's
-            deal. Kept clearly separate from the "Deal Context" section
-            above, which is the part that answers who actually handled
-            this specific transaction. */}
-        <div className="mt-16">
-          <KyleContactCard onCtaClick={onOpenConsultation} ctaLabel="Talk to Kyle" />
         </div>
 
       </div>
