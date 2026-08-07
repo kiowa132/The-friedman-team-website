@@ -56,21 +56,40 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
           No posts in this category yet. Check back soon.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-1 gap-y-10">
           {filteredPosts.map((post) => (
             <Link
               key={post.slug}
               to={`/blog/${post.slug}`}
-              className="group block bg-white border border-[#C9A96A]/30 rounded-xs overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+              className="group block relative overflow-hidden"
             >
-              <div className="aspect-[16/10] overflow-hidden">
+              <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                   src={post.heroImage}
                   alt={post.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.55]"
                 />
+                {/* Hover overlay caption - date, title, excerpt, and a
+                    "Read Article" button fade in over the darkened image. */}
+                <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96A]">
+                    {formatDisplayDate(post.publishDate)} | {post.category}
+                  </span>
+                  <h2 className="font-serif text-xl font-bold text-white leading-snug mt-1.5">
+                    {post.title}
+                  </h2>
+                  <p className="text-xs text-white/70 line-clamp-2 mt-2">
+                    {post.metaDescription}
+                  </p>
+                  <span className="inline-block mt-4 px-5 py-2 bg-white text-[#0D2226] text-[11px] font-bold uppercase tracking-widest">
+                    Read Article
+                  </span>
+                </div>
               </div>
-              <div className="p-5 space-y-2">
+              {/* Default caption, below the image. Collapses on hover
+                  (rather than fading to transparent) so it disappears
+                  cleanly instead of leaving an empty box. */}
+              <div className="bg-white px-5 max-h-56 py-5 space-y-2 overflow-hidden transition-all duration-300 group-hover:max-h-0 group-hover:py-0">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96A]">
                   {post.category}
                 </span>
@@ -85,7 +104,7 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
                     <Calendar className="w-3 h-3" />
                     {formatDisplayDate(post.publishDate)}
                   </span>
-                  <span className="text-xs font-bold text-[#0F5C63] flex items-center gap-1 group-hover:text-[#C9A96A] transition-colors">
+                  <span className="text-xs font-bold text-[#0F5C63] flex items-center gap-1">
                     Read <ArrowRight className="w-3 h-3" />
                   </span>
                 </div>
