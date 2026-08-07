@@ -70,14 +70,18 @@ export const HandbookLandingPage: React.FC<HandbookLandingPageProps> = ({ guide 
 
             <div className="flex flex-wrap gap-4 mt-10">
               <button
+                type="button"
+                disabled={modalOpen}
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#0D2226] hover:bg-[#0F5C63] text-white font-bold text-xs uppercase tracking-widest transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#0D2226] hover:bg-[#0F5C63] text-white font-bold text-xs uppercase tracking-widest transition-colors disabled:opacity-70"
               >
                 <Download className="w-4 h-4" /> Unlock My Free Copy
               </button>
               <button
+                type="button"
+                disabled={modalOpen}
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center gap-2 px-8 py-4 border border-[#0D2226]/20 hover:border-[#0F5C63] text-[#0D2226] font-bold text-xs uppercase tracking-widest transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-4 border border-[#0D2226]/20 hover:border-[#0F5C63] text-[#0D2226] font-bold text-xs uppercase tracking-widest transition-colors disabled:opacity-70"
               >
                 <BookOpen className="w-4 h-4" /> Read Online
               </button>

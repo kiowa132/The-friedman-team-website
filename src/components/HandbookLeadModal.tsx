@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, ShieldCheck, AlertCircle, Download, CheckCircle2 } from 'lucide-react';
 import { submitLead } from '../lib/leads';
 
@@ -17,6 +17,16 @@ export const HandbookLeadModal: React.FC<HandbookLeadModalProps> = ({ coverImage
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  // Lock background scroll while the modal is open - without this, the
+  // page underneath can still scroll and receive touches on mobile while
+  // the modal sits on top of it, which can genuinely interfere with
+  // tapping into the form fields.
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = original; };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,7 +71,7 @@ export const HandbookLeadModal: React.FC<HandbookLeadModalProps> = ({ coverImage
             <div className="relative h-40 overflow-hidden">
               <img src={coverImage} alt={title} className="w-full h-full object-cover object-top" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-transparent to-transparent" />
-              <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#C9A96A] text-[#0D2226] text-[9px] font-bold uppercase tracking-widest rounded-full">
+              <div className="absolute bottom-3 left-3 px-2.5 py-1 bg-[#C9A96A] text-[#0D2226] text-[9px] font-bold uppercase tracking-widest rounded-full">
                 Instant Access
               </div>
             </div>
