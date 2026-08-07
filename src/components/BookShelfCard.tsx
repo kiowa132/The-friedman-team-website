@@ -19,7 +19,7 @@ export const BookShelfCard: React.FC<BookShelfCardProps> = ({ slug, coverImage, 
   return (
     <Link to={`/guides/${slug}`} className="group flex flex-col items-center" style={{ perspective: '1200px' }}>
       <div
-        className="relative w-full max-w-[240px] aspect-[3/4] transition-transform duration-500 ease-out group-hover:-translate-y-3"
+        className="relative w-full max-w-[240px] aspect-[707/1000] transition-transform duration-500 ease-out group-hover:-translate-y-3"
         style={{ transformStyle: 'preserve-3d' }}
       >
         <div
