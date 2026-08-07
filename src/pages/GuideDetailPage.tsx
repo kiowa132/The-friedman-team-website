@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FileText, Download, AlertCircle, CheckCircle2, ShieldCheck, Phone } from 'lucide-react';
+import { FileText, Download, AlertCircle, CheckCircle2, ShieldCheck, Clock, Layers } from 'lucide-react';
 import { GUIDES, BLOG_POSTS } from '../lib/content';
+import { getStructuredGuide } from '../data/guides';
 import { submitLead } from '../lib/leads';
 import { FlipbookViewer } from '../components/FlipbookViewer';
+import { GuideReader } from '../components/GuideReader';
 
-export const GuideDetailPage: React.FC = () => {
+interface GuideDetailPageProps {
+  onOpenConsultation: () => void;
+}
+
+export const GuideDetailPage: React.FC<GuideDetailPageProps> = ({ onOpenConsultation }) => {
   const { slug } = useParams<{ slug: string }>();
   const guide = GUIDES.find((g) => g.slug === slug);
+  const structuredGuide = slug ? getStructuredGuide(slug) : undefined;
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -40,8 +47,6 @@ export const GuideDetailPage: React.FC = () => {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // Tagged with the specific guide name so it's clear in Follow Up Boss
-    // exactly which lead magnet this person unlocked.
     const { ok, error } = await submitLead({
       name,
       email,
@@ -63,11 +68,18 @@ export const GuideDetailPage: React.FC = () => {
     } catch {
       // localStorage unavailable - not critical, unlock still works for this page view
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // AFTER unlocking: full-width reading layout with the real content, not a
-  // narrow sidebar card - this content can genuinely be long-form.
+  // AFTER unlocking, with structured content available: the full
+  // immersive magazine-style reader, real HTML sections instead of
+  // flipbook page images.
+  if (unlocked && structuredGuide) {
+    return <GuideReader guide={structuredGuide} onOpenConsultation={onOpenConsultation} />;
+  }
+
+  // AFTER unlocking, without structured content yet: fall back to the
+  // previous flipbook/embed/html rendering, so older guides still work
+  // until they're converted to the structured format too.
   if (unlocked) {
     return (
       <div className="pt-28 pb-20 max-w-[1600px] mx-auto px-4 sm:px-6 space-y-8">
@@ -119,19 +131,21 @@ export const GuideDetailPage: React.FC = () => {
         )}
 
         <div className="text-center pt-2">
-          <Link
-            to="/contact"
+          <button
+            onClick={onOpenConsultation}
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs"
           >
-            <Phone className="w-4 h-4" />
             Talk to Kyle About Your Situation
-          </Link>
+          </button>
         </div>
       </div>
     );
   }
 
-  // BEFORE unlocking: two-column preview + form
+  // BEFORE unlocking: premium preview + lead capture form
+  const pageCount = structuredGuide?.sections.length;
+  const readMinutes = structuredGuide?.estimatedReadMinutes;
+
   return (
     <div className="pt-28 pb-20 max-w-5xl mx-auto px-4 sm:px-6">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -142,14 +156,25 @@ export const GuideDetailPage: React.FC = () => {
           </div>
 
           <div className="space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#C9A96A] flex items-center gap-2">
-              <FileText className="w-4 h-4" /> Free Guide
-            </span>
+            <div className="flex items-center gap-4 flex-wrap">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#C9A96A] flex items-center gap-2">
+                <FileText className="w-4 h-4" /> Free Guide
+              </span>
+              {readMinutes && (
+                <span className="text-xs font-semibold text-[#1C2B2E]/60 flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5" /> {readMinutes} min read
+                </span>
+              )}
+              {pageCount && (
+                <span className="text-xs font-semibold text-[#1C2B2E]/60 flex items-center gap-1.5">
+                  <Layers className="w-3.5 h-3.5" /> {pageCount} sections
+                </span>
+              )}
+            </div>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] leading-tight">{guide.title}</h1>
             <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">{guide.description}</p>
           </div>
 
-          {/* Short teaser bullets - builds trust before the ask */}
           {guide.previewPoints.length > 0 && (
             <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 rounded-xs p-6 space-y-3">
               <h2 className="font-serif text-lg font-bold text-[#0D2226]">What's Inside This Guide</h2>

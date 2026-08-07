@@ -253,7 +253,7 @@ export default function App() {
             <GuidesListPage />
           } />
           <Route path="/guides/:slug" element={
-            <GuideDetailPage />
+            <GuideDetailPage onOpenConsultation={() => setIsConsultationOpen(true)} />
           } />
 
           <Route path="/luxury" element={
