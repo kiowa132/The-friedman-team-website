@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { FileText, Download, AlertCircle, CheckCircle2, ShieldCheck, Clock, Layers } from 'lucide-react';
 import { GUIDES, BLOG_POSTS } from '../lib/content';
 import { getStructuredGuide } from '../data/guides';
+import { buyerHandbook } from '../data/guides/buyer-handbook-2026';
+import { HandbookLandingPage } from '../components/HandbookLandingPage';
 import { submitLead } from '../lib/leads';
 import { FlipbookViewer } from '../components/FlipbookViewer';
 import { GuideReader } from '../components/GuideReader';
@@ -13,6 +15,15 @@ interface GuideDetailPageProps {
 
 export const GuideDetailPage: React.FC<GuideDetailPageProps> = ({ onOpenConsultation }) => {
   const { slug } = useParams<{ slug: string }>();
+
+  // The premium handbook uses its own dedicated experience entirely -
+  // real page-image spreads, 3D cover, its own lead modal - since it's a
+  // different content shape (real designed pages) from the structured
+  // text guides below.
+  if (slug === buyerHandbook.slug) {
+    return <HandbookLandingPage guide={buyerHandbook} />;
+  }
+
   const guide = GUIDES.find((g) => g.slug === slug);
   const structuredGuide = slug ? getStructuredGuide(slug) : undefined;
 
