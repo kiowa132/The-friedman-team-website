@@ -5,7 +5,7 @@ metaDescription: Accepting an offer on your home is a huge milestone. After
   negotiating with buyers, you've finally reached the point where both parties
   have signed a contract.
 category: Sell Your Home
-publishDate: "{{now}}"
+publishDate: "2026-08-06"
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-30-.png
 carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-28-.png
