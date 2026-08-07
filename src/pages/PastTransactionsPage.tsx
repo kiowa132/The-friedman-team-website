@@ -43,57 +43,39 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-1 gap-y-10">
               {PAST_TRANSACTIONS.map((t, i) => (
-                <div key={i} className="group relative overflow-hidden">
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    {t.image ? (
-                      <img src={t.image} alt={t.address} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.55]" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-[#0D2226]">
-                        <img src="/images/brand/friedman-f-mark.png" alt="" className="h-16 w-auto opacity-40" />
-                      </div>
-                    )}
-                    <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
-                      Sold
+                <div key={i} className="group relative h-[460px] overflow-hidden">
+                  {t.image ? (
+                    <img src={t.image} alt={t.address} className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.5]" />
+                  ) : (
+                    <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-[#0D2226]">
+                      <img src="/images/brand/friedman-f-mark.png" alt="" className="h-16 w-auto opacity-40" />
                     </div>
-                    {/* Hover overlay caption - fades in over the darkened
-                        image. Independent of the default box below, which
-                        collapses itself away rather than just fading, so
-                        no empty space is left behind. */}
-                    <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                      <div className="font-serif text-2xl font-bold text-white tracking-wide">{t.address}</div>
-                      <div className="text-sm text-white/70 mb-2">{t.city}, {t.county}</div>
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-[#C9A96A]">{t.priceDisplay}</span>
-                        <span className="text-xs text-white/60">{t.soldDate}</span>
-                      </div>
-                      {(t.beds || t.baths || t.sqft) && (
-                        <div className="flex items-center gap-3 text-xs text-white/70 mt-2">
-                          {t.beds && <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>}
-                          {t.baths && <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>}
-                          {t.sqft && <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>}
-                        </div>
-                      )}
-                    </div>
+                  )}
+                  <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
+                    Sold
                   </div>
-                  {/* Default caption, below the image. Actually collapses
-                      (max-height + padding to 0) on hover rather than just
-                      fading to transparent, so it disappears cleanly
-                      instead of leaving a blank box behind. */}
-                  <div className="bg-white px-5 max-h-56 py-5 overflow-hidden transition-all duration-300 group-hover:max-h-0 group-hover:py-0">
-                    <div className="font-serif text-lg font-bold text-[#0D2226]">{t.address}</div>
-                    <div className="text-xs text-[#1C2B2E]/60 mb-2">{t.city}, {t.county}</div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="font-semibold text-[#0F5C63]">{t.priceDisplay}</span>
-                      <span className="text-[11px] text-[#1C2B2E]/50">{t.soldDate}</span>
+                  {/* Caption overlay - always present at the bottom of the
+                      full-height image (never a separate box below it, so
+                      the card's total height never changes). Small and
+                      white by default; on hover it grows taller with a
+                      dark scrim and reveals the extra details, but always
+                      fully covers down to the card's bottom edge, so
+                      there's never a gap of bare image or blank space. */}
+                  <div className="absolute inset-x-0 bottom-0 bg-white group-hover:bg-transparent group-hover:bg-gradient-to-t group-hover:from-black/90 group-hover:via-black/60 group-hover:to-transparent px-5 py-5 group-hover:pt-20 transition-all duration-300">
+                    <div className="font-serif text-lg font-bold text-[#0D2226] group-hover:text-white transition-colors">{t.address}</div>
+                    <div className="text-xs text-[#1C2B2E]/60 group-hover:text-white/70 transition-colors mb-2">{t.city}, {t.county}</div>
+                    <div className="flex items-center justify-between mb-1 group-hover:mb-3 transition-all">
+                      <span className="font-semibold text-[#0F5C63] group-hover:text-[#C9A96A] transition-colors">{t.priceDisplay}</span>
+                      <span className="text-[11px] text-[#1C2B2E]/50 group-hover:text-white/60 transition-colors">{t.soldDate}</span>
                     </div>
                     {(t.beds || t.baths || t.sqft) && (
-                      <div className="flex items-center gap-3 text-xs text-[#1C2B2E]/60 border-t border-[#C9A96A]/20 pt-3">
+                      <div className="hidden group-hover:flex items-center gap-3 text-xs text-white/80 mb-2">
                         {t.beds && <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>}
                         {t.baths && <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>}
                         {t.sqft && <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>}
                       </div>
                     )}
-                    <div className="text-[10px] uppercase tracking-widest text-[#C9A96A] font-bold mt-3">{t.role}</div>
+                    <div className="text-[10px] uppercase tracking-widest text-[#C9A96A] font-bold">{t.role}</div>
                   </div>
                 </div>
               ))}
@@ -113,50 +95,33 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-1 gap-y-10">
           {MENTOR_TRANSACTIONS.map((t, i) => (
-            <Link key={i} to={`/transactions/${t.slug}`} className="group block relative overflow-hidden">
-              <div className="relative aspect-[4/3] overflow-hidden">
-                {t.image ? (
-                  <img src={t.image} alt={t.address} loading="lazy" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.55]" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-[#0D2226]">
-                    <span className="text-[#A8B2A1]/40 text-xs uppercase tracking-widest">No photo yet</span>
-                  </div>
-                )}
-                <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
-                  Sold
+            <Link key={i} to={`/transactions/${t.slug}`} className="group block relative h-[460px] overflow-hidden">
+              {t.image ? (
+                <img src={t.image} alt={t.address} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.5]" />
+              ) : (
+                <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-[#0D2226]">
+                  <span className="text-[#A8B2A1]/40 text-xs uppercase tracking-widest">No photo yet</span>
                 </div>
-                {/* Hover overlay caption */}
-                <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                  <div className="font-serif text-2xl font-bold text-white tracking-wide">{t.address}</div>
-                  <div className="text-sm text-white/70 mb-2">{t.cityStateZip}</div>
-                  <div className="font-semibold text-[#C9A96A] mb-2">{t.priceDisplay}</div>
-                  <div className="flex items-center gap-3 text-xs text-white/70">
-                    <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>
-                    <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>
-                    <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>
-                  </div>
-                  <div className="text-[11px] text-white/50 mt-2">
-                    {t.mentorRole && t.mentorOfficeAtSale
-                      ? `${t.mentorRole === 'Listing Agent' ? "Seller's" : "Buyer's"} agent: ${MENTOR_NAME}`
-                      : `Transaction completed by ${MENTOR_NAME}`}
-                  </div>
-                </div>
+              )}
+              <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
+                Sold
               </div>
-              {/* Default caption, collapses on hover instead of fading to
-                  transparent. */}
-              <div className="bg-white px-5 max-h-56 py-5 overflow-hidden transition-all duration-300 group-hover:max-h-0 group-hover:py-0">
-                <div className="font-serif text-lg font-bold text-[#0D2226]">{t.address}</div>
-                <div className="text-xs text-[#1C2B2E]/60 mb-2">{t.cityStateZip}</div>
-                <div className="font-semibold text-[#0F5C63] mb-3">{t.priceDisplay}</div>
-                <div className="flex items-center gap-3 text-xs text-[#1C2B2E]/60 border-t border-[#C9A96A]/20 pt-3">
+              {/* Caption overlay - always covers the bottom of the image,
+                  grows and darkens on hover, never leaves blank space
+                  since the card's total height never changes. */}
+              <div className="absolute inset-x-0 bottom-0 bg-white group-hover:bg-transparent group-hover:bg-gradient-to-t group-hover:from-black/90 group-hover:via-black/60 group-hover:to-transparent px-5 py-5 group-hover:pt-20 transition-all duration-300">
+                <div className="font-serif text-lg font-bold text-[#0D2226] group-hover:text-white transition-colors">{t.address}</div>
+                <div className="text-xs text-[#1C2B2E]/60 group-hover:text-white/70 transition-colors mb-2">{t.cityStateZip}</div>
+                <div className="font-semibold text-[#0F5C63] group-hover:text-[#C9A96A] transition-colors mb-1 group-hover:mb-3">{t.priceDisplay}</div>
+                <div className="hidden group-hover:flex items-center gap-3 text-xs text-white/80 mb-2">
                   <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>
                   <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>
                   <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>
                 </div>
-                <div className="text-[11px] text-[#1C2B2E]/45 mt-3">
+                <div className="text-[11px] text-[#1C2B2E]/45 group-hover:text-white/60 transition-colors">
                   {t.mentorRole && t.mentorOfficeAtSale
-                    ? `${t.mentorRole === 'Listing Agent' ? "Seller's" : "Buyer's"} agent: ${MENTOR_NAME} | ${t.mentorOfficeAtSale}`
-                    : `Transaction completed by ${MENTOR_NAME} | ${MENTOR_AFFILIATION}`}
+                    ? `${t.mentorRole === 'Listing Agent' ? "Seller's" : "Buyer's"} agent: ${MENTOR_NAME}`
+                    : `Transaction completed by ${MENTOR_NAME}`}
                 </div>
               </div>
             </Link>

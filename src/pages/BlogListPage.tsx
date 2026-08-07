@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { BLOG_POSTS } from '../lib/content';
 import { formatDisplayDate } from '../lib/formatDate';
 
@@ -61,53 +61,36 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
             <Link
               key={post.slug}
               to={`/blog/${post.slug}`}
-              className="group block relative overflow-hidden"
+              className="group block relative h-[420px] overflow-hidden"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={post.heroImage}
-                  alt={post.title}
-                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.55]"
-                />
-                {/* Hover overlay caption - date, title, excerpt, and a
-                    "Read Article" button fade in over the darkened image. */}
-                <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96A]">
-                    {formatDisplayDate(post.publishDate)} | {post.category}
-                  </span>
-                  <h2 className="font-serif text-xl font-bold text-white leading-snug mt-1.5">
-                    {post.title}
-                  </h2>
-                  <p className="text-xs text-white/70 line-clamp-2 mt-2">
-                    {post.metaDescription}
-                  </p>
-                  <span className="inline-block mt-4 px-5 py-2 bg-white text-[#0D2226] text-[11px] font-bold uppercase tracking-widest">
-                    Read Article
-                  </span>
-                </div>
-              </div>
-              {/* Default caption, below the image. Collapses on hover
-                  (rather than fading to transparent) so it disappears
-                  cleanly instead of leaving an empty box. */}
-              <div className="bg-white px-5 max-h-56 py-5 space-y-2 overflow-hidden transition-all duration-300 group-hover:max-h-0 group-hover:py-0">
+              <img
+                src={post.heroImage}
+                alt={post.title}
+                className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.5]"
+              />
+              {/* Caption overlay - always covers the bottom of the image,
+                  small and white by default, grows taller with a dark
+                  scrim and reveals the excerpt plus a Read Article button
+                  on hover. Card height never changes, so there's never a
+                  gap of bare image or blank space either way. */}
+              <div className="absolute inset-x-0 bottom-0 bg-white group-hover:bg-transparent group-hover:bg-gradient-to-t group-hover:from-black/90 group-hover:via-black/60 group-hover:to-transparent px-5 py-5 group-hover:pt-24 transition-all duration-300">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96A]">
-                  {post.category}
+                  {formatDisplayDate(post.publishDate)} | {post.category}
                 </span>
-                <h2 className="font-serif text-lg font-bold text-[#0D2226] leading-snug">
+                <h2 className="font-serif text-lg font-bold text-[#0D2226] group-hover:text-white transition-colors leading-snug mt-1">
                   {post.title}
                 </h2>
-                <p className="text-xs text-[#1C2B2E]/70 line-clamp-2">
+                <p className="hidden group-hover:block text-xs text-white/70 line-clamp-2 mt-2">
                   {post.metaDescription}
                 </p>
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-[10px] text-[#1C2B2E]/50 flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {formatDisplayDate(post.publishDate)}
-                  </span>
+                <div className="flex items-center justify-end pt-2 group-hover:hidden">
                   <span className="text-xs font-bold text-[#0F5C63] flex items-center gap-1">
                     Read <ArrowRight className="w-3 h-3" />
                   </span>
                 </div>
+                <span className="hidden group-hover:inline-block mt-4 px-5 py-2 bg-white text-[#0D2226] text-[11px] font-bold uppercase tracking-widest">
+                  Read Article
+                </span>
               </div>
             </Link>
           ))}
