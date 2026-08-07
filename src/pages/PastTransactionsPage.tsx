@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { usePageMeta } from '../lib/usePageMeta';
 import { PAST_TRANSACTIONS } from '../data/pastTransactions';
-import { MENTOR_TRANSACTIONS, MENTOR_NAME, MENTOR_AFFILIATION } from '../data/mentorTransactions';
+import { MENTOR_TRANSACTIONS, MENTOR_NAME } from '../data/mentorTransactions';
 import { Bed, Bath, Maximize2, Phone } from 'lucide-react';
 
 interface PastTransactionsPageProps {
@@ -46,7 +46,7 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
                 <div key={i} className="group relative overflow-hidden bg-[#0D2226]">
                   <div className="relative aspect-[4/3] overflow-hidden">
                     {t.image ? (
-                      <img src={t.image} alt={t.address} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.55]" />
+                      <img src={t.image} alt={t.address} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-[#0D2226]">
                         <img src="/images/brand/friedman-f-mark.png" alt="" className="h-16 w-auto opacity-40" />
@@ -55,43 +55,27 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
                     <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
                       Sold
                     </div>
-                    {/* Hover overlay caption - fades in over the darkened
-                        image, matching the reference's interaction. */}
-                    <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    {/* Caption is always visible, overlaid on a permanent
+                        gradient scrim at the bottom of the photo - never
+                        toggles or disappears, hover just deepens the scrim
+                        and zooms the image slightly for the interactive
+                        feel. */}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent pt-16 pb-5 px-6 transition-colors duration-500 group-hover:from-black/95">
                       <div className="font-serif text-2xl font-bold text-white tracking-wide">{t.address}</div>
-                      <div className="text-sm text-white/70 mb-2">{t.city}, {t.county}</div>
+                      <div className="text-sm text-white/80 mb-2">{t.city}, {t.county}</div>
                       <div className="flex items-center justify-between">
                         <span className="font-semibold text-[#C9A96A]">{t.priceDisplay}</span>
-                        <span className="text-xs text-white/60">{t.soldDate}</span>
+                        <span className="text-xs text-white/70">{t.soldDate}</span>
                       </div>
                       {(t.beds || t.baths || t.sqft) && (
-                        <div className="flex items-center gap-3 text-xs text-white/70 mt-2">
+                        <div className="flex items-center gap-3 text-xs text-white/80 mt-2">
                           {t.beds && <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>}
                           {t.baths && <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>}
                           {t.sqft && <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>}
                         </div>
                       )}
+                      <div className="text-[10px] uppercase tracking-widest text-[#C9A96A] font-bold mt-2">{t.role}</div>
                     </div>
-                  </div>
-                  {/* Default caption, below the image, matching the
-                      reference's non-hovered state. Hidden on hover in
-                      favor of the overlay above so the info doesn't show
-                      twice at once. */}
-                  <div className="bg-white p-5 transition-opacity duration-300 group-hover:opacity-0">
-                    <div className="font-serif text-lg font-bold text-[#0D2226]">{t.address}</div>
-                    <div className="text-xs text-[#1C2B2E]/60 mb-2">{t.city}, {t.county}</div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="font-semibold text-[#0F5C63]">{t.priceDisplay}</span>
-                      <span className="text-[11px] text-[#1C2B2E]/50">{t.soldDate}</span>
-                    </div>
-                    {(t.beds || t.baths || t.sqft) && (
-                      <div className="flex items-center gap-3 text-xs text-[#1C2B2E]/60 border-t border-[#C9A96A]/20 pt-3">
-                        {t.beds && <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>}
-                        {t.baths && <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>}
-                        {t.sqft && <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>}
-                      </div>
-                    )}
-                    <div className="text-[10px] uppercase tracking-widest text-[#C9A96A] font-bold mt-3">{t.role}</div>
                   </div>
                 </div>
               ))}
@@ -114,7 +98,7 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
             <Link key={i} to={`/transactions/${t.slug}`} className="group block relative overflow-hidden bg-[#0D2226]">
               <div className="relative aspect-[4/3] overflow-hidden">
                 {t.image ? (
-                  <img src={t.image} alt={t.address} loading="lazy" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.55]" />
+                  <img src={t.image} alt={t.address} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-[#0D2226]">
                     <span className="text-[#A8B2A1]/40 text-xs uppercase tracking-widest">No photo yet</span>
@@ -123,37 +107,21 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
                 <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
                   Sold
                 </div>
-                {/* Hover overlay caption */}
-                <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                {/* Caption always visible on a permanent gradient scrim */}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent pt-16 pb-5 px-6 transition-colors duration-500 group-hover:from-black/95">
                   <div className="font-serif text-2xl font-bold text-white tracking-wide">{t.address}</div>
-                  <div className="text-sm text-white/70 mb-2">{t.cityStateZip}</div>
+                  <div className="text-sm text-white/80 mb-2">{t.cityStateZip}</div>
                   <div className="font-semibold text-[#C9A96A] mb-2">{t.priceDisplay}</div>
-                  <div className="flex items-center gap-3 text-xs text-white/70">
+                  <div className="flex items-center gap-3 text-xs text-white/80">
                     <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>
                     <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>
                     <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>
                   </div>
-                  <div className="text-[11px] text-white/50 mt-2">
+                  <div className="text-[11px] text-white/60 mt-2">
                     {t.mentorRole && t.mentorOfficeAtSale
                       ? `${t.mentorRole === 'Listing Agent' ? "Seller's" : "Buyer's"} agent: ${MENTOR_NAME}`
                       : `Transaction completed by ${MENTOR_NAME}`}
                   </div>
-                </div>
-              </div>
-              {/* Default caption, below the image */}
-              <div className="bg-white p-5 transition-opacity duration-300 group-hover:opacity-0">
-                <div className="font-serif text-lg font-bold text-[#0D2226]">{t.address}</div>
-                <div className="text-xs text-[#1C2B2E]/60 mb-2">{t.cityStateZip}</div>
-                <div className="font-semibold text-[#0F5C63] mb-3">{t.priceDisplay}</div>
-                <div className="flex items-center gap-3 text-xs text-[#1C2B2E]/60 border-t border-[#C9A96A]/20 pt-3">
-                  <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>
-                  <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>
-                  <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>
-                </div>
-                <div className="text-[11px] text-[#1C2B2E]/45 mt-3">
-                  {t.mentorRole && t.mentorOfficeAtSale
-                    ? `${t.mentorRole === 'Listing Agent' ? "Seller's" : "Buyer's"} agent: ${MENTOR_NAME} | ${t.mentorOfficeAtSale}`
-                    : `Transaction completed by ${MENTOR_NAME} | ${MENTOR_AFFILIATION}`}
                 </div>
               </div>
             </Link>
