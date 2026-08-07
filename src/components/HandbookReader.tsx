@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, X, Menu, Download } from 'lucide-react';
 import { HandbookGuide } from '../data/guides/buyer-handbook-2026';
@@ -7,10 +7,27 @@ interface HandbookReaderProps {
   guide: HandbookGuide;
 }
 
-// Groups pages into "views": the cover and back-cover CTA stand alone,
-// interior pages pair up into two-page spreads on desktop (single page on
-// mobile, handled with CSS rather than a second layout branch).
-function buildViews(pages: HandbookGuide['pages']): number[][] {
+// Tracks whether the viewport is at or below Tailwind's `sm` breakpoint
+// (640px), with a resize listener so rotating a phone or resizing a
+// browser window updates it live.
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return isMobile;
+}
+
+// Groups pages into "views". On mobile, every page is its own view - two
+// portrait pages side by side on a phone screen would each be too narrow
+// to read. On desktop, interior pages pair into two-page spreads, with
+// the cover and the back-cover CTA standing alone.
+function buildViews(pages: HandbookGuide['pages'], isMobile: boolean): number[][] {
+  if (isMobile) {
+    return pages.map((_, i) => [i]);
+  }
   const views: number[][] = [];
   const last = pages.length - 1;
   views.push([0]);
@@ -29,9 +46,20 @@ function buildViews(pages: HandbookGuide['pages']): number[][] {
 }
 
 export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
-  const views = buildViews(guide.pages);
+  const isMobile = useIsMobile();
+  const views = useMemo(() => buildViews(guide.pages, isMobile), [guide.pages, isMobile]);
   const [viewIndex, setViewIndex] = useState(0);
   const [tocOpen, setTocOpen] = useState(false);
+
+  // If the viewport crosses the mobile breakpoint mid-session (resize,
+  // rotation), keep showing roughly the same page rather than resetting
+  // to the start or pointing at an out-of-range index.
+  const currentFirstPage = views[viewIndex]?.[0] ?? 0;
+  useEffect(() => {
+    const newIndex = views.findIndex((v) => v.includes(currentFirstPage));
+    setViewIndex(newIndex >= 0 ? newIndex : 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
 
   const goTo = (i: number) => setViewIndex(Math.max(0, Math.min(views.length - 1, i)));
   const next = () => goTo(viewIndex + 1);
