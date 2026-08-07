@@ -58,9 +58,11 @@ export const HandbookLeadModal: React.FC<HandbookLeadModalProps> = ({ coverImage
           </div>
         ) : (
           <>
-            <div className="relative h-32 bg-[#0D2226] flex items-end justify-center overflow-hidden">
-              <img src={coverImage} alt={title} className="h-40 w-auto -mb-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)] rounded-sm" />
-              <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#C9A96A] text-[#0D2226] text-[9px] font-bold uppercase tracking-widest rounded-full">
+            <div className="relative pt-8 pb-6 bg-[#0D2226] flex flex-col items-center gap-3">
+              <div className="w-20 aspect-[707/1000] rounded-sm overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <img src={coverImage} alt={title} className="w-full h-full object-cover" />
+              </div>
+              <div className="px-2.5 py-1 bg-[#C9A96A] text-[#0D2226] text-[9px] font-bold uppercase tracking-widest rounded-full">
                 Instant Access
               </div>
             </div>

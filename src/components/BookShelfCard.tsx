@@ -42,8 +42,8 @@ export const BookShelfCard: React.FC<BookShelfCardProps> = ({ slug, coverImage, 
 
       <div className="text-center mt-5 max-w-[240px]">
         <span className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96A]">{edition}</span>
-        <h3 className="font-serif text-base font-bold text-white mt-1 leading-snug group-hover:text-[#C9A96A] transition-colors">{title}</h3>
-        <div className="flex items-center justify-center gap-3 mt-2 text-[11px] text-white/50">
+        <h3 className="font-serif text-base font-bold text-[#0D2226] mt-1 leading-snug group-hover:text-[#0F5C63] transition-colors">{title}</h3>
+        <div className="flex items-center justify-center gap-3 mt-2 text-[11px] text-[#1C2B2E]/55">
           <span className="flex items-center gap-1"><Layers className="w-3 h-3" /> {pageCount} pages</span>
           <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {readMinutes} min</span>
         </div>
