@@ -5,9 +5,9 @@ metaDescription: Published by Kyle Friedman | Owner, Founder / Friedman Real
   Estate Team at EXP Realty
 category: Market Reports
 publishDate: "2026-06-15"
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-14-.png
+heroImage: /images/uploads/big-story-07-27-2026-14.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-13-.png
+  - /images/uploads/big-story-07-27-2026-13.jpg
 relatedAreaSlug: null
 ---
 The Seller Who Almost Waited Too Long

@@ -4,10 +4,10 @@ metaDescription: |
   Published by Kyle Friedman | Owner, Founder / The Friedman Team at EXP Realty
 category: Market Reports
 publishDate: "2026-06-01
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-8-.png
+heroImage: /images/uploads/big-story-07-27-2026-8.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-9-.png
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-10-.png
+  - /images/uploads/big-story-07-27-2026-9.jpg
+  - /images/uploads/big-story-07-27-2026-10.jpg
 ---
 Baltimore County enters June at a crossroads. The market is still leaning seller-favored, but the data from the week of June 1–7 tells a more nuanced story one of genuine strength in the right pockets, and quiet softening everywhere else.
 

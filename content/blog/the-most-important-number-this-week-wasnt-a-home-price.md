@@ -4,10 +4,10 @@ metaDescription: Mortgage rates climbed for a fourth straight week as buyer
   demand cooled and Maryland's market shifted into a more balanced phase.
 category: Market Reports
 publishDate: "2026-07-26"
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-5-.png
+heroImage: /images/uploads/big-story-07-27-2026-5.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-6-.png
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-7-.png
+  - /images/uploads/big-story-07-27-2026-6.jpg
+  - /images/uploads/big-story-07-27-2026-7.jpg
 ---
 his week, the entire spread of Maryland’s housing market fit inside one city.
 

@@ -66,6 +66,7 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
               <img
                 src={post.heroImage}
                 alt={post.title}
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.5]"
               />
               {/* Caption overlay - always covers the bottom of the image,

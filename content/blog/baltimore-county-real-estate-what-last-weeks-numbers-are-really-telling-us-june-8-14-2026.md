@@ -5,9 +5,9 @@ metaDescription: Published by Kyle Friedman | Owner, Founder / The Friedman Team
   By Kyle Friedman at EXP Realty
 category: Market Reports
 publishDate: "2026-06-08"
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-11-.png
+heroImage: /images/uploads/big-story-07-27-2026-11.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-12-.png
+  - /images/uploads/big-story-07-27-2026-12.jpg
 ---
 If you only glanced at the headlines, you’d think nothing changed in the Baltimore County housing market last week. Inventory is still tight. Homes are still selling fast. Sellers are still, technically, in control.
 

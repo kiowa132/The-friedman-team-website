@@ -4,10 +4,10 @@ title: Something happened this week that isn’t supposed to happen | The Friedm
 metaDescription: Mortgage rates climbed for the fifth week in a row
 category: Market Reports
 publishDate: 2026-08-02
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-15-.png
+heroImage: /images/uploads/big-story-07-27-2026-15.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-16-.png
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-17-.png
+  - /images/uploads/big-story-07-27-2026-16.jpg
+  - /images/uploads/big-story-07-27-2026-17.jpg
 ---
  👉[View the full interactive market report here](https://the-friedman-report-week-wpfq65l.gamma.site/)
 
