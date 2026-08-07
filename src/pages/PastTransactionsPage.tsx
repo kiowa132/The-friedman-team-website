@@ -41,20 +41,43 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
                 Real closed deals Kyle has personally represented, as listing agent or buyer's agent, across Carroll, Baltimore, Howard, and Frederick counties.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-1 gap-y-10">
               {PAST_TRANSACTIONS.map((t, i) => (
-                <div key={i} className="bg-white border border-[#C9A96A]/25 overflow-hidden shadow-md">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#0D2226] flex items-center justify-center">
+                <div key={i} className="group relative overflow-hidden bg-[#0D2226]">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     {t.image ? (
-                      <img src={t.image} alt={t.address} className="w-full h-full object-cover" />
+                      <img src={t.image} alt={t.address} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.55]" />
                     ) : (
-                      <img src="/images/brand/friedman-f-mark.png" alt="" className="h-16 w-auto opacity-40" />
+                      <div className="w-full h-full flex items-center justify-center bg-[#0D2226]">
+                        <img src="/images/brand/friedman-f-mark.png" alt="" className="h-16 w-auto opacity-40" />
+                      </div>
                     )}
-                    <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
+                    <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
                       Sold
                     </div>
+                    {/* Hover overlay caption - fades in over the darkened
+                        image, matching the reference's interaction. */}
+                    <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <div className="font-serif text-2xl font-bold text-white tracking-wide">{t.address}</div>
+                      <div className="text-sm text-white/70 mb-2">{t.city}, {t.county}</div>
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-[#C9A96A]">{t.priceDisplay}</span>
+                        <span className="text-xs text-white/60">{t.soldDate}</span>
+                      </div>
+                      {(t.beds || t.baths || t.sqft) && (
+                        <div className="flex items-center gap-3 text-xs text-white/70 mt-2">
+                          {t.beds && <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>}
+                          {t.baths && <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>}
+                          {t.sqft && <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="p-5">
+                  {/* Default caption, below the image, matching the
+                      reference's non-hovered state. Hidden on hover in
+                      favor of the overlay above so the info doesn't show
+                      twice at once. */}
+                  <div className="bg-white p-5 transition-opacity duration-300 group-hover:opacity-0">
                     <div className="font-serif text-lg font-bold text-[#0D2226]">{t.address}</div>
                     <div className="text-xs text-[#1C2B2E]/60 mb-2">{t.city}, {t.county}</div>
                     <div className="flex items-center justify-between mb-3">
@@ -86,21 +109,40 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-1 gap-y-10">
           {MENTOR_TRANSACTIONS.map((t, i) => (
-            <Link key={i} to={`/transactions/${t.slug}`} className="group block bg-white border border-[#C9A96A]/25 overflow-hidden shadow-md">
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#0D2226]/10 flex items-center justify-center">
+            <Link key={i} to={`/transactions/${t.slug}`} className="group block relative overflow-hidden bg-[#0D2226]">
+              <div className="relative aspect-[4/3] overflow-hidden">
                 {t.image ? (
-                  <img src={t.image} alt={t.address} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={t.image} alt={t.address} loading="lazy" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.55]" />
                 ) : (
-                  <span className="text-[#1C2B2E]/30 text-xs uppercase tracking-widest">No photo yet</span>
+                  <div className="w-full h-full flex items-center justify-center bg-[#0D2226]">
+                    <span className="text-[#A8B2A1]/40 text-xs uppercase tracking-widest">No photo yet</span>
+                  </div>
                 )}
-                <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
+                <div className="absolute top-4 left-4 px-2.5 py-1 bg-[#0D2226] text-[#C9A96A] text-[10px] font-bold uppercase tracking-widest">
                   Sold
                 </div>
+                {/* Hover overlay caption */}
+                <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="font-serif text-2xl font-bold text-white tracking-wide">{t.address}</div>
+                  <div className="text-sm text-white/70 mb-2">{t.cityStateZip}</div>
+                  <div className="font-semibold text-[#C9A96A] mb-2">{t.priceDisplay}</div>
+                  <div className="flex items-center gap-3 text-xs text-white/70">
+                    <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {t.beds}</span>
+                    <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" /> {t.baths}</span>
+                    <span className="flex items-center gap-1"><Maximize2 className="w-3.5 h-3.5" /> {t.sqft.toLocaleString()} sqft</span>
+                  </div>
+                  <div className="text-[11px] text-white/50 mt-2">
+                    {t.mentorRole && t.mentorOfficeAtSale
+                      ? `${t.mentorRole === 'Listing Agent' ? "Seller's" : "Buyer's"} agent: ${MENTOR_NAME}`
+                      : `Transaction completed by ${MENTOR_NAME}`}
+                  </div>
+                </div>
               </div>
-              <div className="p-5">
-                <div className="font-serif text-lg font-bold text-[#0D2226] group-hover:text-[#0F5C63] transition-colors">{t.address}</div>
+              {/* Default caption, below the image */}
+              <div className="bg-white p-5 transition-opacity duration-300 group-hover:opacity-0">
+                <div className="font-serif text-lg font-bold text-[#0D2226]">{t.address}</div>
                 <div className="text-xs text-[#1C2B2E]/60 mb-2">{t.cityStateZip}</div>
                 <div className="font-semibold text-[#0F5C63] mb-3">{t.priceDisplay}</div>
                 <div className="flex items-center gap-3 text-xs text-[#1C2B2E]/60 border-t border-[#C9A96A]/20 pt-3">
