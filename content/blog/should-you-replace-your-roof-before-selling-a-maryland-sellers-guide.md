@@ -4,7 +4,7 @@ metaDescription: A worn roof can cost you more than repair estimates suggest in
   Carroll, Baltimore, and Howard County's luxury market. Here's how to decide,
   backed by the data.
 category: Sell Your Home
-publishDate: "{{now}}"
+publishDate: "2026-07-30"
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-24-.png
 carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-25-.png

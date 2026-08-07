@@ -4,7 +4,7 @@ metaDescription: >
   “Spring is better than winter” isn’t wrong, but it’s not the whole picture
   either.
 category: Sell Your Home
-publishDate: "{{now}}"
+publishDate: "2026-07-30"
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-21-.png
 carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-22-.png
