@@ -96,10 +96,11 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
   const [tocOpen, setTocOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  // Page-turn animation state (desktop only) - the outgoing spread rotates
-  // away on its vertical edge with a shadow that peaks mid-turn, then the
-  // new spread is committed once the animation finishes.
-  const [flip, setFlip] = useState<{ direction: 'next' | 'prev'; fromIndex: number } | null>(null);
+  // Page-turn animation state (desktop only). Only the single page that
+  // is actually "turning" animates - the right-hand page of the outgoing
+  // spread for "next", the left-hand page for "prev" - matching how a
+  // real book turns, rather than rotating the whole spread as one block.
+  const [flip, setFlip] = useState<{ direction: 'next' | 'prev'; fromIndex: number; turningPageIdx: number } | null>(null);
   const flipTimeout = useRef<number | null>(null);
 
   const currentFirstPage = views[viewIndex]?.[0] ?? 0;
@@ -119,7 +120,11 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
       return;
     }
     const direction = target > viewIndex ? 'next' : 'prev';
-    setFlip({ direction, fromIndex: viewIndex });
+    const fromPages = views[viewIndex];
+    // Next: the rightmost page of the current spread turns. Prev: the
+    // leftmost page turns. A single-page spread just turns itself.
+    const turningPageIdx = direction === 'next' ? fromPages[fromPages.length - 1] : fromPages[0];
+    setFlip({ direction, fromIndex: viewIndex, turningPageIdx });
     if (flipTimeout.current) window.clearTimeout(flipTimeout.current);
     flipTimeout.current = window.setTimeout(() => {
       commitGoTo(target);
@@ -210,29 +215,44 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
             </div>
           ))}
 
-          {/* The outgoing spread, animating away like a page turning,
-              with a shadow that darkens as it lifts and fades as it
-              completes the turn. */}
+          {/* The outgoing spread's turning page only - the other page in
+              the spread (if any) is an invisible same-size placeholder,
+              just to keep the layout aligned, since the new spread
+              underneath already shows the correct content there. */}
           {flip && (
-            <div
-              className="absolute inset-0 flex gap-2 sm:gap-3 items-center justify-center"
-              style={{
-                transformOrigin: flip.direction === 'next' ? 'left center' : 'right center',
-                animation: `${flip.direction === 'next' ? 'pageTurnNext' : 'pageTurnPrev'} 0.42s ease-in forwards`,
-              }}
-            >
-              {views[flip.fromIndex].map((pageIdx) => (
-                <img
-                  key={pageIdx}
-                  src={guide.pages[pageIdx].image}
-                  alt=""
-                  className="max-h-[75vh] w-auto object-contain rounded-sm shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
-                />
-              ))}
-              <div
-                className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/40 to-black/0 rounded-sm"
-                style={{ animation: 'pageTurnShadow 0.42s ease-in-out forwards' }}
-              />
+            <div className="absolute inset-0 flex gap-2 sm:gap-3 items-center justify-center">
+              {views[flip.fromIndex].map((pageIdx) => {
+                if (pageIdx !== flip.turningPageIdx) {
+                  return (
+                    <img
+                      key={pageIdx}
+                      src={guide.pages[pageIdx].image}
+                      alt=""
+                      className="max-h-[75vh] w-auto object-contain rounded-sm opacity-0"
+                    />
+                  );
+                }
+                return (
+                  <div
+                    key={pageIdx}
+                    className="relative"
+                    style={{
+                      transformOrigin: flip.direction === 'next' ? 'left center' : 'right center',
+                      animation: `${flip.direction === 'next' ? 'pageTurnNext' : 'pageTurnPrev'} 0.42s ease-in forwards`,
+                    }}
+                  >
+                    <img
+                      src={guide.pages[pageIdx].image}
+                      alt=""
+                      className="max-h-[75vh] w-auto object-contain rounded-sm shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
+                    />
+                    <div
+                      className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/40 to-black/0 rounded-sm"
+                      style={{ animation: 'pageTurnShadow 0.42s ease-in-out forwards' }}
+                    />
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
