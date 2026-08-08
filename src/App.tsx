@@ -1,41 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { ListingDetailPage } from './pages/ListingDetailPage';
 import { HomeValuationModal } from './components/HomeValuationModal';
 import { StrategyConsultationModal } from './components/StrategyConsultationModal';
 
 import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { SellPage } from './pages/SellPage';
-import { BuyersPage } from './pages/BuyersPage';
-import { NeighborhoodsPage } from './pages/NeighborhoodsPage';
-import { NeighborhoodDetailPage } from './pages/NeighborhoodDetailPage';
-import { ListingsPage } from './pages/ListingsPage';
-import { ContactPage } from './pages/ContactPage';
-import { BlogListPage } from './pages/BlogListPage';
-import { BlogPostPage } from './pages/BlogPostPage';
-import { GuidesListPage } from './pages/GuidesListPage';
-import { LuxuryPage } from './pages/LuxuryPage';
-import { TeamPage } from './pages/TeamPage';
-import { TestimonialsPage } from './pages/TestimonialsPage';
-import { GivingBackPage } from './pages/GivingBackPage';
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
-import { TermsOfUsePage } from './pages/TermsOfUsePage';
-import { CalculatorsPage } from './pages/CalculatorsPage';
-import { MortgageCalculatorPage } from './pages/MortgageCalculatorPage';
-import { AffordabilityCalculatorPage } from './pages/AffordabilityCalculatorPage';
-import { NetProceedsCalculatorPage } from './pages/NetProceedsCalculatorPage';
-import { PastTransactionsPage } from './pages/PastTransactionsPage';
-import { TransactionDetailPage } from './pages/TransactionDetailPage';
-import { VideosPage } from './pages/VideosPage';
-import { FinancingOptionsPage } from './pages/FinancingOptionsPage';
-import { SellerProcessPage } from './pages/SellerProcessPage';
-import { GuideDetailPage } from './pages/GuideDetailPage';
 
 import { FEATURED_LISTINGS, NEIGHBORHOODS } from './data/mockData';
 import { Listing } from './types';
+
+
+// Route-level code splitting - each page's JS only downloads when someone
+// actually navigates to it, instead of every page shipping in one bundle.
+const ListingDetailPage = React.lazy(() => import('./pages/ListingDetailPage').then(m => ({ default: m.ListingDetailPage })));
+const AboutPage = React.lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
+const SellPage = React.lazy(() => import('./pages/SellPage').then(m => ({ default: m.SellPage })));
+const BuyersPage = React.lazy(() => import('./pages/BuyersPage').then(m => ({ default: m.BuyersPage })));
+const NeighborhoodsPage = React.lazy(() => import('./pages/NeighborhoodsPage').then(m => ({ default: m.NeighborhoodsPage })));
+const NeighborhoodDetailPage = React.lazy(() => import('./pages/NeighborhoodDetailPage').then(m => ({ default: m.NeighborhoodDetailPage })));
+const ListingsPage = React.lazy(() => import('./pages/ListingsPage').then(m => ({ default: m.ListingsPage })));
+const ContactPage = React.lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const BlogListPage = React.lazy(() => import('./pages/BlogListPage').then(m => ({ default: m.BlogListPage })));
+const BlogPostPage = React.lazy(() => import('./pages/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
+const GuidesListPage = React.lazy(() => import('./pages/GuidesListPage').then(m => ({ default: m.GuidesListPage })));
+const LuxuryPage = React.lazy(() => import('./pages/LuxuryPage').then(m => ({ default: m.LuxuryPage })));
+const TeamPage = React.lazy(() => import('./pages/TeamPage').then(m => ({ default: m.TeamPage })));
+const TestimonialsPage = React.lazy(() => import('./pages/TestimonialsPage').then(m => ({ default: m.TestimonialsPage })));
+const GivingBackPage = React.lazy(() => import('./pages/GivingBackPage').then(m => ({ default: m.GivingBackPage })));
+const PrivacyPolicyPage = React.lazy(() => import('./pages/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
+const TermsOfUsePage = React.lazy(() => import('./pages/TermsOfUsePage').then(m => ({ default: m.TermsOfUsePage })));
+const CalculatorsPage = React.lazy(() => import('./pages/CalculatorsPage').then(m => ({ default: m.CalculatorsPage })));
+const MortgageCalculatorPage = React.lazy(() => import('./pages/MortgageCalculatorPage').then(m => ({ default: m.MortgageCalculatorPage })));
+const AffordabilityCalculatorPage = React.lazy(() => import('./pages/AffordabilityCalculatorPage').then(m => ({ default: m.AffordabilityCalculatorPage })));
+const NetProceedsCalculatorPage = React.lazy(() => import('./pages/NetProceedsCalculatorPage').then(m => ({ default: m.NetProceedsCalculatorPage })));
+const PastTransactionsPage = React.lazy(() => import('./pages/PastTransactionsPage').then(m => ({ default: m.PastTransactionsPage })));
+const TransactionDetailPage = React.lazy(() => import('./pages/TransactionDetailPage').then(m => ({ default: m.TransactionDetailPage })));
+const VideosPage = React.lazy(() => import('./pages/VideosPage').then(m => ({ default: m.VideosPage })));
+const FinancingOptionsPage = React.lazy(() => import('./pages/FinancingOptionsPage').then(m => ({ default: m.FinancingOptionsPage })));
+const SellerProcessPage = React.lazy(() => import('./pages/SellerProcessPage').then(m => ({ default: m.SellerProcessPage })));
+const GuideDetailPage = React.lazy(() => import('./pages/GuideDetailPage').then(m => ({ default: m.GuideDetailPage })));
 
 // Maps a URL path to the tab name every existing page component already
 // expects (e.g. "/about" -> "about"). This lets every page keep using the
@@ -157,6 +161,11 @@ export default function App() {
       />
 
       <main className="flex-1">
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center bg-[#FAF8F5]">
+            <div className="w-10 h-10 border-2 border-[#C9A96A] border-t-transparent rounded-full animate-spin" />
+          </div>
+        }>
         <Routes>
           <Route path="/" element={
             <HomePage
@@ -321,6 +330,7 @@ export default function App() {
             <FinancingOptionsPage onOpenConsultation={() => setIsConsultationOpen(true)} />
           } />
         </Routes>
+        </Suspense>
       </main>
 
       <Footer
