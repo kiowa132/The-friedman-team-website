@@ -12,11 +12,11 @@ carouselImages:
   - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-29-.png
 relatedAreaSlug: carroll-county
 ---
-But despite what many homeowners believe, \*\*your home isn't officially sold yet.\*\*
+But despite what many homeowners believe, **your home isn't officially sold yet.**
 
 
 
-In real estate, there's an old saying: \*The first offer gets you excited. The closing table gets you paid.\*
+In real estate, there's an old saying: *The first offer gets you excited. The closing table gets you paid.*
 
 
 
@@ -32,11 +32,11 @@ Whether you're selling your first home or your fifth, this guide walks you throu
 
 
 
-\---
+---
 
 
 
-\# What Does "Under Contract" Actually Mean?
+## What Does "Under Contract" Actually Mean?
 
 
 
@@ -52,15 +52,15 @@ Think of it as reaching halftime in a football game. You're ahead, but the game 
 
 
 
-Most Maryland home sales close within \*\*30 to 45 days\*\*, although cash purchases can close much faster.
+Most Maryland home sales close within **30 to 45 days**, although cash purchases can close much faster.
 
 
 
-\---
+---
 
 
 
-\# Step 1: The Earnest Money Deposit
+## Step 1: The Earnest Money Deposit
 
 
 
@@ -84,11 +84,11 @@ If the buyer backs out for a reason protected under the contract, they may recei
 
 
 
-\---
+---
 
 
 
-\# Step 2: The Home Inspection
+## Step 2: The Home Inspection
 
 
 
@@ -100,25 +100,25 @@ A licensed home inspector evaluates the property's major systems, including:
 
 
 
-\* Roof
+* Roof
 
-\* Foundation
+* Foundation
 
-\* Plumbing
+* Plumbing
 
-\* Electrical
+* Electrical
 
-\* HVAC
+* HVAC
 
-\* Windows
+* Windows
 
-\* Appliances
+* Appliances
 
-\* Attic
+* Attic
 
-\* Crawl space
+* Crawl space
 
-\* Exterior
+* Exterior
 
 
 
@@ -126,19 +126,19 @@ Depending on the property, buyers may also order additional inspections such as:
 
 
 
-\* Radon testing
+* Radon testing
 
-\* Well water testing
+* Well water testing
 
-\* Septic inspection
+* Septic inspection
 
-\* Termite inspection
+* Termite inspection
 
-\* Mold inspection
+* Mold inspection
 
 
 
-It's important to remember that \*\*no home is perfect.\*\*
+It's important to remember that **no home is perfect.**
 
 
 
@@ -146,11 +146,11 @@ Even newer homes usually generate inspection reports with dozens of items. Most 
 
 
 
-\---
+---
 
 
 
-\# Step 3: Repair Negotiations
+## Step 3: Repair Negotiations
 
 
 
@@ -166,15 +166,15 @@ Common outcomes include:
 
 
 
-\* Completing agreed-upon repairs
+* Completing agreed-upon repairs
 
-\* Offering a seller credit toward closing costs
+* Offering a seller credit toward closing costs
 
-\* Reducing the purchase price
+* Reducing the purchase price
 
-\* Splitting repair costs
+* Splitting repair costs
 
-\* Selling the property completely as-is
+* Selling the property completely as-is
 
 
 
@@ -186,11 +186,11 @@ The goal isn't always to "win" negotiations it's to keep the transaction moving 
 
 
 
-\---
+---
 
 
 
-\# Step 4: The Home Appraisal
+## Step 4: The Home Appraisal
 
 
 
@@ -222,7 +222,7 @@ Three outcomes are possible:
 
 
 
-\### The Home Appraises Above the Purchase Price
+### The Home Appraises Above the Purchase Price
 
 
 
@@ -234,7 +234,7 @@ The transaction usually continues without issue.
 
 
 
-\### The Home Appraises Exactly at Value
+### The Home Appraises Exactly at Value
 
 
 
@@ -246,7 +246,7 @@ The sale proceeds normally.
 
 
 
-\### The Home Appraises Below the Contract Price
+### The Home Appraises Below the Contract Price
 
 
 
@@ -258,13 +258,13 @@ Possible solutions include:
 
 
 
-\* Seller lowering the price
+* Seller lowering the price
 
-\* Buyer bringing additional cash
+* Buyer bringing additional cash
 
-\* Both parties negotiating a compromise
+* Both parties negotiating a compromise
 
-\* Requesting a reconsideration of the appraisal
+* Requesting a reconsideration of the appraisal
 
 
 
@@ -276,11 +276,11 @@ Many transactions successfully move forward after some negotiation.
 
 
 
-\---
+---
 
 
 
-\# Step 5: Loan Underwriting
+## Step 5: Loan Underwriting
 
 
 
@@ -292,23 +292,23 @@ The underwriting department reviews:
 
 
 
-\* Income
+* Income
 
-\* Employment
+* Employment
 
-\* Assets
+* Assets
 
-\* Credit history
+* Credit history
 
-\* Debt
+* Debt
 
-\* Bank statements
+* Bank statements
 
-\* Tax returns
+* Tax returns
 
-\* Appraisal
+* Appraisal
 
-\* Insurance
+* Insurance
 
 
 
@@ -320,11 +320,11 @@ This is completely normal and happens in many transactions.
 
 
 
-\---
+---
 
 
 
-\# Step 6: The Title Company Gets to Work
+## Step 6: The Title Company Gets to Work
 
 
 
@@ -340,19 +340,19 @@ They'll verify:
 
 
 
-\* Ownership history
+* Ownership history
 
-\* Existing liens
+* Existing liens
 
-\* Property taxes
+* Property taxes
 
-\* Mortgage payoff
+* Mortgage payoff
 
-\* Judgments
+* Judgments
 
-\* Easements
+* Easements
 
-\* HOA information (if applicable)
+* HOA information (if applicable)
 
 
 
@@ -360,11 +360,11 @@ If any issues arise, they're usually addressed before settlement.
 
 
 
-\---
+---
 
 
 
-\# Step 7: Preparing for Closing
+## Step 7: Preparing for Closing
 
 
 
@@ -376,21 +376,21 @@ As the seller, this is a good time to:
 
 
 
-\* Schedule movers
+* Schedule movers
 
-\* Notify utility companies
+* Notify utility companies
 
-\* Gather garage door openers
+* Gather garage door openers
 
-\* Find appliance manuals
+* Find appliance manuals
 
-\* Collect house keys
+* Collect house keys
 
-\* Organize warranties
+* Organize warranties
 
-\* Forward your mail
+* Forward your mail
 
-\* Finish agreed-upon repairs
+* Finish agreed-upon repairs
 
 
 
@@ -402,11 +402,11 @@ The buyer expects to receive the home in substantially the same condition they a
 
 
 
-\---
+---
 
 
 
-\# Step 8: The Final Walkthrough
+## Step 8: The Final Walkthrough
 
 
 
@@ -422,13 +422,13 @@ Instead, it's the buyer's opportunity to confirm:
 
 
 
-\* Repairs were completed
+* Repairs were completed
 
-\* The home is in expected condition
+* The home is in expected condition
 
-\* Included appliances remain
+* Included appliances remain
 
-\* No new damage has occurred
+* No new damage has occurred
 
 
 
@@ -436,11 +436,11 @@ If everything looks good, the transaction moves toward settlement.
 
 
 
-\---
+---
 
 
 
-\# Step 9: Closing Day
+## Step 9: Closing Day
 
 
 
@@ -456,19 +456,19 @@ During closing:
 
 
 
-\* Final paperwork is signed.
+* Final paperwork is signed.
 
-\* Loan funds are transferred.
+* Loan funds are transferred.
 
-\* Existing mortgages are paid off.
+* Existing mortgages are paid off.
 
-\* Closing costs are deducted.
+* Closing costs are deducted.
 
-\* Ownership is recorded.
+* Ownership is recorded.
 
-\* Sale proceeds are distributed.
+* Sale proceeds are distributed.
 
-\* The buyer receives the keys.
+* The buyer receives the keys.
 
 
 
@@ -476,11 +476,11 @@ Congratulations your home is officially sold.
 
 
 
-\---
+---
 
 
 
-\# Typical Timeline After Going Under Contract
+## Typical Timeline After Going Under Contract
 
 
 
@@ -488,31 +488,31 @@ While every sale is different, here's what many Maryland sellers can expect:
 
 
 
-\*\*Day 1:\*\* Offer accepted and contract signed
+**Day 1:** Offer accepted and contract signed
 
 
 
-\*\*Days 1–3:\*\* Earnest money deposited
+**Days 1–3:** Earnest money deposited
 
 
 
-\*\*Days 5–10:\*\* Home inspection completed
+**Days 5–10:** Home inspection completed
 
 
 
-\*\*Days 10–15:\*\* Repair negotiations
+**Days 10–15:** Repair negotiations
 
 
 
-\*\*Days 15–25:\*\* Appraisal ordered and completed
+**Days 15–25:** Appraisal ordered and completed
 
 
 
-\*\*Days 20–35:\*\* Loan underwriting and final approval
+**Days 20–35:** Loan underwriting and final approval
 
 
 
-\*\*Days 30–45:\*\* Closing and settlement
+**Days 30–45:** Closing and settlement
 
 
 
@@ -520,11 +520,11 @@ Cash transactions may close much faster, while more complex financing can take l
 
 
 
-\---
+---
 
 
 
-\# Can a Buyer Back Out?
+## Can a Buyer Back Out?
 
 
 
@@ -540,15 +540,15 @@ Common contingencies include:
 
 
 
-\* Home inspection
+* Home inspection
 
-\* Financing
+* Financing
 
-\* Appraisal
+* Appraisal
 
-\* Title issues
+* Title issues
 
-\* Home sale contingency
+* Home sale contingency
 
 
 
@@ -556,11 +556,11 @@ If these contingencies aren't satisfied, the buyer may have the right to termina
 
 
 
-\---
+---
 
 
 
-\# Can the Seller Back Out?
+## Can the Seller Back Out?
 
 
 
@@ -576,11 +576,11 @@ If circumstances change unexpectedly, it's important to speak with your real est
 
 
 
-\---
+---
 
 
 
-\# What Can Delay Closing?
+## What Can Delay Closing?
 
 
 
@@ -592,25 +592,25 @@ Some of the most common reasons include:
 
 
 
-\* Financing issues
+* Financing issues
 
-\* Low appraisal
+* Low appraisal
 
-\* Inspection disputes
+* Inspection disputes
 
-\* Title problems
+* Title problems
 
-\* Missing paperwork
+* Missing paperwork
 
-\* HOA delays
+* HOA delays
 
-\* Employment verification
+* Employment verification
 
-\* Utility issues
+* Utility issues
 
-\* Weather-related complications
+* Weather-related complications
 
-\* Scheduling conflicts
+* Scheduling conflicts
 
 
 
@@ -618,11 +618,11 @@ Most delays are temporary and can be resolved with good communication.
 
 
 
-\---
+---
 
 
 
-\# Five Things Sellers Should Never Do After Going Under Contract
+## Five Things Sellers Should Never Do After Going Under Contract
 
 
 
@@ -634,7 +634,7 @@ Avoid these common mistakes:
 
 
 
-\*\*Don't cancel your homeowners insurance early.\*\*
+**Don't cancel your homeowners insurance early.**
 
 
 
@@ -642,7 +642,7 @@ Keep your policy active until ownership officially transfers.
 
 
 
-\*\*Don't turn off utilities.\*\*
+**Don't turn off utilities.**
 
 
 
@@ -650,7 +650,7 @@ Inspectors, appraisers, and buyers may still need electricity and water.
 
 
 
-\*\*Don't start major renovations.\*\*
+**Don't start major renovations.**
 
 
 
@@ -658,7 +658,7 @@ Unexpected changes can create new issues.
 
 
 
-\*\*Don't throw away paperwork.\*\*
+**Don't throw away paperwork.**
 
 
 
@@ -666,7 +666,7 @@ Keep receipts for any repairs you've agreed to complete.
 
 
 
-\*\*Don't stop maintaining the property.\*\*
+**Don't stop maintaining the property.**
 
 
 
@@ -674,15 +674,15 @@ Continue mowing the lawn, cleaning, and caring for the home until settlement.
 
 
 
-\---
+---
 
 
 
-\# Frequently Asked Questions
+## Frequently Asked Questions
 
 
 
-\## Is "under contract" the same as sold?
+## Is "under contract" the same as sold?
 
 
 
@@ -694,7 +694,7 @@ A home is under contract after an offer is accepted, but it isn't officially sol
 
 
 
-\## How long does it take to close after accepting an offer?
+## How long does it take to close after accepting an offer?
 
 
 
@@ -702,7 +702,7 @@ Most financed transactions close within 30 to 45 days, although cash sales may c
 
 
 
-\## What happens if the appraisal comes in low?
+## What happens if the appraisal comes in low?
 
 
 
@@ -710,7 +710,7 @@ The buyer and seller can renegotiate the purchase price, the buyer can bring add
 
 
 
-\## Do sellers have to make every repair requested?
+## Do sellers have to make every repair requested?
 
 
 
@@ -722,7 +722,7 @@ Repairs are negotiated between the buyer and seller. Some sellers agree to repai
 
 
 
-\## When do I receive my money?
+## When do I receive my money?
 
 
 
@@ -730,11 +730,11 @@ After settlement is completed and the transaction has funded, your proceeds are 
 
 
 
-\---
+---
 
 
 
-\# The Bottom Line
+## The Bottom Line
 
 
 

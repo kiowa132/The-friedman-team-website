@@ -117,7 +117,7 @@ Hottest Markets (fastest average days on market)
 
 \| 5    | Calvert County*     |                   28 days |       24 |
 
-\*Charles County is essentially tied at 28 days with 27 closings.
+*Charles County is essentially tied at 28 days with 27 closings.
 
 Cooling Markets (slowest average days on market)
 
