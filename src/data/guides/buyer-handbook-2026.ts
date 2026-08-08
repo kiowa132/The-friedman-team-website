@@ -11,8 +11,8 @@ import { HandbookGuide } from '../../types/handbook';
 
 export const buyerHandbook: HandbookGuide = {
   slug: 'buyer-handbook-2026',
-  title: "The Ultimate First Time Homebuyer's Guide",
-  subtitle: 'Everything you need to buy a home in Maryland without costly mistakes.',
+  title: "The First-Time Homebuyer's Guide",
+  subtitle: 'Everything you need to know before buying your first home.',
   edition: '2026 Edition',
   description: "A complete, county-specific walkthrough from financial readiness to closing day - built for Carroll, Baltimore, and Howard County buyers, not a generic national guide.",
   category: 'For Buyers',
