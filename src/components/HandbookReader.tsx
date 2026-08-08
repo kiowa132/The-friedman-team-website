@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import HTMLFlipBook from 'react-pageflip-enhanced';
 import { ChevronLeft, ChevronRight, X, Menu, Download, Expand } from 'lucide-react';
 import { HandbookGuide } from '../data/guides/buyer-handbook-2026';
 
@@ -17,35 +18,9 @@ function useIsMobile(): boolean {
   return isMobile;
 }
 
-function buildViews(pages: HandbookGuide['pages'], isMobile: boolean): number[][] {
-  if (isMobile) {
-    return pages.map((_, i) => [i]);
-  }
-  const views: number[][] = [];
-  const last = pages.length - 1;
-  views.push([0]);
-  let i = 1;
-  while (i < last) {
-    if (i + 1 < last) {
-      views.push([i, i + 1]);
-      i += 2;
-    } else {
-      views.push([i]);
-      i += 1;
-    }
-  }
-  views.push([last]);
-  return views;
-}
-
-// Fullscreen mobile lightbox - tap a page to open it large, swipe left or
-// right to move between pages. Independent of the reader's own "views"
-// grouping since on mobile those are already one page each.
-const MobileLightbox: React.FC<{
-  pages: HandbookGuide['pages'];
-  startIndex: number;
-  onClose: () => void;
-}> = ({ pages, startIndex, onClose }) => {
+// Fullscreen lightbox - shared by both the mobile single-page view and
+// the "expand" button on desktop pages.
+const Lightbox: React.FC<{ pages: HandbookGuide['pages']; startIndex: number; onClose: () => void }> = ({ pages, startIndex, onClose }) => {
   const [index, setIndex] = useState(startIndex);
   const touchStartX = useRef<number | null>(null);
 
@@ -54,6 +29,16 @@ const MobileLightbox: React.FC<{
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = original; };
   }, []);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' && index < pages.length - 1) setIndex(index + 1);
+      if (e.key === 'ArrowLeft' && index > 0) setIndex(index - 1);
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [index, pages.length, onClose]);
 
   const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -65,24 +50,25 @@ const MobileLightbox: React.FC<{
   };
 
   return (
-    <div
-      className="fixed inset-0 z-[70] bg-black flex flex-col"
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
+    <div className="fixed inset-0 z-[70] bg-black flex flex-col" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <div className="shrink-0 flex items-center justify-between px-4 py-3">
         <span className="text-xs text-white/60 tabular-nums">{index + 1} / {pages.length}</span>
         <button onClick={onClose} className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center" aria-label="Close">
           <X className="w-4 h-4 text-white" />
         </button>
       </div>
-      <div className="flex-1 flex items-center justify-center overflow-hidden px-2">
-        <img
-          key={index}
-          src={pages[index].image}
-          alt={pages[index].label}
-          className="max-w-full max-h-full object-contain animate-[fadeIn_0.25s_ease]"
-        />
+      <div className="flex-1 flex items-center justify-center overflow-hidden px-2 relative">
+        {index > 0 && (
+          <button onClick={() => setIndex(index - 1)} className="absolute left-2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center">
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
+        )}
+        <img key={index} src={pages[index].image} alt={pages[index].label} className="max-w-full max-h-full object-contain" />
+        {index < pages.length - 1 && (
+          <button onClick={() => setIndex(index + 1)} className="absolute right-2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center">
+            <ChevronRight className="w-5 h-5 text-white" />
+          </button>
+        )}
       </div>
       <div className="shrink-0 text-center text-[11px] text-white/40 pb-4">Swipe to browse</div>
     </div>
@@ -91,69 +77,49 @@ const MobileLightbox: React.FC<{
 
 export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
   const isMobile = useIsMobile();
-  const views = useMemo(() => buildViews(guide.pages, isMobile), [guide.pages, isMobile]);
-  const [viewIndex, setViewIndex] = useState(0);
+  const bookRef = useRef<any>(null);
+  const [currentPage, setCurrentPage] = useState(0);
   const [tocOpen, setTocOpen] = useState(false);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const total = guide.pages.length;
 
-  // Page-turn animation state (desktop only). Only the single page that
-  // is actually "turning" animates - the right-hand page of the outgoing
-  // spread for "next", the left-hand page for "prev" - matching how a
-  // real book turns, rather than rotating the whole spread as one block.
-  //
-  // Critically, the base layer switches to the TARGET content the moment
-  // the flip starts, not after the animation finishes - the turning page
-  // sits on top of it and rotates away, so the new page is progressively
-  // revealed underneath as it goes, instead of snapping into place at
-  // the end.
-  const [flip, setFlip] = useState<{ direction: 'next' | 'prev'; fromIndex: number; targetIndex: number; turningPageIdx: number } | null>(null);
-  const flipTimeout = useRef<number | null>(null);
-
-  const displayIndex = flip ? flip.targetIndex : viewIndex;
-  const currentFirstPage = views[displayIndex]?.[0] ?? 0;
-  useEffect(() => {
-    const newIndex = views.findIndex((v) => v.includes(currentFirstPage));
-    setViewIndex(newIndex >= 0 ? newIndex : 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile]);
-
-  const goTo = (i: number) => {
-    const target = Math.max(0, Math.min(views.length - 1, i));
-    if (target === viewIndex || flip) return;
+  const goToPage = (i: number) => {
     if (isMobile) {
-      setViewIndex(target);
-      return;
+      setCurrentPage(Math.max(0, Math.min(total - 1, i)));
+    } else {
+      bookRef.current?.pageFlip()?.flip(i);
     }
-    const direction = target > viewIndex ? 'next' : 'prev';
-    const fromPages = views[viewIndex];
-    const turningPageIdx = direction === 'next' ? fromPages[fromPages.length - 1] : fromPages[0];
-    setFlip({ direction, fromIndex: viewIndex, targetIndex: target, turningPageIdx });
-    if (flipTimeout.current) window.clearTimeout(flipTimeout.current);
-    flipTimeout.current = window.setTimeout(() => {
-      setViewIndex(target);
-      setFlip(null);
-    }, 500);
   };
-  const next = () => goTo(viewIndex + 1);
-  const prev = () => goTo(viewIndex - 1);
+  const next = () => goToPage(currentPage + 1);
+  const prev = () => goToPage(currentPage - 1);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      if (lightboxIndex !== null) return;
       if (e.key === 'ArrowRight') next();
       if (e.key === 'ArrowLeft') prev();
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewIndex, isMobile, views.length]);
+  }, [currentPage, lightboxIndex, isMobile]);
 
-  const jumpToPage = (pageIdx: number) => {
-    const vi = views.findIndex((v) => v.includes(pageIdx));
-    if (vi >= 0) goTo(vi);
+  const jumpToPage = (i: number) => {
+    goToPage(i);
     setTocOpen(false);
   };
 
-  const currentPages = views[displayIndex];
+  // Stable reference across re-renders - regenerating this array on every
+  // page flip can reset the book back to page 1 with this library.
+  const bookPages = useMemo(
+    () =>
+      guide.pages.map((p, i) => (
+        <div key={i} className="bg-[#0D2226]">
+          <img src={p.image} alt={p.label} className="w-full h-full object-contain" draggable={false} />
+        </div>
+      )),
+    [guide.pages]
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col" style={{ background: 'radial-gradient(ellipse at center, #1a2a2d 0%, #0D2226 70%)' }}>
@@ -185,7 +151,7 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
                 <button
                   key={i}
                   onClick={() => jumpToPage(i)}
-                  className={`block w-full text-left px-3 py-2.5 text-sm rounded-xs transition-colors ${currentPages.includes(i) ? 'bg-[#0F5C63]/10 text-[#0F5C63] font-semibold' : 'text-[#1C2B2E]/70 hover:bg-[#0D2226]/5'}`}
+                  className={`block w-full text-left px-3 py-2.5 text-sm rounded-xs transition-colors ${currentPage === i ? 'bg-[#0F5C63]/10 text-[#0F5C63] font-semibold' : 'text-[#1C2B2E]/70 hover:bg-[#0D2226]/5'}`}
                 >
                   {p.label}
                 </button>
@@ -195,81 +161,86 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
         </div>
       )}
 
-      {/* Page spread, with a real page-turn animation on desktop */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-16 overflow-hidden" style={{ perspective: '2000px' }}>
-        <div
-          key={displayIndex}
-          className={`relative flex gap-2 sm:gap-3 items-center justify-center max-h-full ${!flip ? 'animate-[fadeIn_0.3s_ease]' : ''}`}
-          style={flip ? { transformStyle: 'preserve-3d' } : undefined}
-        >
-          {currentPages.map((pageIdx) => (
-            <div key={pageIdx} className="relative">
-              <img
-                src={guide.pages[pageIdx].image}
-                alt={guide.pages[pageIdx].label}
-                onClick={() => isMobile && setLightboxOpen(true)}
-                className="max-h-[75vh] w-auto object-contain rounded-sm shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
-              />
-              {isMobile && (
-                <div className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center pointer-events-none">
-                  <Expand className="w-3.5 h-3.5 text-white" />
-                </div>
-              )}
-            </div>
-          ))}
+      <div className="flex-1 flex items-center justify-center px-2 sm:px-8 overflow-hidden">
+        {isMobile ? (
+          // Mobile: bypass the flip library entirely - a plain image with
+          // tap-to-lightbox. Proven simpler and more reliable than trying
+          // to configure the library's own portrait mode.
+          <div className="relative w-full max-w-[480px]">
+            <button
+              onClick={() => setLightboxIndex(currentPage)}
+              className="relative w-full rounded-lg shadow-2xl overflow-hidden border-4 border-[#0F5C63] bg-[#0D2226] block"
+            >
+              <img src={guide.pages[currentPage].image} alt={guide.pages[currentPage].label} className="w-full h-auto block" />
+              <div className="absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1.5 bg-[#0D2226]/85 text-[#C9A96A] text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg">
+                <Expand className="w-3 h-3" />
+                Tap to Enlarge
+              </div>
+            </button>
+          </div>
+        ) : (
+          // Desktop: the real flip book - drag a corner to curl it, or
+          // click near an edge. showCover/usePortrait/singlePage are all
+          // false on purpose - true here reserves a matching blank half
+          // for the cover, which looks small and lopsided.
+          <div className="relative w-full max-w-[1550px]">
+            <div className="relative rounded-lg shadow-2xl w-full flex justify-center overflow-hidden border-4 border-[#0F5C63]">
+              <HTMLFlipBook
+                ref={bookRef}
+                width={750}
+                height={422}
+                size="stretch"
+                minWidth={500}
+                maxWidth={800}
+                minHeight={281}
+                maxHeight={450}
+                singlePage={false}
+                usePortrait={false}
+                showCover={false}
+                startPage={0}
+                drawShadow={true}
+                flippingTime={650}
+                maxShadowOpacity={0.6}
+                mobileScrollSupport={true}
+                renderOnlyPageLengthChange={true}
+                onFlip={(e: any) => setCurrentPage(e.data)}
+              >
+                {bookPages}
+              </HTMLFlipBook>
 
-          {/* The outgoing spread's turning page only - the other page in
-              the spread (if any) is an invisible same-size placeholder,
-              just to keep the layout aligned, since the new spread
-              underneath already shows the correct content there. */}
-          {flip && (
-            <div className="absolute inset-0 flex gap-2 sm:gap-3 items-center justify-center">
-              {views[flip.fromIndex].map((pageIdx) => {
-                if (pageIdx !== flip.turningPageIdx) {
-                  return (
-                    <img
-                      key={pageIdx}
-                      src={guide.pages[pageIdx].image}
-                      alt=""
-                      className="max-h-[75vh] w-auto object-contain rounded-sm opacity-0"
-                    />
-                  );
-                }
-                return (
-                  <div
-                    key={pageIdx}
-                    className="relative"
-                    style={{
-                      transformOrigin: flip.direction === 'next' ? 'left center' : 'right center',
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden',
-                      animation: `${flip.direction === 'next' ? 'pageTurnNext' : 'pageTurnPrev'} 0.5s ease-in-out forwards`,
-                    }}
-                  >
-                    <img
-                      src={guide.pages[pageIdx].image}
-                      alt=""
-                      className="max-h-[75vh] w-auto object-contain rounded-sm shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
-                    />
-                    <div
-                      className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/40 to-black/0 rounded-sm"
-                      style={{ animation: 'pageTurnShadow 0.5s ease-in-out forwards' }}
-                    />
-                  </div>
-                );
-              })}
+              {/* Purely decorative depth cues - pointer-events-none so
+                  they never interfere with the library's own click/drag
+                  detection. */}
+              <div
+                className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-16 pointer-events-none"
+                style={{ background: 'linear-gradient(to right, transparent, rgba(13,34,38,0.16) 45%, rgba(13,34,38,0.22) 50%, rgba(13,34,38,0.16) 55%, transparent)' }}
+              />
+              <div className="absolute top-0 bottom-0 left-0 w-3 pointer-events-none" style={{ background: 'linear-gradient(to right, rgba(13,34,38,0.18), transparent)' }} />
+              <div className="absolute top-0 bottom-0 right-0 w-3 pointer-events-none" style={{ background: 'linear-gradient(to left, rgba(13,34,38,0.18), transparent)' }} />
+              <div
+                className="absolute bottom-0 right-0 w-8 h-8 pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, transparent 50%, rgba(201,169,106,0.35) 50%, rgba(201,169,106,0.5) 100%)', borderBottomRightRadius: '0.5rem' }}
+              />
             </div>
-          )}
-        </div>
+
+            <button
+              onClick={() => setLightboxIndex(currentPage)}
+              className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center transition-colors z-20"
+              aria-label="View full size"
+            >
+              <Expand className="w-4 h-4 text-white" />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="shrink-0 px-4 sm:px-8 py-4">
         <div className="flex items-center justify-center gap-4 mb-3">
-          <button onClick={prev} disabled={displayIndex === 0} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
+          <button onClick={prev} disabled={currentPage === 0} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
             <ChevronLeft className="w-4 h-4 text-white" />
           </button>
-          <span className="text-xs text-white/50 tabular-nums">{displayIndex + 1} / {views.length}</span>
-          <button onClick={next} disabled={displayIndex === views.length - 1} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
+          <span className="text-xs text-white/50 tabular-nums">{currentPage + 1} / {total}</span>
+          <button onClick={next} disabled={currentPage === total - 1} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
             <ChevronRight className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -278,7 +249,7 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
             <button
               key={i}
               onClick={() => jumpToPage(i)}
-              className={`shrink-0 w-8 h-11 rounded-[2px] overflow-hidden border transition-all ${currentPages.includes(i) ? 'border-[#C9A96A] opacity-100' : 'border-white/10 opacity-50 hover:opacity-80'}`}
+              className={`shrink-0 w-8 h-11 rounded-[2px] overflow-hidden border transition-all ${currentPage === i ? 'border-[#C9A96A] opacity-100' : 'border-white/10 opacity-50 hover:opacity-80'}`}
             >
               <img src={p.image} alt="" className="w-full h-full object-cover" />
             </button>
@@ -286,29 +257,9 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
         </div>
       </div>
 
-      {isMobile && lightboxOpen && (
-        <MobileLightbox
-          pages={guide.pages}
-          startIndex={currentFirstPage}
-          onClose={() => setLightboxOpen(false)}
-        />
+      {lightboxIndex !== null && (
+        <Lightbox pages={guide.pages} startIndex={lightboxIndex} onClose={() => setLightboxIndex(null)} />
       )}
-
-      <style>{`
-        @keyframes pageTurnNext {
-          0% { transform: rotateY(0deg); }
-          100% { transform: rotateY(-100deg); }
-        }
-        @keyframes pageTurnPrev {
-          0% { transform: rotateY(0deg); }
-          100% { transform: rotateY(100deg); }
-        }
-        @keyframes pageTurnShadow {
-          0% { opacity: 0; }
-          55% { opacity: 1; }
-          100% { opacity: 0; }
-        }
-      `}</style>
     </div>
   );
 };
