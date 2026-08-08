@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip-enhanced';
 import { ChevronLeft, ChevronRight, X, Menu, Download, Expand } from 'lucide-react';
-import { HandbookGuide } from '../data/guides/buyer-handbook-2026';
+import { HandbookGuide } from '../types/handbook';
 
 interface HandbookReaderProps {
   guide: HandbookGuide;

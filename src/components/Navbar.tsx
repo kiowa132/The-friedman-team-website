@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Building2, Phone, Menu, X, Heart, Calculator, ChevronRight, ChevronDown, Compass, ShieldCheck, Grid2x2, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Building2, Phone, Menu, X, Heart, Calculator, ChevronRight, ChevronDown, Compass, ShieldCheck, Grid2x2, Facebook, Instagram, Linkedin, Star } from 'lucide-react';
 
 interface NavDropdownItem {
   label: string;
@@ -451,6 +451,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               </a>
               <a href="https://www.linkedin.com/in/kyle-friedman-415029168/?skipRedirect=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
                 <Linkedin className="w-4 h-4" />
+              </a>
+              <a href="https://share.google/fH72jPIgQXjEImIHG" target="_blank" rel="noopener noreferrer" aria-label="Google Reviews" className="w-9 h-9 rounded-full border border-[#0D2226]/20 flex items-center justify-center text-[#0D2226]/60 hover:border-[#0F5C63] hover:text-[#0F5C63] transition-colors">
+                <Star className="w-4 h-4" />
               </a>
             </div>
           </div>

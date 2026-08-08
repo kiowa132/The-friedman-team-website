@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, ShieldCheck, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, ShieldCheck, Facebook, Instagram, Linkedin, Star } from 'lucide-react';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
 
 interface FooterProps {
@@ -108,6 +108,9 @@ export const Footer: React.FC<FooterProps> = ({
               </a>
               <a href="https://www.linkedin.com/in/kyle-friedman-415029168/?skipRedirect=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 rounded-full border border-[#FAF8F5]/20 flex items-center justify-center text-[#FAF8F5]/70 hover:border-[#C9A96A] hover:text-[#C9A96A] transition-colors">
                 <Linkedin className="w-3.5 h-3.5" />
+              </a>
+              <a href="https://share.google/fH72jPIgQXjEImIHG" target="_blank" rel="noopener noreferrer" aria-label="Google Reviews" className="w-8 h-8 rounded-full border border-[#FAF8F5]/20 flex items-center justify-center text-[#FAF8F5]/70 hover:border-[#C9A96A] hover:text-[#C9A96A] transition-colors">
+                <Star className="w-3.5 h-3.5" />
               </a>
             </div>
 

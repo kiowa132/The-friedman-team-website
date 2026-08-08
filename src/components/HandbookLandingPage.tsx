@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2, Download, BookOpen } from 'lucide-react';
-import { HandbookGuide } from '../data/guides/buyer-handbook-2026';
+import { HandbookGuide } from '../types/handbook';
 import { HandbookLeadModal } from './HandbookLeadModal';
 import { HandbookReader } from './HandbookReader';
 
