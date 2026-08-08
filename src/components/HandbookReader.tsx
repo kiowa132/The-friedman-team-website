@@ -90,8 +90,20 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
       bookRef.current?.pageFlip()?.flip(i);
     }
   };
-  const next = () => goToPage(currentPage + 1);
-  const prev = () => goToPage(currentPage - 1);
+  const next = () => {
+    if (isMobile) {
+      setCurrentPage((p) => Math.min(total - 1, p + 1));
+    } else {
+      bookRef.current?.pageFlip()?.flipNext();
+    }
+  };
+  const prev = () => {
+    if (isMobile) {
+      setCurrentPage((p) => Math.max(0, p - 1));
+    } else {
+      bookRef.current?.pageFlip()?.flipPrev();
+    }
+  };
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
