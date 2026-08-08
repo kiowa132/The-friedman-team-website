@@ -9,7 +9,7 @@ youtubeVideoId: ""
 carouselImages:
   - /images/uploads/image-1-.jpg
   - /images/uploads/image-2-copy.jpg
-relatedGuideSlug: carroll-county-seller-guide
+relatedGuideSlug: seller-guide-2026
 relatedAreaSlug: carroll-county
 ---
 > **A**n hour in, I’d barely touched the grime. The thing didn’t have the pressure to do anything but rearrange dirt while my neighbor stood in his yard laughing at me. I gave up, walked over, and paid him to finish it with real equipment. He was done in a fraction of the time I’d spent getting nowhere. He’s back next weekend for the fence.

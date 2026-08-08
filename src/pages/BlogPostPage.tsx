@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, ArrowRight, Calculator, Phone, FileText } from 'lucide-react';
-import { BLOG_POSTS, GUIDES } from '../lib/content';
+import { BLOG_POSTS } from '../lib/content';
+import { getHandbookGuide } from '../data/guides';
 import { NEIGHBORHOODS } from '../data/mockData';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
 import { formatDisplayDate } from '../lib/formatDate';
@@ -28,7 +29,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
     );
   }
 
-  const relatedGuide = GUIDES.find((g) => g.slug === post.relatedGuideSlug);
+  const relatedGuide = post.relatedGuideSlug ? getHandbookGuide(post.relatedGuideSlug) : undefined;
   const relatedArea = NEIGHBORHOODS.find((n) => n.id === post.relatedAreaSlug);
   const hasSubstack = SUBSTACK_SUBDOMAIN && SUBSTACK_SUBDOMAIN !== 'YOUR-SUBSTACK-SUBDOMAIN';
 
@@ -147,7 +148,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             {post.metaDescription}
           </p>
           <div className="flex items-center gap-3">
-            <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-9 h-9 rounded-full object-cover" />
+            <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-9 h-9 rounded-full object-cover object-top" />
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-[#C9A96A]">Kyle Friedman</p>
               <p className="text-[10px] text-[#1C2B2E]/50">The Friedman Team</p>

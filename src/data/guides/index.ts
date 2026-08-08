@@ -1,13 +1,16 @@
-import { GuideContent } from '../../types/guide';
-import { firstTimeBuyerGuide } from './first-time-buyer-checklist';
+import { HandbookGuide } from '../../types/handbook';
+import { buyerHandbook } from './buyer-handbook-2026';
+import { sellerGuide } from './seller-guide-2026';
+import { homeValuationGuide } from './home-valuation-guide';
 
-// Registry of all structured guides. Adding a new guide later means
-// writing a new data file matching GuideContent and adding it here - no
-// new reader/component work required for the common section types.
-export const STRUCTURED_GUIDES: GuideContent[] = [
-  firstTimeBuyerGuide,
+// The complete guide library. Adding a new guide later is just writing a
+// new data file matching HandbookGuide and adding it here.
+export const HANDBOOK_GUIDES: HandbookGuide[] = [
+  buyerHandbook,
+  sellerGuide,
+  homeValuationGuide,
 ];
 
-export function getStructuredGuide(slug: string): GuideContent | undefined {
-  return STRUCTURED_GUIDES.find((g) => g.slug === slug);
+export function getHandbookGuide(slug: string): HandbookGuide | undefined {
+  return HANDBOOK_GUIDES.find((g) => g.slug === slug);
 }

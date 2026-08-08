@@ -1,3 +1,5 @@
+import { HandbookGuide } from '../../types/handbook';
+
 // The 2026 Maryland Home Buyer's Handbook - built from Kyle's own real,
 // finished document (10 professionally designed pages, real content, real
 // photo, real preferred lender partner). Rendered as real page images
@@ -6,27 +8,6 @@
 // screenshots of plain text, so the honest engineering call here is to
 // upgrade the reading experience around them rather than risk introducing
 // transcription errors into a document Kyle already finished.
-
-export interface HandbookPage {
-  image: string;
-  label: string; // shown in the table of contents
-}
-
-export interface HandbookGuide {
-  slug: string;
-  title: string;
-  subtitle: string;
-  edition: string;
-  description: string;
-  category: string;
-  estimatedReadMinutes: number;
-  lastUpdated: string;
-  pageCount: number;
-  coverImage: string;
-  pdfUrl: string;
-  pages: HandbookPage[];
-  whatsInside: string[];
-}
 
 export const buyerHandbook: HandbookGuide = {
   slug: 'buyer-handbook-2026',
