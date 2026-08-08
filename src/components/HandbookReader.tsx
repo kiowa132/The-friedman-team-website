@@ -183,17 +183,17 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
           // click near an edge. showCover/usePortrait/singlePage are all
           // false on purpose - true here reserves a matching blank half
           // for the cover, which looks small and lopsided.
-          <div className="relative w-full max-w-[1550px]">
+          <div className="relative w-full max-w-[1000px]">
             <div className="relative rounded-lg shadow-2xl w-full flex justify-center overflow-hidden border-4 border-[#0F5C63]">
               <HTMLFlipBook
                 ref={bookRef}
-                width={750}
-                height={422}
+                width={430}
+                height={608}
                 size="stretch"
-                minWidth={500}
-                maxWidth={800}
-                minHeight={281}
-                maxHeight={450}
+                minWidth={300}
+                maxWidth={550}
+                minHeight={424}
+                maxHeight={778}
                 singlePage={false}
                 usePortrait={false}
                 showCover={false}
