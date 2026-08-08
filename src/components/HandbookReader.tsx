@@ -100,36 +100,39 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
   // is actually "turning" animates - the right-hand page of the outgoing
   // spread for "next", the left-hand page for "prev" - matching how a
   // real book turns, rather than rotating the whole spread as one block.
-  const [flip, setFlip] = useState<{ direction: 'next' | 'prev'; fromIndex: number; turningPageIdx: number } | null>(null);
+  //
+  // Critically, the base layer switches to the TARGET content the moment
+  // the flip starts, not after the animation finishes - the turning page
+  // sits on top of it and rotates away, so the new page is progressively
+  // revealed underneath as it goes, instead of snapping into place at
+  // the end.
+  const [flip, setFlip] = useState<{ direction: 'next' | 'prev'; fromIndex: number; targetIndex: number; turningPageIdx: number } | null>(null);
   const flipTimeout = useRef<number | null>(null);
 
-  const currentFirstPage = views[viewIndex]?.[0] ?? 0;
+  const displayIndex = flip ? flip.targetIndex : viewIndex;
+  const currentFirstPage = views[displayIndex]?.[0] ?? 0;
   useEffect(() => {
     const newIndex = views.findIndex((v) => v.includes(currentFirstPage));
     setViewIndex(newIndex >= 0 ? newIndex : 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
-  const commitGoTo = (i: number) => setViewIndex(Math.max(0, Math.min(views.length - 1, i)));
-
   const goTo = (i: number) => {
     const target = Math.max(0, Math.min(views.length - 1, i));
-    if (target === viewIndex) return;
+    if (target === viewIndex || flip) return;
     if (isMobile) {
-      commitGoTo(target);
+      setViewIndex(target);
       return;
     }
     const direction = target > viewIndex ? 'next' : 'prev';
     const fromPages = views[viewIndex];
-    // Next: the rightmost page of the current spread turns. Prev: the
-    // leftmost page turns. A single-page spread just turns itself.
     const turningPageIdx = direction === 'next' ? fromPages[fromPages.length - 1] : fromPages[0];
-    setFlip({ direction, fromIndex: viewIndex, turningPageIdx });
+    setFlip({ direction, fromIndex: viewIndex, targetIndex: target, turningPageIdx });
     if (flipTimeout.current) window.clearTimeout(flipTimeout.current);
     flipTimeout.current = window.setTimeout(() => {
-      commitGoTo(target);
+      setViewIndex(target);
       setFlip(null);
-    }, 420);
+    }, 500);
   };
   const next = () => goTo(viewIndex + 1);
   const prev = () => goTo(viewIndex - 1);
@@ -150,7 +153,7 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
     setTocOpen(false);
   };
 
-  const currentPages = views[viewIndex];
+  const currentPages = views[displayIndex];
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col" style={{ background: 'radial-gradient(ellipse at center, #1a2a2d 0%, #0D2226 70%)' }}>
@@ -195,7 +198,7 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
       {/* Page spread, with a real page-turn animation on desktop */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-16 overflow-hidden" style={{ perspective: '2000px' }}>
         <div
-          key={viewIndex}
+          key={displayIndex}
           className={`relative flex gap-2 sm:gap-3 items-center justify-center max-h-full ${!flip ? 'animate-[fadeIn_0.3s_ease]' : ''}`}
           style={flip ? { transformStyle: 'preserve-3d' } : undefined}
         >
@@ -238,7 +241,9 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
                     className="relative"
                     style={{
                       transformOrigin: flip.direction === 'next' ? 'left center' : 'right center',
-                      animation: `${flip.direction === 'next' ? 'pageTurnNext' : 'pageTurnPrev'} 0.42s ease-in forwards`,
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
+                      animation: `${flip.direction === 'next' ? 'pageTurnNext' : 'pageTurnPrev'} 0.5s ease-in-out forwards`,
                     }}
                   >
                     <img
@@ -248,7 +253,7 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
                     />
                     <div
                       className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/40 to-black/0 rounded-sm"
-                      style={{ animation: 'pageTurnShadow 0.42s ease-in-out forwards' }}
+                      style={{ animation: 'pageTurnShadow 0.5s ease-in-out forwards' }}
                     />
                   </div>
                 );
@@ -260,11 +265,11 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
 
       <div className="shrink-0 px-4 sm:px-8 py-4">
         <div className="flex items-center justify-center gap-4 mb-3">
-          <button onClick={prev} disabled={viewIndex === 0} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
+          <button onClick={prev} disabled={displayIndex === 0} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
             <ChevronLeft className="w-4 h-4 text-white" />
           </button>
-          <span className="text-xs text-white/50 tabular-nums">{viewIndex + 1} / {views.length}</span>
-          <button onClick={next} disabled={viewIndex === views.length - 1} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
+          <span className="text-xs text-white/50 tabular-nums">{displayIndex + 1} / {views.length}</span>
+          <button onClick={next} disabled={displayIndex === views.length - 1} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
             <ChevronRight className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -292,15 +297,15 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
       <style>{`
         @keyframes pageTurnNext {
           0% { transform: rotateY(0deg); }
-          100% { transform: rotateY(-140deg); }
+          100% { transform: rotateY(-100deg); }
         }
         @keyframes pageTurnPrev {
           0% { transform: rotateY(0deg); }
-          100% { transform: rotateY(140deg); }
+          100% { transform: rotateY(100deg); }
         }
         @keyframes pageTurnShadow {
           0% { opacity: 0; }
-          50% { opacity: 1; }
+          55% { opacity: 1; }
           100% { opacity: 0; }
         }
       `}</style>
