@@ -12,7 +12,7 @@ import { HandbookGuide } from '../../types/handbook';
 // available and add it to the `pages` array between page-08 and page-09.
 export const sellerGuide: HandbookGuide = {
   slug: 'seller-guide-2026',
-  title: "The 2026 Maryland Home Seller's Guide",
+  title: "The 2026 Home Seller's Guide",
   subtitle: 'A complete, county-specific walkthrough for selling your Maryland home for the most money, with the least stress.',
   edition: '2026 Edition',
   description: 'From "should you sell now" through closing day - pricing strategy, which repairs actually matter, negotiating offers, and what to do if your home doesn\u2019t sell right away.',
