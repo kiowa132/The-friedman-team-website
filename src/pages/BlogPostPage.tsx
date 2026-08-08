@@ -167,7 +167,27 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           </figcaption>
         </figure>
 
-        <div className="prose prose-sm max-w-none space-y-5 pt-8 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-[#1C2B2E]/85 [&_p]:leading-relaxed [&_p]:font-light [&_h2]:font-serif [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#0D2226] [&_h2]:pt-2 [&_h3]:font-serif [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[#0D2226]">
+        {/* Lead paragraph gets its own larger, lighter treatment - a
+            common magazine convention that gives the reader an easy
+            on-ramp before the body settles into normal size. */}
+        <div className="prose prose-sm max-w-none pt-10
+          [&>*+*]:mt-6
+          [&_p]:text-[15px] [&_p]:sm:text-lg [&_p]:text-[#1C2B2E]/85 [&_p]:leading-[1.8] [&_p]:font-light
+          [&>p:first-of-type]:text-lg [&>p:first-of-type]:sm:text-xl [&>p:first-of-type]:text-[#1C2B2E] [&>p:first-of-type]:leading-[1.7]
+          [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-bold [&_h2]:text-[#0D2226] [&_h2]:mt-14 [&_h2]:pt-6 [&_h2]:border-t [&_h2]:border-[#C9A96A]/25
+          [&_h3]:font-serif [&_h3]:text-xl [&_h3]:sm:text-2xl [&_h3]:font-bold [&_h3]:text-[#0D2226] [&_h3]:mt-10
+          [&_a]:text-[#0F5C63] [&_a]:font-semibold [&_a]:underline [&_a]:decoration-[#C9A96A] [&_a]:decoration-2 [&_a]:underline-offset-2 [&_a]:transition-colors hover:[&_a]:text-[#C9A96A] hover:[&_a]:decoration-[#0F5C63]
+          [&_strong]:font-bold [&_strong]:text-[#0D2226]
+          [&_em]:italic
+          [&_ul]:space-y-2.5 [&_ul]:my-6 [&_ul]:pl-0 [&_ul]:list-none
+          [&_ul_li]:relative [&_ul_li]:pl-7 [&_ul_li]:text-[15px] [&_ul_li]:sm:text-base [&_ul_li]:text-[#1C2B2E]/85 [&_ul_li]:leading-relaxed
+          [&_ul_li:before]:content-[''] [&_ul_li:before]:absolute [&_ul_li:before]:left-0 [&_ul_li:before]:top-[0.6em] [&_ul_li:before]:w-2.5 [&_ul_li:before]:h-2.5 [&_ul_li:before]:rounded-full [&_ul_li:before]:bg-[#C9A96A]
+          [&_ol]:space-y-2.5 [&_ol]:my-6 [&_ol]:pl-6 [&_ol]:marker:text-[#C9A96A] [&_ol]:marker:font-bold
+          [&_ol_li]:text-[15px] [&_ol_li]:sm:text-base [&_ol_li]:text-[#1C2B2E]/85 [&_ol_li]:leading-relaxed [&_ol_li]:pl-1
+          [&_blockquote]:my-8 [&_blockquote]:border-l-[3px] [&_blockquote]:border-[#C9A96A] [&_blockquote]:pl-6 [&_blockquote]:py-1 [&_blockquote]:font-serif [&_blockquote]:text-xl [&_blockquote]:sm:text-2xl [&_blockquote]:italic [&_blockquote]:text-[#0D2226] [&_blockquote]:leading-snug
+          [&_hr]:border-[#C9A96A]/30 [&_hr]:my-10
+          [&_img]:rounded-xs
+        ">
           {interleavedContent.map((block, i) =>
             block.type === 'html' ? (
               <div key={i} dangerouslySetInnerHTML={{ __html: block.value }} />
