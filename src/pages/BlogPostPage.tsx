@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, ArrowRight, Calculator, Phone, FileText } from 'lucide-react';
+import { Calendar, ArrowRight, Calculator, Phone, FileText, Facebook, Linkedin, Twitter, Star, ShieldCheck } from 'lucide-react';
 import { BLOG_POSTS } from '../lib/content';
 import { getHandbookGuide } from '../data/guides';
 import { NEIGHBORHOODS } from '../data/mockData';
@@ -32,6 +32,20 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
   const relatedGuide = post.relatedGuideSlug ? getHandbookGuide(post.relatedGuideSlug) : undefined;
   const relatedArea = NEIGHBORHOODS.find((n) => n.id === post.relatedAreaSlug);
   const hasSubstack = SUBSTACK_SUBDOMAIN && SUBSTACK_SUBDOMAIN !== 'YOUR-SUBSTACK-SUBDOMAIN';
+
+  // Same category first, then most recent, filling in from the rest of
+  // the archive if there aren't enough same-category posts - always shows
+  // 3 real posts rather than sometimes showing 1 or 2.
+  const sameCategory = BLOG_POSTS.filter((p) => p.slug !== post.slug && p.category === post.category);
+  const others = BLOG_POSTS.filter((p) => p.slug !== post.slug && p.category !== post.category);
+  const relatedPosts = [...sameCategory, ...others].slice(0, 3);
+
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://www.friedmanreteam.com/blog/${post.slug}`;
+  const shareLinks = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(post.title)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+  };
 
   // Category label links back to its corresponding page on the site.
   const CATEGORY_LINKS: Record<string, string> = {
@@ -202,6 +216,22 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           )}
         </div>
 
+        {/* Share buttons - right after the body, matching the reference
+            pattern, since these only get used if someone finished
+            reading and is still engaged. */}
+        <div className="flex items-center justify-center gap-3 mt-10 pt-6 border-t border-[#C9A96A]/20">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-[#1C2B2E]/50 mr-1">Share</span>
+          <a href={shareLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook" className="w-9 h-9 rounded-full border border-[#C9A96A]/40 flex items-center justify-center text-[#0F5C63] hover:bg-[#0D2226] hover:text-[#C9A96A] hover:border-[#0D2226] transition-colors">
+            <Facebook className="w-4 h-4" />
+          </a>
+          <a href={shareLinks.twitter} target="_blank" rel="noopener noreferrer" aria-label="Share on X" className="w-9 h-9 rounded-full border border-[#C9A96A]/40 flex items-center justify-center text-[#0F5C63] hover:bg-[#0D2226] hover:text-[#C9A96A] hover:border-[#0D2226] transition-colors">
+            <Twitter className="w-4 h-4" />
+          </a>
+          <a href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn" className="w-9 h-9 rounded-full border border-[#C9A96A]/40 flex items-center justify-center text-[#0F5C63] hover:bg-[#0D2226] hover:text-[#C9A96A] hover:border-[#0D2226] transition-colors">
+            <Linkedin className="w-4 h-4" />
+          </a>
+        </div>
+
         {/* Real branded valuation banner, clickable - opens the same valuation
             tool as the navbar's "Home Value" button */}
         <button
@@ -304,6 +334,61 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
         {relatedArea && (
           <div className="text-center text-xs text-[#1C2B2E]/60 mb-8">
             More about <Link to="/neighborhoods" className="font-bold text-[#0F5C63] hover:text-[#C9A96A]">{relatedArea.name}</Link>
+          </div>
+        )}
+
+        {/* Meet the Author - a real credibility block, not just the small
+            byline near the title. This is what search engines and AI
+            answer engines increasingly check before trusting or citing a
+            post (Google's E-E-A-T framework), and it's also just good
+            practice for a reader deciding whether to trust the advice. */}
+        <div className="bg-[#0D2226] text-[#FAF8F5] rounded-xs p-6 sm:p-8 mb-10">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96A]">Meet the Author</span>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 mt-4">
+            <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-20 h-20 rounded-full object-cover object-top border-2 border-[#C9A96A] shrink-0" />
+            <div className="text-center sm:text-left">
+              <h3 className="font-serif text-xl font-bold">Kyle Friedman</h3>
+              <p className="text-xs text-[#A8B2A1] mb-3">Licensed REALTOR® & Principal Advisor, The Friedman Team at eXp Realty</p>
+              <p className="text-sm text-[#FAF8F5]/80 leading-relaxed max-w-lg">
+                Kyle serves buyers and sellers across Carroll, Howard, Frederick, and Baltimore counties, with a strategy-first, data-driven approach to pricing and negotiation.
+              </p>
+              <div className="flex items-center justify-center sm:justify-start gap-4 mt-4">
+                <a
+                  href="https://share.google/fH72jPIgQXjEImIHG"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A96A] hover:text-[#FAF8F5] transition-colors"
+                >
+                  <Star className="w-3.5 h-3.5" />
+                  Google Reviews
+                </a>
+                <button onClick={onOpenConsultation} className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A96A] hover:text-[#FAF8F5] transition-colors">
+                  <Phone className="w-3.5 h-3.5" />
+                  Contact Kyle
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Articles - real posts, placed at the end of the
+            article rather than a sidebar, matching current UX guidance
+            that secondary content performs better here than competing
+            for attention beside the article. */}
+        {relatedPosts.length > 0 && (
+          <div className="mb-10">
+            <h3 className="font-serif text-xl font-bold text-[#0D2226] mb-5 text-center">More From The Friedman Report</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-1 gap-y-6">
+              {relatedPosts.map((p) => (
+                <Link key={p.slug} to={`/blog/${p.slug}`} className="group block relative h-[220px] overflow-hidden">
+                  <img src={p.heroImage} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-4 py-4">
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-[#C9A96A]">{formatDisplayDate(p.publishDate)}</span>
+                    <h4 className="font-serif text-sm font-bold text-white leading-snug mt-1 line-clamp-2">{p.title}</h4>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
 
