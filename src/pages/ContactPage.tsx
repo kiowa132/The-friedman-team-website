@@ -60,13 +60,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => 
       {/* Header */}
       <div className="text-center space-y-3">
         <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F5C63] bg-[#0F5C63]/10 px-4 py-1.5 border border-[#0F5C63]/30 inline-block">
-          Confidential Client Office
+          Get In Touch
         </span>
         <h1 className="font-serif text-4xl sm:text-6xl font-bold text-[#0D2226]">
-          Begin Your Real Estate Strategy
+          Let's Talk About Your Goals
         </h1>
         <p className="text-sm text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal">
-          Whether preparing a luxury estate launch or seeking off-market equestrian land, our team provides confidential fiduciary representation.
+          Whether you're buying, selling, or just exploring your options, Kyle and The Friedman Team are here to help, no pressure, no obligation.
         </p>
       </div>
 
@@ -103,7 +103,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => 
               
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-[#0F5C63] mb-1">
-                  Primary Real Estate Goal *
+                  What Can We Help With? *
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {(['Selling', 'Buying', 'Investing', 'Valuation'] as const).map((item) => (
@@ -117,9 +117,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => 
                           : 'bg-[#FAF8F5] text-[#0D2226] border-[#0D2226]/20 hover:border-[#C9A96A]'
                       }`}
                     >
-                      {item === 'Selling' && 'Selling a Luxury Home / Estate'}
+                      {item === 'Selling' && 'Selling a Home'}
                       {item === 'Buying' && 'Buying a Maryland Property'}
-                      {item === 'Investing' && 'Investment / Acreage'}
+                      {item === 'Investing' && 'Investment Property'}
                       {item === 'Valuation' && 'Home Valuation Request'}
                     </button>
                   ))}
@@ -212,7 +212,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => 
                   rows={4}
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  placeholder="Describe your property address, acreage, or specific buying criteria..."
+                  placeholder="Tell us a bit about your property or what you're looking for..."
                   className="w-full bg-[#FAF8F5] border border-[#0D2226]/20 p-3 text-xs text-[#0D2226] focus:border-[#C9A96A] focus:outline-none"
                 />
               </div>
@@ -236,7 +236,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => 
                 ) : (
                   <>
                     <Calendar className="w-4 h-4" />
-                    <span>Begin Real Estate Strategy</span>
+                    <span>Send Message</span>
                   </>
                 )}
               </button>
@@ -309,7 +309,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => 
               Instant Home Valuation Tool
             </h4>
             <p className="text-xs text-[#FAF8F5]/90">
-              Calculate an algorithmic preliminary valuation for your Maryland estate in under 60 seconds.
+              Get a preliminary estimate of your Maryland home's value in under 60 seconds.
             </p>
             <button
               onClick={onOpenValuation}

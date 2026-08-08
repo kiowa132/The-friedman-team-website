@@ -19,9 +19,9 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [county, setCounty] = useState('Carroll County');
-  const [propertyType, setPropertyType] = useState('Luxury Residence');
-  const [sqft, setSqft] = useState(4500);
-  const [acreage, setAcreage] = useState(2.5);
+  const [propertyType, setPropertyType] = useState('Single-Family Home');
+  const [sqft, setSqft] = useState(2200);
+  const [acreage, setAcreage] = useState(0.25);
   const [upgrades, setUpgrades] = useState<string[]>([]);
   
   // Owner details
@@ -32,13 +32,14 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const upgradeOptions = [
-    'Custom Equestrian Barn / Paddocks',
-    'Saltwater Pool / Outdoor Kitchen',
-    'Climate-Controlled Wine Cellar',
-    'Geothermal / Solar Infrastructure',
-    'Gated Private Motor Court',
-    'Main-Floor Primary Luxury Suite',
-    'Historic Preservation Status'
+    'Renovated Kitchen',
+    'Finished Basement',
+    'New Roof (within 5 years)',
+    'Updated HVAC System',
+    'Deck / Patio',
+    'Swimming Pool',
+    'Attached Garage',
+    'Solar Panels'
   ];
 
   const toggleUpgrade = (item: string) => {
@@ -188,10 +189,10 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
                       onChange={(e) => setPropertyType(e.target.value)}
                       className="w-full bg-[#FAF8F5] border border-[#0D2226]/20 p-3 text-xs text-[#0D2226] focus:border-[#C9A96A] focus:outline-none rounded-xs"
                     >
-                      <option value="Luxury Residence">Luxury Single Family</option>
-                      <option value="Equestrian Farm">Equestrian Farm</option>
-                      <option value="Historic Manor">Historic Stone Manor</option>
-                      <option value="Land / Acreage">Land / Acreage Compound</option>
+                      <option value="Single-Family Home">Single-Family Home</option>
+                      <option value="Townhome">Townhome / Rowhome</option>
+                      <option value="Condo">Condo</option>
+                      <option value="Farm / Land">Farm / Land</option>
                     </select>
                   </div>
                   <div>
@@ -237,10 +238,10 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
             <form onSubmit={submitValuationRequest} className="space-y-4 animate-fadeIn">
               <div className="text-center space-y-1">
                 <h4 className="font-serif text-2xl font-bold text-[#0D2226]">
-                  Select Custom Estate Features
+                  Select Your Home's Features
                 </h4>
                 <p className="text-xs text-[#1C2B2E]/70 max-w-md mx-auto">
-                  High-end luxury features add significant strategic market value beyond base square footage.
+                  These help refine your estimate beyond base square footage.
                 </p>
               </div>
 

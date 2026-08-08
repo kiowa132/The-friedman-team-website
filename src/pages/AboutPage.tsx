@@ -13,20 +13,20 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 }) => {
   const specializations = [
     {
-      title: 'Luxury Homes & Residences',
-      description: 'Strategic representation for distinctive estates, custom architectural homes, and high-end suburban sanctuaries.'
+      title: 'First-Time & Move-Up Buyers',
+      description: 'Clear, step-by-step guidance from pre-approval through closing, whether it\u2019s a first home or an upgrade.'
     },
     {
-      title: 'Farms, Acreage & Estates',
-      description: 'Deep technical knowledge of Maryland land preservation, MALPF easements, equestrian facilities, and agricultural zoning.'
+      title: 'Local County Expertise',
+      description: 'Deep knowledge of Carroll, Howard, Frederick, and Baltimore County, from HOA nuances to well and septic considerations.'
     },
     {
-      title: 'Strategic Marketing & Production',
-      description: 'Cinematic drone video, architectural photography, targeted digital exposure to out-of-state buyers, and press placements.'
+      title: 'Strategic Marketing',
+      description: 'Professional photography, targeted digital exposure, and a clear plan for where today\u2019s buyers are actually looking.'
     },
     {
-      title: 'Master Negotiation & Protection',
-      description: 'Protecting seller equity through disciplined offer structures, contract contingencies, and fiduciary advocacy.'
+      title: 'Data-Driven Negotiation',
+      description: 'Protecting your equity through real comparable data, disciplined offer structures, and clear communication at every step.'
     },
     {
       title: 'Discreet Off-Market Placement',
@@ -55,7 +55,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </p>
 
             <p className="text-xs sm:text-sm text-[#FAF8F5]/90 leading-relaxed font-normal pt-2">
-              Kyle Friedman founded The Friedman Team on a simple idea: every client deserves the same level of preparation, whether they're buying a starter home or selling a multi-acre property. Kyle's background is in direct sales and property transactions, which shaped a practical, detail-driven approach to pricing and negotiation that's become the foundation of how the team operates today. Based in Taneytown and serving Carroll, Howard, Frederick, and Baltimore County, The Friedman Team works with first-time buyers, growing families, move-up sellers, and owners of larger properties with acreage, outbuildings, or equestrian facilities, all getting the same strategy and standard of service at every price point.
+              Kyle Friedman founded The Friedman Team on a simple idea: every client deserves the same level of preparation, whether they're buying a starter home or selling a long-time family property. Kyle's background is in direct sales and property transactions, which shaped a practical, detail-driven approach to pricing and negotiation that's become the foundation of how the team operates today. Based in Taneytown and serving Carroll, Howard, Frederick, and Baltimore County, The Friedman Team works with first-time buyers, growing families, and move-up sellers, all getting the same strategy and standard of service at every price point.
             </p>
 
             <p className="text-xs text-[#A8B2A1] leading-relaxed">

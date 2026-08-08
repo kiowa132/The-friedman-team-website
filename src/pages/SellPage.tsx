@@ -70,7 +70,7 @@ export const SellPage: React.FC<SellPageProps> = ({
         </h1>
 
         <p className="text-sm sm:text-base text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal leading-relaxed">
-          Pricing a home isn't a formula. It's a strategy. The Friedman Team starts with real comparable data and market trends, then builds a marketing plan and negotiation approach designed to bring the right buyers and the strongest offers. From condos and townhomes to single-family homes and larger properties with acreage, every listing gets professional photography, a clear pricing strategy, and a plan for where buyers are actually looking.
+          Pricing a home isn't a formula. It's a strategy. The Friedman Team starts with real comparable data and market trends, then builds a marketing plan and negotiation approach designed to bring the right buyers and the strongest offers. From condos and townhomes to single-family homes, every listing gets professional photography, a clear pricing strategy, and a plan for where buyers are actually looking.
         </p>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">

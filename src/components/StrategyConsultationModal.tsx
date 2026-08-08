@@ -75,7 +75,7 @@ export const StrategyConsultationModal: React.FC<StrategyConsultationModalProps>
           <div className="flex items-center gap-2">
             <Phone className="w-5 h-5 text-[#C9A96A]" />
             <h3 className="font-serif text-xl font-bold tracking-wide text-[#FAF8F5]">
-              Schedule Private Real Estate Strategy Call
+              Schedule a Strategy Call
             </h3>
           </div>
           <button
@@ -108,17 +108,17 @@ export const StrategyConsultationModal: React.FC<StrategyConsultationModalProps>
               
               <div className="text-center space-y-1">
                 <p className="text-xs text-[#0F5C63] font-bold uppercase tracking-wider">
-                  Confidential Representation
+                  Free, No-Obligation Consultation
                 </p>
                 <h4 className="font-serif text-2xl font-bold text-[#0D2226]">
-                  Begin Your Real Estate Strategy
+                  Let's Talk About Your Goals
                 </h4>
               </div>
 
               {/* Interest Selector */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-[#0F5C63] mb-1">
-                  I Am Seeking Representation For:
+                  I'm Interested In:
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {(['Selling', 'Buying', 'Investing', 'Valuation'] as const).map((item) => (
@@ -132,10 +132,10 @@ export const StrategyConsultationModal: React.FC<StrategyConsultationModalProps>
                           : 'bg-[#FAF8F5] text-[#0D2226] border-[#0D2226]/20 hover:border-[#C9A96A]'
                       }`}
                     >
-                      {item === 'Selling' && 'Selling a Luxury Home / Estate'}
-                      {item === 'Buying' && 'Buying a Maryland Property'}
-                      {item === 'Investing' && 'Investment / Land Compound'}
-                      {item === 'Valuation' && 'Strategic Home Valuation'}
+                      {item === 'Selling' && 'Selling a Home'}
+                      {item === 'Buying' && 'Buying a Home'}
+                      {item === 'Investing' && 'Investment Property'}
+                      {item === 'Valuation' && 'Home Valuation'}
                     </button>
                   ))}
                 </div>
@@ -228,7 +228,7 @@ export const StrategyConsultationModal: React.FC<StrategyConsultationModalProps>
                   rows={3}
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  placeholder="Share details regarding your property, acreage, or specific buying goals..."
+                  placeholder="Share a few details about your property or what you're looking for..."
                   className="w-full bg-[#FAF8F5] border border-[#0D2226]/20 p-2.5 text-xs text-[#0D2226] focus:border-[#C9A96A] focus:outline-none"
                 />
               </div>
@@ -252,7 +252,7 @@ export const StrategyConsultationModal: React.FC<StrategyConsultationModalProps>
                 ) : (
                   <>
                     <Calendar className="w-4 h-4" />
-                    <span>Begin Real Estate Strategy</span>
+                    <span>Schedule My Consultation</span>
                   </>
                 )}
               </button>

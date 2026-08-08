@@ -62,7 +62,7 @@ export const MarketReportPage: React.FC<MarketReportPageProps> = ({
         </h1>
 
         <p className="font-serif italic text-base sm:text-lg text-[#1C2B2E]/80 max-w-2xl mx-auto font-normal">
-          Wall Street Journal-grade intelligence on Maryland luxury residential markets, equestrian land values, and regional wealth shifts.
+          Clear, data-driven analysis of Maryland's housing market, week by week, for buyers and sellers who want the real numbers.
         </p>
       </div>
 
