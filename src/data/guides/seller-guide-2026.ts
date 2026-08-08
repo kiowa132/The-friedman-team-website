@@ -1,21 +1,17 @@
 import { HandbookGuide } from '../../types/handbook';
 
-// The 2026 Maryland Home Seller's Guide - real, finished 14-page document.
-//
-// One real gap to flag: the printed Table of Contents page lists a
-// Chapter 7, "Getting Your Home Ready for Showings," but no page for it
-// was included in the delivered file set (files jump from Chapter 6
-// straight to Chapter 8). The interactive table of contents below only
-// lists the chapters that actually have a page, so navigation stays
-// accurate - but the printed TOC graphic itself still shows "07" since
-// that's baked into the image. Swap in the missing page whenever it's
-// available and add it to the `pages` array between page-08 and page-09.
+// The 2026 Home Seller's Guide - rebuilt from Kyle's newer, complete
+// version of the document. This version resolves the earlier gap: what
+// was a missing Chapter 7 ("Getting Your Home Ready for Showings") in
+// the first version is now merged directly into the Photography &
+// Marketing page here, so the full 14-page set is complete with nothing
+// missing.
 export const sellerGuide: HandbookGuide = {
   slug: 'seller-guide-2026',
   title: "The 2026 Home Seller's Guide",
-  subtitle: 'A complete, county-specific walkthrough for selling your Maryland home for the most money, with the least stress.',
+  subtitle: 'Prepare. Price. Sell with Confidence.',
   edition: '2026 Edition',
-  description: 'From "should you sell now" through closing day - pricing strategy, which repairs actually matter, negotiating offers, and what to do if your home doesn\u2019t sell right away.',
+  description: 'A practical, county-specific guide to preparing, pricing, and selling your Maryland home for the most money, with the least stress.',
   category: 'For Sellers',
   estimatedReadMinutes: 14,
   lastUpdated: 'August 2026',
@@ -37,9 +33,7 @@ export const sellerGuide: HandbookGuide = {
     { image: '/images/guides/seller-guide-2026/page-05.jpg', label: 'Preparing Your Maryland Home for Market' },
     { image: '/images/guides/seller-guide-2026/page-06.jpg', label: 'Which Repairs Actually Matter?' },
     { image: '/images/guides/seller-guide-2026/page-07.jpg', label: 'Pricing Your Maryland Home' },
-    { image: '/images/guides/seller-guide-2026/page-08.jpg', label: 'Photography, Marketing & First Impressions' },
-    // Chapter 7 in the printed TOC, "Getting Your Home Ready for
-    // Showings," is missing here - see the note above.
+    { image: '/images/guides/seller-guide-2026/page-08.jpg', label: 'Photography, Marketing & Showings' },
     { image: '/images/guides/seller-guide-2026/page-09.jpg', label: 'Evaluating & Negotiating Offers' },
     { image: '/images/guides/seller-guide-2026/page-10.jpg', label: 'Inspection & Appraisal' },
     { image: '/images/guides/seller-guide-2026/page-11.jpg', label: 'Closing Your Maryland Home Sale' },
