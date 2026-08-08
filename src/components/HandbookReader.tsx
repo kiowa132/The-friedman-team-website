@@ -251,8 +251,8 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
           <button onClick={prev} disabled={currentPage === 0} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
             <ChevronLeft className="w-4 h-4 text-white" />
           </button>
-          <span className="text-xs text-white/50 tabular-nums">{currentPage + 1} / {total}</span>
-          <button onClick={next} disabled={currentPage === total - 1} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
+          <span className="text-xs text-white/50 tabular-nums">{isMobile ? currentPage + 1 : Math.min(currentPage + 2, total)} / {total}</span>
+          <button onClick={next} disabled={isMobile ? currentPage === total - 1 : currentPage + 2 >= total} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none transition-colors">
             <ChevronRight className="w-4 h-4 text-white" />
           </button>
         </div>
