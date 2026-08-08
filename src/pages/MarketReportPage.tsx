@@ -3,6 +3,7 @@ import { MARKET_TRENDS, MARKET_STATS, EDITORIAL_ARTICLES } from '../data/mockDat
 import { EditorialArticle } from '../types';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, Legend, BarChart, Bar } from 'recharts';
 import { TrendingUp, FileText, ArrowRight, ShieldCheck, Mail, CheckCircle2, Download, BookOpen, X } from 'lucide-react';
+import { submitLead } from '../lib/leads';
 
 interface MarketReportPageProps {
   onOpenConsultation: () => void;
@@ -14,16 +15,35 @@ export const MarketReportPage: React.FC<MarketReportPageProps> = ({
   const [selectedArticle, setSelectedArticle] = useState<EditorialArticle | null>(null);
   const [emailSub, setEmailSub] = useState('');
   const [subSuccess, setSubSuccess] = useState(false);
+  const [subSubmitting, setSubSubmitting] = useState(false);
+  const [subError, setSubError] = useState<string | null>(null);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailSub) {
-      setSubSuccess(true);
-      setTimeout(() => {
-        setEmailSub('');
-        setSubSuccess(false);
-      }, 5000);
+    if (!emailSub) return;
+
+    setSubSubmitting(true);
+    setSubError(null);
+
+    const { ok, error } = await submitLead({
+      name: emailSub.split('@')[0], // FUB requires a name - best available signal from an email-only form
+      email: emailSub,
+      type: 'Registration',
+      message: 'Subscribed to the Friedman Market Report via the Market Report page.',
+    });
+
+    setSubSubmitting(false);
+
+    if (!ok) {
+      setSubError(error || 'Something went wrong. Please try again.');
+      return;
     }
+
+    setSubSuccess(true);
+    setTimeout(() => {
+      setEmailSub('');
+      setSubSuccess(false);
+    }, 5000);
   };
 
   return (
@@ -223,11 +243,15 @@ export const MarketReportPage: React.FC<MarketReportPageProps> = ({
                 />
                 <button
                   type="submit"
-                  className="w-full py-3 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+                  disabled={subSubmitting}
+                  className="w-full py-3 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
                 >
                   <Download className="w-4 h-4 text-[#C9A96A]" />
-                  <span>Subscribe & Download Latest Issue</span>
+                  <span>{subSubmitting ? 'Submitting...' : 'Subscribe & Download Latest Issue'}</span>
                 </button>
+                {subError && (
+                  <p className="text-xs text-red-600">{subError}</p>
+                )}
               </form>
             )}
           </div>

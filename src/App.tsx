@@ -19,6 +19,7 @@ import { BlogPostPage } from './pages/BlogPostPage';
 import { GuidesListPage } from './pages/GuidesListPage';
 import { LuxuryPage } from './pages/LuxuryPage';
 import { TeamPage } from './pages/TeamPage';
+import { TestimonialsPage } from './pages/TestimonialsPage';
 import { GivingBackPage } from './pages/GivingBackPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { TermsOfUsePage } from './pages/TermsOfUsePage';
@@ -53,6 +54,7 @@ const PATH_TO_TAB: Record<string, string> = {
   '/guides': 'guides',
   '/luxury': 'luxury',
   '/team': 'team',
+  '/testimonials': 'testimonials',
   '/giving-back': 'giving-back',
   '/privacy-policy': 'privacy-policy',
   '/terms-of-use': 'terms-of-use',
@@ -77,6 +79,7 @@ const TAB_TO_PATH: Record<string, string> = {
   guides: '/guides',
   luxury: '/luxury',
   team: '/team',
+  testimonials: '/testimonials',
   'giving-back': '/giving-back',
   'privacy-policy': '/privacy-policy',
   'terms-of-use': '/terms-of-use',
@@ -264,6 +267,12 @@ export default function App() {
 
           <Route path="/team" element={
             <TeamPage
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
+
+          <Route path="/testimonials" element={
+            <TestimonialsPage
               onOpenConsultation={() => setIsConsultationOpen(true)}
             />
           } />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Listing } from '../types';
 import { X, MapPin, Bed, Bath, Maximize2, Calendar, ShieldCheck, Heart, Share2, Check, Calculator, Phone, CheckCircle2, DollarSign, Hammer } from 'lucide-react';
+import { submitLead } from '../lib/leads';
 
 interface ListingDetailModalProps {
   listing: Listing | null;
@@ -33,6 +34,8 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
   const [visitorEmail, setVisitorEmail] = useState('');
   const [visitorPhone, setVisitorPhone] = useState('');
   const [showingSubmitted, setShowingSubmitted] = useState(false);
+  const [showingSubmitting, setShowingSubmitting] = useState(false);
+  const [showingError, setShowingError] = useState<string | null>(null);
 
   const downPayment = (listing.price * downPercent) / 100;
   const loanAmount = listing.price - downPayment;
@@ -54,8 +57,26 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const handleShowingSubmit = (e: React.FormEvent) => {
+  const handleShowingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setShowingSubmitting(true);
+    setShowingError(null);
+
+    const { ok, error } = await submitLead({
+      name: visitorName,
+      email: visitorEmail,
+      phone: visitorPhone,
+      type: 'Property Inquiry',
+      message: `Requested a showing of "${listing.title}" (${listing.address}) - ${showingDate}, ${showingTime}.`,
+    });
+
+    setShowingSubmitting(false);
+
+    if (!ok) {
+      setShowingError(error || 'Something went wrong. Please try again or contact Kyle directly.');
+      return;
+    }
+
     setShowingSubmitted(true);
     setTimeout(() => {
       setShowingSubmitted(false);
@@ -268,9 +289,12 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         <label className="block text-xs font-semibold text-[#C9A96A] uppercase mb-1">Phone Number *</label>
                         <input type="tel" required value={visitorPhone} onChange={(e) => setVisitorPhone(e.target.value)} placeholder="(443) 789-3101" className="w-full bg-[#1A2E33] border border-[#FAF8F5]/20 p-2.5 text-xs text-[#FAF8F5] placeholder-[#A8B2A1]/50 focus:border-[#C9A96A] focus:outline-none" />
                       </div>
-                      <button type="submit" id="submit-showing-req" className="w-full py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-wider rounded-xs transition-all shadow-lg flex items-center justify-center gap-2 mt-4">
+                      {showingError && (
+                        <p className="text-xs text-red-300">{showingError} You can also reach Kyle directly at (443) 789-3101.</p>
+                      )}
+                      <button type="submit" id="submit-showing-req" disabled={showingSubmitting} className="w-full py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-wider rounded-xs transition-all shadow-lg flex items-center justify-center gap-2 mt-4 disabled:opacity-60">
                         <Calendar className="w-4 h-4" />
-                        <span>Request a Tour</span>
+                        <span>{showingSubmitting ? 'Sending...' : 'Request a Tour'}</span>
                       </button>
                     </form>
                   )}

@@ -216,7 +216,7 @@ export const Footer: React.FC<FooterProps> = ({
             <button onClick={() => goTo('home')} className="hover:text-[#C9A96A] transition-colors">Home</button>
             <button onClick={() => goTo('team')} className="hover:text-[#C9A96A] transition-colors">Meet the Team</button>
             <button onClick={() => goTo('listings')} className="hover:text-[#C9A96A] transition-colors">Featured Properties</button>
-            <button onClick={() => goTo('home')} className="hover:text-[#C9A96A] transition-colors">Testimonials</button>
+            <button onClick={() => goTo('testimonials')} className="hover:text-[#C9A96A] transition-colors">Testimonials</button>
             <button onClick={() => goTo('contact')} className="hover:text-[#C9A96A] transition-colors">Let's Connect</button>
           </div>
         </div>

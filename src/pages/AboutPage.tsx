@@ -34,29 +34,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({
     }
   ];
 
-  const timelineMilestones = [
-    {
-      year: '2016',
-      title: 'Foundations in Maryland Real Estate',
-      description: 'Began real estate career with a focus on land development, farm acquisitions, and residential representation in Carroll County.'
-    },
-    {
-      year: '2019',
-      title: 'Establishment of The Friedman Team',
-      description: 'Expanded team coverage into Baltimore County’s Green Spring Valley and Howard County’s Fulton luxury corridors.'
-    },
-    {
-      year: '2022',
-      title: 'eXp Realty Partnership & Global Reach',
-      description: 'Partnered with eXp Realty to leverage cloud technology, international buyer networks, and proprietary digital tools.'
-    },
-    {
-      year: '2025 to Present',
-      title: '$150M+ Sales Volume Milestone',
-      description: 'Recognized among top 1% luxury advisors in Maryland, representing generational horse farms, historic manors, and luxury estates.'
-    }
-  ];
-
   return (
     <div className="pt-28 pb-20 space-y-20">
       
@@ -187,32 +164,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </div>
           </div>
 
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="text-center space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">
-            Track Record
-          </span>
-          <h2 className="font-serif text-3xl font-bold text-[#0D2226]">
-            Milestones of Excellence
-          </h2>
-        </div>
-
-        <div className="space-y-6">
-          {timelineMilestones.map((m, idx) => (
-            <div key={idx} className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-6 rounded-xs flex flex-col sm:flex-row items-start gap-4 shadow-sm">
-              <div className="bg-[#0F5C63] text-[#C9A96A] font-serif font-bold text-xl px-4 py-2 rounded-xs shrink-0">
-                {m.year}
-              </div>
-              <div className="space-y-1">
-                <h3 className="font-serif text-xl font-bold text-[#0D2226]">{m.title}</h3>
-                <p className="text-xs text-[#1C2B2E]/80 leading-relaxed">{m.description}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
