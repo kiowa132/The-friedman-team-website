@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, ArrowRight, Calculator, Phone, FileText, Facebook, Linkedin, Twitter, Star, ShieldCheck } from 'lucide-react';
+import { Calendar, ArrowRight, Calculator, Phone, FileText, Facebook, Linkedin, Twitter, Star, ShieldCheck, Home } from 'lucide-react';
 import { BLOG_POSTS } from '../lib/content';
 import { getHandbookGuide } from '../data/guides';
 import { NEIGHBORHOODS } from '../data/mockData';
@@ -361,6 +361,15 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
                 >
                   <Star className="w-3.5 h-3.5" />
                   Google Reviews
+                </a>
+                <a
+                  href="https://www.zillow.com/profile/Kyle%20Friedman%20Team"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A96A] hover:text-[#FAF8F5] transition-colors"
+                >
+                  <Home className="w-3.5 h-3.5" />
+                  Zillow
                 </a>
                 <button onClick={onOpenConsultation} className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A96A] hover:text-[#FAF8F5] transition-colors">
                   <Phone className="w-3.5 h-3.5" />
