@@ -28,7 +28,14 @@ collections:
       - { label: "Carousel Images", name: "carouselImages", widget: "list", required: false, hint: "Recommended size: 1000x1250px (4:5 portrait ratio) per photo, under 400KB each.", field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Related Guide (slug)", name: "relatedGuideSlug", widget: "string", required: false, hint: "Must match a guide's filename exactly, e.g. carroll-county-seller-guide" }
       - { label: "Related Area (slug)", name: "relatedAreaSlug", widget: "select", required: false, options: ["carroll-county", "baltimore-county", "howard-county", "frederick-county"] }
-      - { label: "Body", name: "body", widget: "markdown", hint: "Use the image button in this editor's toolbar to insert photos right where you want them in the text - they'll appear inline, in that exact spot, styled automatically." }
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        hint: "Use the toolbar buttons above (Bold, Italic, headings, lists, quote, link) to format text, and the image button to insert photos right where you want them - both always produce correct formatting. If you paste text from ChatGPT or another AI tool, paste it as plain text first (Ctrl+Shift+V / Cmd+Shift+V) and then use the toolbar to format it, rather than pasting already-formatted text directly - pasted markdown symbols can come through as literal characters (**text** instead of bold) instead of real formatting."
+        modes: ["rich_text", "raw"]
+        default_mode: "rich_text"
+        buttons: ["bold", "italic", "link", "heading-one", "heading-two", "quote", "bulleted-list", "numbered-list", "code"]
+        editor_components: ["image"]
 
   - name: "guides"
     label: "Free Guides"
@@ -46,7 +53,15 @@ collections:
         widget: "list"
         required: false
         hint: "Short, punchy bullets - e.g. 'How Carroll County pricing actually works right now'. Builds trust before the ask."
-      - { label: "Full Guide Content (the real content - unlocks on the page right after someone submits their info)", name: "body", widget: "markdown", required: false }
+      - label: "Full Guide Content (the real content - unlocks on the page right after someone submits their info)"
+        name: "body"
+        widget: "markdown"
+        required: false
+        hint: "Use the toolbar buttons to format text - if pasting from ChatGPT or another AI tool, paste as plain text first (Ctrl+Shift+V / Cmd+Shift+V), then format with the toolbar."
+        modes: ["rich_text", "raw"]
+        default_mode: "rich_text"
+        buttons: ["bold", "italic", "link", "heading-one", "heading-two", "quote", "bulleted-list", "numbered-list", "code"]
+        editor_components: ["image"]
       - label: "Publuu Flipbook Embed URL (optional - shows an interactive page-flip viewer instead of plain text)"
         name: "publuuEmbedUrl"
         widget: "string"
