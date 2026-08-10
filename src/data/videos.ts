@@ -6,15 +6,16 @@ export interface VideoEntry {
   title: string;
   description: string;
   youtubeId: string;
+  isShort?: boolean; // true for vertical YouTube Shorts (9:16) vs standard landscape videos (16:9)
   publishDate: string; // "YYYY-MM-DD"
 }
 
 export const VIDEOS: VideoEntry[] = [
-  // Add real videos here, e.g.:
-  // {
-  //   title: 'The Friedman Report: Week of August 3, 2026',
-  //   description: 'This week\'s Carroll County market numbers, explained.',
-  //   youtubeId: 'dQw4w9WgXcQ',
-  //   publishDate: '2026-08-03',
-  // },
+  {
+    title: 'Maryland Housing Market Update: Week of August 3\u20139, 2026',
+    description: 'This week\'s Maryland market numbers, explained \u2014 closings, pending contracts, mortgage rates, and what it means for buyers and sellers.',
+    youtubeId: 'pLw1zeMCZ5E',
+    isShort: true,
+    publishDate: '2026-08-09',
+  },
 ];

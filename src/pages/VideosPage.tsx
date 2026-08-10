@@ -39,7 +39,7 @@ export const VideosPage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {VIDEOS.map((v, i) => (
               <div key={i} className="bg-white border border-[#C9A96A]/25 overflow-hidden shadow-md">
-                <div className="aspect-video">
+                <div className={v.isShort ? 'aspect-[9/16] max-w-[280px] mx-auto' : 'aspect-video'}>
                   <iframe
                     className="w-full h-full"
                     src={`https://www.youtube.com/embed/${v.youtubeId}`}
