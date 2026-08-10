@@ -166,7 +166,7 @@ export const SeniorRelocationPage: React.FC<SeniorRelocationPageProps> = ({ onOp
       <ReviewsSection />
 
       {/* CTA */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-24 text-center">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-20 pb-24 text-center">
         <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Let's Talk Through Your Timeline</h2>
         <p className="text-sm text-[#1C2B2E]/70 mt-3 max-w-lg mx-auto">
           No pressure, no deadline. Just a conversation about what's next, whenever you're ready to have it.
