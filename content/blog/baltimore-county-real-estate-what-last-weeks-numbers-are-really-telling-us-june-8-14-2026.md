@@ -1,8 +1,6 @@
 ---
-title: "Baltimore County Real Estate: What Last Week's Numbers Are Really
-  Telling Us June 8–14, 2026 "
-metaDescription: Published by Kyle Friedman | Owner, Founder / The Friedman Team
-  By Kyle Friedman at EXP Realty
+title: "Baltimore County Real Estate: What Last Week's Numbers Are Really Telling Us, June 8–14, 2026"
+metaDescription: "Baltimore County's headline numbers look unchanged, but the real data from June 8–14 tells a quieter story worth watching before it shows up in next month's prices."
 category: Market Reports
 publishDate: "2026-06-08"
 heroImage: /images/uploads/big-story-07-27-2026-11.jpg

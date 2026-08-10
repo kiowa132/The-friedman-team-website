@@ -18,15 +18,14 @@
 // out of sync. Real browsers (i.e. everyone else) are untouched and get
 // the normal SPA exactly as before.
 //
-// SCOPE: this currently covers the pages most likely to be shared -
-// the 30 neighborhood detail pages, the neighborhoods list, and the
-// homepage. Blog posts and guides load their content via Vite's
-// import.meta.glob at build time (see src/lib/content.ts), which isn't
-// safely importable into an Edge Middleware bundle the same way a plain
-// data file like towns.ts is - extending this to /blog/:slug and
-// /guides/:slug is a natural follow-up, but needs a different approach
-// (e.g. a small generated JSON manifest written at build time) rather
-// than importing content.ts directly here.
+// SCOPE: covers the homepage, all 30 neighborhood pages, the neighborhoods
+// list, every blog post, and every guide. Blog posts are handled via a
+// small generated manifest (src/data/blogManifest.json, built by
+// scripts/generate-blog-manifest.mjs before every build) since their real
+// content loads through Vite's import.meta.glob, which isn't safely
+// importable into an Edge Middleware bundle. Guides are plain TypeScript
+// data files (src/data/guides), so they're imported directly, the same
+// way TOWNS already is.
 //
 // IMPORTANT CAVEAT: written against Vercel's documented framework-agnostic
 // Edge Middleware API (plain Request/Response, no next/server import,
@@ -43,11 +42,13 @@
 // projects in the dashboard.
 
 import { TOWNS } from './src/data/towns';
+import blogManifest from './src/data/blogManifest.json';
+import { HANDBOOK_GUIDES } from './src/data/guides';
 
 const SITE_URL = 'https://www.friedmanreteam.com';
-const DEFAULT_TITLE = 'The Friedman Team | Luxury Maryland Real Estate & Estates';
+const DEFAULT_TITLE = 'The Friedman Team | Carroll, Howard, Frederick & Baltimore County Real Estate';
 const DEFAULT_DESCRIPTION =
-  'Strategic real estate representation for Maryland luxury properties, farms, estates, and distinctive homes in Carroll County, Baltimore County, Howard County, and surrounding markets.';
+  'Local, data-driven real estate representation for buyers and sellers across Carroll, Baltimore, Howard, and Frederick County, Maryland.';
 const DEFAULT_IMAGE = `${SITE_URL}/images/kyle-portrait.jpg`;
 
 // Known social/link-preview crawlers. Deliberately broad - false positives
@@ -131,6 +132,23 @@ export default function middleware(request: Request): Response | undefined {
     }
     // If the slug doesn't match a real town, fall through to site defaults
     // rather than a broken/empty preview.
+  } else if (path.startsWith('/blog/')) {
+    const slug = path.slice('/blog/'.length);
+    const post = (blogManifest as { slug: string; title: string; metaDescription: string; heroImage: string }[]).find((p) => p.slug === slug);
+    if (post) {
+      title = `${post.title} | The Friedman Team`;
+      description = post.metaDescription || DEFAULT_DESCRIPTION;
+      image = post.heroImage.startsWith('http') ? post.heroImage : `${SITE_URL}${post.heroImage}`;
+    }
+    // Unknown slug falls through to site defaults rather than a broken preview.
+  } else if (path.startsWith('/guides/')) {
+    const slug = path.slice('/guides/'.length);
+    const guide = HANDBOOK_GUIDES.find((g) => g.slug === slug);
+    if (guide) {
+      title = `${guide.title} | The Friedman Team`;
+      description = guide.description;
+      image = guide.coverImage.startsWith('http') ? guide.coverImage : `${SITE_URL}${guide.coverImage}`;
+    }
   }
   // path === '/' falls through to the site defaults set above.
 
@@ -141,5 +159,5 @@ export default function middleware(request: Request): Response | undefined {
 }
 
 export const config = {
-  matcher: ['/', '/neighborhoods', '/neighborhoods/:slug*'],
+  matcher: ['/', '/neighborhoods', '/neighborhoods/:slug*', '/blog/:slug*', '/guides/:slug*'],
 };

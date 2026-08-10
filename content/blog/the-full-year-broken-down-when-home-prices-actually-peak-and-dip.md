@@ -5,10 +5,10 @@ metaDescription: >
   either.
 category: Sell Your Home
 publishDate: "2026-07-30"
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-21-.png
+heroImage: /images/uploads/big-story-07-27-2026-21.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-22-.png
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-23-.png
+  - /images/uploads/big-story-07-27-2026-22.jpg
+  - /images/uploads/big-story-07-27-2026-23.jpg
 ---
 The real story is a full wave that builds, peaks, drops, and starts climbing again and knowing where you are in that wave changes how you should think about timing.
 

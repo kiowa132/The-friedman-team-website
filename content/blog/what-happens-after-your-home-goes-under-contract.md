@@ -6,10 +6,10 @@ metaDescription: Accepting an offer on your home is a huge milestone. After
   have signed a contract.
 category: Sell Your Home
 publishDate: "2026-08-06"
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-30-.png
+heroImage: /images/uploads/big-story-07-27-2026-30.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-28-.png
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-29-.png
+  - /images/uploads/big-story-07-27-2026-28.jpg
+  - /images/uploads/big-story-07-27-2026-29.jpg
 relatedAreaSlug: carroll-county
 ---
 But despite what many homeowners believe, **your home isn't officially sold yet.**
