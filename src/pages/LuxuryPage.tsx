@@ -147,42 +147,26 @@ export const LuxuryPage: React.FC<LuxuryPageProps> = ({ onOpenConsultation }) =>
         </div>
       </div>
 
-      {/* Downsizing & Senior Relocation Support - framed as real service
-          commitments Kyle can actually deliver, not a named certification
-          (SRES or similar) he hasn't confirmed holding. Fits naturally
-          here since long-time owners of larger estate properties are
-          often the ones navigating this transition. */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-16">
-        <div className="bg-white border border-[#C9A96A]/30 p-10 sm:p-14">
-          <div className="text-center max-w-2xl mx-auto">
+      {/* Downsizing & Senior Relocation Support - real, commissioned
+          graphic leading into its own dedicated page, matching the
+          Showcase section's pattern. Given real prominence here per
+          Kyle's direction - bigger than the other sections on this
+          page on purpose. */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-20">
+        <div className="border border-[#C9A96A]/30 shadow-xl overflow-hidden">
+          <img src="/images/senior-relocation/banner-crop.jpg" alt="Senior Relocation Services - The Friedman Team" className="w-full h-[220px] sm:h-[320px] object-cover" />
+          <div className="bg-white p-10 sm:p-14 text-center">
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#C9A96A]">A Different Kind of Move</span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] mt-3">Downsizing & Later-Life Relocation</h2>
-            <p className="text-sm sm:text-base text-[#1C2B2E]/75 leading-relaxed mt-5 font-light">
-              Leaving a long-time home is rarely just a transaction. Kyle works at a pace that respects that, with the patience and coordination this kind of move actually requires.
+            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#0D2226] mt-3">Senior Relocation Services</h2>
+            <p className="text-base sm:text-lg text-[#1C2B2E]/75 leading-relaxed mt-5 font-light max-w-2xl mx-auto">
+              Leaving a longtime home is rarely just a transaction. From right-sizing decisions through a coordinated move, Kyle works at a pace that respects what this transition actually is, for the homeowner and their whole family.
             </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-10 text-center">
-            <div>
-              <h3 className="font-serif text-base font-bold text-[#0D2226]">An Unhurried Timeline</h3>
-              <p className="text-xs text-[#1C2B2E]/65 leading-relaxed mt-2">No pressure to list before you're ready. This moves at your pace, not a deadline.</p>
-            </div>
-            <div>
-              <h3 className="font-serif text-base font-bold text-[#0D2226]">Trusted Local Connections</h3>
-              <p className="text-xs text-[#1C2B2E]/65 leading-relaxed mt-2">Movers, estate-sale companies, and downsizing specialists Kyle can put you in touch with.</p>
-            </div>
-            <div>
-              <h3 className="font-serif text-base font-bold text-[#0D2226]">Family Welcome at Every Step</h3>
-              <p className="text-xs text-[#1C2B2E]/65 leading-relaxed mt-2">Adult children and family members are always included in the conversation, when that's helpful.</p>
-            </div>
-          </div>
-          <div className="text-center mt-10">
-            <button
-              onClick={onOpenConsultation}
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+            <Link
+              to="/senior-relocation"
+              className="inline-flex items-center gap-2 mt-8 px-8 py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
             >
-              <Phone className="w-4 h-4" />
-              Talk to Kyle About Your Move
-            </button>
+              Learn More About Senior Relocation Services
+            </Link>
           </div>
         </div>
       </div>
