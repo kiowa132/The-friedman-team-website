@@ -1,8 +1,12 @@
 \---
 
 title: Curb Appeal Isn’t Staging. It’s Math.
+<<<<<<< HEAD
 metaDescription: My wife grabbed one of those bargain power washers over the
 weekend, and I figured I’d handle the deck myself before we stained it
+=======
+metaDescription: A bargain power washer taught me the same lesson sellers keep learning the hard way - cutting corners on curb appeal costs more than it saves.
+>>>>>>> a0904eb83123963f684ada4f4044ec35e1502fe4
 category: Sell Your Home
 publishDate: 2026-07-30
 heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-3-.png

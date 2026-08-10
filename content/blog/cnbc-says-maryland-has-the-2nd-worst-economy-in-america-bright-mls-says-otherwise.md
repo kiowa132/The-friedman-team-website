@@ -6,10 +6,10 @@ metaDescription: "My phone hasn’t stopped buzzing this week. Clients, past
   ranked Maryland the 2nd worst economy in America."
 category: Sell Your Home
 publishDate: "2026-07-30"
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-18-.png
+heroImage: /images/uploads/big-story-07-27-2026-18.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-20-.png
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-19-.png
+  - /images/uploads/big-story-07-27-2026-20.jpg
+  - /images/uploads/big-story-07-27-2026-19.jpg
 ---
 The ranking is based on one thing
 

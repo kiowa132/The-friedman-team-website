@@ -1,8 +1,6 @@
 ---
-title: "Maryland Real Estate Market Update (June 15–21, 2026): Prices, Inventory
-  & Trends"
-metaDescription: Published by Kyle Friedman | Owner, Founder / Friedman Real
-  Estate Team at EXP Realty
+title: "Maryland Real Estate Market Update (June 15–21, 2026): Prices, Inventory & Trends"
+metaDescription: "A seller almost waited too long to list — here's what Maryland's prices and inventory actually did the week of June 15–21, 2026."
 category: Market Reports
 publishDate: "2026-06-15"
 heroImage: /images/uploads/big-story-07-27-2026-14.jpg

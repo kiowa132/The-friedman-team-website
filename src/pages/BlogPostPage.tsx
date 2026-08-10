@@ -200,6 +200,12 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           [&_ol_li]:text-[15px] [&_ol_li]:sm:text-base [&_ol_li]:text-[#1C2B2E]/85 [&_ol_li]:leading-relaxed [&_ol_li]:pl-1
           [&_blockquote]:my-8 [&_blockquote]:border-l-[3px] [&_blockquote]:border-[#C9A96A] [&_blockquote]:pl-6 [&_blockquote]:py-1 [&_blockquote]:font-serif [&_blockquote]:text-xl [&_blockquote]:sm:text-2xl [&_blockquote]:italic [&_blockquote]:text-[#0D2226] [&_blockquote]:leading-snug
           [&_hr]:border-[#C9A96A]/30 [&_hr]:my-10
+          [&_table]:w-full [&_table]:my-8 [&_table]:border-collapse [&_table]:text-sm [&_table]:block [&_table]:overflow-x-auto [&_table]:whitespace-nowrap
+          [&_thead]:bg-[#0D2226]
+          [&_th]:text-[#C9A96A] [&_th]:text-left [&_th]:font-bold [&_th]:uppercase [&_th]:tracking-wider [&_th]:text-[11px] [&_th]:px-4 [&_th]:py-3
+          [&_td]:px-4 [&_td]:py-3 [&_td]:text-[#1C2B2E]/85 [&_td]:border-b [&_td]:border-[#C9A96A]/15
+          [&_tbody_tr:nth-child(even)]:bg-[#EFEBE2]/50
+          [&_tbody_tr:hover]:bg-[#C9A96A]/10
           [&_img]:rounded-xs
         ">
           {interleavedContent.map((block, i) =>

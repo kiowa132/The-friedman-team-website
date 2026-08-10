@@ -5,10 +5,10 @@ metaDescription: A worn roof can cost you more than repair estimates suggest in
   backed by the data.
 category: Sell Your Home
 publishDate: "2026-07-30"
-heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-24-.png
+heroImage: /images/uploads/big-story-07-27-2026-24.jpg
 carouselImages:
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-25-.png
-  - /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-26-.png
+  - /images/uploads/big-story-07-27-2026-25.jpg
+  - /images/uploads/big-story-07-27-2026-26.jpg
 ---
 A buyer walks the exterior of a beautifully maintained country estate, admires the fencing, the outbuildings, the view from the porch, and then looks up. A roof that is clearly on its last few years does not just cost you a repair credit at the negotiating table. At the upper end of the Maryland market, it can cost you the buyer entirely. Someone shopping at this price point has options, and a roof that raises questions is an easy reason to keep looking.
 
