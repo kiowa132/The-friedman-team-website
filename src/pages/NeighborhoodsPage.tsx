@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { TOWNS } from '../data/towns';
 import { usePageMeta } from '../lib/usePageMeta';
-import { Phone, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Phone, Facebook, Instagram, Linkedin, Star, Home, Youtube } from 'lucide-react';
 
 interface NeighborhoodsPageProps {
   onOpenConsultation: () => void;
@@ -40,6 +40,15 @@ export const NeighborhoodsPage: React.FC<NeighborhoodsPageProps> = ({
             </a>
             <a href="https://www.linkedin.com/in/kyle-friedman-415029168/?skipRedirect=true" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-[#FAF8F5]/50 flex items-center justify-center text-[#FAF8F5] hover:bg-[#FAF8F5]/10 transition-colors">
               <Linkedin className="w-4 h-4" />
+            </a>
+            <a href="https://share.google/fH72jPIgQXjEImIHG" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-[#FAF8F5]/50 flex items-center justify-center text-[#FAF8F5] hover:bg-[#FAF8F5]/10 transition-colors">
+              <Star className="w-4 h-4" />
+            </a>
+            <a href="https://www.zillow.com/profile/Kyle%20Friedman%20Team" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-[#FAF8F5]/50 flex items-center justify-center text-[#FAF8F5] hover:bg-[#FAF8F5]/10 transition-colors">
+              <Home className="w-4 h-4" />
+            </a>
+            <a href="https://www.youtube.com/@SimplyFriedman/shorts" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-[#FAF8F5]/50 flex items-center justify-center text-[#FAF8F5] hover:bg-[#FAF8F5]/10 transition-colors">
+              <Youtube className="w-4 h-4" />
             </a>
           </div>
         </div>
