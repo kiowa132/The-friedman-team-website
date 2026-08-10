@@ -35,11 +35,11 @@ export const SeniorRelocationPage: React.FC<SeniorRelocationPageProps> = ({ onOp
     <div className="bg-[#FAF8F5]">
 
       {/* Hero banner - Kyle's own commissioned graphic */}
-      <div className="relative w-full h-[320px] sm:h-[440px] overflow-hidden mt-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-32">
         <img
           src="/images/senior-relocation/banner-crop.jpg"
           alt="Senior Relocation Services - The Friedman Team"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="w-full h-auto rounded-sm shadow-lg"
         />
       </div>
 
