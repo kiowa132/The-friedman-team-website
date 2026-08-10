@@ -1,18 +1,22 @@
----
+\---
+
 title: Curb Appeal Isn’t Staging. It’s Math.
 metaDescription: My wife grabbed one of those bargain power washers over the
-  weekend, and I figured I’d handle the deck myself before we stained it
+weekend, and I figured I’d handle the deck myself before we stained it
 category: Sell Your Home
 publishDate: 2026-07-30
-heroImage: /images/uploads/big-story-07-27-2026-3.jpg
+heroImage: /images/uploads/the-big-story-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ-monday-07.27.2026-view-in-app-3-.png
 youtubeVideoId: ""
 carouselImages:
-  - /images/uploads/image-1-.jpg
-  - /images/uploads/image-2-copy.jpg
-relatedGuideSlug: seller-guide-2026
+
+* /images/uploads/image-1-.jpg
+* /images/uploads/image-2-copy.jpg
+relatedGuideSlug: carroll-county-seller-guide
 relatedAreaSlug: carroll-county
----
-> **A**n hour in, I’d barely touched the grime. The thing didn’t have the pressure to do anything but rearrange dirt while my neighbor stood in his yard laughing at me. I gave up, walked over, and paid him to finish it with real equipment. He was done in a fraction of the time I’d spent getting nowhere. He’s back next weekend for the fence.
+
+\---
+
+> \\\*\\\*A\\\*\\\*n hour in, I’d barely touched the grime. The thing didn’t have the pressure to do anything but rearrange dirt while my neighbor stood in his yard laughing at me. I gave up, walked over, and paid him to finish it with real equipment. He was done in a fraction of the time I’d spent getting nowhere. He’s back next weekend for the fence.
 
 Cheap tool, wasted hour, paid for the job anyway. That’s not a frugal move, that’s just the expensive route with extra steps.
 
@@ -35,3 +39,4 @@ Staging makes a space feel aspirational but staging only works on people who act
 And skip the bargain tool. Rent something commercial grade or hire it out. One pass beats three attempts and a laughing neighbor.
 
 If you’re gearing up to list in Baltimore County, Carroll County, or anywhere else I work, this is the exact conversation I have with every seller before we ever talk price what’s worth fixing before photos, and what buyers genuinely won’t notice. Happy to walk your place with you.
+
