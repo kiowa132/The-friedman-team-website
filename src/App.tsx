@@ -25,6 +25,7 @@ const BlogListPage = React.lazy(() => import('./pages/BlogListPage').then(m => (
 const BlogPostPage = React.lazy(() => import('./pages/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
 const GuidesListPage = React.lazy(() => import('./pages/GuidesListPage').then(m => ({ default: m.GuidesListPage })));
 const LuxuryPage = React.lazy(() => import('./pages/LuxuryPage').then(m => ({ default: m.LuxuryPage })));
+const ZillowShowcasePage = React.lazy(() => import('./pages/ZillowShowcasePage').then(m => ({ default: m.ZillowShowcasePage })));
 const TeamPage = React.lazy(() => import('./pages/TeamPage').then(m => ({ default: m.TeamPage })));
 const TestimonialsPage = React.lazy(() => import('./pages/TestimonialsPage').then(m => ({ default: m.TestimonialsPage })));
 const GivingBackPage = React.lazy(() => import('./pages/GivingBackPage').then(m => ({ default: m.GivingBackPage })));
@@ -57,6 +58,7 @@ const PATH_TO_TAB: Record<string, string> = {
   '/blog': 'blog',
   '/guides': 'guides',
   '/luxury': 'luxury',
+  '/zillow-showcase': 'zillow-showcase',
   '/team': 'team',
   '/testimonials': 'testimonials',
   '/giving-back': 'giving-back',
@@ -82,6 +84,7 @@ const TAB_TO_PATH: Record<string, string> = {
   blog: '/blog',
   guides: '/guides',
   luxury: '/luxury',
+  'zillow-showcase': '/zillow-showcase',
   team: '/team',
   testimonials: '/testimonials',
   'giving-back': '/giving-back',
@@ -270,6 +273,12 @@ export default function App() {
 
           <Route path="/luxury" element={
             <LuxuryPage
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
+
+          <Route path="/zillow-showcase" element={
+            <ZillowShowcasePage
               onOpenConsultation={() => setIsConsultationOpen(true)}
             />
           } />

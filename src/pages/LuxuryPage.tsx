@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, ShieldCheck, Globe2, Camera, Clock } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { ReviewsSection } from '../components/ReviewsSection';
@@ -124,6 +125,25 @@ export const LuxuryPage: React.FC<LuxuryPageProps> = () => {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Zillow Showcase - a real differentiator Kyle offers, given real
+          prominence here per his direction, with its own full page for
+          the complete explanation and sourced stats. */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-24">
+        <div className="bg-[#0D2226] p-10 sm:p-14 text-center">
+          <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#C9A96A]">A Real Difference</span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#FAF8F5] mt-3">Zillow Showcase</h2>
+          <p className="text-sm sm:text-base text-[#F5F1E8]/85 leading-relaxed max-w-2xl mx-auto mt-5 font-light">
+            A premium listing placement available to roughly 10% of listings in a market - interactive floor plans, 3D tours, and priority visibility on Zillow. When a property qualifies, it's part of the marketing plan, at no extra cost.
+          </p>
+          <Link
+            to="/zillow-showcase"
+            className="inline-flex items-center gap-2 mt-8 px-8 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+          >
+            Learn More About Showcase
+          </Link>
         </div>
       </div>
 
