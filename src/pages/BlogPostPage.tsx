@@ -252,17 +252,34 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
         </button>
 
         {/* Embedded YouTube video - at the bottom, and completely absent
-            (not even a placeholder) unless a real video was actually added. */}
+            (not even a placeholder) unless a real video was actually added.
+            Shorts are vertical (9:16) - full-width 16:9 would badly
+            letterbox/distort them, so they get a narrower, centered,
+            portrait-shaped player instead. */}
         {post.youtubeVideoId && (
-          <div className="aspect-video rounded-xs overflow-hidden border border-[#C9A96A]/30 mb-8">
-            <iframe
-              className="w-full h-full"
-              src={`https://www.youtube.com/embed/${post.youtubeVideoId}`}
-              title={post.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+          post.youtubeIsShort ? (
+            <div className="flex justify-center mb-8">
+              <div className="w-full max-w-[280px] aspect-[9/16] rounded-xs overflow-hidden border border-[#C9A96A]/30">
+                <iframe
+                  className="w-full h-full"
+                  src={`https://www.youtube.com/embed/${post.youtubeVideoId}`}
+                  title={post.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="aspect-video rounded-xs overflow-hidden border border-[#C9A96A]/30 mb-8">
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${post.youtubeVideoId}`}
+                title={post.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          )
         )}
 
         <div className="text-center text-[11px] uppercase tracking-[0.3em] text-[#1C2B2E]/40 py-1">

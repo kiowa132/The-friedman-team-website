@@ -6,6 +6,7 @@ export interface BlogPost {
   publishDate: string; // ISO format, e.g. "2026-07-30"
   heroImage: string;
   youtubeVideoId?: string; // just the ID, e.g. "dQw4w9WgXcQ"
+  youtubeIsShort?: boolean; // true for vertical YouTube Shorts (9:16) vs standard landscape videos (16:9)
   carouselImages?: string[];
   bodyHtml: string; // rendered from markdown
   relatedGuideSlug?: string;
