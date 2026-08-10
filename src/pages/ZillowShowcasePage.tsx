@@ -56,8 +56,12 @@ export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenCo
         </p>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-16">
-        <img src="/images/zillow-showcase/blog-thumbnail.jpg" alt="Maximize your home's visibility with Zillow Showcase" className="w-full rounded-sm shadow-lg" />
+      <div className="relative w-full h-[280px] sm:h-[380px] overflow-hidden mb-16">
+        <img
+          src="/images/zillow-showcase/blog-thumbnail.jpg"
+          alt="Maximize your home's visibility with Zillow Showcase"
+          className="absolute inset-0 w-full h-full object-cover object-[center_65%]"
+        />
       </div>
 
       {/* What's included */}
