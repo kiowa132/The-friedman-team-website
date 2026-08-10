@@ -165,11 +165,6 @@ export const SeniorRelocationPage: React.FC<SeniorRelocationPageProps> = ({ onOp
           site, not written specifically for this page. */}
       <ReviewsSection />
 
-      {/* Full infographic, for anyone who wants the complete overview */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20">
-        <img src="/images/senior-relocation/full-infographic.jpg" alt="The Friedman Team Senior Relocation Services overview" className="w-full rounded-sm shadow-lg" />
-      </div>
-
       {/* CTA */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-24 text-center">
         <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Let's Talk Through Your Timeline</h2>
