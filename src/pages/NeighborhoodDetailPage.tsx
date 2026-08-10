@@ -9,7 +9,7 @@ import { usePageMeta } from '../lib/usePageMeta';
 import {
   ChevronRight, MapPin, ExternalLink, Compass, UtensilsCrossed, Bus,
   GraduationCap, Users, Calendar, DollarSign, Footprints, Bike, TrainFront,
-  ArrowRight, Phone, Home,
+  ArrowRight, Phone, Home, Facebook, Instagram, Linkedin, Star, Youtube,
 } from 'lucide-react';
 
 interface NeighborhoodDetailPageProps {
@@ -239,6 +239,26 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
               <Phone className="w-4 h-4" />
               Talk to Kyle
             </button>
+          </div>
+          <div className="flex items-center gap-2.5 mt-6">
+            <a href="https://www.facebook.com/kyle.friedman132" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-8 h-8 rounded-full border border-[#FAF8F5]/25 flex items-center justify-center text-[#FAF8F5]/70 hover:border-[#C9A96A] hover:text-[#C9A96A] transition-colors">
+              <Facebook className="w-3.5 h-3.5" />
+            </a>
+            <a href="https://www.instagram.com/keysbykyle" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 rounded-full border border-[#FAF8F5]/25 flex items-center justify-center text-[#FAF8F5]/70 hover:border-[#C9A96A] hover:text-[#C9A96A] transition-colors">
+              <Instagram className="w-3.5 h-3.5" />
+            </a>
+            <a href="https://www.linkedin.com/in/kyle-friedman-415029168/?skipRedirect=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 rounded-full border border-[#FAF8F5]/25 flex items-center justify-center text-[#FAF8F5]/70 hover:border-[#C9A96A] hover:text-[#C9A96A] transition-colors">
+              <Linkedin className="w-3.5 h-3.5" />
+            </a>
+            <a href="https://share.google/fH72jPIgQXjEImIHG" target="_blank" rel="noopener noreferrer" aria-label="Google Reviews" className="w-8 h-8 rounded-full border border-[#FAF8F5]/25 flex items-center justify-center text-[#FAF8F5]/70 hover:border-[#C9A96A] hover:text-[#C9A96A] transition-colors">
+              <Star className="w-3.5 h-3.5" />
+            </a>
+            <a href="https://www.zillow.com/profile/Kyle%20Friedman%20Team" target="_blank" rel="noopener noreferrer" aria-label="Zillow" className="w-8 h-8 rounded-full border border-[#FAF8F5]/25 flex items-center justify-center text-[#FAF8F5]/70 hover:border-[#C9A96A] hover:text-[#C9A96A] transition-colors">
+              <Home className="w-3.5 h-3.5" />
+            </a>
+            <a href="https://www.youtube.com/@SimplyFriedman/shorts" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="w-8 h-8 rounded-full border border-[#FAF8F5]/25 flex items-center justify-center text-[#FAF8F5]/70 hover:border-[#C9A96A] hover:text-[#C9A96A] transition-colors">
+              <Youtube className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
       </div>

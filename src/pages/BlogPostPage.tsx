@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, ArrowRight, Calculator, Phone, FileText, Facebook, Linkedin, Twitter, Star, ShieldCheck, Home } from 'lucide-react';
+import { Calendar, ArrowRight, Calculator, Phone, FileText, Facebook, Linkedin, Twitter, Star, ShieldCheck, Home, Youtube } from 'lucide-react';
 import { BLOG_POSTS } from '../lib/content';
 import { getHandbookGuide } from '../data/guides';
 import { NEIGHBORHOODS } from '../data/mockData';
@@ -393,6 +393,15 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
                 >
                   <Home className="w-3.5 h-3.5" />
                   Zillow
+                </a>
+                <a
+                  href="https://www.youtube.com/@SimplyFriedman/shorts"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A96A] hover:text-[#FAF8F5] transition-colors"
+                >
+                  <Youtube className="w-3.5 h-3.5" />
+                  YouTube
                 </a>
                 <button onClick={onOpenConsultation} className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A96A] hover:text-[#FAF8F5] transition-colors">
                   <Phone className="w-3.5 h-3.5" />
