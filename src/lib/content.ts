@@ -116,6 +116,8 @@ export const BLOG_POSTS: BlogPost[] = Object.entries(blogFiles)
       heroImage: data.heroImage || '',
       youtubeVideoId: data.youtubeVideoId || '',
       youtubeIsShort: data.youtubeIsShort === true || data.youtubeIsShort === 'true',
+      youtubeVideoId2: data.youtubeVideoId2 || '',
+      youtubeIsShort2: data.youtubeIsShort2 === true || data.youtubeIsShort2 === 'true',
       carouselImages: data.carouselImages || [],
       bodyHtml: marked.parse(content || '') as string,
       relatedGuideSlug: data.relatedGuideSlug || undefined,

@@ -116,24 +116,24 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           },
         },
       },
-      ...(post.youtubeVideoId
-        ? [{
-            '@type': 'VideoObject',
-            name: post.title,
-            description: post.metaDescription,
-            thumbnailUrl: post.heroImage.startsWith('http') ? post.heroImage : `https://www.friedmanreteam.com${post.heroImage}`,
-            uploadDate: post.publishDate,
-            embedUrl: `https://www.youtube.com/embed/${post.youtubeVideoId}`,
-            publisher: {
-              '@type': 'Organization',
-              name: 'The Friedman Team',
-              logo: {
-                '@type': 'ImageObject',
-                url: 'https://www.friedmanreteam.com/favicon-192.png',
-              },
+      ...[post.youtubeVideoId, post.youtubeVideoId2]
+        .filter((id): id is string => !!id)
+        .map((id) => ({
+          '@type': 'VideoObject',
+          name: post.title,
+          description: post.metaDescription,
+          thumbnailUrl: post.heroImage.startsWith('http') ? post.heroImage : `https://www.friedmanreteam.com${post.heroImage}`,
+          uploadDate: post.publishDate,
+          embedUrl: `https://www.youtube.com/embed/${id}`,
+          publisher: {
+            '@type': 'Organization',
+            name: 'The Friedman Team',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://www.friedmanreteam.com/favicon-192.png',
             },
-          }]
-        : []),
+          },
+        })),
     ],
   };
 
@@ -281,14 +281,18 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             (not even a placeholder) unless a real video was actually added.
             Shorts are vertical (9:16) - full-width 16:9 would badly
             letterbox/distort them, so they get a narrower, centered,
-            portrait-shaped player instead. */}
-        {post.youtubeVideoId && (
-          post.youtubeIsShort ? (
-            <div className="flex justify-center mb-8">
+            portrait-shaped player instead. Supports up to two videos per
+            post - most posts have zero or one, but this post has two. */}
+        {[
+          { id: post.youtubeVideoId, isShort: post.youtubeIsShort },
+          { id: post.youtubeVideoId2, isShort: post.youtubeIsShort2 },
+        ].filter((v) => v.id).map((v, i) => (
+          v.isShort ? (
+            <div key={i} className="flex justify-center mb-8">
               <div className="w-full max-w-[280px] aspect-[9/16] rounded-xs overflow-hidden border border-[#C9A96A]/30">
                 <iframe
                   className="w-full h-full"
-                  src={`https://www.youtube.com/embed/${post.youtubeVideoId}`}
+                  src={`https://www.youtube.com/embed/${v.id}`}
                   title={post.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -296,17 +300,17 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
               </div>
             </div>
           ) : (
-            <div className="aspect-video rounded-xs overflow-hidden border border-[#C9A96A]/30 mb-8">
+            <div key={i} className="aspect-video rounded-xs overflow-hidden border border-[#C9A96A]/30 mb-8">
               <iframe
                 className="w-full h-full"
-                src={`https://www.youtube.com/embed/${post.youtubeVideoId}`}
+                src={`https://www.youtube.com/embed/${v.id}`}
                 title={post.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             </div>
           )
-        )}
+        ))}
 
         <div className="text-center text-[11px] uppercase tracking-[0.3em] text-[#1C2B2E]/40 py-1">
           Or

@@ -7,6 +7,8 @@ export interface BlogPost {
   heroImage: string;
   youtubeVideoId?: string; // just the ID, e.g. "dQw4w9WgXcQ"
   youtubeIsShort?: boolean; // true for vertical YouTube Shorts (9:16) vs standard landscape videos (16:9)
+  youtubeVideoId2?: string; // optional second video, same post
+  youtubeIsShort2?: boolean;
   carouselImages?: string[];
   bodyHtml: string; // rendered from markdown
   relatedGuideSlug?: string;

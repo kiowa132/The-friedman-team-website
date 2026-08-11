@@ -10,6 +10,8 @@ carouselImages:
 relatedAreaSlug: carroll-county
 youtubeVideoId: "pLw1zeMCZ5E"
 youtubeIsShort: true
+youtubeVideoId2: "vbDINPrb3JA"
+youtubeIsShort2: true
 ---
 Maryland home sales pulled back sharply this week, but the story underneath the headline number is more encouraging than it looks, especially if you're a buyer who got outbid a few times earlier this summer. Here's the full county by county breakdown of what happened in the Maryland real estate market between August 3 and August 9, 2026, including current mortgage rates, median home prices, and which Maryland counties are moving fastest right now.
 
