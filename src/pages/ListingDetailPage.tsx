@@ -5,6 +5,7 @@ import { fetchMlsListings, fetchMlsListingDetails } from '../lib/mlsApi';
 import { ListingCard } from '../components/ListingCard';
 import { usePageMeta } from '../lib/usePageMeta';
 import { KyleContactCard } from '../components/KyleContactCard';
+import { ListingAlertSignup } from '../components/ListingAlertSignup';
 import { submitLead } from '../lib/leads';
 import {
   ChevronRight, Bed, Bath, Maximize2, Calendar, ShieldCheck, Heart, Share2, Check,
@@ -453,6 +454,8 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
       <div className="mt-16">
         <KyleContactCard ctaHref="#schedule-showing" ctaLabel="Contact Kyle Friedman" />
       </div>
+
+      <ListingAlertSignup listing={listing} />
 
       {/* Similar Properties */}
       {similarListings.length > 0 && (
