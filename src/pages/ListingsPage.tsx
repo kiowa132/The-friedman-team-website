@@ -4,6 +4,7 @@ import { ListingCard } from '../components/ListingCard';
 import { IDXSearchHeader } from '../components/IDXSearchHeader';
 import { Building2, SearchX, Phone, Loader2, WifiOff, AlertTriangle } from 'lucide-react';
 import { fetchMlsListings } from '../lib/mlsApi';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface ListingsPageProps {
   savedListings: string[];
@@ -24,6 +25,10 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
   onOpenConsultation,
   initialCountyFilter = 'All'
 }) => {
+  usePageMeta(
+    'Homes for Sale | Carroll, Baltimore, Howard & Frederick County, MD',
+    'Search current homes for sale across Carroll, Baltimore, Howard, and Frederick County, Maryland with The Friedman Team.'
+  );
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCounty, setSelectedCounty] = useState(initialCountyFilter);
   const [selectedType, setSelectedType] = useState('All');

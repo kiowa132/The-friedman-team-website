@@ -4,6 +4,7 @@ import { EditorialArticle } from '../types';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, Legend, BarChart, Bar } from 'recharts';
 import { TrendingUp, FileText, ArrowRight, ShieldCheck, Mail, CheckCircle2, Download, BookOpen, X } from 'lucide-react';
 import { submitLead } from '../lib/leads';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface MarketReportPageProps {
   onOpenConsultation: () => void;
@@ -12,6 +13,10 @@ interface MarketReportPageProps {
 export const MarketReportPage: React.FC<MarketReportPageProps> = ({
   onOpenConsultation
 }) => {
+  usePageMeta(
+    'The Friedman Report | Maryland Market Intelligence',
+    'Weekly, data-driven Maryland real estate market analysis for Carroll, Baltimore, Howard, and Frederick County from The Friedman Team.'
+  );
   const [selectedArticle, setSelectedArticle] = useState<EditorialArticle | null>(null);
   const [emailSub, setEmailSub] = useState('');
   const [subSuccess, setSubSuccess] = useState(false);

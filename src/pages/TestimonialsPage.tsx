@@ -1,12 +1,17 @@
 import React from 'react';
 import { Star, Quote, ExternalLink, Phone } from 'lucide-react';
 import { GOOGLE_REVIEWS, GOOGLE_OVERALL_RATING, GOOGLE_TOTAL_REVIEW_COUNT, GOOGLE_MAPS_URL } from '../data/reviews';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface TestimonialsPageProps {
   onOpenConsultation: () => void;
 }
 
 export const TestimonialsPage: React.FC<TestimonialsPageProps> = ({ onOpenConsultation }) => {
+  usePageMeta(
+    'Client Testimonials | The Friedman Team',
+    'Real client reviews for Kyle Friedman and The Friedman Team, serving Carroll, Baltimore, Howard, and Frederick County, Maryland.'
+  );
   // Some Google reviews are star-only with no written text - still real,
   // still worth showing, just without a quote.
   const withText = GOOGLE_REVIEWS.filter((r) => r.text.trim().length > 0);

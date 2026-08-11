@@ -195,8 +195,43 @@ export const ListingDetailPage: React.FC<ListingDetailPageProps> = ({
   if (typeof listing.associationFee === 'number' && listing.associationFee > 0) additionalInfo.push(['HOA Fee', `$${listing.associationFee.toLocaleString()}/mo`]);
   if (listing.listOfficeName) additionalInfo.push(['Listed By', listing.listOfficeName]);
 
+  // RealEstateListing schema - only includes fields that are actually
+  // present on this specific listing (see the Listing type's own comment
+  // on why optional MLS fields should never be shown as placeholder data).
+  const listingUrl = `https://www.friedmanreteam.com/listings/${listing.mlsNumber}`;
+  const listingSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    url: listingUrl,
+    name: listing.title,
+    description: listing.description,
+    image: listing.heroImage.startsWith('http') ? listing.heroImage : `https://www.friedmanreteam.com${listing.heroImage}`,
+    about: {
+      '@type': 'SingleFamilyResidence',
+      name: listing.title,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: listing.address,
+        addressLocality: listing.city,
+        addressRegion: 'MD',
+        postalCode: listing.zip,
+      },
+      numberOfRooms: listing.beds,
+      numberOfBathroomsTotal: listing.baths,
+      floorSize: listing.sqft ? { '@type': 'QuantitativeValue', value: listing.sqft, unitCode: 'FTK' } : undefined,
+      ...(listing.yearBuilt ? { yearBuilt: listing.yearBuilt } : {}),
+    },
+    offers: {
+      '@type': 'Offer',
+      price: listing.price,
+      priceCurrency: 'USD',
+      availability: listing.status === 'Active' ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut',
+    },
+  };
+
   return (
     <div className="pt-28 pb-20 max-w-6xl mx-auto px-4 sm:px-6">
+      <script type="application/ld+json">{JSON.stringify(listingSchema)}</script>
 
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs text-[#1C2B2E]/60 mb-6">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShieldCheck, Award, CheckCircle2, Phone, Calendar, ArrowRight, Compass, MapPin, Building2, Landmark, GraduationCap } from 'lucide-react';
 import { ReviewsSection } from '../components/ReviewsSection';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface AboutPageProps {
   onOpenConsultation: () => void;
@@ -11,6 +12,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   onOpenConsultation,
   setActiveTab
 }) => {
+  usePageMeta(
+    'About Kyle Friedman | The Friedman Team',
+    'Meet Kyle Friedman, Principal Advisor of The Friedman Team at eXp Realty, serving Carroll, Baltimore, Howard, and Frederick County, Maryland.'
+  );
   const specializations = [
     {
       title: 'First-Time & Move-Up Buyers',

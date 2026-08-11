@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin, ShieldCheck, CheckCircle2, Clock, Building2, Calendar, AlertCircle } from 'lucide-react';
 import { LeadFormPayload } from '../types';
 import { submitLead } from '../lib/leads';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface ContactPageProps {
   onOpenValuation: () => void;
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({ onOpenValuation }) => {
+  usePageMeta(
+    'Contact The Friedman Team | Kyle Friedman, eXp Realty',
+    'Get in touch with Kyle Friedman and The Friedman Team - buying, selling, or just exploring your options in Carroll, Baltimore, Howard, or Frederick County, Maryland.'
+  );
   const [form, setForm] = useState<LeadFormPayload>({
     name: '',
     email: '',

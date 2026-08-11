@@ -1,8 +1,13 @@
 import React from 'react';
 import { HANDBOOK_GUIDES } from '../data/guides';
 import { BookShelfCard } from '../components/BookShelfCard';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export const GuidesListPage: React.FC = () => {
+  usePageMeta(
+    'Free Guides | The Friedman Team',
+    'Free, real guides for Maryland buyers and sellers - the First-Time Homebuyer\u2019s Guide, the Seller\u2019s Guide, and the Home Valuation Guide.'
+  );
   return (
     <div className="pt-28 pb-24 bg-[#FAF8F5]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
