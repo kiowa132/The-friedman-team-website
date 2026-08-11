@@ -384,68 +384,6 @@ export const NEIGHBORHOODS: Neighborhood[] = [
   }
 ];
 
-export const MARKET_TRENDS: MarketTrendData[] = [
-  { month: 'Aug 2025', carrollAvgPrice: 810000, baltimoreAvgPrice: 1150000, howardAvgPrice: 910000, activeListings: 142 },
-  { month: 'Oct 2025', carrollAvgPrice: 825000, baltimoreAvgPrice: 1180000, howardAvgPrice: 935000, activeListings: 135 },
-  { month: 'Dec 2025', carrollAvgPrice: 840000, baltimoreAvgPrice: 1210000, howardAvgPrice: 948000, activeListings: 118 },
-  { month: 'Feb 2026', carrollAvgPrice: 862000, baltimoreAvgPrice: 1245000, howardAvgPrice: 962000, activeListings: 128 },
-  { month: 'Apr 2026', carrollAvgPrice: 875000, baltimoreAvgPrice: 1280000, howardAvgPrice: 980000, activeListings: 145 },
-  { month: 'Jun 2026', carrollAvgPrice: 895000, baltimoreAvgPrice: 1310000, howardAvgPrice: 1010000, activeListings: 152 }
-];
-
-export const MARKET_STATS: MarketStat[] = [
-  { county: 'Carroll County', avgPrice: '$895,000', yoyGrowth: '+7.4%', inventoryLevel: '1.8 Months (Tight Seller Market)', avgDaysOnMarket: 14 },
-  { county: 'Baltimore County (North)', avgPrice: '$1,310,000', yoyGrowth: '+6.2%', inventoryLevel: '2.1 Months (High Demand)', avgDaysOnMarket: 12 },
-  { county: 'Howard County', avgPrice: '$1,010,000', yoyGrowth: '+8.1%', inventoryLevel: '1.4 Months (Extreme Demand)', avgDaysOnMarket: 9 }
-];
-
-export const EDITORIAL_ARTICLES: EditorialArticle[] = [
-  {
-    id: 'article-1',
-    title: 'The Shift toward Rural Luxury & Equestrian Compounds in Maryland',
-    date: 'July 22, 2026',
-    category: 'Market Trends',
-    readTime: '6 min read',
-    summary: 'An analysis of high-net-worth buyers migrating from metropolitan hubs to multi-acre estates in Carroll and northern Baltimore counties.',
-    content: [
-      'Over the past 24 months, the luxury real estate dynamics in central Maryland have undergone a fundamental evolution. Ultra-high-net-worth buyers are prioritizing privacy, land security, and custom agricultural preservation over traditional suburban density.',
-      'In Carroll County, acreage properties featuring custom equestrian amenities, private ponds, and high-speed fiber connectivity are commanding 12% to 18% premiums over standard luxury subdivisions.',
-      'Our analysis indicates that off-market placement accounts for nearly 28% of all luxury sales over $2.5 Million in the Green Spring and South Carroll corridors. Positioning a home strategically before public MLS broadcast remains the single most lucrative tactic for estate owners.'
-    ],
-    author: 'Kyle Friedman',
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80'
-  },
-  {
-    id: 'article-2',
-    title: 'Pricing Strategy vs. Listing Strategy: How 1% Differences Yield $150K+',
-    date: 'July 10, 2026',
-    category: 'Seller Strategy',
-    readTime: '5 min read',
-    summary: 'Why traditional real estate marketing fails luxury properties, and how algorithmic valuation combined with private buyer networks unlocks maximum return.',
-    content: [
-      'Listing a luxury property is simple. Strategically launching a luxury property to high-intent global capital requires a precise mix of narrative positioning, cinematic photography, architectural storytelling, and discrete negotiation protection.',
-      'When an estate is priced 4% above market equilibrium without strategic positioning, it sits on the market for an average of 64 days, eventually suffering price cuts that erode net proceeds by up to 8%.',
-      'Conversely, our Strategic Launch Framework leverages pre-market private previews, targeted digital exposure to high-earning relocations, and structured offer windows to generate competitive urgency.'
-    ],
-    author: 'Kyle Friedman',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
-  },
-  {
-    id: 'article-3',
-    title: 'Navigating Preservation Easements & Tax Credits for Maryland Farms',
-    date: 'June 28, 2026',
-    category: 'Estate Management',
-    readTime: '7 min read',
-    summary: 'A complete breakdown of MALPF, Rural Legacy, and Agricultural Preservation tax incentives for Carroll and Baltimore County land owners.',
-    content: [
-      'Maryland offers some of the nation’s most robust agricultural preservation incentives. For owners of 10+ acres in Carroll or Baltimore County, understanding the nuances of the Maryland Agricultural Land Preservation Foundation (MALPF) can yield substantial tax relief and capital preservation.',
-      'Whether evaluating property tax reductions under agricultural status or negotiating conservation easements, having an advisory team with deep rural land experience is non-negotiable.'
-    ],
-    author: 'Kyle Friedman',
-    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80'
-  }
-];
-
 export const TESTIMONIALS = [
   {
     id: 't-1',
