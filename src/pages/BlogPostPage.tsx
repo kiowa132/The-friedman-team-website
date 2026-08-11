@@ -7,6 +7,7 @@ import { NEIGHBORHOODS } from '../data/mockData';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
 import { formatDisplayDate } from '../lib/formatDate';
 import { ScrollSubscribePrompt } from '../components/ScrollSubscribePrompt';
+import { ExitIntentCapture } from '../components/ExitIntentCapture';
 
 interface BlogPostPageProps {
   onOpenConsultation: () => void;
@@ -142,6 +143,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
 
       <ScrollSubscribePrompt />
+      <ExitIntentCapture />
 
       {/* Masthead - real branded image */}
       <div className="bg-[#0D2226] py-4 border-b-4 border-[#C9A96A]">

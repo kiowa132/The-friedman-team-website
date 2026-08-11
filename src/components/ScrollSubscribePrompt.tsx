@@ -3,6 +3,9 @@ import { X } from 'lucide-react';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
 
 const DISMISS_KEY = 'friedman_scroll_subscribe_dismissed';
+const EXIT_SHOWN_KEY = 'friedman_exit_intent_shown'; // shared with
+// ExitIntentCapture - if that already fired this session, this bar stays
+// quiet too. One soft interruption per session, not two.
 
 // A slide-in bar (not a blocking overlay) that appears once someone has
 // scrolled about halfway through an article - real engagement signal that
@@ -14,8 +17,9 @@ export const ScrollSubscribePrompt: React.FC = () => {
   const hasSubstack = SUBSTACK_SUBDOMAIN && SUBSTACK_SUBDOMAIN !== 'YOUR-SUBSTACK-SUBDOMAIN';
 
   useEffect(() => {
-    // Don't show again this session if already dismissed once.
-    if (sessionStorage.getItem(DISMISS_KEY) === 'true') {
+    // Don't show again this session if already dismissed once, or if
+    // the exit-intent modal already caught this visitor.
+    if (sessionStorage.getItem(DISMISS_KEY) === 'true' || sessionStorage.getItem(EXIT_SHOWN_KEY) === 'true') {
       setDismissed(true);
       return;
     }
@@ -26,6 +30,11 @@ export const ScrollSubscribePrompt: React.FC = () => {
       const scrollPercent = (window.scrollY / scrollableHeight) * 100;
       if (scrollPercent > 50) {
         setVisible(true);
+        // Marked as "shown" the moment it appears, not just on dismiss -
+        // this is what ExitIntentCapture checks to avoid popping up on
+        // top of this bar if both would otherwise fire around the same
+        // time.
+        sessionStorage.setItem(DISMISS_KEY, 'true');
       }
     };
 
