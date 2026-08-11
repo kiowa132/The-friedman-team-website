@@ -83,29 +83,55 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
     bodyBlocks.forEach((block) => interleavedContent.push({ type: 'html', value: block }));
   }
 
-  // Article + VideoObject schema markup - this is what makes the post
+  // BlogPosting + VideoObject schema markup - this is what makes the post
   // eligible for rich results in Google, including video thumbnails
-  // showing up directly in search results.
+  // showing up directly in search results. BlogPosting (not the more
+  // generic Article) is the correct, more precise type for this content,
+  // and publisher.logo is required by Google's own guidelines for rich
+  // result eligibility - it was missing before.
+  const canonicalUrl = `https://www.friedmanreteam.com/blog/${post.slug}`;
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'Article',
+        '@type': 'BlogPosting',
         headline: post.title,
         description: post.metaDescription,
         datePublished: post.publishDate,
-        image: post.heroImage,
-        author: { '@type': 'Person', name: 'Kyle Friedman' },
-        publisher: { '@type': 'Organization', name: 'The Friedman Team' },
+        dateModified: post.publishDate,
+        url: canonicalUrl,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+        image: post.heroImage.startsWith('http') ? post.heroImage : `https://www.friedmanreteam.com${post.heroImage}`,
+        author: {
+          '@type': 'Person',
+          name: 'Kyle Friedman',
+          url: 'https://www.friedmanreteam.com/about',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'The Friedman Team',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://www.friedmanreteam.com/favicon-192.png',
+          },
+        },
       },
       ...(post.youtubeVideoId
         ? [{
             '@type': 'VideoObject',
             name: post.title,
             description: post.metaDescription,
-            thumbnailUrl: post.heroImage,
+            thumbnailUrl: post.heroImage.startsWith('http') ? post.heroImage : `https://www.friedmanreteam.com${post.heroImage}`,
             uploadDate: post.publishDate,
             embedUrl: `https://www.youtube.com/embed/${post.youtubeVideoId}`,
+            publisher: {
+              '@type': 'Organization',
+              name: 'The Friedman Team',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://www.friedmanreteam.com/favicon-192.png',
+              },
+            },
           }]
         : []),
     ],

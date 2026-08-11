@@ -18,7 +18,7 @@ Cheap tool, wasted hour, paid for the job anyway. That's not a frugal move - tha
 
 I see this constantly with listings: someone treats curb appeal as optional polish, the thing you get to if there's time and budget left. But a buyer scrolling at 9pm isn't touring your house. They're reacting to one photo, and that photo is doing all the talking before anyone schedules a showing.
 
-Grimy siding and a stained front walk don't read as "we've been busy." They read as "what else did they skip?" That question is expensive. It doesn't just cost you the buyers who scroll past - it costs you the ones who click in, then anchor their offer low because they've already decided the whole house needs work, kitchen and roof included, before they've seen either.
+Grimy siding and a stained front walk don't read as "we've been busy." They read as "what else did they skip?" That question is expensive. It doesn't just cost you the buyers who scroll past - it costs you the ones who click in, then anchor their offer low because they've already decided the whole house needs work, kitchen and [roof](/blog/should-you-replace-your-roof-before-selling-a-maryland-sellers-guide) included, before they've seen either.
 
 ## The house talks before you do
 

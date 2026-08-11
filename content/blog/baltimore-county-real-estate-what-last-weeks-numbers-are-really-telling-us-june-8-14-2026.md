@@ -49,7 +49,7 @@ List-to-sale ratio: about 99.1%, meaning most homes are still selling close to a
 
 
 
-Mortgage Rates Ticked Up Here’s Why
+[Mortgage Rates](/calculators/mortgage) Ticked Up Here’s Why
 
 The 30-year fixed mortgage averaged 6.52% for the week ending June 11, up slightly from 6.48% the week before. By midweek, daily rate trackers had it closer to 6.6%.
 

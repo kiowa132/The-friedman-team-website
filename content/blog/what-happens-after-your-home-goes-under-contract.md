@@ -154,7 +154,7 @@ Even newer homes usually generate inspection reports with dozens of items. Most 
 
 
 
-Once inspections are complete, the buyer may request repairs or financial credits.
+Once inspections are complete, the buyer may request [repairs](/blog/should-you-replace-your-roof-before-selling-a-maryland-sellers-guide) or financial credits.
 
 
 

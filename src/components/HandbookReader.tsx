@@ -263,7 +263,7 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
               onClick={() => jumpToPage(i)}
               className={`shrink-0 w-8 h-11 rounded-[2px] overflow-hidden border transition-all ${currentPage === i ? 'border-[#C9A96A] opacity-100' : 'border-white/10 opacity-50 hover:opacity-80'}`}
             >
-              <img src={p.image} alt="" className="w-full h-full object-cover" />
+              <img src={p.image} alt={p.label} className="w-full h-full object-cover" />
             </button>
           ))}
         </div>

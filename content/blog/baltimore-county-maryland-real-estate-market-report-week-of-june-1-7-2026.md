@@ -154,7 +154,7 @@ The math on aspirational pricing is unambiguous. A home launched 5–10% above c
 
 
 
-Precision pricing is not leaving money on the table. It is maximizing net proceeds.
+Precision pricing is not leaving money on the table. It is maximizing [net proceeds](/calculators/net-proceeds).
 
 
 

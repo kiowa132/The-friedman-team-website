@@ -1,7 +1,7 @@
 ---
 title: Something happened this week that isn’t supposed to happen | The Friedman
   Maryland Report | Week of July 27 – August 2, 2026
-metaDescription: Mortgage rates climbed for the fifth week in a row
+metaDescription: [Mortgage rates](/calculators/mortgage) climbed for the fifth week in a row
 category: Market Reports
 publishDate: 2026-08-02
 heroImage: /images/uploads/big-story-07-27-2026-15.jpg

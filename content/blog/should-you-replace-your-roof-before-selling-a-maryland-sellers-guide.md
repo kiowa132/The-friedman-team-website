@@ -68,7 +68,7 @@ An outdated or damaged roof does not just lower offers. Multiple industry source
 
 
 
-There is also a financing reality worth understanding even if most of your buyers are not using government backed loans. FHA guidelines require a roof to have at least two years of remaining useful life and no active leaks before a loan can close. VA guidelines require two to three years of remaining life, with some lenders interpreting that closer to three to five years, along with no active leaks and no structural damage to the decking. Roof condition is consistently one of the most common reasons an appraisal gets flagged, and repairs triggered late in the process can delay closing by weeks.
+There is also a [financing](/financing-options) reality worth understanding even if most of your buyers are not using government backed loans. FHA guidelines require a roof to have at least two years of remaining useful life and no active leaks before a loan can close. VA guidelines require two to three years of remaining life, with some lenders interpreting that closer to three to five years, along with no active leaks and no structural damage to the decking. Roof condition is consistently one of the most common reasons an appraisal gets flagged, and repairs triggered late in the process can delay closing by weeks.
 
 
 
