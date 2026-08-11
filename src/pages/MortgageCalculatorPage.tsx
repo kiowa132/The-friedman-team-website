@@ -177,7 +177,7 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
               className="w-full py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4" />
-              Talk to Kyle About Financing
+              Talk to Kyle Friedman About Financing
             </button>
           </div>
         </div>

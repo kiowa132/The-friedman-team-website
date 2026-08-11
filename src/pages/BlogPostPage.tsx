@@ -327,7 +327,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           <div className="border border-[#C9A96A] rounded-xs p-6 text-center space-y-3 bg-[#0D2226] text-[#FAF8F5]">
             <div className="text-xs font-bold uppercase tracking-widest text-[#C9A96A]">Thinking of Selling?</div>
             <div className="font-serif text-lg font-bold">Free Market Evaluation</div>
-            <p className="text-[11px] text-[#A8B2A1]">Kyle personally reviews your property. No automated guess.</p>
+            <p className="text-[11px] text-[#A8B2A1]">Kyle Friedman personally reviews your property. No automated guess.</p>
             <button
               onClick={onOpenValuation}
               className="w-full py-3 bg-[#C9A96A] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#D4AF37] transition-colors flex items-center justify-center gap-2"
@@ -373,7 +373,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
               <h3 className="font-serif text-xl font-bold">Kyle Friedman</h3>
               <p className="text-xs text-[#A8B2A1] mb-3">Licensed REALTOR® & Principal Advisor, The Friedman Team at eXp Realty</p>
               <p className="text-sm text-[#FAF8F5]/80 leading-relaxed max-w-lg">
-                Kyle serves buyers and sellers across Carroll, Howard, Frederick, and Baltimore counties, with a strategy-first, data-driven approach to pricing and negotiation.
+                Kyle Friedman serves buyers and sellers across Carroll, Howard, Frederick, and Baltimore counties, with a strategy-first, data-driven approach to pricing and negotiation.
               </p>
               <div className="flex items-center justify-center sm:justify-start gap-4 mt-4">
                 <a
@@ -405,7 +405,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
                 </a>
                 <button onClick={onOpenConsultation} className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A96A] hover:text-[#FAF8F5] transition-colors">
                   <Phone className="w-3.5 h-3.5" />
-                  Contact Kyle
+                  Contact Kyle Friedman
                 </button>
               </div>
             </div>

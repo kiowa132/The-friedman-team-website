@@ -75,14 +75,14 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
           35,000 unique viewers on a listing, and years-of-experience - but
           flagged all of these as unverified (the experience figure alone
           had two conflicting numbers in the source docs: 8 vs 17 years).
-          Once Kyle confirms real, current numbers (and the correct
+          Once Kyle Friedman confirms real, current numbers (and the correct
           reporting period/source), replace the qualitative bullets below
           with the actual figures.
         */}
         <div className="bg-[#0D2226] text-[#FAF8F5] border border-[#C9A96A]/40 p-8 rounded-xs space-y-4">
           <h2 className="font-serif text-2xl font-bold">The Numbers That Matter</h2>
           <p className="text-sm text-[#A8B2A1] leading-relaxed">
-            Real performance data from recent listings. Ask Kyle directly for current, verified numbers on list to sale ratio, average days on market, and listing reach, sourced from Bright MLS for the most recent reporting period.
+            Real performance data from recent listings. Ask Kyle Friedman directly for current, verified numbers on list to sale ratio, average days on market, and listing reach, sourced from Bright MLS for the most recent reporting period.
           </p>
           <ul className="space-y-2 text-sm">
             <li className="flex items-start gap-2">
@@ -122,12 +122,12 @@ export const SellerProcessPage: React.FC<SellerProcessPageProps> = ({ onOpenValu
         </div>
 
         {/* "Restrictions apply" per source doc - confirm exact terms with
-            Kyle before this goes live, this is placeholder-safe language
+            Kyle Friedman before this goes live, this is placeholder-safe language
             until confirmed. */}
         <div className="bg-[#FAF8F5] border border-[#C9A96A]/30 p-8 rounded-xs space-y-3">
           <h2 className="font-serif text-2xl font-bold text-[#0D2226]">The Easy Exit Guarantee</h2>
           <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
-            If you're ever not fully satisfied, you can cancel the listing agreement. No lengthy contract, no risk. Ask Kyle for the full details.
+            If you're ever not fully satisfied, you can cancel the listing agreement. No lengthy contract, no risk. Ask Kyle Friedman for the full details.
           </p>
         </div>
 

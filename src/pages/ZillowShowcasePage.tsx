@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Camera, Boxes, MapPinned, Users, TrendingUp, Clock3, Award, Phone } from 'lucide-react';
+import { Camera, Boxes, MapPinned, Users, TrendingUp, Clock3, Award, Phone, Eye, MousePointerClick, Sparkles } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
+import { ReviewsSection } from '../components/ReviewsSection';
 
 interface ZillowShowcasePageProps {
   onOpenConsultation: () => void;
@@ -9,13 +10,13 @@ interface ZillowShowcasePageProps {
 
 // Real, sourced content only. The stats are Zillow/ShowingTime+'s own
 // published numbers (cited below), not a Friedman Team-specific result -
-// Kyle doesn't have his own Showcase outcome data yet, so this page
-// explains the real product rather than implying a track record that
-// doesn't exist. The comparison graphic and one-pager are Kyle's own
-// co-branded marketing assets (his name/logo already on them). The
-// floor plan image and videos are illustrative product demos of a
-// different real listing, used to show what the feature looks like,
-// not presented as one of Kyle's own listings.
+// Kyle Friedman doesn't have his own Showcase outcome data yet, so this
+// page explains the real product rather than implying a track record
+// that doesn't exist. The comparison graphic and one-pager are Kyle's
+// own co-branded marketing assets. The floor plan image and videos are
+// illustrative product demos of a different real listing, used to show
+// what the feature looks like, not presented as one of Kyle's own
+// listings.
 export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenConsultation }) => {
   usePageMeta(
     'Zillow Showcase | The Friedman Team',
@@ -26,7 +27,13 @@ export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenCo
     { icon: Camera, title: 'High-Resolution Photography', description: 'Professional photography built for the larger, more prominent hero image Showcase listings get.' },
     { icon: Boxes, title: 'Interactive Floor Plans & 3D Tours', description: 'Buyers can explore the actual layout room by room, not just scroll through static photos.' },
     { icon: MapPinned, title: 'Priority Placement', description: 'Special map callouts and prioritized position in personalized Zillow search results.' },
-    { icon: Users, title: 'Direct Buyer Access', description: 'Interested buyers can contact Kyle directly from the listing, with exposure to Zillow\u2019s own user base.' },
+    { icon: Users, title: 'Direct Buyer Access', description: 'Interested buyers can contact Kyle Friedman directly from the listing, with exposure to Zillow\u2019s own user base.' },
+  ];
+
+  const whyItMatters = [
+    { icon: Eye, title: 'The Thumbnail Decides Everything', description: 'Most buyers scroll through dozens of listings before ever scheduling a showing. The first photo is doing all the work, before anyone reads a single detail.' },
+    { icon: MousePointerClick, title: 'Attention Is the Scarce Resource', description: 'A standard listing competes for a click on equal footing with every other home nearby. Showcase changes that competition entirely.' },
+    { icon: Sparkles, title: 'Not Every Listing Qualifies, and That\u2019s the Point', description: 'Showcase is limited to roughly 10% of listings in a market. When a property is eligible, that scarcity is exactly what makes the placement valuable.' },
   ];
 
   const stats = [
@@ -42,6 +49,13 @@ export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenCo
     { src: '/videos/zillow-showcase/photos.mp4', title: 'Professional Photography' },
   ];
 
+  const faqs = [
+    { q: 'Does every listing qualify for Showcase?', a: 'No. It\u2019s available to roughly 10% of listings in a given market at a time. Kyle Friedman can tell you honestly whether a specific property is likely to be eligible before you list.' },
+    { q: 'Does this cost extra?', a: 'No. When a property qualifies, Showcase is included as part of the marketing plan, at no additional cost to you.' },
+    { q: 'What if my home doesn\u2019t qualify?', a: 'It still gets a full, professional marketing plan, professional photography, and a strategic pricing approach. Showcase is an enhancement on top of that, not a replacement for it.' },
+    { q: 'How is this different from a regular Zillow listing?', a: 'A larger hero image, interactive floor plans and 3D tours, priority placement in search and on the map, and direct alerts to interested buyers in Zillow\u2019s own user base.' },
+  ];
+
   return (
     <div className="bg-[#FAF8F5]">
 
@@ -52,47 +66,61 @@ export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenCo
           Zillow Showcase
         </h1>
         <p className="text-base sm:text-lg text-[#1C2B2E]/80 leading-relaxed mt-5 max-w-2xl mx-auto font-light">
-          A premium listing placement on Zillow, available to roughly 10% of listings in a given market. When a property qualifies, Kyle uses it as part of the marketing plan, at no extra cost to you.
+          A premium listing placement on Zillow, available to roughly 10% of listings in a given market. When a property qualifies, Kyle Friedman uses it as part of the marketing plan, at no extra cost to you.
         </p>
       </div>
 
-      <div className="relative w-full h-[280px] sm:h-[380px] overflow-hidden mb-16">
-        <img
-          src="/images/zillow-showcase/blog-thumbnail.jpg"
-          alt="Maximize your home's visibility with Zillow Showcase"
-          className="absolute inset-0 w-full h-full object-cover object-[center_65%]"
-        />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-16">
+        <img src="/images/zillow-showcase/blog-thumbnail.jpg" alt="Maximize your home's visibility with Zillow Showcase" className="w-full h-auto rounded-sm shadow-lg" />
       </div>
 
-      {/* What's included */}
+      {/* Why it matters */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-20">
-        <h2 className="font-serif text-2xl font-bold text-[#0D2226] text-center mb-10">What Showcase Includes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8">
-          {included.map((item) => (
-            <div key={item.title} className="flex gap-4">
-              <div className="w-11 h-11 rounded-full border border-[#C9A96A]/40 flex items-center justify-center shrink-0 text-[#0F5C63]">
-                <item.icon className="w-5 h-5" />
+        <h2 className="font-serif text-2xl font-bold text-[#0D2226] text-center mb-3">Why Visibility Actually Matters</h2>
+        <p className="text-sm text-[#1C2B2E]/65 text-center mb-10 max-w-2xl mx-auto">
+          Before a buyer ever walks through the door, they've already made a decision about your home online.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {whyItMatters.map((w) => (
+            <div key={w.title} className="bg-white border border-[#C9A96A]/25 p-7 text-center">
+              <div className="w-12 h-12 rounded-full border border-[#C9A96A]/40 flex items-center justify-center mx-auto text-[#0F5C63]">
+                <w.icon className="w-5 h-5" />
               </div>
-              <div>
-                <h3 className="font-serif text-lg font-bold text-[#0D2226]">{item.title}</h3>
-                <p className="text-sm text-[#1C2B2E]/70 leading-relaxed mt-1">{item.description}</p>
-              </div>
+              <h3 className="font-serif text-base font-bold text-[#0D2226] mt-4">{w.title}</h3>
+              <p className="text-xs text-[#1C2B2E]/65 leading-relaxed mt-2">{w.description}</p>
             </div>
           ))}
         </div>
+      </div>
 
-        <div className="mt-14">
-          <img src="/images/zillow-showcase/floorplan-demo.jpg" alt="Example of the interactive floor plan feature on a Zillow Showcase listing" className="w-full rounded-sm shadow-lg" />
-          <p className="text-xs text-[#1C2B2E]/50 text-center mt-3">
-            Example of the interactive floor plan experience buyers get on a Showcase listing.
-          </p>
+      {/* What's included */}
+      <div className="bg-white py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <h2 className="font-serif text-2xl font-bold text-[#0D2226] text-center mb-10">What Showcase Includes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8">
+            {included.map((item) => (
+              <div key={item.title} className="flex gap-4">
+                <div className="w-11 h-11 rounded-full border border-[#C9A96A]/40 flex items-center justify-center shrink-0 text-[#0F5C63]">
+                  <item.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-lg font-bold text-[#0D2226]">{item.title}</h3>
+                  <p className="text-sm text-[#1C2B2E]/70 leading-relaxed mt-1">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-14">
+            <img src="/images/zillow-showcase/floorplan-demo.jpg" alt="Example of the interactive floor plan feature on a Zillow Showcase listing" className="w-full rounded-sm shadow-lg" />
+            <p className="text-xs text-[#1C2B2E]/50 text-center mt-3">
+              Example of the interactive floor plan experience buyers get on a Showcase listing.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* See it in action - real product demo videos, illustrative of the
-          feature, not one of Kyle's own listings. preload="metadata"
-          keeps these from eating bandwidth until someone actually plays
-          one. */}
+      {/* See it in action */}
       <div className="bg-[#0D2226] py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#FAF8F5] text-center mb-3">See Showcase In Action</h2>
@@ -100,11 +128,7 @@ export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenCo
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {videos.map((v) => (
               <div key={v.src}>
-                <video
-                  controls
-                  preload="metadata"
-                  className="w-full rounded-sm border border-[#FAF8F5]/10 shadow-lg bg-black"
-                >
+                <video controls preload="metadata" className="w-full rounded-sm border border-[#FAF8F5]/10 shadow-lg bg-black">
                   <source src={v.src} type="video/mp4" />
                 </video>
                 <p className="text-xs text-[#F5F1E8]/70 text-center mt-3">{v.title}</p>
@@ -114,7 +138,7 @@ export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenCo
         </div>
       </div>
 
-      {/* Standard vs Showcase - Kyle's own co-branded comparison graphic */}
+      {/* Standard vs Showcase */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226] text-center mb-10">
           Standard Listing vs. Showcase
@@ -148,14 +172,25 @@ export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenCo
         </p>
       </div>
 
-      {/* Friedman-branded one-pager */}
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 pb-20 text-center">
-        <h2 className="font-serif text-xl font-bold text-[#0D2226] mb-6">The Full Overview</h2>
-        <img src="/images/zillow-showcase/friedman-showcase-onepager.jpg" alt="The Friedman Team Zillow Showcase overview" className="w-full max-w-md mx-auto rounded-sm shadow-lg border border-[#C9A96A]/20" />
+      {/* FAQ */}
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-20">
+        <h2 className="font-serif text-2xl font-bold text-[#0D2226] text-center mb-10">Common Questions</h2>
+        <div className="space-y-6">
+          {faqs.map((f) => (
+            <div key={f.q} className="border-b border-[#C9A96A]/20 pb-6">
+              <h3 className="font-serif text-base font-bold text-[#0D2226]">{f.q}</h3>
+              <p className="text-sm text-[#1C2B2E]/70 leading-relaxed mt-2">{f.a}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
+      {/* Real reviews - same genuine Google reviews shown elsewhere on the
+          site, not written specifically for this page. */}
+      <ReviewsSection />
+
       {/* CTA */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-24 text-center">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-20 pb-24 text-center">
         <h2 className="font-serif text-2xl font-bold text-[#0D2226]">See If Your Home Qualifies</h2>
         <p className="text-sm text-[#1C2B2E]/70 mt-3 max-w-lg mx-auto">
           Not every listing is eligible for Showcase, but if yours is, it's included in the marketing plan. Let's talk about your property.
@@ -165,7 +200,7 @@ export const ZillowShowcasePage: React.FC<ZillowShowcasePageProps> = ({ onOpenCo
           className="inline-flex items-center gap-2 mt-7 px-10 py-4 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-colors"
         >
           <Phone className="w-4 h-4" />
-          Talk to Kyle
+          Talk to Kyle Friedman
         </button>
         <div className="mt-6">
           <Link to="/luxury" className="text-xs text-[#0F5C63] hover:text-[#C9A96A] font-bold underline">

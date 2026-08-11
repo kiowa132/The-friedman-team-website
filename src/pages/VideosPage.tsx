@@ -24,7 +24,7 @@ export const VideosPage: React.FC = () => {
         {VIDEOS.length === 0 ? (
           <div className="max-w-xl mx-auto text-center border border-[#C9A96A]/30 bg-white p-10">
             <p className="text-sm text-[#1C2B2E]/70 mb-6">
-              Video library coming soon. In the meantime, catch Kyle's latest market updates on Instagram and YouTube.
+              Video library coming soon. In the meantime, catch Kyle Friedman's latest market updates on Instagram and YouTube.
             </p>
             <div className="flex items-center justify-center gap-4">
               <a href="#" className="inline-flex items-center gap-2 px-6 py-2.5 border border-[#0D2226]/20 hover:border-[#0F5C63] text-[#0D2226] font-bold text-xs uppercase tracking-widest transition-colors">

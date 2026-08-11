@@ -237,7 +237,7 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
               className="inline-flex items-center gap-2 px-6 py-3 border border-[#FAF8F5]/60 hover:border-[#C9A96A] text-[#FAF8F5] hover:text-[#C9A96A] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
             >
               <Phone className="w-4 h-4" />
-              Talk to Kyle
+              Talk to Kyle Friedman
             </button>
           </div>
           <div className="flex items-center gap-2.5 mt-6">

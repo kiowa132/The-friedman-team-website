@@ -46,7 +46,7 @@ export const GuideDetailPage: React.FC = () => {
     setIsSubmitting(false);
 
     if (!ok) {
-      setSubmitError(error || 'Something went wrong. Please try again or contact Kyle directly.');
+      setSubmitError(error || 'Something went wrong. Please try again or contact Kyle Friedman directly.');
       return;
     }
 
@@ -139,7 +139,7 @@ export const GuideDetailPage: React.FC = () => {
 
                 <p className="text-[10px] text-[#A8B2A1] text-center flex items-center justify-center gap-1.5 pt-1">
                   <ShieldCheck className="w-3 h-3 text-[#C9A96A]" />
-                  Your info goes straight to Kyle. Never sold or shared.
+                  Your info goes straight to Kyle Friedman. Never sold or shared.
                 </p>
               </form>
             ) : (
@@ -157,7 +157,7 @@ export const GuideDetailPage: React.FC = () => {
                   </a>
                 ) : (
                   <p className="text-xs text-[#A8B2A1]">
-                    Thanks! Kyle will send this guide directly to your email shortly.
+                    Thanks! Kyle Friedman will send this guide directly to your email shortly.
                   </p>
                 )}
               </div>

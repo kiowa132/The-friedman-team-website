@@ -299,7 +299,7 @@ export const MarketReportPage: React.FC<MarketReportPageProps> = ({
                 }}
                 className="px-6 py-2 bg-[#C9A96A] text-[#0D2226] text-xs font-bold uppercase"
               >
-                Discuss Article Insights with Kyle
+                Discuss Article Insights with Kyle Friedman
               </button>
             </div>
           </div>

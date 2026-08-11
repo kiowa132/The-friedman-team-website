@@ -55,7 +55,7 @@ export const StrategyConsultationModal: React.FC<StrategyConsultationModalProps>
     setIsSubmitting(false);
 
     if (!ok) {
-      setSubmitError(error || 'Something went wrong sending your request. Please call or email Kyle directly.');
+      setSubmitError(error || 'Something went wrong sending your request. Please call or email Kyle Friedman directly.');
       return;
     }
 
@@ -237,7 +237,7 @@ export const StrategyConsultationModal: React.FC<StrategyConsultationModalProps>
                 <div className="bg-red-900/10 border border-red-500/40 p-3 text-left rounded-xs flex items-start gap-2">
                   <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                   <p className="text-xs text-red-700">
-                    {submitError} You can also reach Kyle directly at kyle@friedmanreteam.com or (443) 789-3101.
+                    {submitError} You can also reach Kyle Friedman directly at kyle@friedmanreteam.com or (443) 789-3101.
                   </p>
                 </div>
               )}

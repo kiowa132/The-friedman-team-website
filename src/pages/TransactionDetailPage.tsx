@@ -153,11 +153,11 @@ export const TransactionDetailPage: React.FC<TransactionDetailPageProps> = ({ on
         <div className="mt-10">
           <KyleContactCard
             onCtaClick={onOpenConsultation}
-            ctaLabel="Talk to Kyle"
+            ctaLabel="Talk to Kyle Friedman"
             dealContextText={
               t.mentorRole && t.mentorOfficeAtSale
-                ? `${MENTOR_NAME} represented ${t.mentorRole === 'Listing Agent' ? 'the seller' : 'the buyer'} on this transaction. Kyle Friedman trained directly under ${MENTOR_NAME}, and this deal is shown as context for that mentorship, not as part of Kyle's or The Friedman Team's own sales record.`
-                : `Kyle Friedman trained directly under ${MENTOR_NAME}. This deal is shown as context for that mentorship, not as part of Kyle's or The Friedman Team's own sales record.`
+                ? `${MENTOR_NAME} represented ${t.mentorRole === 'Listing Agent' ? 'the seller' : 'the buyer'} on this transaction. Kyle Friedman trained directly under ${MENTOR_NAME}, and this deal is shown as context for that mentorship, not as part of Kyle Friedman's or The Friedman Team's own sales record.`
+                : `Kyle Friedman trained directly under ${MENTOR_NAME}. This deal is shown as context for that mentorship, not as part of Kyle Friedman's or The Friedman Team's own sales record.`
             }
           />
         </div>

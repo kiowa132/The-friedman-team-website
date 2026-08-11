@@ -367,7 +367,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </form>
           ) : (
             <p className="text-sm text-[#0F5C63] font-semibold">
-              Thanks! Kyle will follow up personally with a real comparative market analysis.
+              Thanks! Kyle Friedman will follow up personally with a real comparative market analysis.
             </p>
           )}
         </div>

@@ -77,7 +77,7 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
     setIsSubmitting(false);
 
     if (!ok) {
-      setSubmitError(error || 'Something went wrong sending your request. Please call or email Kyle directly.');
+      setSubmitError(error || 'Something went wrong sending your request. Please call or email Kyle Friedman directly.');
       return;
     }
 
@@ -129,7 +129,7 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
                   Where is your Maryland property located?
                 </h4>
                 <p className="text-xs text-[#1C2B2E]/70 max-w-md mx-auto">
-                  Tell Kyle a bit about your property below — he'll follow up personally with a full comparative market analysis built from live MLS comps in Carroll, Baltimore, Howard, and Frederick counties.
+                  Tell Kyle Friedman a bit about your property below — he'll follow up personally with a full comparative market analysis built from live MLS comps in Carroll, Baltimore, Howard, and Frederick counties.
                 </p>
               </div>
 
@@ -340,7 +340,7 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
                 <div className="text-[#FAF8F5]">
                   <span className="text-xs text-[#A8B2A1] block">For {address || 'Your Property'}</span>
                   <p className="text-sm sm:text-base mt-2 max-w-md mx-auto">
-                    Kyle will personally review your property details and prepare a real valuation using current comparable sales and local market data — not an automated guess.
+                    Kyle Friedman will personally review your property details and prepare a real valuation using current comparable sales and local market data — not an automated guess.
                   </p>
                 </div>
 
@@ -353,7 +353,7 @@ export const HomeValuationModal: React.FC<HomeValuationModalProps> = ({
                 <div className="bg-red-900/10 border border-red-500/40 p-3 text-left rounded-xs flex items-start gap-2">
                   <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                   <p className="text-xs text-red-700">
-                    {submitError} You can also reach Kyle directly at kyle@friedmanreteam.com or (443) 789-3101.
+                    {submitError} You can also reach Kyle Friedman directly at kyle@friedmanreteam.com or (443) 789-3101.
                   </p>
                 </div>
               )}

@@ -16,7 +16,7 @@ interface KyleContactCardProps {
 // different agent capture the buyer-side inquiry. Kept as its own
 // component so it's identical everywhere it appears rather than
 // duplicated and potentially drifting between pages.
-export const KyleContactCard: React.FC<KyleContactCardProps> = ({ ctaHref = '#', ctaLabel = 'Contact Kyle', onCtaClick, dealContextText }) => {
+export const KyleContactCard: React.FC<KyleContactCardProps> = ({ ctaHref = '#', ctaLabel = 'Contact Kyle Friedman', onCtaClick, dealContextText }) => {
   const Cta = onCtaClick ? (
     <button
       onClick={onCtaClick}

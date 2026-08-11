@@ -40,7 +40,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onOpenConsultation }) => {
 
         {/*
           Home Prep Advisor and Transaction Coordinator below use a generic
-          placeholder icon, not a fabricated photo - Kyle doesn't currently
+          placeholder icon, not a fabricated photo - Kyle Friedman doesn't currently
           have named people filling these specific roles. If he brings on a
           stager, contractor, or transaction coordinator he works with
           regularly, swap in their real photo and name here.

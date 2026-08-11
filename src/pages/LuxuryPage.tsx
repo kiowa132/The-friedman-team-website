@@ -50,7 +50,7 @@ export const LuxuryPage: React.FC<LuxuryPageProps> = ({ onOpenConsultation }) =>
     setIsSubmitting(false);
 
     if (!ok) {
-      setSubmitError(error || 'Something went wrong. Please try again or reach Kyle directly.');
+      setSubmitError(error || 'Something went wrong. Please try again or reach Kyle Friedman directly.');
       return;
     }
 
@@ -153,7 +153,7 @@ export const LuxuryPage: React.FC<LuxuryPageProps> = ({ onOpenConsultation }) =>
       {/* Downsizing & Senior Relocation Support - real, commissioned
           graphic leading into its own dedicated page, matching the
           Showcase section's pattern. Given real prominence here per
-          Kyle's direction - bigger than the other sections on this
+          Kyle Friedman's direction - bigger than the other sections on this
           page on purpose. */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-20">
         <div className="border border-[#C9A96A]/30 shadow-xl overflow-hidden">
@@ -162,7 +162,7 @@ export const LuxuryPage: React.FC<LuxuryPageProps> = ({ onOpenConsultation }) =>
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#C9A96A]">A Different Kind of Move</span>
             <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#0D2226] mt-3">Senior Relocation Services</h2>
             <p className="text-base sm:text-lg text-[#1C2B2E]/75 leading-relaxed mt-5 font-light max-w-2xl mx-auto">
-              Leaving a longtime home is rarely just a transaction. From right-sizing decisions through a coordinated move, Kyle works at a pace that respects what this transition actually is, for the homeowner and their whole family.
+              Leaving a longtime home is rarely just a transaction. From right-sizing decisions through a coordinated move, Kyle Friedman works at a pace that respects what this transition actually is, for the homeowner and their whole family.
             </p>
             <Link
               to="/senior-relocation"
@@ -195,7 +195,7 @@ export const LuxuryPage: React.FC<LuxuryPageProps> = ({ onOpenConsultation }) =>
         {success ? (
           <div className="text-center border border-[#C9A96A]/40 bg-white p-10">
             <p className="font-serif text-xl font-bold text-[#0D2226]">Thank You</p>
-            <p className="text-sm text-[#1C2B2E]/70 mt-2">Kyle will be in touch personally, shortly.</p>
+            <p className="text-sm text-[#1C2B2E]/70 mt-2">Kyle Friedman will be in touch personally, shortly.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -233,7 +233,7 @@ export const LuxuryPage: React.FC<LuxuryPageProps> = ({ onOpenConsultation }) =>
               className="w-full border border-[#0D2226]/20 p-3.5 text-sm bg-white focus:border-[#0F5C63] focus:outline-none resize-none"
             />
             {submitError && (
-              <p className="text-xs text-red-600">{submitError} You can also reach Kyle directly at (443) 789-3101.</p>
+              <p className="text-xs text-red-600">{submitError} You can also reach Kyle Friedman directly at (443) 789-3101.</p>
             )}
             <button
               type="submit"

@@ -44,7 +44,7 @@ export const HandbookLeadModal: React.FC<HandbookLeadModalProps> = ({ coverImage
     setIsSubmitting(false);
 
     if (!ok) {
-      setError(err || 'Something went wrong. Please try again or contact Kyle directly.');
+      setError(err || 'Something went wrong. Please try again or contact Kyle Friedman directly.');
       return;
     }
 
@@ -124,7 +124,7 @@ export const HandbookLeadModal: React.FC<HandbookLeadModalProps> = ({ coverImage
 
               <p className="text-[10px] text-[#1C2B2E]/50 text-center flex items-center justify-center gap-1.5">
                 <ShieldCheck className="w-3 h-3 text-[#C9A96A]" />
-                Your info goes straight to Kyle. Never sold or shared.
+                Your info goes straight to Kyle Friedman. Never sold or shared.
               </p>
             </form>
           </>

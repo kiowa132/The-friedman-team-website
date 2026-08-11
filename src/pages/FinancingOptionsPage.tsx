@@ -84,7 +84,7 @@ export const FinancingOptionsPage: React.FC<FinancingOptionsPageProps> = ({ onOp
           </div>
           <h2 className="font-serif text-2xl sm:text-3xl font-bold mb-3">See What You Could Qualify For</h2>
           <p className="text-sm text-[#A8B2A1] max-w-xl mx-auto mb-6">
-            Run your own numbers with the affordability calculator, including a first-time buyer toggle for Maryland-specific savings, or talk to Kyle directly about which program fits your situation.
+            Run your own numbers with the affordability calculator, including a first-time buyer toggle for Maryland-specific savings, or talk to Kyle Friedman directly about which program fits your situation.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
@@ -100,7 +100,7 @@ export const FinancingOptionsPage: React.FC<FinancingOptionsPageProps> = ({ onOp
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest transition-colors"
             >
               <Phone className="w-4 h-4" />
-              Talk to Kyle
+              Talk to Kyle Friedman
             </button>
           </div>
         </div>

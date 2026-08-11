@@ -38,7 +38,7 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
             <div className="mb-10">
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2226]">My Transactions</h2>
               <p className="text-sm text-[#1C2B2E]/70 mt-2 max-w-2xl">
-                Real closed deals Kyle has personally represented, as listing agent or buyer's agent, across Carroll, Baltimore, Howard, and Frederick counties.
+                Real closed deals Kyle Friedman has personally represented, as listing agent or buyer's agent, across Carroll, Baltimore, Howard, and Frederick counties.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-1 gap-y-10">
@@ -134,7 +134,7 @@ export const PastTransactionsPage: React.FC<PastTransactionsPageProps> = ({ onOp
             className="inline-flex items-center gap-2 px-8 py-3 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
           >
             <Phone className="w-4 h-4" />
-            Talk to Kyle
+            Talk to Kyle Friedman
           </button>
         </div>
 

@@ -73,7 +73,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
     setShowingSubmitting(false);
 
     if (!ok) {
-      setShowingError(error || 'Something went wrong. Please try again or contact Kyle directly.');
+      setShowingError(error || 'Something went wrong. Please try again or contact Kyle Friedman directly.');
       return;
     }
 
@@ -261,7 +261,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                     <div className="my-8 p-6 bg-[#0F5C63] border border-[#C9A96A] rounded-xs text-center space-y-3 animate-fadeIn">
                       <CheckCircle2 className="w-12 h-12 text-[#C9A96A] mx-auto" />
                       <h4 className="font-serif text-xl font-bold text-[#FAF8F5]">Showing Request Received</h4>
-                      <p className="text-xs text-[#FAF8F5]/90">Thank you, {visitorName}. Kyle will reach out shortly to confirm your tour of {listing.title}.</p>
+                      <p className="text-xs text-[#FAF8F5]/90">Thank you, {visitorName}. Kyle Friedman will reach out shortly to confirm your tour of {listing.title}.</p>
                     </div>
                   ) : (
                     <form onSubmit={handleShowingSubmit} className="mt-6 space-y-4">
@@ -290,7 +290,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         <input type="tel" required value={visitorPhone} onChange={(e) => setVisitorPhone(e.target.value)} placeholder="(443) 789-3101" className="w-full bg-[#1A2E33] border border-[#FAF8F5]/20 p-2.5 text-xs text-[#FAF8F5] placeholder-[#A8B2A1]/50 focus:border-[#C9A96A] focus:outline-none" />
                       </div>
                       {showingError && (
-                        <p className="text-xs text-red-300">{showingError} You can also reach Kyle directly at (443) 789-3101.</p>
+                        <p className="text-xs text-red-300">{showingError} You can also reach Kyle Friedman directly at (443) 789-3101.</p>
                       )}
                       <button type="submit" id="submit-showing-req" disabled={showingSubmitting} className="w-full py-3 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-wider rounded-xs transition-all shadow-lg flex items-center justify-center gap-2 mt-4 disabled:opacity-60">
                         <Calendar className="w-4 h-4" />

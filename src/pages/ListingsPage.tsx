@@ -177,13 +177,13 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
             Live MLS Search Isn't Connected Yet
           </h3>
           <p className="text-xs text-[#1C2B2E]/80 max-w-md mx-auto">
-            This page is built and ready to show real, live listings the moment an MLS data feed (Bridge Interactive or an IDX vendor) is connected on the server. In the meantime, reach out directly and Kyle will send you current listings by hand.
+            This page is built and ready to show real, live listings the moment an MLS data feed (Bridge Interactive or an IDX vendor) is connected on the server. In the meantime, reach out directly and Kyle Friedman will send you current listings by hand.
           </p>
           <button
             onClick={onOpenConsultation}
             className="px-6 py-2.5 bg-[#C9A96A] text-[#0D2226] font-bold text-xs uppercase"
           >
-            Get Current Listings From Kyle
+            Get Current Listings From Kyle Friedman
           </button>
         </div>
       )}
@@ -248,7 +248,7 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
               No Listings Match Your Criteria
             </h3>
             <p className="text-xs text-[#1C2B2E]/80 max-w-md mx-auto">
-              Try adjusting your search filters, or contact Kyle directly — he has access to off-market opportunities not shown in public search.
+              Try adjusting your search filters, or contact Kyle Friedman directly — he has access to off-market opportunities not shown in public search.
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
               <button

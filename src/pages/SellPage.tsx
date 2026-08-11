@@ -234,7 +234,7 @@ export const SellPage: React.FC<SellPageProps> = ({
             Curious What Your Home Is Worth in Today's Market?
           </h2>
           <p className="text-xs sm:text-sm text-[#1C2B2E]/80 max-w-xl mx-auto">
-            Tell Kyle a bit about your property, and he'll personally follow up with a real comparative market analysis built from current comps, not an automated guess.
+            Tell Kyle Friedman a bit about your property, and he'll personally follow up with a real comparative market analysis built from current comps, not an automated guess.
           </p>
           <button
             onClick={onOpenValuation}

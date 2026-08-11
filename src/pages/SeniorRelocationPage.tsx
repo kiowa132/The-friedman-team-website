@@ -48,10 +48,10 @@ export const SeniorRelocationPage: React.FC<SeniorRelocationPageProps> = ({ onOp
   ];
 
   const faqs = [
-    { q: 'Do I need to fix up the house before we even talk?', a: 'No. Start with a conversation. Kyle will walk the property with you and give honest, practical guidance on what\u2019s actually worth doing, if anything, before it\u2019s time to sell.' },
+    { q: 'Do I need to fix up the house before we even talk?', a: 'No. Start with a conversation. Kyle Friedman will walk the property with you and give honest, practical guidance on what\u2019s actually worth doing, if anything, before it\u2019s time to sell.' },
     { q: 'What if I\u2019m not ready to decide yet?', a: 'That\u2019s completely normal, and there\u2019s no pressure to commit to anything. Many families start this conversation months, even years, before an actual move.' },
-    { q: 'Can my adult children be part of this process?', a: 'Yes, whenever that\u2019s helpful. Kyle is glad to include family members in conversations, walkthroughs, and planning, at whatever level you\u2019re comfortable with.' },
-    { q: 'What happens to belongings that aren\u2019t moving with me?', a: 'Kyle can connect you with trusted local estate sale companies, donation resources, and decluttering professionals to help sort through what stays, what goes, and where it goes.' },
+    { q: 'Can my adult children be part of this process?', a: 'Yes, whenever that\u2019s helpful. Kyle Friedman is glad to include family members in conversations, walkthroughs, and planning, at whatever level you\u2019re comfortable with.' },
+    { q: 'What happens to belongings that aren\u2019t moving with me?', a: 'Kyle Friedman can connect you with trusted local estate sale companies, donation resources, and decluttering professionals to help sort through what stays, what goes, and where it goes.' },
   ];
 
   return (
@@ -69,7 +69,7 @@ export const SeniorRelocationPage: React.FC<SeniorRelocationPageProps> = ({ onOp
       {/* Intro */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-16 text-center">
         <p className="text-base sm:text-lg text-[#1C2B2E]/80 leading-relaxed font-light">
-          Leaving a longtime home is more than a real estate transaction. It's a major life transition, and it deserves a process that respects that. Kyle works with homeowners and their families to make right-sizing and later-life relocation as thoughtful and unhurried as it needs to be.
+          Leaving a longtime home is more than a real estate transaction. It's a major life transition, and it deserves a process that respects that. Kyle Friedman works with homeowners and their families to make right-sizing and later-life relocation as thoughtful and unhurried as it needs to be.
         </p>
       </div>
 
@@ -114,7 +114,7 @@ export const SeniorRelocationPage: React.FC<SeniorRelocationPageProps> = ({ onOp
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
         <h2 className="font-serif text-2xl font-bold text-[#0D2226] text-center mb-3">A Trusted Partner Network</h2>
         <p className="text-sm text-[#1C2B2E]/65 text-center mb-10 max-w-2xl mx-auto">
-          You don't have to coordinate this alone. Kyle can connect you with local professionals for every part of the transition.
+          You don't have to coordinate this alone. Kyle Friedman can connect you with local professionals for every part of the transition.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {partners.map((p) => (
@@ -176,7 +176,7 @@ export const SeniorRelocationPage: React.FC<SeniorRelocationPageProps> = ({ onOp
           className="inline-flex items-center gap-2 mt-7 px-10 py-4 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-colors"
         >
           <Phone className="w-4 h-4" />
-          Talk to Kyle
+          Talk to Kyle Friedman
         </button>
         <div className="mt-6">
           <Link to="/luxury" className="text-xs text-[#0F5C63] hover:text-[#C9A96A] font-bold underline">
