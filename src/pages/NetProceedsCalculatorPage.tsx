@@ -4,6 +4,7 @@ import { Phone } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
 import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
+import { GatedResults } from '../components/GatedResults';
 
 interface NetProceedsCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -93,6 +94,11 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
 
           {/* Results */}
           <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
+            <GatedResults
+              calculatorName="Net Proceeds Calculator"
+              resultsSummary={`Sale Price: ${formatCurrency(salePrice)}\nEstimated Net Proceeds: ${formatCurrency(result.netProceeds)}\nAgent Commission: ${formatCurrency(result.commission)}\nTransfer/Recordation Tax: ${formatCurrency(result.sellerTaxShare)}`}
+            >
+            <div className="w-full flex flex-col items-center">
             <div className="text-center pb-6 border-b border-[#FAF8F5]/15 w-full">
               <div className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-1">Estimated Net Proceeds</div>
               <div className="font-serif text-4xl sm:text-5xl font-bold">{formatCurrency(result.netProceeds)}</div>
@@ -131,6 +137,7 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
                 </div>
               </div>
             </div>
+
 <div className="flex items-center gap-3 mt-6 mb-3">
               <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-11 h-11 rounded-full object-cover object-top border-2 border-[#C9A96A]" />
               <div>
@@ -145,6 +152,8 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
               <Phone className="w-4 h-4" />
               Get a Real Net Proceeds Estimate
             </button>
+            </div>
+            </GatedResults>
           </div>
         </div>
 

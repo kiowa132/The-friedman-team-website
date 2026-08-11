@@ -4,6 +4,7 @@ import { Phone, RotateCcw } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, monthlyPrincipalAndInterest, totalInterestPaid, estimateMonthlyPmi } from '../lib/calculators';
 import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
+import { GatedResults } from '../components/GatedResults';
 
 interface MortgageCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -136,6 +137,11 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
 
           {/* Results */}
           <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
+            <GatedResults
+              calculatorName="Mortgage Calculator"
+              resultsSummary={`Home Price: ${formatCurrency(homePrice)}\nDown Payment: ${formatCurrency(downPayment)} (${downPaymentPct.toFixed(1)}%)\nRate: ${rate}% / ${termYears}yr\nEstimated Monthly Payment: ${formatCurrency(totalMonthly)}`}
+            >
+            <div className="w-full flex flex-col items-center">
             <PaymentBreakdownChart
               total={totalMonthly}
               totalLabel="Your Monthly Payment"
@@ -165,6 +171,7 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
                 <div className="font-serif text-xl font-bold text-[#FAF8F5]">{formatCurrency(loanAmount + totalInterest)}</div>
               </div>
             </div>
+
 <div className="flex items-center gap-3 mt-6 mb-3">
               <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-11 h-11 rounded-full object-cover object-top border-2 border-[#C9A96A]" />
               <div>
@@ -179,6 +186,8 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
               <Phone className="w-4 h-4" />
               Talk to Kyle Friedman About Financing
             </button>
+            </div>
+            </GatedResults>
           </div>
         </div>
 

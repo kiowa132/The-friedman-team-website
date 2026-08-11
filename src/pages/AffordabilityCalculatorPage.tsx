@@ -3,6 +3,7 @@ import { Phone, Info } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, monthlyPrincipalAndInterest, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
 import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
+import { GatedResults } from '../components/GatedResults';
 
 interface AffordabilityCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -185,6 +186,11 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
 
           {/* Results */}
           <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
+            <GatedResults
+              calculatorName="Affordability Calculator"
+              resultsSummary={`Estimated Affordable Home Price: ${formatCurrency(result.maxHomePrice)}\nMax Monthly Payment: ${formatCurrency(result.maxHousingPayment)}\nDown Payment: ${formatCurrency(downPayment)} (${downPaymentPct.toFixed(1)}%)\nEstimated Cash to Close: ${formatCurrency(result.cashToClose)}`}
+            >
+            <div className="w-full flex flex-col items-center">
             <div className="text-center pb-2">
               <div className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold mb-1">Estimated Affordable Home Price</div>
               <div className="font-serif text-3xl sm:text-4xl font-bold">{formatCurrency(result.maxHomePrice)}</div>
@@ -246,6 +252,8 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
               <Phone className="w-4 h-4" />
               Talk to Kyle Friedman About Buying
             </button>
+            </div>
+            </GatedResults>
           </div>
         </div>
 
