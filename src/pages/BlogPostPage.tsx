@@ -6,8 +6,7 @@ import { getHandbookGuide } from '../data/guides';
 import { NEIGHBORHOODS } from '../data/mockData';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
 import { formatDisplayDate } from '../lib/formatDate';
-import { ScrollSubscribePrompt } from '../components/ScrollSubscribePrompt';
-import { ExitIntentCapture } from '../components/ExitIntentCapture';
+import { BlogScrollGate } from '../components/BlogScrollGate';
 
 interface BlogPostPageProps {
   onOpenConsultation: () => void;
@@ -142,8 +141,6 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
     <div className="pt-20 pb-20">
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
 
-      <ScrollSubscribePrompt />
-      <ExitIntentCapture />
 
       {/* Masthead - real branded image */}
       <div className="bg-[#0D2226] py-4 border-b-4 border-[#C9A96A]">
@@ -212,6 +209,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
         {/* Lead paragraph gets its own larger, lighter treatment - a
             common magazine convention that gives the reader an easy
             on-ramp before the body settles into normal size. */}
+        <BlogScrollGate>
         <div className="prose prose-sm max-w-none pt-10
           [&>*+*]:mt-6
           [&_p]:text-[15px] [&_p]:sm:text-lg [&_p]:text-[#1C2B2E]/85 [&_p]:leading-[1.8] [&_p]:font-light
@@ -249,6 +247,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             )
           )}
         </div>
+        </BlogScrollGate>
 
         {/* Share buttons - right after the body, matching the reference
             pattern, since these only get used if someone finished
