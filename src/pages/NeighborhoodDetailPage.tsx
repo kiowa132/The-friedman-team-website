@@ -6,6 +6,7 @@ import { fetchMlsListings } from '../lib/mlsApi';
 import { Listing } from '../types';
 import { ListingCard } from '../components/ListingCard';
 import { usePageMeta } from '../lib/usePageMeta';
+import { TownAlertSignup } from '../components/TownAlertSignup';
 import {
   ChevronRight, MapPin, ExternalLink, Compass, UtensilsCrossed, Bus,
   GraduationCap, Users, Calendar, DollarSign, Footprints, Bike, TrainFront,
@@ -314,6 +315,8 @@ export const NeighborhoodDetailPage: React.FC<NeighborhoodDetailPageProps> = ({
             </div>
           )}
         </div>
+
+        <TownAlertSignup townName={town.name} />
 
         {/* Neighborhood Guide - written narrative content */}
         {content && (
