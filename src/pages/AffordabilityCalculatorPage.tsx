@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Phone, Info } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, monthlyPrincipalAndInterest, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
@@ -43,6 +43,11 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
   const [isFirstTimeBuyer, setIsFirstTimeBuyer] = useState(false);
   const [countyIndex, setCountyIndex] = useState(() => MARYLAND_COUNTIES.findIndex((c) => c.name === 'Carroll County'));
   const [lenderTitleFees, setLenderTitleFees] = useState(4000);
+
+  // Captures the true starting values once, then flags interaction the
+  // moment anything actually changes.
+  const initialSnapshot = useRef(JSON.stringify([120000, 500, 60000, 6.5, 30, 1.1, 1500, false, MARYLAND_COUNTIES.findIndex((c) => c.name === 'Carroll County'), 4000]));
+  const hasInteracted = JSON.stringify([annualIncome, monthlyDebts, downPayment, rate, termYears, annualPropertyTaxRatePct, annualInsurance, isFirstTimeBuyer, countyIndex, lenderTitleFees]) !== initialSnapshot.current;
 
   const county = MARYLAND_COUNTIES[countyIndex];
 
@@ -188,6 +193,7 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
           <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
             <GatedResults
               calculatorName="Affordability Calculator"
+              hasInteracted={hasInteracted}
               resultsSummary={`Estimated Affordable Home Price: ${formatCurrency(result.maxHomePrice)}\nMax Monthly Payment: ${formatCurrency(result.maxHousingPayment)}\nDown Payment: ${formatCurrency(downPayment)} (${downPaymentPct.toFixed(1)}%)\nEstimated Cash to Close: ${formatCurrency(result.cashToClose)}`}
             >
             <div className="w-full flex flex-col items-center">

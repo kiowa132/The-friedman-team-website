@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Phone } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
@@ -28,6 +28,11 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
   const [commissionPct, setCommissionPct] = useState(5.5);
   const [sellerTaxSharePct, setSellerTaxSharePct] = useState(50); // customary 50/50 split, editable
   const [otherClosingCosts, setOtherClosingCosts] = useState(2500);
+
+  // Captures the true starting values once (including any ?price= from
+  // the URL), then flags interaction the moment anything actually changes.
+  const initialSnapshot = useRef(JSON.stringify([priceParam > 0 ? priceParam : 500000, MARYLAND_COUNTIES.findIndex((c) => c.name === 'Carroll County'), 250000, 5.5, 50, 2500]));
+  const hasInteracted = JSON.stringify([salePrice, countyIndex, mortgagePayoff, commissionPct, sellerTaxSharePct, otherClosingCosts]) !== initialSnapshot.current;
 
   const county = MARYLAND_COUNTIES[countyIndex];
 
@@ -96,6 +101,7 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
           <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
             <GatedResults
               calculatorName="Net Proceeds Calculator"
+              hasInteracted={hasInteracted}
               resultsSummary={`Sale Price: ${formatCurrency(salePrice)}\nEstimated Net Proceeds: ${formatCurrency(result.netProceeds)}\nAgent Commission: ${formatCurrency(result.commission)}\nTransfer/Recordation Tax: ${formatCurrency(result.sellerTaxShare)}`}
             >
             <div className="w-full flex flex-col items-center">

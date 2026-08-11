@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Phone, RotateCcw } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
@@ -52,6 +52,13 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
   const [annualPropertyTax, setAnnualPropertyTax] = useState(DEFAULTS.annualPropertyTax);
   const [annualInsurance, setAnnualInsurance] = useState(DEFAULTS.annualInsurance);
   const [monthlyHoa, setMonthlyHoa] = useState(DEFAULTS.monthlyHoa);
+
+  // Captures the true starting values once (including any ?price= from
+  // the URL), then flags interaction the moment anything actually
+  // changes - catches every input automatically, including the quick
+  // down-payment button, without listing each field by hand.
+  const initialSnapshot = useRef(JSON.stringify([initialHomePrice, DEFAULTS.downPayment, DEFAULTS.rate, DEFAULTS.termYears, DEFAULTS.annualPropertyTax, DEFAULTS.annualInsurance, DEFAULTS.monthlyHoa]));
+  const hasInteracted = JSON.stringify([homePrice, downPayment, rate, termYears, annualPropertyTax, annualInsurance, monthlyHoa]) !== initialSnapshot.current;
 
   const resetDefaults = () => {
     setHomePrice(DEFAULTS.homePrice);
@@ -139,6 +146,7 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
           <div className="bg-[#0D2226] text-[#FAF8F5] p-6 sm:p-8 flex flex-col items-center">
             <GatedResults
               calculatorName="Mortgage Calculator"
+              hasInteracted={hasInteracted}
               resultsSummary={`Home Price: ${formatCurrency(homePrice)}\nDown Payment: ${formatCurrency(downPayment)} (${downPaymentPct.toFixed(1)}%)\nRate: ${rate}% / ${termYears}yr\nEstimated Monthly Payment: ${formatCurrency(totalMonthly)}`}
             >
             <div className="w-full flex flex-col items-center">

@@ -6,24 +6,39 @@ interface GatedResultsProps {
   calculatorName: string;
   resultsSummary: string; // plain-text snapshot of the live numbers at
   // the moment of unlock, sent as real context in the lead message.
+  hasInteracted: boolean; // true once any input has changed from its
+  // starting value - results show clearly (a taste, using the starting
+  // numbers) until this flips true, at which point the blur kicks in.
+  // This lets someone see the tool actually works before asking for
+  // anything, then gates the moment they customize it to their own
+  // situation - the exact number they actually came for.
   children: React.ReactNode; // the actual results panel content - stays
   // live-computed underneath the blur the whole time, so the reveal on
   // unlock is instant with correct numbers, not a second load.
 }
 
-// Blurs the results panel until a real name + email is submitted. This is
-// a deliberate exception to "never gate content" - the calculator inputs,
-// labels, and surrounding page text all stay fully open and indexable
-// regardless (that's what protects SEO), but a specific numeric result
-// computed from whatever a visitor typed in was never something Google
-// could index anyway, since it can't fill in the form itself. Gating
-// just that output costs nothing on the SEO side.
-export const GatedResults: React.FC<GatedResultsProps> = ({ calculatorName, resultsSummary, children }) => {
+// Blurs the results panel once someone starts customizing the inputs to
+// their own situation, until a real name + email is submitted. Shows the
+// results clearly at first (using whatever starting numbers are already
+// filled in) so a visitor can see the tool actually works before being
+// asked for anything - the gate only kicks in the moment they change
+// something, which is also the exact moment the number on screen becomes
+// personal enough to be worth capturing.
+//
+// This is a deliberate exception to "never gate content" - the calculator
+// inputs, labels, and surrounding page text all stay fully open and
+// indexable regardless (that's what protects SEO), but a specific numeric
+// result computed from whatever a visitor typed in was never something
+// Google could index anyway, since it can't fill in the form itself.
+// Gating just that output costs nothing on the SEO side.
+export const GatedResults: React.FC<GatedResultsProps> = ({ calculatorName, resultsSummary, hasInteracted, children }) => {
   const [unlocked, setUnlocked] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const gated = hasInteracted && !unlocked;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,13 +65,13 @@ export const GatedResults: React.FC<GatedResultsProps> = ({ calculatorName, resu
   return (
     <div className="relative w-full">
       {/* Real, live-computed results - always rendered, just visually
-          obscured until unlocked, so the reveal is instant and correct
-          the moment someone submits, not a second fetch or recompute. */}
-      <div className={unlocked ? 'transition-all duration-500' : 'blur-md select-none pointer-events-none transition-all duration-500'} aria-hidden={!unlocked}>
+          obscured once gated, so the reveal is instant and correct the
+          moment someone submits, not a second fetch or recompute. */}
+      <div className={gated ? 'blur-md select-none pointer-events-none transition-all duration-500' : 'transition-all duration-500'} aria-hidden={gated}>
         {children}
       </div>
 
-      {!unlocked && (
+      {gated && (
         <div className="absolute inset-0 flex items-center justify-center p-4">
           <form
             onSubmit={handleSubmit}
