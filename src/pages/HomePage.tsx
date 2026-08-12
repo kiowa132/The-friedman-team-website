@@ -192,45 +192,45 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-1">
           <button
             onClick={() => setActiveTab('listings')}
-            className="group relative aspect-[4/3] overflow-hidden"
+            className="group relative aspect-[380/429] overflow-hidden"
           >
             <img
               src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=90"
               alt="Home Search"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/80 transition-colors" />
-            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
+            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
               Home Search
             </span>
           </button>
 
           <button
             onClick={onOpenValuation}
-            className="group relative aspect-[4/3] overflow-hidden"
+            className="group relative aspect-[380/429] overflow-hidden"
           >
             <img
               src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90"
               alt="Home Valuation"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/80 transition-colors" />
-            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
+            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
               Home Valuation
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('contact')}
-            className="group relative aspect-[4/3] overflow-hidden"
+            className="group relative aspect-[380/429] overflow-hidden"
           >
             <img
               src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=90"
               alt="Contact Us"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/80 transition-colors" />
-            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
+            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
               Contact Us
             </span>
           </button>
@@ -239,7 +239,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         {/* 3. AGENT INTRO STRIP - tan/beige, photo-left, matches Canopy's
             exact layout. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 border border-[#C9A96A]/30 text-left sm:h-[560px]">
-          <div className="h-64 sm:h-full overflow-hidden">
+          <div className="h-96 sm:h-full overflow-hidden">
             <img
               src="/images/kyle-portrait.jpg"
               alt="Kyle Friedman"
