@@ -65,8 +65,10 @@ export const NetworkMemberProfilePage: React.FC = () => {
         </Link>
 
         <div className="flex flex-col sm:flex-row items-start gap-6 mt-6">
-          <div className="w-24 h-24 rounded-full bg-[#0F5C63]/10 flex items-center justify-center shrink-0 text-[#0F5C63] font-serif text-3xl font-bold">
-            {member.name.split(' ').map((n) => n[0]).join('')}
+          <div className="w-24 h-24 rounded-full bg-[#0F5C63]/10 flex items-center justify-center shrink-0 text-[#0F5C63] font-serif text-3xl font-bold overflow-hidden">
+            {isPlaceholder(member.headshot) ? member.name.split(' ').map((n) => n[0]).join('') : (
+              <img src={member.headshot} alt={member.name} className="w-full h-full object-cover" />
+            )}
           </div>
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-[#C9A96A]">{member.status}</span>
@@ -78,10 +80,23 @@ export const NetworkMemberProfilePage: React.FC = () => {
         </div>
 
         {!isPlaceholder(member.bio) && (
-          <p className="text-sm text-[#1C2B2E]/80 leading-relaxed mt-8">{member.bio}</p>
+          <div className="text-sm text-[#1C2B2E]/80 leading-relaxed mt-8 whitespace-pre-line">
+            {member.bio}
+          </div>
         )}
         {isPlaceholder(member.bio) && (
           <p className="text-sm text-[#1C2B2E]/40 italic mt-8">Bio not yet supplied.</p>
+        )}
+
+        {member.certifications && member.certifications.length > 0 && (
+          <div className="border border-[#C9A96A]/25 bg-white p-6 mt-8">
+            <h3 className="font-serif text-sm font-bold text-[#0D2226] uppercase tracking-wide">Certifications</h3>
+            <ul className="mt-3 space-y-1.5">
+              {member.certifications.map((cert) => (
+                <li key={cert} className="text-xs text-[#1C2B2E]/70">&bull; {cert}</li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {member.videoUrl && (

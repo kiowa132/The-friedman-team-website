@@ -28,6 +28,7 @@ export interface NetworkMember {
   county: string;
   markets: string[];
   bio: string;
+  certifications?: string[];
   services: string[];
   clientsServed?: string;
   lookingToMeet: string[];
@@ -47,13 +48,14 @@ export const NETWORK_MEMBERS: NetworkMember[] = [
     id: 'nicholas-purcell',
     slug: 'nicholas-purcell',
     name: 'Nicholas Purcell',
-    headshot: `${PLACEHOLDER_PREFIX} headshot not yet supplied`,
-    title: 'CFP\u00ae, Paraplanner',
+    headshot: '/images/network/nicholas-purcell.jpg',
+    title: 'CFP\u00ae, Financial Planner & Associate Director of Financial Planning',
     company: 'Heritage Financial Consultants, LLC',
     industry: 'Financial Planning / Wealth Management',
     county: 'Baltimore City / Baltimore County',
     markets: ['Baltimore area'],
-    bio: 'Nicholas Purcell is a CFP focused on helping clients make thoughtful financial decisions and build long-term financial plans.',
+    bio: 'Nick Purcell, CFP\u00ae, is a Financial Planner with Heritage Financial Consultants, LLC, and also serves as Associate Director of Financial Planning. He began his career at Heritage as an intern while completing his B.S. in Business Administration with a concentration in Finance and a minor in Economics from Towson University.\n\nOver the years, by working closely with many planners in the Financial Planning Department, Nick has developed deep expertise in creating personalized financial plans and helping clients achieve both short- and long-term financial goals.\n\nA proud CERTIFIED FINANCIAL PLANNER\u00ae professional, Nick also holds the Series 7 and Series 66 securities registrations, along with Life, Accident, and Health Insurance licenses. His combination of credentials and hands-on experience reflects a strong foundation in holistic financial planning and a commitment to continuous professional growth.\n\nOriginally from Long Island, New York, Nick now lives in Baltimore. Outside of work, he enjoys playing and watching sports, attending live music events, and spending time outdoors. He is passionate about giving back to his community, volunteering for initiatives such as neighborhood cleanups, feeding the homeless, and participating annually in the Red Shoe Shuffle to support the Ronald McDonald House Charities of Maryland.',
+    certifications: ['CERTIFIED FINANCIAL PLANNER\u00ae practitioner', 'Series 7 & 66 registered', 'Life, Accident, and Health insurance licensed'],
     services: [`${PLACEHOLDER_PREFIX} specific services not yet confirmed`],
     lookingToMeet: ['Business owners', 'CPAs', 'Attorneys', 'Real estate professionals', 'Other trusted professionals'],
     canHelpWith: ['Financial planning and related planning conversations'],
