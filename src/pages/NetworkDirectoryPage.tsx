@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, ArrowRight } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
-import { NETWORK_MEMBERS, isPlaceholder } from '../data/network';
+import { NETWORK_MEMBERS, getNetworkMembersSorted, isPlaceholder } from '../data/network';
 import { FieldValue } from '../components/FieldValue';
 
 export const NetworkDirectoryPage: React.FC = () => {
@@ -21,7 +21,7 @@ export const NetworkDirectoryPage: React.FC = () => {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return NETWORK_MEMBERS.filter((m) => {
+    return getNetworkMembersSorted().filter((m) => {
       const matchesIndustry = industryFilter === 'All' || m.industry === industryFilter;
       if (!q) return matchesIndustry;
       const haystack = [m.name, m.industry, m.county, ...m.lookingToMeet, ...m.canHelpWith]

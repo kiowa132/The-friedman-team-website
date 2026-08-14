@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Handshake, Share2, TrendingUp } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
-import { NETWORK_MEMBERS, isPlaceholder } from '../data/network';
+import { getNetworkMembersSorted, isPlaceholder } from '../data/network';
 import { FieldValue } from '../components/FieldValue';
 
 export const NetworkLandingPage: React.FC = () => {
@@ -64,7 +64,7 @@ export const NetworkLandingPage: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <h2 className="font-serif text-2xl font-bold text-[#0D2226] text-center mb-10">Current Members</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {NETWORK_MEMBERS.map((m) => (
+          {getNetworkMembersSorted().map((m) => (
             <Link
               key={m.id}
               to={`/network/members/${m.slug}`}

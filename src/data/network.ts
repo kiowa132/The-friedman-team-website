@@ -62,7 +62,7 @@ export const NETWORK_MEMBERS: NetworkMember[] = [
     website: 'https://www.heritageconsultants.com/project/nicholas-purcell/',
     linkedin: 'https://www.linkedin.com/in/nicholaspurcell7/',
     status: 'Founding Member',
-    dateJoined: '2026-08-01',
+    dateJoined: '2026-08-10',
   },
   {
     id: 'cullen-mcnally',
@@ -82,7 +82,7 @@ export const NETWORK_MEMBERS: NetworkMember[] = [
     website: undefined,
     linkedin: 'https://www.linkedin.com/in/cullen-mcnally-52607b160/',
     status: 'Founding Member',
-    dateJoined: '2026-08-01',
+    dateJoined: '2026-08-13',
   },
   {
     id: 'anthony-poulin',
@@ -104,9 +104,16 @@ export const NETWORK_MEMBERS: NetworkMember[] = [
     phone: '(571) 474-4794',
     email: 'anthony.poulin@movement.com',
     status: 'Founding Member',
-    dateJoined: '2026-08-01',
+    dateJoined: '2026-08-14',
   },
 ];
+
+// Newest members first - sorted by dateJoined rather than array order, so
+// this stays correct automatically no matter where a new entry gets
+// inserted in NETWORK_MEMBERS above.
+export function getNetworkMembersSorted(): NetworkMember[] {
+  return [...NETWORK_MEMBERS].sort((a, b) => b.dateJoined.localeCompare(a.dateJoined));
+}
 
 export function getNetworkMember(slug: string): NetworkMember | undefined {
   return NETWORK_MEMBERS.find((m) => m.slug === slug);
