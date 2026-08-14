@@ -79,7 +79,7 @@ export const NetworkDirectoryPage: React.FC = () => {
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-full bg-[#0F5C63]/10 flex items-center justify-center shrink-0 text-[#0F5C63] font-serif text-lg font-bold overflow-hidden">
                       {isPlaceholder(m.headshot) ? m.name.split(' ').map((n) => n[0]).join('') : (
-                        <img src={m.headshot} alt={m.name} className="w-full h-full object-cover" />
+                        <img src={m.headshot} alt={m.name} className="w-full h-full object-cover object-[center_15%]" />
                       )}
                     </div>
                     <div>

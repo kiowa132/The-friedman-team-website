@@ -67,7 +67,7 @@ export const NetworkMemberProfilePage: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-start gap-6 mt-6">
           <div className="w-24 h-24 rounded-full bg-[#0F5C63]/10 flex items-center justify-center shrink-0 text-[#0F5C63] font-serif text-3xl font-bold overflow-hidden">
             {isPlaceholder(member.headshot) ? member.name.split(' ').map((n) => n[0]).join('') : (
-              <img src={member.headshot} alt={member.name} className="w-full h-full object-cover" />
+              <img src={member.headshot} alt={member.name} className="w-full h-full object-cover object-[center_15%]" />
             )}
           </div>
           <div>

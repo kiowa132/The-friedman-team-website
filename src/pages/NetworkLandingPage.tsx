@@ -71,9 +71,9 @@ export const NetworkLandingPage: React.FC = () => {
               className="block border border-[#C9A96A]/30 bg-white p-7 hover:border-[#C9A96A] transition-colors"
             >
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-[#0F5C63]/10 flex items-center justify-center shrink-0 text-[#0F5C63] font-serif text-xl font-bold overflow-hidden">
+                <div className="w-20 h-20 rounded-full bg-[#0F5C63]/10 flex items-center justify-center shrink-0 text-[#0F5C63] font-serif text-xl font-bold overflow-hidden">
                   {isPlaceholder(m.headshot) ? m.name.split(' ').map((n) => n[0]).join('') : (
-                    <img src={m.headshot} alt={m.name} className="w-full h-full object-cover object-top" />
+                    <img src={m.headshot} alt={m.name} className="w-full h-full object-cover object-[center_15%]" />
                   )}
                 </div>
                 <div>
