@@ -77,7 +77,7 @@ export const NETWORK_MEMBERS: NetworkMember[] = [
     bio: 'Cullen McNally works across two closely related fields: home financing and personal insurance. As a Senior Mortgage Broker with E Mortgage Capital, Inc. and over 5 years of experience in finance and lending, he guides individuals, families, and investors through home financing - whether that\u2019s a first home purchase, a refinance, or funding for a property portfolio - with solutions tailored to each client\u2019s goals.\n\nAs a Personal Insurance Advisor with RCM&D, Cullen also helps individuals and families protect what matters most, specializing in simplifying coverage options across life, health, home, and auto insurance so clients can make confident, informed decisions.',
     certifications: ['NMLS #1416824'],
     services: ['Mortgage financing, refinancing & investment property funding', 'Personal insurance - life, health, home & auto'],
-    lookingToMeet: [`${PLACEHOLDER_PREFIX} not yet confirmed`],
+    lookingToMeet: ['CPA / Accountant', 'Banker', 'Estate Planning Attorney', 'Family Law Attorney', 'Flooring Specialist', 'Roofing Contractor', 'Commercial Realtor', 'Pest Control', 'Credit Repair', 'Handyman', 'Architect', 'Therapist / Counselor'],
     canHelpWith: ['Home financing - purchases, refinancing, and investment property funding', 'Personal insurance - life, health, home, and auto coverage'],
     website: undefined,
     linkedin: 'https://www.linkedin.com/in/cullen-mcnally-52607b160/',
