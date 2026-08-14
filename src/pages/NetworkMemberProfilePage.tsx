@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Globe, Linkedin, ShieldCheck, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
+import { Globe, Linkedin, ShieldCheck, ArrowRight, Loader2, CheckCircle2, Phone, Mail } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { getNetworkMember, isPlaceholder } from '../data/network';
 import { FieldValue } from '../components/FieldValue';
@@ -140,8 +140,8 @@ export const NetworkMemberProfilePage: React.FC = () => {
           )}
         </div>
 
-        {(member.website || member.linkedin) && (
-          <div className="flex gap-4 mt-6">
+        {(member.website || member.linkedin || member.phone || member.email) && (
+          <div className="flex flex-wrap gap-4 mt-6">
             {member.website && (
               <a href={member.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-[#0F5C63] hover:text-[#C9A96A]">
                 <Globe className="w-3.5 h-3.5" /> Website
@@ -150,6 +150,16 @@ export const NetworkMemberProfilePage: React.FC = () => {
             {member.linkedin && (
               <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-[#0F5C63] hover:text-[#C9A96A]">
                 <Linkedin className="w-3.5 h-3.5" /> LinkedIn
+              </a>
+            )}
+            {member.phone && (
+              <a href={`tel:${member.phone.replace(/[^0-9+]/g, '')}`} className="inline-flex items-center gap-1.5 text-xs text-[#0F5C63] hover:text-[#C9A96A]">
+                <Phone className="w-3.5 h-3.5" /> {member.phone}
+              </a>
+            )}
+            {member.email && (
+              <a href={`mailto:${member.email}`} className="inline-flex items-center gap-1.5 text-xs text-[#0F5C63] hover:text-[#C9A96A]">
+                <Mail className="w-3.5 h-3.5" /> {member.email}
               </a>
             )}
           </div>
