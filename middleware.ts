@@ -19,13 +19,16 @@
 // the normal SPA exactly as before.
 //
 // SCOPE: covers the homepage, all 30 neighborhood pages, the neighborhoods
-// list, every blog post, and every guide. Blog posts are handled via a
+// list, every blog post, every guide, and the Maryland Professional
+// Network section (the general network pages plus every individual
+// member profile, using that member's own real headshot as the preview
+// image rather than a generic default). Blog posts are handled via a
 // small generated manifest (src/data/blogManifest.json, built by
 // scripts/generate-blog-manifest.mjs before every build) since their real
 // content loads through Vite's import.meta.glob, which isn't safely
-// importable into an Edge Middleware bundle. Guides are plain TypeScript
-// data files (src/data/guides), so they're imported directly, the same
-// way TOWNS already is.
+// importable into an Edge Middleware bundle. Guides and network members
+// are plain TypeScript data files (src/data/guides, src/data/network), so
+// they're imported directly, the same way TOWNS already is.
 //
 // IMPORTANT CAVEAT: written against Vercel's documented framework-agnostic
 // Edge Middleware API (plain Request/Response, no next/server import,
@@ -44,12 +47,17 @@
 import { TOWNS } from './src/data/towns';
 import blogManifest from './src/data/blogManifest.json';
 import { HANDBOOK_GUIDES } from './src/data/guides';
+import { NETWORK_MEMBERS, isPlaceholder } from './src/data/network';
 
 const SITE_URL = 'https://www.friedmanreteam.com';
 const DEFAULT_TITLE = 'The Friedman Team | Carroll, Howard, Frederick & Baltimore County Real Estate';
 const DEFAULT_DESCRIPTION =
   'Local, data-driven real estate representation for buyers and sellers across Carroll, Baltimore, Howard, and Frederick County, Maryland.';
 const DEFAULT_IMAGE = `${SITE_URL}/images/kyle-portrait.jpg`;
+// Neutral fallback for general network pages that aren't about any one
+// person - the site logo mark, not Kyle's face, per his direction that
+// only /about should show his portrait.
+const NETWORK_DEFAULT_IMAGE = `${SITE_URL}/favicon-192.png`;
 
 // Known social/link-preview crawlers. Deliberately broad - false positives
 // here just mean an extra crawler gets a correct, lightweight HTML response
@@ -149,6 +157,43 @@ export default function middleware(request: Request): Response | undefined {
       description = guide.description;
       image = guide.coverImage.startsWith('http') ? guide.coverImage : `${SITE_URL}${guide.coverImage}`;
     }
+  } else if (path.startsWith('/network/members/')) {
+    const slug = path.slice('/network/members/'.length);
+    const member = NETWORK_MEMBERS.find((m) => m.slug === slug);
+    if (member) {
+      title = `${member.name} | Maryland Professional Network`;
+      description = !isPlaceholder(member.bio)
+        ? truncate(member.bio.split('\n\n')[0], 200)
+        : `${member.name} - ${member.industry}, Maryland Professional Network.`;
+      image = !isPlaceholder(member.headshot)
+        ? (member.headshot.startsWith('http') ? member.headshot : `${SITE_URL}${member.headshot}`)
+        : NETWORK_DEFAULT_IMAGE;
+    }
+    // Unknown slug falls through to network defaults below rather than a broken preview.
+    else {
+      title = 'Member Not Found | Maryland Professional Network';
+      image = NETWORK_DEFAULT_IMAGE;
+    }
+  } else if (path === '/network') {
+    title = 'The Maryland Professional Network | Friedman Real Estate Team';
+    description = 'A curated network of trusted Maryland professionals connecting, referring business, and helping one another grow.';
+    image = NETWORK_DEFAULT_IMAGE;
+  } else if (path === '/network/directory') {
+    title = 'Directory | Maryland Professional Network';
+    description = 'Search the Maryland Professional Network by name, industry, county, or specialty to find a trusted professional.';
+    image = NETWORK_DEFAULT_IMAGE;
+  } else if (path === '/network/join') {
+    title = 'Apply to Join | Maryland Professional Network';
+    description = 'Apply to join The Maryland Professional Network, a curated group of Maryland professionals building meaningful relationships and referring business.';
+    image = NETWORK_DEFAULT_IMAGE;
+  } else if (path === '/network/about') {
+    title = 'About | Maryland Professional Network';
+    description = 'About The Maryland Professional Network, a curated group of trusted Maryland professionals founded by Kyle Friedman.';
+    image = NETWORK_DEFAULT_IMAGE;
+  } else if (path === '/network/events') {
+    title = 'Events | Maryland Professional Network';
+    description = 'Small, curated events and roundtables for members of The Maryland Professional Network - coming soon.';
+    image = NETWORK_DEFAULT_IMAGE;
   }
   // path === '/' falls through to the site defaults set above.
 
@@ -159,5 +204,5 @@ export default function middleware(request: Request): Response | undefined {
 }
 
 export const config = {
-  matcher: ['/', '/neighborhoods', '/neighborhoods/:slug*', '/blog/:slug*', '/guides/:slug*'],
+  matcher: ['/', '/neighborhoods', '/neighborhoods/:slug*', '/blog/:slug*', '/guides/:slug*', '/network', '/network/directory', '/network/members/:slug*', '/network/join', '/network/about', '/network/events'],
 };
