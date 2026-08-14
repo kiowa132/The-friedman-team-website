@@ -19,6 +19,8 @@ export interface NetworkMember {
   name: string;
   slug: string;
   headshot: string; // PLACEHOLDER: if no real headshot supplied
+  videoUrl?: string; // optional short-form reel-style video, if supplied
+  videoIsShort?: boolean;
   title: string;
   company: string;
   industry: string;
@@ -46,17 +48,17 @@ export const NETWORK_MEMBERS: NetworkMember[] = [
     slug: 'nicholas-purcell',
     name: 'Nicholas Purcell',
     headshot: `${PLACEHOLDER_PREFIX} headshot not yet supplied`,
-    title: 'CFP\u00ae, Certified Financial Planner',
-    company: `${PLACEHOLDER_PREFIX} company not yet confirmed`,
+    title: 'CFP\u00ae, Paraplanner',
+    company: 'Heritage Financial Consultants, LLC',
     industry: 'Financial Planning / Wealth Management',
-    county: `${PLACEHOLDER_PREFIX} county not yet confirmed`,
-    markets: [`${PLACEHOLDER_PREFIX} markets not yet confirmed`],
+    county: 'Baltimore City / Baltimore County',
+    markets: ['Baltimore area'],
     bio: 'Nicholas Purcell is a CFP focused on helping clients make thoughtful financial decisions and build long-term financial plans.',
     services: [`${PLACEHOLDER_PREFIX} specific services not yet confirmed`],
     lookingToMeet: ['Business owners', 'CPAs', 'Attorneys', 'Real estate professionals', 'Other trusted professionals'],
     canHelpWith: ['Financial planning and related planning conversations'],
-    website: undefined,
-    linkedin: undefined,
+    website: 'https://www.heritageconsultants.com/project/nicholas-purcell/',
+    linkedin: 'https://www.linkedin.com/in/nicholaspurcell7/',
     status: 'Founding Member',
     dateJoined: '2026-08-01',
   },
@@ -65,9 +67,9 @@ export const NETWORK_MEMBERS: NetworkMember[] = [
     slug: 'cullen-mcnulty',
     name: 'Cullen McNulty',
     headshot: `${PLACEHOLDER_PREFIX} headshot not yet supplied`,
-    title: `${PLACEHOLDER_PREFIX} professional title not yet confirmed`,
+    title: 'Lender',
     company: `${PLACEHOLDER_PREFIX} company not yet confirmed`,
-    industry: `${PLACEHOLDER_PREFIX} industry not yet confirmed`,
+    industry: 'Mortgage Lending',
     county: `${PLACEHOLDER_PREFIX} county not yet confirmed`,
     markets: [`${PLACEHOLDER_PREFIX} markets not yet confirmed`],
     bio: `${PLACEHOLDER_PREFIX} bio not yet supplied`,

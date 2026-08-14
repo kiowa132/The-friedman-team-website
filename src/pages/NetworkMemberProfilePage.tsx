@@ -84,6 +84,24 @@ export const NetworkMemberProfilePage: React.FC = () => {
           <p className="text-sm text-[#1C2B2E]/40 italic mt-8">Bio not yet supplied.</p>
         )}
 
+        {member.videoUrl && (
+          member.videoIsShort ? (
+            <div className="flex justify-center mt-8">
+              <div className="w-full max-w-[280px] aspect-[9/16] rounded-xs overflow-hidden border border-[#C9A96A]/30">
+                <video controls preload="metadata" className="w-full h-full bg-black">
+                  <source src={member.videoUrl} type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          ) : (
+            <div className="aspect-video rounded-xs overflow-hidden border border-[#C9A96A]/30 mt-8">
+              <video controls preload="metadata" className="w-full h-full bg-black">
+                <source src={member.videoUrl} type="video/mp4" />
+              </video>
+            </div>
+          )
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10">
           {hasRealList(member.lookingToMeet) && (
             <div className="border border-[#C9A96A]/25 bg-white p-6">
