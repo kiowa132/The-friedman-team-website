@@ -1,7 +1,7 @@
 // Shared helper for sending form submissions to the backend, which forwards
 // them to Follow Up Boss. See server.js for the actual FUB integration.
 
-export type LeadType = 'Seller Inquiry' | 'General Inquiry' | 'Property Inquiry' | 'Registration';
+export type LeadType = 'Seller Inquiry' | 'General Inquiry' | 'Property Inquiry' | 'Registration' | 'Network Inquiry';
 
 export interface LeadSubmission {
   name: string;

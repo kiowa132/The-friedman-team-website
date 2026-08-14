@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomeValuationModal } from './components/HomeValuationModal';
 import { StrategyConsultationModal } from './components/StrategyConsultationModal';
+import { FloatingContactButton } from './components/FloatingContactButton';
 
 import { HomePage } from './pages/HomePage';
 
@@ -27,6 +28,12 @@ const GuidesListPage = React.lazy(() => import('./pages/GuidesListPage').then(m 
 const LuxuryPage = React.lazy(() => import('./pages/LuxuryPage').then(m => ({ default: m.LuxuryPage })));
 const ZillowShowcasePage = React.lazy(() => import('./pages/ZillowShowcasePage').then(m => ({ default: m.ZillowShowcasePage })));
 const SeniorRelocationPage = React.lazy(() => import('./pages/SeniorRelocationPage').then(m => ({ default: m.SeniorRelocationPage })));
+const NetworkLandingPage = React.lazy(() => import('./pages/NetworkLandingPage').then(m => ({ default: m.NetworkLandingPage })));
+const NetworkDirectoryPage = React.lazy(() => import('./pages/NetworkDirectoryPage').then(m => ({ default: m.NetworkDirectoryPage })));
+const NetworkMemberProfilePage = React.lazy(() => import('./pages/NetworkMemberProfilePage').then(m => ({ default: m.NetworkMemberProfilePage })));
+const NetworkJoinPage = React.lazy(() => import('./pages/NetworkJoinPage').then(m => ({ default: m.NetworkJoinPage })));
+const NetworkAboutPage = React.lazy(() => import('./pages/NetworkAboutPage').then(m => ({ default: m.NetworkAboutPage })));
+const NetworkEventsPage = React.lazy(() => import('./pages/NetworkEventsPage').then(m => ({ default: m.NetworkEventsPage })));
 const TeamPage = React.lazy(() => import('./pages/TeamPage').then(m => ({ default: m.TeamPage })));
 const TestimonialsPage = React.lazy(() => import('./pages/TestimonialsPage').then(m => ({ default: m.TestimonialsPage })));
 const GivingBackPage = React.lazy(() => import('./pages/GivingBackPage').then(m => ({ default: m.GivingBackPage })));
@@ -61,6 +68,11 @@ const PATH_TO_TAB: Record<string, string> = {
   '/luxury': 'luxury',
   '/zillow-showcase': 'zillow-showcase',
   '/senior-relocation': 'senior-relocation',
+  '/network': 'network',
+  '/network/directory': 'network-directory',
+  '/network/join': 'network-join',
+  '/network/about': 'network-about',
+  '/network/events': 'network-events',
   '/team': 'team',
   '/testimonials': 'testimonials',
   '/giving-back': 'giving-back',
@@ -88,6 +100,11 @@ const TAB_TO_PATH: Record<string, string> = {
   luxury: '/luxury',
   'zillow-showcase': '/zillow-showcase',
   'senior-relocation': '/senior-relocation',
+  'network': '/network',
+  'network-directory': '/network/directory',
+  'network-join': '/network/join',
+  'network-about': '/network/about',
+  'network-events': '/network/events',
   team: '/team',
   testimonials: '/testimonials',
   'giving-back': '/giving-back',
@@ -292,6 +309,13 @@ export default function App() {
             />
           } />
 
+          <Route path="/network" element={<NetworkLandingPage />} />
+          <Route path="/network/directory" element={<NetworkDirectoryPage />} />
+          <Route path="/network/members/:slug" element={<NetworkMemberProfilePage />} />
+          <Route path="/network/join" element={<NetworkJoinPage />} />
+          <Route path="/network/about" element={<NetworkAboutPage />} />
+          <Route path="/network/events" element={<NetworkEventsPage />} />
+
           <Route path="/team" element={
             <TeamPage
               onOpenConsultation={() => setIsConsultationOpen(true)}
@@ -370,6 +394,8 @@ export default function App() {
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
       />
+
+      <FloatingContactButton onOpenConsultation={() => setIsConsultationOpen(true)} />
 
     </div>
   );
