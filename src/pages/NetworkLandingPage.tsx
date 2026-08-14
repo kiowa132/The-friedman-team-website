@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Handshake, Share2, TrendingUp, ArrowRight } from 'lucide-react';
+import { Users, Handshake, Share2, TrendingUp } from 'lucide-react';
 import { usePageMeta } from '../lib/usePageMeta';
 import { NETWORK_MEMBERS, isPlaceholder } from '../data/network';
 import { FieldValue } from '../components/FieldValue';
@@ -47,22 +47,21 @@ export const NetworkLandingPage: React.FC = () => {
       </div>
 
       {/* Meet -> Connect -> Refer -> Grow */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-          {loop.map((step, i) => (
-            <div key={step.label} className="text-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {loop.map((step) => (
+            <div key={step.label} className="text-center border border-[#C9A96A]/30 rounded-xs py-6 px-3 bg-white">
               <div className="w-14 h-14 rounded-full border border-[#C9A96A]/40 flex items-center justify-center mx-auto text-[#0F5C63]">
                 <step.icon className="w-6 h-6" />
               </div>
               <p className="font-serif text-sm font-bold text-[#0D2226] mt-3 uppercase tracking-wide">{step.label}</p>
-              {i < loop.length - 1 && <ArrowRight className="w-4 h-4 text-[#C9A96A]/50 mx-auto mt-2 hidden sm:block" />}
             </div>
           ))}
         </div>
       </div>
 
       {/* Current members preview */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <h2 className="font-serif text-2xl font-bold text-[#0D2226] text-center mb-10">Current Members</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {NETWORK_MEMBERS.map((m) => (
