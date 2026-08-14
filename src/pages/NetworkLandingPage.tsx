@@ -61,17 +61,6 @@ export const NetworkLandingPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Why curated */}
-      <div className="bg-[#0D2226] py-20">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#FAF8F5]">Intentionally Curated, Not Open</h2>
-          <p className="text-sm sm:text-base text-[#F5F1E8]/80 leading-relaxed mt-5 font-light">
-            This isn't an open directory or a general networking group. It's a small, growing group of Maryland professionals who take relationships seriously - quality over quantity. Every member is here because they're someone worth introducing to the rest of the network.
-          </p>
-          <p className="text-xs text-[#A8B2A1] mt-6">Founded by Kyle Friedman</p>
-        </div>
-      </div>
-
       {/* Current members preview */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
         <h2 className="font-serif text-2xl font-bold text-[#0D2226] text-center mb-10">Current Members</h2>
@@ -104,6 +93,17 @@ export const NetworkLandingPage: React.FC = () => {
               <p className="text-xs text-[#1C2B2E]/40 italic">Future category: {category}</p>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Why curated */}
+      <div className="bg-[#0D2226] py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#FAF8F5]">Intentionally Curated, Not Open</h2>
+          <p className="text-sm sm:text-base text-[#F5F1E8]/80 leading-relaxed mt-5 font-light">
+            This isn't an open directory or a general networking group. It's a small, growing group of Maryland professionals who take relationships seriously - quality over quantity. Every member is here because they're someone worth introducing to the rest of the network.
+          </p>
+          <p className="text-xs text-[#A8B2A1] mt-6">Founded by Kyle Friedman</p>
         </div>
       </div>
 
