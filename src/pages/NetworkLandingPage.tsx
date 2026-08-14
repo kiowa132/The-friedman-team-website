@@ -73,7 +73,7 @@ export const NetworkLandingPage: React.FC = () => {
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-full bg-[#0F5C63]/10 flex items-center justify-center shrink-0 text-[#0F5C63] font-serif text-xl font-bold overflow-hidden">
                   {isPlaceholder(m.headshot) ? m.name.split(' ').map((n) => n[0]).join('') : (
-                    <img src={m.headshot} alt={m.name} className="w-full h-full object-cover" />
+                    <img src={m.headshot} alt={m.name} className="w-full h-full object-cover object-top" />
                   )}
                 </div>
                 <div>
@@ -83,8 +83,11 @@ export const NetworkLandingPage: React.FC = () => {
                 </div>
               </div>
               {!isPlaceholder(m.bio) && (
-                <p className="text-xs text-[#1C2B2E]/70 leading-relaxed mt-4">{m.bio}</p>
+                <p className="text-xs text-[#1C2B2E]/70 leading-relaxed mt-4 line-clamp-3">{m.bio}</p>
               )}
+              <span className="inline-block mt-3 text-xs font-bold text-[#0F5C63]">
+                Read Full Profile &rarr;
+              </span>
             </Link>
           ))}
 
