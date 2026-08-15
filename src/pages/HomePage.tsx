@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { m } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { Listing, Neighborhood } from '../types';
 import { ListingCard } from '../components/ListingCard';
 import { ReviewsSection } from '../components/ReviewsSection';
 import { Reveal, RevealItem } from '../components/Reveal';
+import { FmmiGauge } from '../components/FmmiGauge';
+import { getLatestFmmi } from '../data/fmmi';
 import { liftHover } from '../lib/motion';
 import { usePageMeta } from '../lib/usePageMeta';
 import { submitLead } from '../lib/leads';
@@ -274,6 +277,46 @@ export const HomePage: React.FC<HomePageProps> = ({
             </m.button>
           </div>
         </Reveal>
+      </section>
+
+      {/* 3.5 MARKET PULSE - The Friedman Market Momentum Index (FMMI), a
+          real proprietary weekly score pulled from src/data/fmmi.ts. Add a
+          new entry there each week and this section (and the eventual
+          trend line once enough weeks exist) updates on its own. */}
+      <section className="bg-[#0D2226] py-20 sm:py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal className="text-center space-y-3 mb-10">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#C9A96A]">
+              This Week's Market Pulse
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-light text-[#FAF8F5]">
+              The Friedman Market Momentum Index
+            </h2>
+            <p className="text-sm text-[#FAF8F5]/60 max-w-xl mx-auto leading-relaxed">
+              Numbers over guesswork. Every week we score Maryland's housing market so you don't
+              have to guess where things stand.
+            </p>
+          </Reveal>
+
+          <Reveal className="bg-[#FAF8F5] rounded-sm py-10 px-6 sm:px-10 flex flex-col items-center">
+            <FmmiGauge />
+            {getLatestFmmi().sourceSlug ? (
+              <Link
+                to={`/blog/${getLatestFmmi().sourceSlug}`}
+                className="mt-6 px-7 py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+              >
+                Read This Week's Full Report
+              </Link>
+            ) : (
+              <button
+                onClick={() => setActiveTab('blog')}
+                className="mt-6 px-7 py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+              >
+                Read the Friedman Report
+              </button>
+            )}
+          </Reveal>
+        </div>
       </section>
 
       {/* 4. WHAT OUR CLIENTS SAY - full-bleed moody carousel, built into the
