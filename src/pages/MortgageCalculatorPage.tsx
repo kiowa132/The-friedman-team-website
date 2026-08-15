@@ -5,6 +5,7 @@ import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, monthlyPrincipalAndInterest, totalInterestPaid, estimateMonthlyPmi } from '../lib/calculators';
 import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
 import { GatedResults } from '../components/GatedResults';
+import { SliderInput } from '../components/SliderInput';
 
 interface MortgageCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -99,17 +100,41 @@ export const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ 
           {/* Inputs */}
           <div className="bg-white border border-[#C9A96A]/30 p-6 sm:p-8 space-y-5">
             <div>
-              <label className={labelClass}>Home Price <InfoDot text="The total purchase price of the home." /></label>
-              <input type="number" className={inputClass} value={homePrice} onChange={(e) => setHomePrice(Number(e.target.value) || 0)} />
+              <SliderInput
+                label={<>Home Price <InfoDot text="The total purchase price of the home." /></>}
+                value={homePrice}
+                min={100000}
+                max={2000000}
+                step={5000}
+                onChange={setHomePrice}
+                format={(v) => formatCurrency(v)}
+                parse={(raw) => Number(raw) || 0}
+              />
             </div>
             <div>
-              <label className={labelClass}>Down Payment ({downPaymentPct.toFixed(1)}%) <InfoDot text="Cash paid upfront, reducing your loan amount. 20%+ avoids PMI." /></label>
-              <input type="number" className={inputClass} value={downPayment} onChange={(e) => setDownPayment(Number(e.target.value) || 0)} />
+              <SliderInput
+                label={<>Down Payment ({downPaymentPct.toFixed(1)}%) <InfoDot text="Cash paid upfront, reducing your loan amount. 20%+ avoids PMI." /></>}
+                value={downPayment}
+                min={0}
+                max={homePrice}
+                step={1000}
+                onChange={setDownPayment}
+                format={(v) => formatCurrency(v)}
+                parse={(raw) => Number(raw) || 0}
+              />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Interest Rate (%) <InfoDot text="Your loan's annual interest rate, set by your lender." /></label>
-                <input type="number" step="0.01" className={inputClass} value={rate} onChange={(e) => setRate(Number(e.target.value) || 0)} />
+                <SliderInput
+                  label={<>Rate (%) <InfoDot text="Your loan's annual interest rate, set by your lender." /></>}
+                  value={rate}
+                  min={3}
+                  max={10}
+                  step={0.125}
+                  onChange={setRate}
+                  format={(v) => `${v.toFixed(3).replace(/0+$/, '').replace(/\.$/, '')}%`}
+                  parse={(raw) => Number(raw.replace('%', '')) || 0}
+                />
               </div>
               <div>
                 <label className={labelClass}>Loan Term</label>
