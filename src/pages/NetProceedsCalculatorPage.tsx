@@ -5,6 +5,7 @@ import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
 import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
 import { GatedResults } from '../components/GatedResults';
+import { SliderInput } from '../components/SliderInput';
 
 interface NetProceedsCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -64,8 +65,16 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
           {/* Inputs */}
           <div className="bg-white border border-[#C9A96A]/30 p-6 sm:p-8 space-y-5">
             <div>
-              <label className={labelClass}>Expected Sale Price</label>
-              <input type="number" className={inputClass} value={salePrice} onChange={(e) => setSalePrice(Number(e.target.value) || 0)} />
+              <SliderInput
+                label="Expected Sale Price"
+                value={salePrice}
+                min={100000}
+                max={2000000}
+                step={5000}
+                onChange={setSalePrice}
+                format={(v) => formatCurrency(v)}
+                parse={(raw) => Number(raw) || 0}
+              />
             </div>
             <div>
               <label className={labelClass}>County</label>
@@ -76,12 +85,28 @@ export const NetProceedsCalculatorPage: React.FC<NetProceedsCalculatorPageProps>
               </select>
             </div>
             <div>
-              <label className={labelClass}>Remaining Mortgage Payoff</label>
-              <input type="number" className={inputClass} value={mortgagePayoff} onChange={(e) => setMortgagePayoff(Number(e.target.value) || 0)} />
+              <SliderInput
+                label="Remaining Mortgage Payoff"
+                value={mortgagePayoff}
+                min={0}
+                max={salePrice}
+                step={2500}
+                onChange={setMortgagePayoff}
+                format={(v) => formatCurrency(v)}
+                parse={(raw) => Number(raw) || 0}
+              />
             </div>
             <div>
-              <label className={labelClass}>Total Agent Commission (%)</label>
-              <input type="number" step="0.1" className={inputClass} value={commissionPct} onChange={(e) => setCommissionPct(Number(e.target.value) || 0)} />
+              <SliderInput
+                label="Total Agent Commission (%)"
+                value={commissionPct}
+                min={0}
+                max={8}
+                step={0.1}
+                onChange={setCommissionPct}
+                format={(v) => `${v.toFixed(2).replace(/0+$/, '').replace(/\.$/, '')}%`}
+                parse={(raw) => Number(raw.replace('%', '')) || 0}
+              />
             </div>
             <div>
               <label className={labelClass}>Your Share of Transfer/Recordation Tax (%)</label>

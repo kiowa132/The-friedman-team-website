@@ -4,6 +4,7 @@ import { usePageMeta } from '../lib/usePageMeta';
 import { formatCurrency, monthlyPrincipalAndInterest, MARYLAND_COUNTIES, calculateDeedTax } from '../lib/calculators';
 import { PaymentBreakdownChart } from '../components/PaymentBreakdownChart';
 import { GatedResults } from '../components/GatedResults';
+import { SliderInput } from '../components/SliderInput';
 
 interface AffordabilityCalculatorPageProps {
   onOpenConsultation: () => void;
@@ -138,8 +139,16 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
             )}
 
             <div>
-              <label className={labelClass}>Annual Gross Household Income</label>
-              <input type="number" className={inputClass} value={annualIncome} onChange={(e) => setAnnualIncome(Number(e.target.value) || 0)} />
+              <SliderInput
+                label="Annual Gross Household Income"
+                value={annualIncome}
+                min={30000}
+                max={500000}
+                step={2500}
+                onChange={setAnnualIncome}
+                format={(v) => formatCurrency(v)}
+                parse={(raw) => Number(raw) || 0}
+              />
             </div>
             <div>
               <label className={labelClass}>Other Monthly Debt Payments</label>
@@ -147,13 +156,29 @@ export const AffordabilityCalculatorPage: React.FC<AffordabilityCalculatorPagePr
               <p className="text-[11px] text-[#1C2B2E]/50 mt-1">Car loans, student loans, credit cards, and any other minimum monthly payments.</p>
             </div>
             <div>
-              <label className={labelClass}>Available Down Payment</label>
-              <input type="number" className={inputClass} value={downPayment} onChange={(e) => setDownPayment(Number(e.target.value) || 0)} />
+              <SliderInput
+                label="Available Down Payment"
+                value={downPayment}
+                min={0}
+                max={500000}
+                step={2500}
+                onChange={setDownPayment}
+                format={(v) => formatCurrency(v)}
+                parse={(raw) => Number(raw) || 0}
+              />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Interest Rate (%)</label>
-                <input type="number" step="0.01" className={inputClass} value={rate} onChange={(e) => setRate(Number(e.target.value) || 0)} />
+                <SliderInput
+                  label="Rate (%)"
+                  value={rate}
+                  min={3}
+                  max={10}
+                  step={0.125}
+                  onChange={setRate}
+                  format={(v) => `${v.toFixed(3).replace(/0+$/, '').replace(/\.$/, '')}%`}
+                  parse={(raw) => Number(raw.replace('%', '')) || 0}
+                />
               </div>
               <div>
                 <label className={labelClass}>Loan Term</label>
