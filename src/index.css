@@ -63,6 +63,16 @@
   animation: kenburns 30s ease-in-out infinite alternate;
 }
 
+/* Shimmer sweep for image loading skeletons (listing cards, etc.) */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 /* Custom glass / backdrop effects */
 .glass-luxury {
   background: rgba(245, 241, 232, 0.88);
