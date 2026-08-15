@@ -1,10 +1,18 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { AnimatePresence, LazyMotion, m, MotionConfig } from 'motion/react';
+
+// Loads the actual animation engine as its own separate chunk, in parallel
+// with everything else, instead of bundling it into the main entry file.
+// Until it resolves, m.* components just render as plain elements - no
+// blocked paint, no layout shift.
+const loadMotionFeatures = () => import('./lib/motionFeatures').then((res) => res.default);
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomeValuationModal } from './components/HomeValuationModal';
 import { StrategyConsultationModal } from './components/StrategyConsultationModal';
 import { FloatingContactButton } from './components/FloatingContactButton';
+import { fade } from './lib/motion';
 
 import { HomePage } from './pages/HomePage';
 
@@ -172,6 +180,11 @@ export default function App() {
   };
 
   return (
+    // reducedMotion="user" makes every motion.* component site-wide
+    // automatically honor the OS-level "reduce motion" accessibility
+    // setting - no per-component opt-in needed.
+    <LazyMotion features={loadMotionFeatures} strict>
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-[#F5F1E8] text-[#1C2B2E] font-sans flex flex-col justify-between selection:bg-[#C9A96A] selection:text-[#0D2226]">
 
       <Navbar
@@ -184,6 +197,18 @@ export default function App() {
       />
 
       <main className="flex-1">
+        {/* Soft crossfade between pages instead of a hard cut. Keyed by
+            pathname so AnimatePresence knows a "different page" mounted;
+            mode="wait" fades the old page fully out before the new one
+            fades in, so nothing ever overlaps or jumps. */}
+        <AnimatePresence mode="wait" initial={false}>
+        <m.div
+          key={location.pathname}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={fade}
+        >
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center bg-[#FAF8F5]">
             <div className="w-10 h-10 border-2 border-[#C9A96A] border-t-transparent rounded-full animate-spin" />
@@ -373,6 +398,8 @@ export default function App() {
           } />
         </Routes>
         </Suspense>
+        </m.div>
+        </AnimatePresence>
       </main>
 
       <Footer
@@ -398,5 +425,7 @@ export default function App() {
       <FloatingContactButton onOpenConsultation={() => setIsConsultationOpen(true)} />
 
     </div>
+    </MotionConfig>
+    </LazyMotion>
   );
 }

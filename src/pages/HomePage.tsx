@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { m } from 'motion/react';
 import { Listing, Neighborhood } from '../types';
 import { ListingCard } from '../components/ListingCard';
 import { ReviewsSection } from '../components/ReviewsSection';
+import { Reveal, RevealItem } from '../components/Reveal';
+import { liftHover } from '../lib/motion';
 import { usePageMeta } from '../lib/usePageMeta';
 import { submitLead } from '../lib/leads';
 import { fetchMlsListings } from '../lib/mlsApi';
@@ -180,65 +183,74 @@ export const HomePage: React.FC<HomePageProps> = ({
           exact pattern: three labeled photo tiles linking to Search, Valuation,
           and Contact. */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center space-y-12">
-        <div className="space-y-5">
+        <Reveal className="space-y-5">
           <h2 className="font-serif text-3xl sm:text-5xl font-light uppercase tracking-[0.15em] text-[#0D2226]">
             Data-Driven Real Estate Solutions
           </h2>
           <p className="text-sm sm:text-base text-[#1C2B2E]/70 max-w-2xl mx-auto leading-relaxed">
             Our team leverages real market data alongside hands-on local experience to guide buyers and sellers across Carroll, Howard, Frederick, and Baltimore County. Discover a smarter approach to real estate, where data-driven insight meets trusted expertise.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-1">
-          <button
-            onClick={() => setActiveTab('listings')}
-            className="group relative aspect-[380/429] overflow-hidden"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=90"
-              alt="Home Search"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
-            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
-              Home Search
-            </span>
-          </button>
+        <Reveal stagger className="grid grid-cols-1 sm:grid-cols-3 gap-1">
+          <RevealItem>
+            <m.button
+              onClick={() => setActiveTab('listings')}
+              className="group relative aspect-[380/429] overflow-hidden w-full"
+              {...liftHover}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=90"
+                alt="Home Search"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
+              <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
+                Home Search
+              </span>
+            </m.button>
+          </RevealItem>
 
-          <button
-            onClick={onOpenValuation}
-            className="group relative aspect-[380/429] overflow-hidden"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90"
-              alt="Home Valuation"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
-            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
-              Home Valuation
-            </span>
-          </button>
+          <RevealItem>
+            <m.button
+              onClick={onOpenValuation}
+              className="group relative aspect-[380/429] overflow-hidden w-full"
+              {...liftHover}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90"
+                alt="Home Valuation"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
+              <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
+                Home Valuation
+              </span>
+            </m.button>
+          </RevealItem>
 
-          <button
-            onClick={() => setActiveTab('contact')}
-            className="group relative aspect-[380/429] overflow-hidden"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=90"
-              alt="Contact Us"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
-            <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
-              Contact Us
-            </span>
-          </button>
-        </div>
+          <RevealItem>
+            <m.button
+              onClick={() => setActiveTab('contact')}
+              className="group relative aspect-[380/429] overflow-hidden w-full"
+              {...liftHover}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=90"
+                alt="Contact Us"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/10 to-transparent group-hover:from-[#0D2226]/85 transition-all duration-500" />
+              <span className="absolute bottom-5 left-5 text-white text-sm sm:text-base font-semibold uppercase tracking-widest transition-transform duration-500 group-hover:-translate-y-1">
+                Contact Us
+              </span>
+            </m.button>
+          </RevealItem>
+        </Reveal>
 
         {/* 3. AGENT INTRO STRIP - tan/beige, photo-left, matches Canopy's
             exact layout. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 border border-[#C9A96A]/30 text-left sm:h-[560px]">
+        <Reveal className="grid grid-cols-1 sm:grid-cols-2 border border-[#C9A96A]/30 text-left sm:h-[560px]">
           <div className="h-96 sm:h-full overflow-hidden">
             <img
               src="/images/kyle-portrait.jpg"
@@ -253,14 +265,15 @@ export const HomePage: React.FC<HomePageProps> = ({
             <p className="text-sm sm:text-base text-[#1C2B2E]/80 leading-relaxed">
               The Friedman Team at eXp Realty, led by Kyle Friedman, gives you access to a real, data-driven strategy for buying or selling, from your first home to a multi-acre property. Every client gets the same level of preparation and care.
             </p>
-            <button
+            <m.button
               onClick={() => setActiveTab('team')}
               className="self-start px-7 py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+              {...liftHover}
             >
               Meet the Team
-            </button>
+            </m.button>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* 4. WHAT OUR CLIENTS SAY - full-bleed moody carousel, built into the
