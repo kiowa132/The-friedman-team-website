@@ -8,6 +8,8 @@ carouselImages:
   - /images/uploads/chatgpt-image-aug-16-2026-07_50_34-pm.png
   - /images/uploads/chatgpt-image-aug-16-2026-07_53_41-pm.png
   - /images/uploads/91050749-083e-4f25-bc3c-f289d2e8bff9.png
+youtubeVideoId: "ojkpZrlVMuE"
+youtubeIsShort: true
 ---
 Maryland home sales rebounded sharply this week, and mortgage rates finally gave buyers and sellers a break after six straight weeks of increases. Here's the full county-by-county breakdown of what happened in the Maryland real estate market between August 10 and August 16, 2026.
 
