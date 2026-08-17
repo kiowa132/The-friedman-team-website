@@ -101,12 +101,13 @@ const SubScoreBar: React.FC<{
 }> = ({ name, score, previousScore, note, index }) => {
   const [open, setOpen] = useState(false);
   const delta = previousScore !== null ? score - previousScore : null;
+  const hasNote = note.trim().length > 0;
 
   return (
     <div className="border-b border-[#FAF8F5]/10 last:border-b-0">
       <button
-        onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center gap-3 py-3 text-left group"
+        onClick={() => hasNote && setOpen((o) => !o)}
+        className={`w-full flex items-center gap-3 py-3 text-left group ${hasNote ? '' : 'cursor-default'}`}
       >
         <span className="text-xs font-semibold uppercase tracking-wider text-[#FAF8F5]/70 w-32 shrink-0">
           {name}
@@ -133,23 +134,27 @@ const SubScoreBar: React.FC<{
             {delta === 0 ? '—' : `${delta > 0 ? '+' : ''}${delta}`}
           </span>
         )}
-        <ChevronDown
-          className={`w-3.5 h-3.5 text-[#FAF8F5]/40 transition-transform shrink-0 ${open ? 'rotate-180' : ''}`}
-        />
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <m.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: DURATION.fast, ease: EASE_PREMIUM }}
-            className="overflow-hidden"
-          >
-            <p className="text-xs text-[#FAF8F5]/60 leading-relaxed pb-3 pl-0 sm:pl-32">{note}</p>
-          </m.div>
+        {hasNote && (
+          <ChevronDown
+            className={`w-3.5 h-3.5 text-[#FAF8F5]/40 transition-transform shrink-0 ${open ? 'rotate-180' : ''}`}
+          />
         )}
-      </AnimatePresence>
+      </button>
+      {hasNote && (
+        <AnimatePresence initial={false}>
+          {open && (
+            <m.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: DURATION.fast, ease: EASE_PREMIUM }}
+              className="overflow-hidden"
+            >
+              <p className="text-xs text-[#FAF8F5]/60 leading-relaxed pb-3 pl-0 sm:pl-32">{note}</p>
+            </m.div>
+          )}
+        </AnimatePresence>
+      )}
     </div>
   );
 };

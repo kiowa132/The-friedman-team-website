@@ -64,5 +64,38 @@
         "note": "The 30-year fixed hit 6.69%, a sixth consecutive weekly increase."
       }
     ]
+  },
+  {
+    "date": "2026-08-16",
+    "score": 51,
+    "label": "Balanced Market, Stabilizing",
+    "signal": "Stabilizing",
+    "sourceSlug": "maryland-housing-market-update-week-of-august-10-16-2026",
+    "subScores": [
+      {
+        "name": "Demand",
+        "score": 58,
+        "previousScore": 40,
+        "note": ""
+      },
+      {
+        "name": "Seller Strength",
+        "score": 52,
+        "previousScore": 45,
+        "note": ""
+      },
+      {
+        "name": "Market Speed",
+        "score": 58,
+        "previousScore": 63,
+        "note": ""
+      },
+      {
+        "name": "Rate Environment",
+        "score": 35,
+        "previousScore": 24,
+        "note": ""
+      }
+    ]
   }
 ]
