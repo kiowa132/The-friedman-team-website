@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { usePageMeta } from '../lib/usePageMeta';
 import { VIDEOS } from '../data/videos';
 import { Youtube, Instagram } from 'lucide-react';
@@ -51,7 +52,15 @@ export const VideosPage: React.FC = () => {
                 <div className="p-5">
                   <div className="font-serif text-lg font-bold text-[#0D2226] leading-snug">{v.title}</div>
                   <p className="text-xs text-[#1C2B2E]/70 mt-1.5 leading-relaxed">{v.description}</p>
-                  <div className="text-[11px] text-[#1C2B2E]/50 mt-3">{formatDisplayDate(v.publishDate)}</div>
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="text-[11px] text-[#1C2B2E]/50">{formatDisplayDate(v.publishDate)}</span>
+                    <Link
+                      to={`/blog/${v.sourceSlug}`}
+                      className="text-[11px] font-bold uppercase tracking-wider text-[#0F5C63] hover:text-[#C9A96A] transition-colors"
+                    >
+                      Read the Report &rarr;
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
