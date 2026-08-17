@@ -12,6 +12,26 @@ youtubeVideoId: "pLw1zeMCZ5E"
 youtubeIsShort: true
 youtubeVideoId2: "vbDINPrb3JA"
 youtubeIsShort2: true
+fmmi:
+  score: 43
+  label: Balanced Market, Cooling Again
+  signal: Cooling
+  demand:
+    score: 40
+    previous: 70
+    note: Closings fell 32.2% week over week, though pending contracts held essentially flat, suggesting this is a closings pipeline correction rather than a genuine drop in Maryland buyer activity.
+  sellerStrength:
+    score: 45
+    previous: 58
+    note: Median sold price fell 8.0% to $405,000, though homes are still closing at roughly 100% of list price on a median basis.
+  marketSpeed:
+    score: 63
+    previous: 63
+    note: Average days on market held exactly steady at 30, the calmest reading of any component this week.
+  rateEnvironment:
+    score: 24
+    previous: 28
+    note: The 30-year fixed hit 6.69%, a sixth consecutive weekly increase.
 ---
 Maryland home sales pulled back sharply this week, but the story underneath the headline number is more encouraging than it looks, especially if you're a buyer who got outbid a few times earlier this summer. Here's the full county by county breakdown of what happened in the Maryland real estate market between August 3 and August 9, 2026, including current mortgage rates, median home prices, and which Maryland counties are moving fastest right now.
 

@@ -28,6 +28,52 @@ collections:
       - { label: "Carousel Images", name: "carouselImages", widget: "list", required: false, hint: "Recommended size: 1000x1250px (4:5 portrait ratio) per photo, under 400KB each.", field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Related Guide (slug)", name: "relatedGuideSlug", widget: "string", required: false, hint: "Must match a guide's filename exactly, e.g. carroll-county-seller-guide" }
       - { label: "Related Area (slug)", name: "relatedAreaSlug", widget: "select", required: false, options: ["carroll-county", "baltimore-county", "howard-county", "frederick-county"] }
+      - label: "Friedman Market Momentum Index (FMMI)"
+        name: "fmmi"
+        widget: "object"
+        required: false
+        collapsed: true
+        hint: "Only fill this in for a weekly Market Report post. Leave collapsed/empty for every other post. Filling this in is what makes the homepage Market Pulse card update automatically - nothing else needs to change."
+        fields:
+          - { label: "This Week's Score (0-100)", name: "score", widget: "number", required: false }
+          - { label: "Headline Label", name: "label", widget: "string", required: false, hint: "e.g. Balanced Market, Cooling Again" }
+          - { label: "The Friedman Signal", name: "signal", widget: "string", required: false, hint: "e.g. Cooling, Warming, Balanced" }
+          - label: "Demand"
+            name: "demand"
+            widget: "object"
+            required: false
+            collapsed: true
+            fields:
+              - { label: "Score", name: "score", widget: "number", required: false }
+              - { label: "Last Week's Score", name: "previous", widget: "number", required: false }
+              - { label: "One-Sentence Note", name: "note", widget: "text", required: false }
+          - label: "Seller Strength"
+            name: "sellerStrength"
+            widget: "object"
+            required: false
+            collapsed: true
+            fields:
+              - { label: "Score", name: "score", widget: "number", required: false }
+              - { label: "Last Week's Score", name: "previous", widget: "number", required: false }
+              - { label: "One-Sentence Note", name: "note", widget: "text", required: false }
+          - label: "Market Speed"
+            name: "marketSpeed"
+            widget: "object"
+            required: false
+            collapsed: true
+            fields:
+              - { label: "Score", name: "score", widget: "number", required: false }
+              - { label: "Last Week's Score", name: "previous", widget: "number", required: false }
+              - { label: "One-Sentence Note", name: "note", widget: "text", required: false }
+          - label: "Rate Environment"
+            name: "rateEnvironment"
+            widget: "object"
+            required: false
+            collapsed: true
+            fields:
+              - { label: "Score", name: "score", widget: "number", required: false }
+              - { label: "Last Week's Score", name: "previous", widget: "number", required: false }
+              - { label: "One-Sentence Note", name: "note", widget: "text", required: false }
       - label: "Body"
         name: "body"
         widget: "markdown"

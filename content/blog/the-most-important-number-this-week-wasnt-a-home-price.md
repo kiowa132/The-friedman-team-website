@@ -1,13 +1,32 @@
 ---
 title: The Most Important Number This Week Wasn't a Home Price
-metaDescription: [Mortgage rates](/calculators/mortgage) climbed for a fourth straight week as buyer
-  demand cooled and Maryland's market shifted into a more balanced phase.
+metaDescription: "[Mortgage rates](/calculators/mortgage) climbed for a fourth straight week as buyer demand cooled and Maryland's market shifted into a more balanced phase."
 category: Market Reports
 publishDate: "2026-07-26"
 heroImage: /images/uploads/big-story-07-27-2026-5.jpg
 carouselImages:
   - /images/uploads/big-story-07-27-2026-6.jpg
   - /images/uploads/big-story-07-27-2026-7.jpg
+fmmi:
+  score: 50
+  label: Balanced Market, Cooling Momentum
+  signal: Cooling
+  demand:
+    score: 45
+    previous: 65
+    note: Closings fell 9.6% and pending contracts dropped 11%, the clearest signs of softening buyer momentum this week.
+  sellerStrength:
+    score: 52
+    previous: 55
+    note: The average sold-to-list ratio actually strengthened to 104.8%, but 1,101 active listings still carry a price cut, keeping this component in check.
+  marketSpeed:
+    score: 60
+    previous: 75
+    note: Average days on market rose from 28 to 31, a real, if modest, slowdown in pace.
+  rateEnvironment:
+    score: 35
+    previous: 40
+    note: The 30-year fixed hit 6.58%, a fourth consecutive weekly increase and the highest level since August 2025.
 ---
 his week, the entire spread of Maryland’s housing market fit inside one city.
 
