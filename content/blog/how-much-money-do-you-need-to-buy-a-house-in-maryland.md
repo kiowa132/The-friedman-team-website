@@ -3,8 +3,14 @@ title: "How Much Money Do You Actually Need to Buy a House in Maryland?"
 metaDescription: "A full breakdown of every cost to buy a home in Maryland - earnest money, inspections, appraisal, closing costs, and county-by-county taxes."
 category: Buy a Home
 publishDate: "2026-08-17"
+heroImage: /images/uploads/buyer-costs-agent-consultation-hero.webp
+carouselImages:
+  - /images/uploads/buyer-costs-signing-contract.webp
+  - /images/uploads/buyer-costs-couple-house-dusk.webp
 ---
 **Quick answer:** most Maryland buyers need between 5% and 10% of the purchase price in total cash - covering the earnest money deposit, inspections, appraisal, down payment, and closing costs - though the exact number depends on your loan program, purchase price, and county. On a $450,000 home, that typically lands between $25,000 and $45,000 all-in, not counting moving costs.
+
+<img src="/images/uploads/buyer-costs-emd-inspection-appraisal-closing.webp" alt="Four stages of cash outlay when buying a home: earnest money deposit, inspection, appraisal, and closing" style="width:100%;max-width:600px;height:auto;margin:20px auto;display:block;" />
 
 > It's not one lump sum due at closing. It's a series of payments, spread across the entire time you're under contract.
 
