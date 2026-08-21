@@ -194,7 +194,7 @@ export default function middleware(request: Request): Response | undefined {
       image = GENERIC_DEFAULT_IMAGE;
     }
   } else if (path === '/network') {
-    title = 'The Maryland Professional Network | Friedman Real Estate Team';
+    title = 'The Maryland Professional Network | The Friedman Team';
     description = 'A curated network of trusted Maryland professionals connecting, referring business, and helping one another grow.';
     image = GENERIC_DEFAULT_IMAGE;
   } else if (path === '/network/directory') {
@@ -215,7 +215,7 @@ export default function middleware(request: Request): Response | undefined {
     image = GENERIC_DEFAULT_IMAGE;
   } else if (path === '/about') {
     title = 'About Kyle Friedman | The Friedman Team';
-    description = 'Meet Kyle Friedman, Principal Advisor of The Friedman Team at eXp Realty, serving Carroll, Baltimore, Howard, and Frederick County, Maryland.';
+    description = 'Meet Kyle Friedman, Real Estate Professional & Expert Negotiator with The Friedman Team at eXp Realty, serving Carroll, Baltimore, Howard, and Frederick County, Maryland.';
     image = DEFAULT_IMAGE;
   } else if (path === '/team') {
     title = 'Meet the Team | The Friedman Team';
@@ -318,7 +318,14 @@ export default function middleware(request: Request): Response | undefined {
   }
   // path === '/' falls through to the site defaults set above.
 
-  return new Response(metaHtml({ title, description, image, url: url.toString() }), {
+  // The canonical tag always points to a clean, normalized URL (site
+  // domain + trailing-slash-stripped path) regardless of how the page was
+  // actually requested - never the raw request URL. Without this, a
+  // trailing slash or a tracking parameter (e.g. ?utm_source=facebook)
+  // produced a canonical tag pointing right back at that exact variant,
+  // which is what caused Search Console's "Duplicate without user-selected
+  // canonical" and "Google chose a different canonical than user" issues.
+  return new Response(metaHtml({ title, description, image, url: `${SITE_URL}${path}` }), {
     status: 200,
     headers: { 'content-type': 'text/html; charset=utf-8' },
   });
