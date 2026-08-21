@@ -213,8 +213,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
         <div className="prose prose-sm max-w-none pt-10
           [&>*+*]:mt-6
           [&_p]:text-[15px] [&_p]:sm:text-lg [&_p]:text-[#1C2B2E]/85 [&_p]:leading-[1.8] [&_p]:font-light
-          [&>div:first-child>p:first-of-type]:text-lg [&>div:first-child>p:first-of-type]:sm:text-xl [&>div:first-child>p:first-of-type]:text-[#1C2B2E] [&>div:first-child>p:first-of-type]:leading-[1.7]
-          [&>div:first-child>p:first-of-type::first-letter]:font-serif [&>div:first-child>p:first-of-type::first-letter]:text-[64px] [&>div:first-child>p:first-of-type::first-letter]:sm:text-[80px] [&>div:first-child>p:first-of-type::first-letter]:font-bold [&>div:first-child>p:first-of-type::first-letter]:text-[#0F5C63] [&>div:first-child>p:first-of-type::first-letter]:float-left [&>div:first-child>p:first-of-type::first-letter]:leading-[0.85] [&>div:first-child>p:first-of-type::first-letter]:mr-3 [&>div:first-child>p:first-of-type::first-letter]:mt-1
+          [&>p:first-of-type]:text-lg [&>p:first-of-type]:sm:text-xl [&>p:first-of-type]:text-[#1C2B2E] [&>p:first-of-type]:leading-[1.7]
           [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-bold [&_h2]:text-[#0D2226] [&_h2]:mt-14 [&_h2]:pt-6 [&_h2]:border-t [&_h2]:border-[#C9A96A]/25
           [&_h3]:font-serif [&_h3]:text-xl [&_h3]:sm:text-2xl [&_h3]:font-bold [&_h3]:text-[#0D2226] [&_h3]:mt-10
           [&_a]:text-[#0F5C63] [&_a]:font-semibold [&_a]:underline [&_a]:decoration-[#C9A96A] [&_a]:decoration-2 [&_a]:underline-offset-2 [&_a]:transition-colors hover:[&_a]:text-[#C9A96A] hover:[&_a]:decoration-[#0F5C63]
@@ -403,7 +402,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-20 h-20 rounded-full object-cover object-top border-2 border-[#C9A96A] shrink-0" />
             <div className="text-center sm:text-left">
               <h3 className="font-serif text-xl font-bold">Kyle Friedman</h3>
-              <p className="text-xs text-[#A8B2A1] mb-3">Licensed REALTOR® & Principal Advisor, The Friedman Team at eXp Realty</p>
+              <p className="text-xs text-[#A8B2A1] mb-3">Licensed REALTOR® & Expert Negotiator, The Friedman Team at eXp Realty</p>
               <p className="text-sm text-[#FAF8F5]/80 leading-relaxed max-w-lg">
                 Kyle Friedman serves buyers and sellers across Carroll, Howard, Frederick, and Baltimore counties, with a strategy-first, data-driven approach to pricing and negotiation.
               </p>

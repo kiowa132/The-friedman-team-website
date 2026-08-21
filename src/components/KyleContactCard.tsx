@@ -41,7 +41,7 @@ export const KyleContactCard: React.FC<KyleContactCardProps> = ({ ctaHref = '#',
       <div className="p-8 sm:p-10 text-[#FAF8F5]">
         <span className="text-[11px] uppercase tracking-widest text-[#C9A96A] font-bold">Talk to a Real Advisor</span>
         <h2 className="font-serif text-4xl font-bold mt-2">Kyle Friedman</h2>
-        <p className="text-sm text-[#A8B2A1] font-semibold mt-1 mb-6">Principal Advisor, The Friedman Team</p>
+        <p className="text-sm text-[#A8B2A1] font-semibold mt-1 mb-6">Real Estate Professional & Expert Negotiator, The Friedman Team</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm mb-8">
           <div>

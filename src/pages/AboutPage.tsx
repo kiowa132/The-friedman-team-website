@@ -14,7 +14,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 }) => {
   usePageMeta(
     'About Kyle Friedman | The Friedman Team',
-    'Meet Kyle Friedman, Principal Advisor of The Friedman Team at eXp Realty, serving Carroll, Baltimore, Howard, and Frederick County, Maryland.'
+    'Meet Kyle Friedman, Real Estate Professional & Expert Negotiator with The Friedman Team at eXp Realty, serving Carroll, Baltimore, Howard, and Frederick County, Maryland.'
   );
   const specializations = [
     {
@@ -56,7 +56,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </h1>
 
             <p className="text-sm sm:text-base text-[#A8B2A1] font-light leading-relaxed">
-              Principal Advisor • The Friedman Team • eXp Realty
+              Real Estate Professional & Expert Negotiator • The Friedman Team • eXp Realty
             </p>
 
             <p className="text-xs sm:text-sm text-[#FAF8F5]/90 leading-relaxed font-normal pt-2">

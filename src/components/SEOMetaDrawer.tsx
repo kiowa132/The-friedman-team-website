@@ -35,7 +35,7 @@ export const SEOMetaDrawer: React.FC = () => {
     "founder": {
       "@type": "Person",
       "name": "Kyle Friedman",
-      "jobTitle": "Principal Advisor"
+      "jobTitle": "Real Estate Professional & Expert Negotiator"
     },
     "knowsAbout": [
       "Residential Real Estate",
