@@ -230,8 +230,8 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     id: 'carroll-county',
     name: 'Carroll County',
     county: 'Carroll County',
-    tagline: 'Rolling Pastoral Hills, Historic Towns & Premier Farm Estates',
-    avgHomeValue: '$875,000 to $3,500,000+',
+    tagline: 'Rolling Hills, Historic Small Towns & Room to Grow',
+    avgHomeValue: '$400,000 to $650,000+',
     medianDaysOnMarket: 14,
     heroImage: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80',
     galleryImages: [

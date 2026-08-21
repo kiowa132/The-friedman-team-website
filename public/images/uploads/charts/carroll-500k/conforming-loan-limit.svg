@@ -1,0 +1,10 @@
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" font-family="Avenir Next, Arial, sans-serif">
+<rect x="113.3" y="116.7" width="160" height="133.3" rx="4" fill="#0F5C63"/>
+<text x="193.3" y="106.7" font-size="18" font-weight="800" fill="#0D2226" text-anchor="middle">$832,750</text>
+<text x="193.3" y="272.0" font-size="12" font-weight="600" fill="#0D2226" text-anchor="middle">Carroll, Baltimore,</text>
+<text x="193.3" y="288.0" font-size="12" font-weight="600" fill="#0D2226" text-anchor="middle">Howard &amp; Frederick County</text>
+<rect x="366.7" y="50.0" width="160" height="200.0" rx="4" fill="#C97064"/>
+<text x="446.7" y="40.0" font-size="18" font-weight="800" fill="#0D2226" text-anchor="middle">$1,249,125</text>
+<text x="446.7" y="272.0" font-size="12" font-weight="600" fill="#0D2226" text-anchor="middle">Montgomery County</text>
+<text x="446.7" y="288.0" font-size="12" font-weight="600" fill="#0D2226" text-anchor="middle">(D.C.-adjacent)</text>
+</svg>
