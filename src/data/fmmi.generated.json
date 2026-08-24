@@ -97,5 +97,38 @@
         "note": ""
       }
     ]
+  },
+  {
+    "date": "2026-08-23",
+    "score": 55,
+    "label": "Balanced Market, Tightening",
+    "signal": "Tightening",
+    "sourceSlug": "maryland-real-estate-market-report-week-of-august-17-23-2026",
+    "subScores": [
+      {
+        "name": "Demand",
+        "score": 62,
+        "previousScore": 58,
+        "note": ""
+      },
+      {
+        "name": "Seller Strength",
+        "score": 60,
+        "previousScore": 52,
+        "note": ""
+      },
+      {
+        "name": "Market Speed",
+        "score": 55,
+        "previousScore": 58,
+        "note": ""
+      },
+      {
+        "name": "Rate Environment",
+        "score": 42,
+        "previousScore": 35,
+        "note": ""
+      }
+    ]
   }
 ]

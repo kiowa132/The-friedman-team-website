@@ -6,6 +6,8 @@ publishDate: "2026-08-23"
 heroImage: /images/uploads/firefly-3-.png
 carouselImages:
   - /images/uploads/chatgpt-image-aug-23-2026-10_15_20-pm.png
+youtubeVideoId: "Z2OpxAlgT7k"
+youtubeIsShort: true
 ---
 Marcus has been playing it patient all summer.
 
