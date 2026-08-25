@@ -173,12 +173,19 @@ export const HandbookReader: React.FC<HandbookReaderProps> = ({ guide }) => {
         </div>
       )}
 
-      <div className="flex-1 flex items-center justify-center px-2 sm:px-8 overflow-hidden">
+      <div className="flex-1 flex items-start sm:items-center justify-center px-2 sm:px-8 overflow-hidden">
         {isMobile ? (
           // Mobile: bypass the flip library entirely - a plain image with
           // tap-to-lightbox. Proven simpler and more reliable than trying
-          // to configure the library's own portrait mode.
-          <div className="relative w-full max-w-[480px]">
+          // to configure the library's own portrait mode. Aligned to the
+          // top (items-start above) rather than centered - every page's
+          // title bar sits near the top of the image, and on shorter
+          // phone viewports the full page is often taller than the
+          // visible area, so centering it clipped the title itself.
+          // Aligning top means any overflow is cropped from the bottom
+          // instead, and the full page is always one tap away in the
+          // lightbox anyway.
+          <div className="relative w-full max-w-[480px] mt-2">
             <button
               onClick={() => setLightboxIndex(currentPage)}
               className="relative w-full rounded-lg shadow-2xl overflow-hidden border-4 border-[#0F5C63] bg-[#0D2226] block"
