@@ -4,16 +4,9 @@ metaDescription: "How escalation clauses and appraisal gap coverage actually wor
 category: Buy a Home
 publishDate: "2026-08-28"
 heroImage: /images/uploads/escalation-appraisal-gap-hero.png
-carouselImages:
-  - /images/uploads/escalation-appraisal-gap-stepup.png
-  - /images/uploads/escalation-appraisal-gap-gap.png
-  - /images/uploads/escalation-appraisal-gap-agent.png
 youtubeVideoId: ""
-youtubeIsShort: true
+relatedAreaSlug: carroll-county
 ---
-<!-- Target keyword: escalation clause appraisal gap Maryland -->
-
-
 Dana found the house in early August. So did four other buyers.
 
 She'd done everything right - full pre-approval, flexible closing date, an agent who moved fast. Her agent came back with two recommendations to make the offer competitive: an escalation clause and appraisal gap coverage. Dana signed both that afternoon. She won the house by $3,000. Three weeks later, the appraisal came in $19,000 under her contract price, and because of the second clause she'd signed, that $19,000 was now cash she owed at closing - on top of her down payment.
@@ -84,38 +77,34 @@ In a fast-moving market this happens because appraisals lean on recent comparabl
 
 These three get used interchangeably in conversation, and they are not the same move.
 
-<table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;color:#0D2226;">
-<thead>
-<tr style="background:#0F5C63;color:#fff;">
-<th style="text-align:left;padding:10px 12px;border:1px solid #C9A96A55;">Approach</th>
-<th style="text-align:left;padding:10px 12px;border:1px solid #C9A96A55;">What it is</th>
-<th style="text-align:left;padding:10px 12px;border:1px solid #C9A96A55;">Your cash exposure</th>
-<th style="text-align:left;padding:10px 12px;border:1px solid #C9A96A55;">When it fits</th>
-</tr>
-</thead>
-<tbody>
-<tr style="background:#FAF8F5;">
-<td style="padding:10px 12px;border:1px solid #C9A96A55;font-weight:700;">Keep the appraisal contingency</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;">Maryland Realtors appraisal contingency addendum (financed or cash). A low appraisal lets you renegotiate or walk.</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;">None &mdash; you keep your options and your deposit.</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;">A balanced market, or any time you can't absorb a shortfall.</td>
-</tr>
-<tr>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;font-weight:700;">Cap your gap coverage</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;">You'll cover a shortfall up to a stated limit &mdash; e.g. "buyer pays up to $15,000 over a low appraisal," or "split the difference up to $Y each."</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;">Known and capped at a number you chose on purpose.</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;">Competitive offers where you have real reserves and want to stay in control.</td>
-</tr>
-<tr style="background:#FAF8F5;">
-<td style="padding:10px 12px;border:1px solid #C9A96A55;font-weight:700;">Waive the contingency entirely</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;">No appraisal-based exit. Whatever the gap turns out to be is yours to cover.</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;color:#B5544A;font-weight:700;">Open-ended.</td>
-<td style="padding:10px 12px;border:1px solid #C9A96A55;">Rarely for financed buyers &mdash; mostly strong-cash offers only.</td>
-</tr>
-</tbody>
-</table>
+<div style="background:#FAF8F5;border:1px solid #C9A96A55;border-radius:6px;padding:18px 20px;margin:20px 0;">
+<div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#0F5C63;margin-bottom:8px;">Keep the appraisal contingency</div>
+<div style="color:#0D2226;font-size:15px;line-height:1.7;">
+<strong>What it is:</strong> the Maryland Realtors appraisal contingency addendum (financed or cash). A low appraisal lets you renegotiate or walk.<br />
+<strong>Cash exposure:</strong> none - you keep your options and your deposit.<br />
+<strong>When it fits:</strong> a balanced market, or any time you can't absorb a shortfall.
+</div>
+</div>
 
-Whichever route you take, the planning number is the same: set aside roughly **2-5% of the purchase price** in cash you could put toward a gap, separate from your down payment, before you write the offer.
+<div style="background:#FAF8F5;border:1px solid #C9A96A55;border-radius:6px;padding:18px 20px;margin:20px 0;">
+<div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#0F5C63;margin-bottom:8px;">Cap your gap coverage</div>
+<div style="color:#0D2226;font-size:15px;line-height:1.7;">
+<strong>What it is:</strong> you'll cover a shortfall up to a stated limit - "buyer pays up to $15,000 over a low appraisal," or "split the difference up to $Y each."<br />
+<strong>Cash exposure:</strong> known and capped at a number you chose on purpose.<br />
+<strong>When it fits:</strong> competitive offers where you have real reserves and want to stay in control.
+</div>
+</div>
+
+<div style="background:#FAF8F5;border:1px solid #C9A96A55;border-radius:6px;padding:18px 20px;margin:20px 0;">
+<div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#0F5C63;margin-bottom:8px;">Waive the contingency entirely</div>
+<div style="color:#0D2226;font-size:15px;line-height:1.7;">
+<strong>What it is:</strong> no appraisal-based exit. Whatever the gap turns out to be is yours to cover.<br />
+<strong>Cash exposure:</strong> <span style="color:#B5544A;font-weight:700;">open-ended.</span><br />
+<strong>When it fits:</strong> rarely for financed buyers - mostly strong-cash offers only.
+</div>
+</div>
+
+Whichever route you take, the planning number is the same: set aside roughly **2-5% of the purchase price** in cash you could put toward a gap, separate from your down payment, before you write the offer. If you want the full picture of what that cash pile needs to cover, [How Much Money Do You Actually Need to Buy a House in Maryland?](/blog/how-much-money-do-you-need-to-buy-a-house-in-maryland) breaks it down from earnest money through closing.
 
 ## How the Two Clauses Combine in a Competitive Offer
 
@@ -172,15 +161,3 @@ A common planning range is 2-5% of the purchase price, held separately from your
 **Can an escalation clause make me overpay for a house?**
 
 Only up to the cap you set - it never goes higher. And it doesn't guarantee a win: Maryland listing agents weigh net proceeds and terms, so a lower, cleaner offer can still beat an escalated one.
-
-## Your Next Move Starts Here
-
-Whether you're preparing your first competitive offer or your fifth, the right structure on these two clauses is the difference between winning a home and overpaying for one.
-
-**[Check Your Home's Value](https://www.friedmanreteam.com/home-valuation)** — A personalized estimate based on recent comparable sales and current buyer demand, not an automated guess.
-
-**[How Much Money Do You Actually Need to Buy a House in Maryland?](https://www.friedmanreteam.com/blog/how-much-money-do-you-need-to-buy-a-house-in-maryland)** — The full cash picture from earnest money through closing, so you know your real gap-coverage room before you offer.
-
-If you're writing an offer in [Carroll, Baltimore, Howard, or Frederick County](https://www.friedmanreteam.com/neighborhoods), I'll walk you through exactly how these should be structured for your situation - your real ceiling, your real gap cash, and which contingencies to keep - before you sign anything.
-
-— Kyle Friedman, The Friedman Team
