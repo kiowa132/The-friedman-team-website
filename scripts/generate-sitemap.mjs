@@ -25,7 +25,7 @@ const SITE_URL = 'https://www.friedmanreteam.com';
 // --- Static routes, taken directly from src/App.tsx's <Route> list -------
 const STATIC_ROUTES = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
-  { path: '/about', changefreq: 'monthly', priority: '0.6' },
+  { path: '/about', changefreq: 'monthly', priority: '0.9' },
   { path: '/sell', changefreq: 'monthly', priority: '0.8' },
   { path: '/sell/marketing-strategy', changefreq: 'monthly', priority: '0.6' },
   { path: '/buy', changefreq: 'monthly', priority: '0.8' },
