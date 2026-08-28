@@ -21,8 +21,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   // Knowledge Panel. index.html carries the RealEstateAgent schema with Kyle
   // nested as `founder`; this is the standalone Person with mainEntityOfPage
   // pointing at /about, which is what Google keys a person entity off of.
-  // TODO: add the Google Business Profile URL to `sameAs`, and the REALTOR
-  // license number as a `hasCredential` block, once Kyle provides them.
+  // TODO: swap the share.google short link in `sameAs` for the full
+  // google.com/maps/place/... URL, and add Realtor.com / Homes.com profile
+  // URLs to `sameAs` once available.
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -64,6 +65,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       'Maryland Housing Market',
     ],
     memberOf: { '@type': 'Organization', name: 'National Association of REALTORS' },
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Real Estate License',
+      recognizedBy: { '@type': 'GovernmentOrganization', name: 'Maryland Real Estate Commission' },
+      identifier: '673223',
+    },
     sameAs: [
       'https://share.google/q91ZdJrdKqZ3o5NUd',
       'https://share.google/fH72jPIgQXjEImIHG',
