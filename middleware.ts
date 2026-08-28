@@ -214,7 +214,7 @@ export default function middleware(request: Request): Response | undefined {
     description = 'Small, curated events and roundtables for members of The Maryland Professional Network - coming soon.';
     image = GENERIC_DEFAULT_IMAGE;
   } else if (path === '/about') {
-    title = 'About Kyle Friedman | The Friedman Team';
+    title = 'Kyle Friedman | Realtor, The Friedman Team | Carroll County, MD';
     description = 'Meet Kyle Friedman, Real Estate Professional & Expert Negotiator with The Friedman Team at eXp Realty, serving Carroll, Baltimore, Howard, and Frederick County, Maryland.';
     image = DEFAULT_IMAGE;
   } else if (path === '/team') {

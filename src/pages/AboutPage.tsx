@@ -38,12 +38,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
     email: 'kyle@friedmanreteam.com',
     worksFor: {
       '@type': 'RealEstateAgent',
-      name: 'The Friedman Team',
+      name: 'The Friedman Team by Kyle Friedman',
       url: 'https://www.friedmanreteam.com/',
       telephone: '+1-443-789-3101',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '8115 Maple Lawn Blvd #350',
+        streetAddress: '8115 Maple Lawn Blvd Suite 350',
         addressLocality: 'Fulton',
         addressRegion: 'MD',
         postalCode: '20759',
@@ -65,6 +65,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
     ],
     memberOf: { '@type': 'Organization', name: 'National Association of REALTORS' },
     sameAs: [
+      'https://share.google/q91ZdJrdKqZ3o5NUd',
       'https://share.google/fH72jPIgQXjEImIHG',
       'https://www.zillow.com/profile/Kyle%20Friedman%20Team',
       'https://www.facebook.com/kyle.friedman132',
