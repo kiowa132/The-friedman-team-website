@@ -2,6 +2,10 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/sell-your-home", "destination": "/sell", "permanent": true },
+    { "source": "/market-reports", "destination": "/blog", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/((?!api/|admin/).*)", "destination": "/index.html" }
   ]
