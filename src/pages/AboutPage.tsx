@@ -13,9 +13,67 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   setActiveTab
 }) => {
   usePageMeta(
-    'About Kyle Friedman | The Friedman Team',
+    'Kyle Friedman | Realtor, The Friedman Team | Carroll County, MD',
     'Meet Kyle Friedman, Real Estate Professional & Expert Negotiator with The Friedman Team at eXp Realty, serving Carroll, Baltimore, Howard, and Frederick County, Maryland.'
   );
+
+  // Page-level Person entity for the "Kyle Friedman" branded search / Google
+  // Knowledge Panel. index.html carries the RealEstateAgent schema with Kyle
+  // nested as `founder`; this is the standalone Person with mainEntityOfPage
+  // pointing at /about, which is what Google keys a person entity off of.
+  // TODO: add the Google Business Profile URL to `sameAs`, and the REALTOR
+  // license number as a `hasCredential` block, once Kyle provides them.
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': 'https://www.friedmanreteam.com/about#kyle-friedman',
+    name: 'Kyle Friedman',
+    jobTitle: 'Real Estate Professional & Expert Negotiator',
+    description:
+      'Kyle Friedman is the founder of The Friedman Team at eXp Realty, serving buyers and sellers across Carroll, Baltimore, Howard, and Frederick County, Maryland with a data-driven approach to pricing and negotiation.',
+    url: 'https://www.friedmanreteam.com/about',
+    image: 'https://www.friedmanreteam.com/images/kyle-portrait.jpg',
+    mainEntityOfPage: 'https://www.friedmanreteam.com/about',
+    telephone: '+1-443-789-3101',
+    email: 'kyle@friedmanreteam.com',
+    worksFor: {
+      '@type': 'RealEstateAgent',
+      name: 'The Friedman Team',
+      url: 'https://www.friedmanreteam.com/',
+      telephone: '+1-443-789-3101',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '8115 Maple Lawn Blvd #350',
+        addressLocality: 'Fulton',
+        addressRegion: 'MD',
+        postalCode: '20759',
+        addressCountry: 'US',
+      },
+    },
+    areaServed: [
+      { '@type': 'AdministrativeArea', name: 'Carroll County, MD' },
+      { '@type': 'AdministrativeArea', name: 'Baltimore County, MD' },
+      { '@type': 'AdministrativeArea', name: 'Howard County, MD' },
+      { '@type': 'AdministrativeArea', name: 'Frederick County, MD' },
+    ],
+    knowsAbout: [
+      'Residential Real Estate',
+      'Farm & Land Sales',
+      'Data-Driven Pricing Strategy',
+      'Real Estate Negotiation',
+      'Maryland Housing Market',
+    ],
+    memberOf: { '@type': 'Organization', name: 'National Association of REALTORS' },
+    sameAs: [
+      'https://share.google/fH72jPIgQXjEImIHG',
+      'https://www.zillow.com/profile/Kyle%20Friedman%20Team',
+      'https://www.facebook.com/kyle.friedman132',
+      'https://www.instagram.com/keysbykyle',
+      'https://www.linkedin.com/in/kyle-friedman-415029168',
+      'https://www.youtube.com/@SimplyFriedman/shorts',
+    ],
+  };
+
   const specializations = [
     {
       title: 'First-Time & Move-Up Buyers',
@@ -41,7 +99,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
   return (
     <div className="pt-28 pb-20 space-y-20">
-      
+
+      <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
+
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-[#0D2226] text-[#FAF8F5] border border-[#C9A96A]/40 p-8 sm:p-14 rounded-xs shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative overflow-hidden">

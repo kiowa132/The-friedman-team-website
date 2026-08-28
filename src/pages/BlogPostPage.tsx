@@ -187,9 +187,11 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
             {post.metaDescription}
           </p>
           <div className="flex items-center gap-3">
-            <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-9 h-9 rounded-full object-cover object-top" />
+            <Link to="/about" aria-label="About Kyle Friedman">
+              <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-9 h-9 rounded-full object-cover object-top" />
+            </Link>
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-[#C9A96A]">Kyle Friedman</p>
+              <Link to="/about" className="text-xs font-bold uppercase tracking-widest text-[#C9A96A] hover:text-[#0F5C63] transition-colors">Kyle Friedman</Link>
               <p className="text-[10px] text-[#1C2B2E]/50">The Friedman Team</p>
             </div>
           </div>
@@ -401,7 +403,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 mt-4">
             <img src="/images/kyle-portrait.jpg" alt="Kyle Friedman" className="w-20 h-20 rounded-full object-cover object-top border-2 border-[#C9A96A] shrink-0" />
             <div className="text-center sm:text-left">
-              <h3 className="font-serif text-xl font-bold">Kyle Friedman</h3>
+              <h3 className="font-serif text-xl font-bold"><Link to="/about" className="hover:text-[#C9A96A] transition-colors">Kyle Friedman</Link></h3>
               <p className="text-xs text-[#A8B2A1] mb-3">Licensed REALTOR® & Expert Negotiator, The Friedman Team at eXp Realty</p>
               <p className="text-sm text-[#FAF8F5]/80 leading-relaxed max-w-lg">
                 Kyle Friedman serves buyers and sellers across Carroll, Howard, Frederick, and Baltimore counties, with a strategy-first, data-driven approach to pricing and negotiation.
