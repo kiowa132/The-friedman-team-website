@@ -149,6 +149,12 @@ export const Footer: React.FC<FooterProps> = ({
               <li><FLink to="/listings" className="hover:text-[#C9A96A] transition-colors">Featured Listings</FLink></li>
               <li><FLink to="/blog" className="hover:text-[#C9A96A] transition-colors">Market Intelligence Report</FLink></li>
               <li><FLink to="/team" className="hover:text-[#C9A96A] transition-colors">Meet the Team</FLink></li>
+              <li><FLink to="/guides" className="hover:text-[#C9A96A] transition-colors">Free Buyer & Seller Guides</FLink></li>
+              <li><FLink to="/videos" className="hover:text-[#C9A96A] transition-colors">Maryland Market Videos</FLink></li>
+              <li><FLink to="/financing-options" className="hover:text-[#C9A96A] transition-colors">Financing Options</FLink></li>
+              <li><FLink to="/calculators" className="hover:text-[#C9A96A] transition-colors">Real Estate Calculators</FLink></li>
+              <li><FLink to="/past-transactions" className="hover:text-[#C9A96A] transition-colors">Team Transaction Record</FLink></li>
+              <li><FLink to="/network" className="hover:text-[#C9A96A] transition-colors">Maryland Professional Network</FLink></li>
             </ul>
           </div>
 
@@ -158,13 +164,13 @@ export const Footer: React.FC<FooterProps> = ({
               Key Markets
             </h5>
             <ul className="space-y-2 text-xs text-[#FAF8F5]/80">
-              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Carroll County Real Estate</FLink></li>
-              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Baltimore County Valleys</FLink></li>
-              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Howard County Estates</FLink></li>
-              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Frederick County Homes</FLink></li>
-              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Fulton & Maple Lawn</FLink></li>
-              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Eldersburg & Sykesville</FLink></li>
-              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Mount Airy Farms</FLink></li>
+              <li><FLink to="/neighborhoods/westminster" className="hover:text-[#C9A96A] transition-colors">Westminster & Carroll County</FLink></li>
+              <li><FLink to="/neighborhoods/hunt-valley" className="hover:text-[#C9A96A] transition-colors">Baltimore County Valleys</FLink></li>
+              <li><FLink to="/neighborhoods/clarksville" className="hover:text-[#C9A96A] transition-colors">Clarksville & Howard County</FLink></li>
+              <li><FLink to="/neighborhoods/downtown-frederick" className="hover:text-[#C9A96A] transition-colors">Frederick County Homes</FLink></li>
+              <li><FLink to="/neighborhoods/fulton" className="hover:text-[#C9A96A] transition-colors">Fulton & Maple Lawn</FLink></li>
+              <li><FLink to="/neighborhoods/eldersburg" className="hover:text-[#C9A96A] transition-colors">Eldersburg & Sykesville</FLink></li>
+              <li><FLink to="/neighborhoods/mount-airy" className="hover:text-[#C9A96A] transition-colors">Mount Airy</FLink></li>
               <li><FLink to="/luxury" className="hover:text-[#C9A96A] transition-colors">Fine Homes & Estates</FLink></li>
             </ul>
           </div>

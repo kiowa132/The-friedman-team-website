@@ -46,6 +46,11 @@ const STATIC_ROUTES = [
   { path: '/past-transactions', changefreq: 'monthly', priority: '0.6' },
   { path: '/videos', changefreq: 'monthly', priority: '0.5' },
   { path: '/financing-options', changefreq: 'monthly', priority: '0.6' },
+  { path: '/network', changefreq: 'monthly', priority: '0.5' },
+  { path: '/network/directory', changefreq: 'weekly', priority: '0.4' },
+  { path: '/network/about', changefreq: 'yearly', priority: '0.3' },
+  { path: '/network/events', changefreq: 'monthly', priority: '0.3' },
+  { path: '/network/join', changefreq: 'yearly', priority: '0.3' },
 ];
 
 // --- Neighborhood pages, from the same data the site itself renders from -
