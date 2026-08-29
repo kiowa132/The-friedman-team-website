@@ -1,22 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ShieldCheck, Facebook, Instagram, Linkedin, Star, Home, Youtube } from 'lucide-react';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
 
 interface FooterProps {
-  setActiveTab: (tab: string) => void;
+  // kept for API compatibility with App.tsx; nav is now real <Link>s
+  setActiveTab?: (tab: string) => void;
   onOpenValuation: () => void;
   onOpenConsultation: () => void;
 }
 
+// Real crawlable link for footer nav. Renders <a href>, does SPA nav,
+// and scrolls to top on click (matching the old goTo behavior).
+const FLink: React.FC<{ to: string; className?: string; children: React.ReactNode }> = ({ to, className, children }) => (
+  <Link
+    to={to}
+    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    className={className}
+  >
+    {children}
+  </Link>
+);
+
 export const Footer: React.FC<FooterProps> = ({
-  setActiveTab,
   onOpenValuation,
   onOpenConsultation
 }) => {
-  const goTo = (tab: string) => {
-    setActiveTab(tab);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <footer className="bg-[#0D2226] text-[#F5F1E8] border-t border-[#C9A96A]/30 pt-16 pb-8 relative overflow-hidden">
@@ -133,13 +142,13 @@ export const Footer: React.FC<FooterProps> = ({
               Navigation
             </h5>
             <ul className="space-y-2 text-xs text-[#FAF8F5]/80">
-              <li><button onClick={() => goTo('home')} className="hover:text-[#C9A96A] transition-colors">Home</button></li>
-              <li><button onClick={() => goTo('about')} className="hover:text-[#C9A96A] transition-colors">About Kyle Friedman</button></li>
-              <li><button onClick={() => goTo('sell')} className="hover:text-[#C9A96A] transition-colors">Sell Your Home</button></li>
-              <li><button onClick={() => goTo('buy')} className="hover:text-[#C9A96A] transition-colors">Buyers Strategy</button></li>
-              <li><button onClick={() => goTo('listings')} className="hover:text-[#C9A96A] transition-colors">Featured Listings</button></li>
-              <li><button onClick={() => goTo('blog')} className="hover:text-[#C9A96A] transition-colors">Market Intelligence Report</button></li>
-              <li><button onClick={() => goTo('team')} className="hover:text-[#C9A96A] transition-colors">Meet the Team</button></li>
+              <li><FLink to="/" className="hover:text-[#C9A96A] transition-colors">Home</FLink></li>
+              <li><FLink to="/about" className="hover:text-[#C9A96A] transition-colors">About Kyle Friedman</FLink></li>
+              <li><FLink to="/sell" className="hover:text-[#C9A96A] transition-colors">Sell Your Home</FLink></li>
+              <li><FLink to="/buy" className="hover:text-[#C9A96A] transition-colors">Buyers Strategy</FLink></li>
+              <li><FLink to="/listings" className="hover:text-[#C9A96A] transition-colors">Featured Listings</FLink></li>
+              <li><FLink to="/blog" className="hover:text-[#C9A96A] transition-colors">Market Intelligence Report</FLink></li>
+              <li><FLink to="/team" className="hover:text-[#C9A96A] transition-colors">Meet the Team</FLink></li>
             </ul>
           </div>
 
@@ -149,14 +158,14 @@ export const Footer: React.FC<FooterProps> = ({
               Key Markets
             </h5>
             <ul className="space-y-2 text-xs text-[#FAF8F5]/80">
-              <li><button onClick={() => goTo('neighborhoods')} className="hover:text-[#C9A96A] transition-colors">Carroll County Real Estate</button></li>
-              <li><button onClick={() => goTo('neighborhoods')} className="hover:text-[#C9A96A] transition-colors">Baltimore County Valleys</button></li>
-              <li><button onClick={() => goTo('neighborhoods')} className="hover:text-[#C9A96A] transition-colors">Howard County Estates</button></li>
-              <li><button onClick={() => goTo('neighborhoods')} className="hover:text-[#C9A96A] transition-colors">Frederick County Homes</button></li>
-              <li><button onClick={() => goTo('neighborhoods')} className="hover:text-[#C9A96A] transition-colors">Fulton & Maple Lawn</button></li>
-              <li><button onClick={() => goTo('neighborhoods')} className="hover:text-[#C9A96A] transition-colors">Eldersburg & Sykesville</button></li>
-              <li><button onClick={() => goTo('neighborhoods')} className="hover:text-[#C9A96A] transition-colors">Mount Airy Farms</button></li>
-              <li><button onClick={() => goTo('luxury')} className="hover:text-[#C9A96A] transition-colors">Fine Homes & Estates</button></li>
+              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Carroll County Real Estate</FLink></li>
+              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Baltimore County Valleys</FLink></li>
+              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Howard County Estates</FLink></li>
+              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Frederick County Homes</FLink></li>
+              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Fulton & Maple Lawn</FLink></li>
+              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Eldersburg & Sykesville</FLink></li>
+              <li><FLink to="/neighborhoods" className="hover:text-[#C9A96A] transition-colors">Mount Airy Farms</FLink></li>
+              <li><FLink to="/luxury" className="hover:text-[#C9A96A] transition-colors">Fine Homes & Estates</FLink></li>
             </ul>
           </div>
 
@@ -178,12 +187,12 @@ export const Footer: React.FC<FooterProps> = ({
               >
                 Schedule Consultation
               </button>
-              <button
-                onClick={() => goTo('contact')}
+              <FLink
+                to="/contact"
                 className="w-full text-left text-xs text-[#A8B2A1] hover:text-[#C9A96A] pt-1 block"
               >
                 Confidential Lead Office
-              </button>
+              </FLink>
             </div>
           </div>
 
@@ -212,18 +221,18 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="text-center md:text-left text-[10px] text-[#A8B2A1]/60 pt-2 border-t border-[#FAF8F5]/5">
             © {new Date().getFullYear()} The Friedman Team | eXp Realty. All Rights Reserved.
             {' · '}
-            <button onClick={() => goTo('privacy-policy')} className="hover:text-[#C9A96A] transition-colors underline">Privacy Policy</button>
+            <FLink to="/privacy-policy" className="hover:text-[#C9A96A] transition-colors underline">Privacy Policy</FLink>
             {' · '}
-            <button onClick={() => goTo('terms-of-use')} className="hover:text-[#C9A96A] transition-colors underline">Terms of Use</button>
+            <FLink to="/terms-of-use" className="hover:text-[#C9A96A] transition-colors underline">Terms of Use</FLink>
           </div>
 
           {/* Bottom mini nav row */}
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 pt-4 border-t border-[#FAF8F5]/5 text-[11px] font-semibold uppercase tracking-widest text-[#FAF8F5]/60">
-            <button onClick={() => goTo('home')} className="hover:text-[#C9A96A] transition-colors">Home</button>
-            <button onClick={() => goTo('team')} className="hover:text-[#C9A96A] transition-colors">Meet the Team</button>
-            <button onClick={() => goTo('listings')} className="hover:text-[#C9A96A] transition-colors">Featured Properties</button>
-            <button onClick={() => goTo('testimonials')} className="hover:text-[#C9A96A] transition-colors">Testimonials</button>
-            <button onClick={() => goTo('contact')} className="hover:text-[#C9A96A] transition-colors">Let's Connect</button>
+            <FLink to="/" className="hover:text-[#C9A96A] transition-colors">Home</FLink>
+            <FLink to="/team" className="hover:text-[#C9A96A] transition-colors">Meet the Team</FLink>
+            <FLink to="/listings" className="hover:text-[#C9A96A] transition-colors">Featured Properties</FLink>
+            <FLink to="/testimonials" className="hover:text-[#C9A96A] transition-colors">Testimonials</FLink>
+            <FLink to="/contact" className="hover:text-[#C9A96A] transition-colors">Let's Connect</FLink>
           </div>
         </div>
 

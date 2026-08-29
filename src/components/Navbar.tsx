@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
 import { Building2, Phone, Menu, X, Heart, Calculator, ChevronRight, ChevronDown, Compass, ShieldCheck, Grid2x2, Facebook, Instagram, Linkedin, Star, Home, Youtube } from 'lucide-react';
 
 interface NavDropdownItem {
   label: string;
-  action: () => void;
+  to?: string;          // real route -> renders a crawlable <Link>
+  action?: () => void;  // fallback for non-nav actions (modals)
 }
 
 interface NavGroup {
   id: string;
   label: string;
-  action?: () => void; // for a plain link with no dropdown (e.g. Home)
+  to?: string;          // plain link with no dropdown -> crawlable <Link>
+  action?: () => void;  // non-nav action (e.g. open valuation modal) or dropdown toggle
   items?: NavDropdownItem[];
 }
 
@@ -74,6 +77,33 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Close all menus + scroll to top after a real <Link> navigation.
+  const afterNav = () => {
+    closeFullMenu();
+    setExpandedFullMenuGroup(null);
+    setOpenDesktopGroup(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Renders a crawlable <a href> when `to` is set, else a <button> for
+  // modal/toggle actions. One helper for every nav render spot.
+  const NavItem: React.FC<{
+    to?: string;
+    action?: () => void;
+    className?: string;
+    id?: string;
+    children: React.ReactNode;
+  }> = ({ to, action, className, id, children }) =>
+    to ? (
+      <Link to={to} id={id} className={className} onClick={afterNav}>
+        {children}
+      </Link>
+    ) : (
+      <button type="button" id={id} className={className} onClick={action}>
+        {children}
+      </button>
+    );
+
   const goToNeighborhood = (neighborhoodId: string) => {
     onSelectNeighborhood?.(neighborhoodId);
     goTo('neighborhoods');
@@ -90,34 +120,34 @@ export const Navbar: React.FC<NavbarProps> = ({
       id: 'properties',
       label: 'Properties',
       items: [
-        { label: 'Featured Properties', action: () => goTo('listings') },
-        { label: 'Home Search', action: () => goTo('listings') },
-        { label: "Mentor's and Team's Transactions", action: () => goTo('past-transactions') },
-        { label: "Buyer's Strategy", action: () => goTo('buy') },
-        { label: "Seller's Strategy", action: () => goTo('sell') },
+        { label: 'Featured Properties', to: '/listings' },
+        { label: 'Home Search', to: '/listings' },
+        { label: "Mentor's and Team's Transactions", to: '/past-transactions' },
+        { label: "Buyer's Strategy", to: '/buy' },
+        { label: "Seller's Strategy", to: '/sell' },
       ],
     },
-    { id: 'neighborhoods', label: 'Neighborhoods', action: () => goTo('neighborhoods') },
+    { id: 'neighborhoods', label: 'Neighborhoods', to: '/neighborhoods' },
     { id: 'home-valuation', label: 'Home Valuation', action: () => onOpenValuation() },
-    { id: 'mortgage-calculator', label: 'Mortgage Calculator', action: () => goTo('calculators-mortgage') },
-    { id: 'affordability-calculator', label: 'Affordability Calculator', action: () => goTo('calculators-affordability') },
+    { id: 'mortgage-calculator', label: 'Mortgage Calculator', to: '/calculators/mortgage' },
+    { id: 'affordability-calculator', label: 'Affordability Calculator', to: '/calculators/affordability' },
     {
       id: 'resources',
       label: 'Resources',
       items: [
-        { label: 'Meet the Team', action: () => goTo('team') },
-        { label: "The Friedman Report", action: () => goTo('blog') },
-        { label: 'Free Guides', action: () => goTo('guides') },
-        { label: 'Videos', action: () => goTo('videos') },
-        { label: 'Net Proceeds Calculator', action: () => goTo('calculators-net-proceeds') },
-        { label: 'Financing Options', action: () => goTo('financing-options') },
-        { label: 'Giving Back', action: () => goTo('giving-back') },
-        { label: 'Maryland Professional Network', action: () => goTo('network') },
-        { label: 'Fine Homes & Estates', action: () => goTo('luxury') },
-        { label: 'About Kyle Friedman', action: () => goTo('about') },
+        { label: 'Meet the Team', to: '/team' },
+        { label: "The Friedman Report", to: '/blog' },
+        { label: 'Free Guides', to: '/guides' },
+        { label: 'Videos', to: '/videos' },
+        { label: 'Net Proceeds Calculator', to: '/calculators/net-proceeds' },
+        { label: 'Financing Options', to: '/financing-options' },
+        { label: 'Giving Back', to: '/giving-back' },
+        { label: 'Maryland Professional Network', to: '/network' },
+        { label: 'Fine Homes & Estates', to: '/luxury' },
+        { label: 'About Kyle Friedman', to: '/about' },
       ],
     },
-    { id: 'contact', label: 'Contact Us', action: () => goTo('contact') },
+    { id: 'contact', label: 'Contact Us', to: '/contact' },
   ];
 
   // Which top-level group should show as "active" (for the underline/highlight)
@@ -150,41 +180,41 @@ export const Navbar: React.FC<NavbarProps> = ({
   // bottom. This is separate from the compact dropdown-based top bar above.
   const fullMenuColumns: NavGroup[][] = [
     [
-      { id: 'home', label: 'Home', action: () => goTo('home') },
-      { id: 'team', label: 'Meet the Team', action: () => goTo('team') },
+      { id: 'home', label: 'Home', to: '/' },
+      { id: 'team', label: 'Meet the Team', to: '/team' },
       { id: 'home-valuation-full', label: 'Home Valuation', action: () => { onOpenValuation(); closeFullMenu(); } },
-      { id: 'mortgage-calculator-full', label: 'Mortgage Calculator', action: () => goTo('calculators-mortgage') },
-      { id: 'affordability-calculator-full', label: 'Affordability Calculator', action: () => goTo('calculators-affordability') },
-      { id: 'neighborhoods-full', label: 'Neighborhoods', action: () => goTo('neighborhoods') },
-      { id: 'blog-full', label: 'The Friedman Report', action: () => goTo('blog') },
-      { id: 'giving-back-full', label: 'Giving Back', action: () => goTo('giving-back') },
+      { id: 'mortgage-calculator-full', label: 'Mortgage Calculator', to: '/calculators/mortgage' },
+      { id: 'affordability-calculator-full', label: 'Affordability Calculator', to: '/calculators/affordability' },
+      { id: 'neighborhoods-full', label: 'Neighborhoods', to: '/neighborhoods' },
+      { id: 'blog-full', label: 'The Friedman Report', to: '/blog' },
+      { id: 'giving-back-full', label: 'Giving Back', to: '/giving-back' },
     ],
     [
       {
         id: 'properties-full',
         label: 'Properties',
         items: [
-          { label: 'Featured Properties', action: () => goTo('listings') },
-          { label: 'Home Search', action: () => goTo('listings') },
-          { label: "Mentor's and Team's Transactions", action: () => goTo('past-transactions') },
-          { label: "Buyer's Strategy", action: () => goTo('buy') },
-          { label: "Seller's Strategy", action: () => goTo('sell') },
+          { label: 'Featured Properties', to: '/listings' },
+          { label: 'Home Search', to: '/listings' },
+          { label: "Mentor's and Team's Transactions", to: '/past-transactions' },
+          { label: "Buyer's Strategy", to: '/buy' },
+          { label: "Seller's Strategy", to: '/sell' },
         ],
       },
       {
         id: 'resources-full',
         label: 'Resources',
         items: [
-          { label: 'Free Guides', action: () => goTo('guides') },
-          { label: 'Videos', action: () => goTo('videos') },
-          { label: 'Net Proceeds Calculator', action: () => goTo('calculators-net-proceeds') },
-          { label: 'Financing Options', action: () => goTo('financing-options') },
-          { label: 'Fine Homes & Estates', action: () => goTo('luxury') },
-          { label: 'Maryland Professional Network', action: () => goTo('network') },
-          { label: 'About Kyle Friedman', action: () => goTo('about') },
+          { label: 'Free Guides', to: '/guides' },
+          { label: 'Videos', to: '/videos' },
+          { label: 'Net Proceeds Calculator', to: '/calculators/net-proceeds' },
+          { label: 'Financing Options', to: '/financing-options' },
+          { label: 'Fine Homes & Estates', to: '/luxury' },
+          { label: 'Maryland Professional Network', to: '/network' },
+          { label: 'About Kyle Friedman', to: '/about' },
         ],
       },
-      { id: 'contact-full', label: 'Contact Us', action: () => goTo('contact') },
+      { id: 'contact-full', label: 'Contact Us', to: '/contact' },
     ],
   ];
 
@@ -209,8 +239,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center justify-between">
 
           {/* Logo Branding */}
-          <button
-            onClick={() => goTo('home')}
+          <Link
+            to="/"
+            onClick={afterNav}
             className="flex items-center gap-3 text-left group focus:outline-none"
             id="nav-logo-btn"
           >
@@ -229,7 +260,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="text-[#A8B2A1]/90">eXp Realty</span>
               </div>
             </div>
-          </button>
+          </Link>
 
           {/* Desktop Navigation - grouped by buyer/seller intent */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
@@ -244,31 +275,46 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onMouseEnter={() => hasDropdown && handleDesktopEnter(group.id)}
                   onMouseLeave={() => hasDropdown && handleDesktopLeave()}
                 >
-                  <button
-                    onClick={() => (group.action ? group.action() : handleDesktopEnter(group.id))}
-                    id={`nav-link-${group.id}`}
-                    className={`px-3 py-2 text-xs xl:text-sm uppercase tracking-widest font-medium transition-all relative flex items-center gap-1 ${
+                  {(() => {
+                    const cls = `px-3 py-2 text-xs xl:text-sm uppercase tracking-widest font-medium transition-all relative flex items-center gap-1 ${
                       isActive ? 'text-[#C9A96A] font-semibold' : 'text-[#FAF8F5]/85 hover:text-[#C9A96A]'
-                    }`}
-                  >
-                    {group.label}
-                    {hasDropdown && <ChevronDown className="w-3 h-3" />}
-                    {isActive && (
-                      <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#C9A96A] rounded-full shadow-[0_0_8px_#C9A96A]" />
-                    )}
-                  </button>
+                    }`;
+                    const inner = (
+                      <>
+                        {group.label}
+                        {hasDropdown && <ChevronDown className="w-3 h-3" />}
+                        {isActive && (
+                          <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#C9A96A] rounded-full shadow-[0_0_8px_#C9A96A]" />
+                        )}
+                      </>
+                    );
+                    if (group.to) {
+                      return <Link to={group.to} id={`nav-link-${group.id}`} className={cls} onClick={afterNav}>{inner}</Link>;
+                    }
+                    return (
+                      <button
+                        type="button"
+                        onClick={() => (group.action ? group.action() : handleDesktopEnter(group.id))}
+                        id={`nav-link-${group.id}`}
+                        className={cls}
+                      >
+                        {inner}
+                      </button>
+                    );
+                  })()}
 
                   {hasDropdown && openDesktopGroup === group.id && (
                     <div className="absolute top-full left-0 pt-2 min-w-[220px] z-30">
                       <div className="bg-[#0D2226] border border-[#C9A96A]/40 rounded-xs shadow-2xl overflow-hidden">
                         {group.items!.map((item) => (
-                          <button
+                          <NavItem
                             key={item.label}
-                            onClick={item.action}
-                            className="w-full text-left px-4 py-3 text-xs uppercase tracking-wider text-[#FAF8F5]/90 hover:bg-[#0F5C63] hover:text-[#C9A96A] transition-colors border-b border-[#FAF8F5]/5 last:border-b-0"
+                            to={item.to}
+                            action={item.action}
+                            className="block w-full text-left px-4 py-3 text-xs uppercase tracking-wider text-[#FAF8F5]/90 hover:bg-[#0F5C63] hover:text-[#C9A96A] transition-colors border-b border-[#FAF8F5]/5 last:border-b-0"
                           >
                             {item.label}
-                          </button>
+                          </NavItem>
                         ))}
                       </div>
                     </div>
@@ -282,8 +328,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               favorites icon and the phone number displayed directly, no
               large button-styled CTAs cluttering the header. */}
           <div className="hidden lg:flex items-center space-x-5">
-            <button
-              onClick={() => goTo('listings')}
+            <Link
+              to="/listings"
+              onClick={afterNav}
               className="relative p-1 text-[#FAF8F5]/80 hover:text-[#C9A96A] transition-colors focus:outline-none"
               title="Saved Properties"
               id="nav-saved-btn"
@@ -294,7 +341,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {savedCount}
                 </span>
               )}
-            </button>
+            </Link>
 
             <a
               href="tel:4437893101"
@@ -363,8 +410,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             <div className="flex items-center justify-between pb-6 border-b border-[#0D2226]/15">
-              <button
-                onClick={() => goTo('home')}
+              <Link
+                to="/"
+                onClick={afterNav}
                 className="flex items-center gap-2 text-left"
               >
                 <div className="w-9 h-9 rounded-sm bg-[#0F5C63] border border-[#C9A96A] flex items-center justify-center text-[#C9A96A] font-serif font-bold text-lg">
@@ -373,7 +421,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="font-serif text-lg font-bold tracking-wider text-[#0D2226] uppercase">
                   Friedman
                 </span>
-              </button>
+              </Link>
               <button
                 onClick={closeFullMenu}
                 aria-label="Close menu"
@@ -392,13 +440,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                     if (!hasDropdown) {
                       return (
-                        <button
+                        <NavItem
                           key={group.id}
-                          onClick={group.action}
+                          to={group.to}
+                          action={group.action}
                           className="block text-left text-lg sm:text-xl uppercase tracking-wide text-[#0D2226] hover:text-[#0F5C63] transition-colors"
                         >
                           {group.label}
-                        </button>
+                        </NavItem>
                       );
                     }
 
@@ -414,13 +463,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                         {isExpanded && (
                           <div className="pt-3 pl-2 space-y-2.5">
                             {group.items!.map((item) => (
-                              <button
+                              <NavItem
                                 key={item.label}
-                                onClick={item.action}
+                                to={item.to}
+                                action={item.action}
                                 className="block text-left text-sm uppercase tracking-wider text-[#1C2B2E]/70 hover:text-[#0F5C63] transition-colors"
                               >
                                 {item.label}
-                              </button>
+                              </NavItem>
                             ))}
                           </div>
                         )}
