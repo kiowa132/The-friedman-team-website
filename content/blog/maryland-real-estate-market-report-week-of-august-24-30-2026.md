@@ -3,7 +3,7 @@ title: "Maryland Real Estate Market Report: New Listings Nearly Double, Week of 
 metaDescription: "Maryland new listings and closings both nearly doubled this week. Full statewide and 24-county Bright MLS data, the Friedman Market Momentum Index, and mortgage rates."
 category: Market Reports
 publishDate: "2026-08-31"
-heroImage: /images/uploads/maryland-real-estate-market-report-week-of-august-24-30-2026-hero.png
+heroImage: /images/uploads/maryland-real-estate-market-report-week-of-august-24-30-2026-hero.jpg
 carouselImages:
   - /images/uploads/maryland-real-estate-market-report-week-of-august-24-30-2026-snapshot.jpg
 youtubeVideoId: ""
@@ -311,7 +311,7 @@ don't rarely make headlines, and this week there were a lot of them.
 
 ## Bonus From My Kitchen: Smoked Cream Cheese, Two Ways
 
-<img src="/images/uploads/maryland-real-estate-market-report-week-of-august-24-30-2026-recipe.jpg" alt="A block of smoked cream cheese topped with fresh rosemary and a torched golden crust, served with crackers" style="width:100%;height:auto;margin:20px 0;" />
+<img src="/images/uploads/maryland-real-estate-market-report-week-of-august-24-30-2026-recipe.png" alt="A block of smoked cream cheese topped with fresh rosemary and a torched golden crust, served with crackers" style="width:100%;height:auto;margin:20px 0;" />
 
 Labor Day weekend means one more cookout, and this is the easiest thing
 I've put on the smoker all summer. We did two flavors — one savory, one
