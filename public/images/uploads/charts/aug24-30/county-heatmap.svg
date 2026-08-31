@@ -1,0 +1,42 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" font-family="Avenir Next, Arial, sans-serif">
+<text x="0" y="26" font-size="12.5" font-weight="600" fill="#0D2226">Carroll County</text>
+<rect x="150" y="14" width="80.5" height="18" rx="3" fill="#0f5c63"/>
+<text x="238.5" y="27" font-size="12" font-weight="700" fill="#0D2226">19d</text>
+<text x="638" y="27" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">38 closings</text>
+<text x="0" y="60" font-size="12.5" font-weight="600" fill="#0D2226">Cecil County</text>
+<rect x="150" y="48" width="84.7" height="18" rx="3" fill="#125c63"/>
+<text x="242.7" y="61" font-size="12" font-weight="700" fill="#0D2226">20d</text>
+<text x="638" y="61" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">18 closings</text>
+<text x="0" y="94" font-size="12.5" font-weight="600" fill="#0D2226">Caroline County</text>
+<rect x="150" y="82" width="88.9" height="18" rx="3" fill="#155d63"/>
+<text x="246.9" y="95" font-size="12" font-weight="700" fill="#0D2226">21d</text>
+<text x="638" y="95" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">7 closings</text>
+<text x="0" y="128" font-size="12.5" font-weight="600" fill="#0D2226">Calvert County</text>
+<rect x="150" y="116" width="97.4" height="18" rx="3" fill="#1a5d63"/>
+<text x="255.4" y="129" font-size="12" font-weight="700" fill="#0D2226">23d</text>
+<text x="638" y="129" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">27 closings</text>
+<text x="0" y="162" font-size="12.5" font-weight="600" fill="#0D2226">St. Mary's County</text>
+<rect x="150" y="150" width="97.4" height="18" rx="3" fill="#1a5d63"/>
+<text x="255.4" y="163" font-size="12" font-weight="700" fill="#0D2226">23d</text>
+<text x="638" y="163" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">26 closings</text>
+<text x="0" y="196" font-size="12.5" font-weight="600" fill="#0D2226">Baltimore City</text>
+<rect x="150" y="184" width="216.0" height="18" rx="3" fill="#696663"/>
+<text x="374.0" y="197" font-size="12" font-weight="700" fill="#0D2226">51d</text>
+<text x="638" y="197" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">105 closings</text>
+<text x="0" y="230" font-size="12.5" font-weight="600" fill="#0D2226">Worcester County</text>
+<rect x="150" y="218" width="233.0" height="18" rx="3" fill="#756764"/>
+<text x="391.0" y="231" font-size="12" font-weight="700" fill="#0D2226">55d</text>
+<text x="638" y="231" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">48 closings</text>
+<text x="0" y="264" font-size="12.5" font-weight="600" fill="#0D2226">Somerset County</text>
+<rect x="150" y="252" width="300.7" height="18" rx="3" fill="#a26c64"/>
+<text x="458.7" y="265" font-size="12" font-weight="700" fill="#0D2226">71d</text>
+<text x="638" y="265" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">8 closings</text>
+<text x="0" y="298" font-size="12.5" font-weight="600" fill="#0D2226">Talbot County</text>
+<rect x="150" y="286" width="313.4" height="18" rx="3" fill="#aa6d64"/>
+<text x="471.4" y="299" font-size="12" font-weight="700" fill="#0D2226">74d</text>
+<text x="638" y="299" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">9 closings</text>
+<text x="0" y="332" font-size="12.5" font-weight="600" fill="#0D2226">Dorchester County</text>
+<rect x="150" y="320" width="360.0" height="18" rx="3" fill="#c97064"/>
+<text x="518.0" y="333" font-size="12" font-weight="700" fill="#0D2226">85d</text>
+<text x="638" y="333" font-size="11" fill="#1C2B2E" fill-opacity="0.55" text-anchor="end">5 closings</text>
+</svg>
