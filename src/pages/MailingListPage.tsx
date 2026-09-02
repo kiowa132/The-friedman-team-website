@@ -215,7 +215,7 @@ export const MailingListPage: React.FC = () => {
                 className="w-full py-3.5 bg-[#0D2226] hover:bg-[#0F5C63] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest transition-colors rounded-xs flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-                {submitting ? 'Sending…' : 'Get My Free Schedules'}
+                {submitting ? 'Sending…' : wantsMailedGift ? 'Get My Free Schedules' : 'Join the List'}
               </button>
 
               <p className="text-[11px] text-[#1C2B2E]/45 leading-relaxed text-center">
