@@ -146,7 +146,13 @@ collections:
       - { label: "Lot Size (override)", name: "lotSize", widget: "string", required: false, hint: "e.g. 0.25 acres" }
       - { label: "Year Built (override)", name: "yearBuilt", widget: "string", required: false }
       - { label: "Virtual Tour / Video URL", name: "tourUrl", widget: "string", required: false, hint: "Matterport or YouTube link - optional" }
-      - { label: "Hero / Main Photo (override)", name: "heroImage", widget: "image", required: false, hint: "Optional. If left blank, the page uses the first photo from the folder public/images/listings/<this-file's-name>/  (or Lofty's photo)." }
+      - { label: "Hero / Main Photo (override)", name: "heroImage", widget: "image", required: false, hint: "Optional. If left blank, the page uses the first gallery photo below, then the photo folder, then Lofty's photo." }
+      - label: "Photo Gallery (override)"
+        name: "photos"
+        widget: "list"
+        required: false
+        hint: "Optional. Best case: leave empty and let the photos come from Lofty. Otherwise add them here. In the media picker you can drag several files in at once to upload them, then insert them. COMPRESS FIRST - keep each under ~400KB (tinypng.com), phone photos are ~15MB and will break the build."
+        field: { label: "Photo", name: "image", widget: "image" }
       - label: "Highlights / Description (override)"
         name: "body"
         widget: "markdown"

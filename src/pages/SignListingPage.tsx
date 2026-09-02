@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Bed, Bath, Maximize2, Trees, CalendarClock, MapPin, Phone, MessageSquareText, Mail, Play } from 'lucide-react';
 import { SignListing, Listing } from '../types';
 import { usePageMeta } from '../lib/usePageMeta';
-import { fetchMlsListings } from '../lib/mlsApi';
+import { fetchMlsListings, fetchMlsListingDetails } from '../lib/mlsApi';
 
 const PHONE = '4437893101';
 const PHONE_DISPLAY = '443-789-3101';
@@ -22,22 +22,35 @@ interface Props {
 // photos in the folder - and everything else fills itself in.
 export const SignListingPage: React.FC<Props> = ({ listing }) => {
   const [mls, setMls] = useState<Listing | null>(null);
+  const [mlsExtra, setMlsExtra] = useState<{ gallery: string[]; description: string } | null>(null);
+  const [mlsState, setMlsState] = useState<'idle' | 'loading' | 'ok' | 'not_connected' | 'not_found'>('idle');
 
-  // Live Lofty pull by MLS number - same /api/mls endpoint the IDX pages
-  // use. Fails quietly: if Lofty isn't connected (LOFTY_API_KEY not set in
-  // Vercel) or the number isn't found, the page just uses the CMS fields.
+  // Live Lofty pull by MLS number - same /api/mls endpoints the IDX pages
+  // use. Two calls: /search finds the listing (address, price, beds...),
+  // then /details tries to get the full photo gallery + remarks. Fails
+  // quietly: if Lofty isn't connected (LOFTY_API_KEY not set in Vercel) the
+  // page just uses whatever's in the CMS entry.
   useEffect(() => {
     const id = listing?.mlsId?.trim();
     if (!id) return;
     let cancelled = false;
-    fetchMlsListings({ q: id, top: 8 })
-      .then((res) => {
-        if (cancelled || res.status !== 'ok' || !res.listings.length) return;
+    setMlsState('loading');
+    fetchMlsListings({ q: id, top: 12 })
+      .then(async (res) => {
+        if (cancelled) return;
+        if (res.status === 'not_configured') { setMlsState('not_connected'); return; }
+        if (res.status !== 'ok' || !res.listings.length) { setMlsState('not_found'); return; }
         const hit =
           res.listings.find((l) => (l.mlsNumber || '').toLowerCase() === id.toLowerCase()) || res.listings[0];
-        setMls(hit || null);
+        if (!hit) { setMlsState('not_found'); return; }
+        setMls(hit);
+        setMlsState('ok');
+        const det = await fetchMlsListingDetails(hit.id || hit.mlsNumber || id);
+        if (!cancelled && det.status === 'ok' && (det.gallery.length || det.description)) {
+          setMlsExtra({ gallery: det.gallery, description: det.description });
+        }
       })
-      .catch(() => {});
+      .catch(() => { if (!cancelled) setMlsState('not_found'); });
     return () => {
       cancelled = true;
     };
@@ -61,10 +74,16 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
     tourUrl: listing?.tourUrl || mls?.virtualTourUrl || '',
   };
 
-  const photos = listing?.photos?.length ? listing.photos : mls?.gallery || [];
+  // Photos: CMS gallery -> photo folder -> Lofty full gallery -> Lofty preview pic.
+  const photos = listing?.photos?.length
+    ? listing.photos
+    : mlsExtra?.gallery?.length
+    ? mlsExtra.gallery
+    : mls?.gallery || [];
   const heroImage = listing?.heroImage || photos[0] || mls?.heroImage || '';
+  const loftyDescription = mlsExtra?.description || mls?.description || '';
   const highlightsHtml =
-    listing?.highlightsHtml || (mls?.description ? `<p>${mls.description}</p>` : '');
+    listing?.highlightsHtml || (loftyDescription ? `<p>${loftyDescription}</p>` : '');
 
   const addressLine = [v.streetAddress, v.cityStateZip].filter(Boolean).join(', ');
 
@@ -145,6 +164,9 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
           </h1>
           {v.cityStateZip && <p className="text-base text-[#1C2B2E]/70">{v.cityStateZip}</p>}
           {v.listPrice && <p className="font-serif text-2xl sm:text-3xl font-bold text-[#0F5C63]">{v.listPrice}</p>}
+          {listing.mlsId && mlsState === 'loading' && !mls && (
+            <p className="text-[11px] uppercase tracking-widest text-[#1C2B2E]/40">Pulling the latest details…</p>
+          )}
         </div>
 
         {/* Hero image */}

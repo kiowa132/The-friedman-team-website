@@ -7,6 +7,14 @@
   <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@3.1.3/dist/decap-cms.js"></script>
+  <!--
+    Sveltia CMS - a drop-in replacement for Decap. Reads the same
+    /admin/config.yml and uses the same GitHub backend + OAuth flow
+    (api/decap-auth). Switched from Decap 2026-09 for real multi-file image
+    upload (drag/select many photos at once) and a faster editor.
+    REVERT: if /admin login or the editor breaks, swap this one line back to
+      <script src="https://unpkg.com/decap-cms@3.1.3/dist/decap-cms.js"></script>
+  -->
+  <script src="https://unpkg.com/@sveltia/cms@0/dist/sveltia-cms.js" type="module"></script>
 </body>
 </html>
