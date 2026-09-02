@@ -243,20 +243,20 @@ export default function middleware(request: Request): Response | undefined {
     const slug = path.slice('/listings/'.length);
     const listing = (listingsManifest as {
       slug: string; status: string; streetAddress: string; cityStateZip: string;
-      listPrice: string; beds: string; baths: string; sqft: string; heroImage: string;
+      listPrice: string; beds: string; baths: string; sqft: string;
+      heroImage: string; hero?: string;
     }[]).find((l) => l.slug === slug);
     if (listing) {
-      title = `${[listing.streetAddress, listing.cityStateZip].filter(Boolean).join(', ')} | The Friedman Team`;
+      title = `${[listing.streetAddress, listing.cityStateZip].filter(Boolean).join(', ') || 'Featured Listing'} | The Friedman Team`;
       const facts = [
         listing.beds && `${listing.beds} bed`,
         listing.baths && `${listing.baths} bath`,
         listing.sqft && `${listing.sqft} sq ft`,
       ].filter(Boolean).join(' / ');
-      description = [listing.status, listing.listPrice, facts].filter(Boolean).join(' · ')
-        + ' — presented by Kyle Friedman, The Friedman Team.';
-      image = listing.heroImage
-        ? (listing.heroImage.startsWith('http') ? listing.heroImage : `${SITE_URL}${listing.heroImage}`)
-        : GENERIC_DEFAULT_IMAGE;
+      description = ([listing.status, listing.listPrice, facts].filter(Boolean).join(' · ')
+        || 'A featured home') + ' — presented by Kyle Friedman, The Friedman Team.';
+      const img = listing.heroImage || listing.hero || '';
+      image = img ? (img.startsWith('http') ? img : `${SITE_URL}${img}`) : GENERIC_DEFAULT_IMAGE;
     } else {
       title = 'Homes for Sale | Carroll, Baltimore, Howard & Frederick County, MD';
       description = 'Search current homes for sale across Carroll, Baltimore, Howard, and Frederick County, Maryland with The Friedman Team.';

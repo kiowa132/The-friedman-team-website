@@ -9,6 +9,9 @@
     "beds": "6",
     "baths": "3",
     "sqft": "3,080",
-    "heroImage": ""
+    "mlsId": "",
+    "heroImage": "",
+    "hero": "",
+    "photos": []
   }
 ]

@@ -2,6 +2,10 @@
 import { marked } from 'marked';
 import { BlogPost, Guide, SignListing } from '../types';
 import { normalizePublishDate } from './formatDate';
+// Generated in "prebuild" by scripts/generate-listings-manifest.mjs. Used
+// here only for the per-listing photo folder scan (public/images/listings/
+// <slug>/) so a batch photo upload shows up without any CMS photo entry.
+import listingsManifest from '../data/listingsManifest.json';
 
 // gray-matter (a common frontmatter-parsing library) relies on Node.js's
 // Buffer internally, which doesn't exist in the browser and crashes the
@@ -145,15 +149,24 @@ export const GUIDES: Guide[] = Object.entries(guideFiles).map(([path, raw]) => {
 
 // Hand-curated "sign listings" - one .md per slot in content/listings/.
 // These back /listings/<slug> pages and the /listings/active redirect
-// (see src/pages/SignListingPage.tsx and ActiveListingRedirect). Kept
-// deliberately simple: whatever fields are filled in show, blanks are
-// skipped on the page.
+// (see src/pages/SignListingPage.tsx and ActiveListingRedirect). Any field
+// left blank falls back to the photo folder (public/images/listings/<slug>/)
+// and then, on the page itself, to a live Lofty lookup by MLS number.
+const listingMediaBySlug = Object.fromEntries(
+  (listingsManifest as { slug: string; hero?: string; photos?: string[] }[]).map((m) => [m.slug, m])
+);
+
 export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([path, raw]) => {
   const { data, content } = parseFrontmatter(raw);
+  const slug = slugFromPath(path);
+  const media = listingMediaBySlug[slug] || {};
+  const folderPhotos = Array.isArray(media.photos) ? media.photos : [];
+  const cmsPhotos = Array.isArray(data.photos) ? data.photos : [];
+  const photos = folderPhotos.length ? folderPhotos : cmsPhotos;
   return {
-    slug: slugFromPath(path),
+    slug,
     active: data.active === true || data.active === 'true',
-    status: data.status || 'Active',
+    status: data.status || '',
     streetAddress: data.streetAddress || '',
     cityStateZip: data.cityStateZip || '',
     listPrice: data.listPrice || '',
@@ -164,8 +177,8 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     yearBuilt: data.yearBuilt != null ? String(data.yearBuilt) : '',
     mlsId: data.mlsId || '',
     tourUrl: data.tourUrl || '',
-    heroImage: data.heroImage || '',
-    photos: Array.isArray(data.photos) ? data.photos : [],
+    heroImage: data.heroImage || media.hero || photos[0] || '',
+    photos,
     highlightsHtml: marked.parse(content || '') as string,
   };
 });

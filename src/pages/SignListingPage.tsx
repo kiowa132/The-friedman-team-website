@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bed, Bath, Maximize2, Trees, CalendarClock, MapPin, Phone, MessageSquareText, Mail, Play } from 'lucide-react';
-import { SignListing } from '../types';
+import { SignListing, Listing } from '../types';
 import { usePageMeta } from '../lib/usePageMeta';
+import { fetchMlsListings } from '../lib/mlsApi';
 
 const PHONE = '4437893101';
 const PHONE_DISPLAY = '443-789-3101';
@@ -12,31 +13,70 @@ interface Props {
   listing?: SignListing;
 }
 
-// The page a For Sale sign's QR code lands on. Kept deliberately simple:
-// only fields that are filled in show. Built from a markdown file in
-// content/listings/ (Decap CMS: /admin). The printed QR should point at
-// /listings/active (a redirect to whichever listing has active: true) so
-// it never has to be reprinted.
+// The page a For Sale sign's QR code lands on. Data comes from three
+// sources, in this priority order:
+//   1. Whatever Kyle typed into the CMS entry (content/listings/<slug>.md)
+//   2. A live Lofty lookup by MLS number (fills every blank text field)
+//   3. Batch-uploaded photos in public/images/listings/<slug>/
+// So the normal workflow is: set `active`, paste the MLS number, drop the
+// photos in the folder - and everything else fills itself in.
 export const SignListingPage: React.FC<Props> = ({ listing }) => {
-  const addressLine = listing
-    ? [listing.streetAddress, listing.cityStateZip].filter(Boolean).join(', ')
-    : '';
+  const [mls, setMls] = useState<Listing | null>(null);
+
+  // Live Lofty pull by MLS number - same /api/mls endpoint the IDX pages
+  // use. Fails quietly: if Lofty isn't connected (LOFTY_API_KEY not set in
+  // Vercel) or the number isn't found, the page just uses the CMS fields.
+  useEffect(() => {
+    const id = listing?.mlsId?.trim();
+    if (!id) return;
+    let cancelled = false;
+    fetchMlsListings({ q: id, top: 8 })
+      .then((res) => {
+        if (cancelled || res.status !== 'ok' || !res.listings.length) return;
+        const hit =
+          res.listings.find((l) => (l.mlsNumber || '').toLowerCase() === id.toLowerCase()) || res.listings[0];
+        setMls(hit || null);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [listing?.mlsId]);
+
+  // Merge: CMS value if set, otherwise the Lofty value. All null-safe so
+  // this can run before the "no listing" guard below (hooks stay
+  // unconditional).
+  const v = {
+    status: listing?.status || mls?.status || 'For Sale',
+    streetAddress: listing?.streetAddress || mls?.address || '',
+    cityStateZip:
+      listing?.cityStateZip ||
+      (mls ? [mls.city, `MD ${mls.zip}`.trim()].filter((s) => s && s !== 'MD').join(', ') : ''),
+    listPrice: listing?.listPrice || mls?.formattedPrice || '',
+    beds: listing?.beds || (mls?.beds ? String(mls.beds) : ''),
+    baths: listing?.baths || (mls?.baths ? String(mls.baths) : ''),
+    sqft: listing?.sqft || (mls?.sqft ? mls.sqft.toLocaleString() : ''),
+    lotSize: listing?.lotSize || (mls?.acres ? `${mls.acres} acres` : ''),
+    yearBuilt: listing?.yearBuilt || (mls?.yearBuilt ? String(mls.yearBuilt) : ''),
+    tourUrl: listing?.tourUrl || mls?.virtualTourUrl || '',
+  };
+
+  const photos = listing?.photos?.length ? listing.photos : mls?.gallery || [];
+  const heroImage = listing?.heroImage || photos[0] || mls?.heroImage || '';
+  const highlightsHtml =
+    listing?.highlightsHtml || (mls?.description ? `<p>${mls.description}</p>` : '');
+
+  const addressLine = [v.streetAddress, v.cityStateZip].filter(Boolean).join(', ');
 
   usePageMeta(
-    listing
-      ? `${listing.streetAddress || 'Featured Listing'}${listing.cityStateZip ? `, ${listing.cityStateZip}` : ''} | The Friedman Team`
-      : 'Featured Listing | The Friedman Team',
-    listing
-      ? [
-          listing.status,
-          listing.listPrice,
-          [listing.beds && `${listing.beds} bed`, listing.baths && `${listing.baths} bath`, listing.sqft && `${listing.sqft} sq ft`]
-            .filter(Boolean)
-            .join(' / '),
-        ]
-          .filter(Boolean)
-          .join(' · ') + ' — presented by Kyle Friedman, The Friedman Team.'
-      : 'A featured home presented by Kyle Friedman, The Friedman Team.'
+    `${v.streetAddress || 'Featured Listing'}${v.cityStateZip ? `, ${v.cityStateZip}` : ''} | The Friedman Team`,
+    [
+      v.status,
+      v.listPrice,
+      [v.beds && `${v.beds} bed`, v.baths && `${v.baths} bath`, v.sqft && `${v.sqft} sq ft`].filter(Boolean).join(' / '),
+    ]
+      .filter(Boolean)
+      .join(' · ') + ' — presented by Kyle Friedman, The Friedman Team.'
   );
 
   if (!listing) {
@@ -54,36 +94,34 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
   }
 
   const stats = [
-    listing.beds && { icon: Bed, label: 'Bedrooms', value: listing.beds },
-    listing.baths && { icon: Bath, label: 'Bathrooms', value: listing.baths },
-    listing.sqft && { icon: Maximize2, label: 'Sq Ft', value: listing.sqft },
-    listing.lotSize && { icon: Trees, label: 'Lot', value: listing.lotSize },
-    listing.yearBuilt && { icon: CalendarClock, label: 'Year Built', value: listing.yearBuilt },
+    v.beds && { icon: Bed, label: 'Bedrooms', value: v.beds },
+    v.baths && { icon: Bath, label: 'Bathrooms', value: v.baths },
+    v.sqft && { icon: Maximize2, label: 'Sq Ft', value: v.sqft },
+    v.lotSize && { icon: Trees, label: 'Lot', value: v.lotSize },
+    v.yearBuilt && { icon: CalendarClock, label: 'Year Built', value: v.yearBuilt },
   ].filter(Boolean) as { icon: React.ElementType; label: string; value: string }[];
 
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`;
-  const smsBody = `Hi Kyle, I scanned the sign at ${addressLine} and would like more info.`;
+  const smsBody = `Hi Kyle, I scanned the sign at ${addressLine || 'your listing'} and would like more info.`;
   const smsUrl = `sms:${PHONE}?&body=${encodeURIComponent(smsBody)}`;
-  const mailUrl = `mailto:${EMAIL}?subject=${encodeURIComponent(`Question about ${addressLine}`)}`;
+  const mailUrl = `mailto:${EMAIL}?subject=${encodeURIComponent(`Question about ${addressLine || 'your listing'}`)}`;
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'SingleFamilyResidence',
-    name: addressLine,
+    name: addressLine || 'Featured Listing',
     url: `https://www.friedmanreteam.com/listings/${listing.slug}`,
-    ...(listing.heroImage
-      ? { image: listing.heroImage.startsWith('http') ? listing.heroImage : `https://www.friedmanreteam.com${listing.heroImage}` }
+    ...(heroImage
+      ? { image: heroImage.startsWith('http') ? heroImage : `https://www.friedmanreteam.com${heroImage}` }
       : {}),
     address: {
       '@type': 'PostalAddress',
-      streetAddress: listing.streetAddress,
+      streetAddress: v.streetAddress,
       addressRegion: 'MD',
       addressCountry: 'US',
     },
-    ...(listing.sqft
-      ? { floorSize: { '@type': 'QuantitativeValue', value: listing.sqft.replace(/[^\d.]/g, ''), unitCode: 'FTK' } }
-      : {}),
-    ...(listing.beds ? { numberOfBedrooms: listing.beds } : {}),
+    ...(v.sqft ? { floorSize: { '@type': 'QuantitativeValue', value: v.sqft.replace(/[^\d.]/g, ''), unitCode: 'FTK' } } : {}),
+    ...(v.beds ? { numberOfBedrooms: v.beds } : {}),
     broker: {
       '@type': 'RealEstateAgent',
       name: 'The Friedman Team by Kyle Friedman',
@@ -100,23 +138,19 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
         {/* Header */}
         <div className="pt-8 pb-6 space-y-3">
           <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#0F5C63] border border-[#0F5C63]/40 rounded-full px-3 py-1">
-            {listing.status}
+            {v.status}
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] leading-tight">
-            {listing.streetAddress}
+            {v.streetAddress || 'Featured Listing'}
           </h1>
-          {listing.cityStateZip && (
-            <p className="text-base text-[#1C2B2E]/70">{listing.cityStateZip}</p>
-          )}
-          {listing.listPrice && (
-            <p className="font-serif text-2xl sm:text-3xl font-bold text-[#0F5C63]">{listing.listPrice}</p>
-          )}
+          {v.cityStateZip && <p className="text-base text-[#1C2B2E]/70">{v.cityStateZip}</p>}
+          {v.listPrice && <p className="font-serif text-2xl sm:text-3xl font-bold text-[#0F5C63]">{v.listPrice}</p>}
         </div>
 
         {/* Hero image */}
-        {listing.heroImage ? (
+        {heroImage ? (
           <div className="aspect-[16/9] max-h-[460px] overflow-hidden rounded-xs mb-6">
-            <img src={listing.heroImage} alt={addressLine} className="w-full h-full object-cover" />
+            <img src={heroImage} alt={addressLine} className="w-full h-full object-cover" />
           </div>
         ) : (
           <div className="aspect-[16/9] max-h-[380px] rounded-xs mb-6 border border-[#C9A96A]/40 bg-[#EFEBE2] flex items-center justify-center text-center px-6">
@@ -140,9 +174,9 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
         )}
 
         {/* Virtual tour */}
-        {listing.tourUrl && (
+        {v.tourUrl && (
           <a
-            href={listing.tourUrl}
+            href={v.tourUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full py-3 mb-8 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#0F5C63] transition-colors"
@@ -153,7 +187,7 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
         )}
 
         {/* Highlights / description */}
-        {listing.highlightsHtml && (
+        {highlightsHtml && (
           <div
             className="prose prose-sm max-w-none mb-10
               [&>*+*]:mt-4
@@ -168,16 +202,21 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
               [&_ol]:space-y-2 [&_ol]:my-4 [&_ol]:pl-6 [&_ol]:marker:text-[#C9A96A] [&_ol]:marker:font-bold
               [&_img]:rounded-xs [&_img]:my-4
             "
-            dangerouslySetInnerHTML={{ __html: listing.highlightsHtml }}
+            dangerouslySetInnerHTML={{ __html: highlightsHtml }}
           />
         )}
 
-        {/* Photo gallery */}
-        {listing.photos.length > 0 && (
+        {/* Photo gallery (everything except the one already shown as the hero) */}
+        {photos.filter((p) => p !== heroImage).length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-10">
-            {listing.photos.map((src, i) => (
+            {photos.filter((p) => p !== heroImage).map((src, i) => (
               <a key={i} href={src} target="_blank" rel="noopener noreferrer" className="block aspect-[4/3] overflow-hidden rounded-xs">
-                <img src={src} alt={`${addressLine} photo ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                <img
+                  src={src}
+                  alt={`${addressLine || 'Listing'} photo ${i + 1}`}
+                  loading="lazy"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
               </a>
             ))}
           </div>
