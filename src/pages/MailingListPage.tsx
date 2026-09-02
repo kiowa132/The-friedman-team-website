@@ -24,7 +24,7 @@ const GIFT_OPTIONS = [
 const CARD_PEEKS = [
   {
     tag: 'Astonishing fact',
-    text: 'An octopus has three hearts and blue blood. Two pump blood to the gills; the third pumps it to the rest of the body — and it stops beating when the octopus swims, which is why they prefer to crawl.',
+    text: 'An octopus has three hearts and blue blood. Two pump blood to the gills; the third pumps it to the rest of the body, and it stops beating when the octopus swims, which is why they prefer to crawl.',
   },
   {
     tag: 'Life hack',
@@ -52,7 +52,7 @@ const Figure: React.FC<{
     if (hideOnError) return null;
     return (
       <div className={`${ratio} bg-[#EFEBE2] border border-[#C9A96A]/40 flex items-center justify-center text-center px-6 ${className}`}>
-        <span className="text-[11px] uppercase tracking-widest text-[#1C2B2E]/45">{label} — image coming soon</span>
+        <span className="text-[11px] uppercase tracking-widest text-[#1C2B2E]/45">{label} image coming soon</span>
       </div>
     );
   }
@@ -184,31 +184,23 @@ export const MailingListPage: React.FC = () => {
 
   return (
     <div className="bg-[#FAF8F5]">
-      {/* HERO */}
-      <div className="relative min-h-[460px] w-full overflow-hidden flex items-end bg-[#0D2226]">
-        <Figure
-          src={IMG.hero}
-          alt=""
-          label=""
-          hideOnError
-          className="absolute inset-0 w-full h-full object-cover object-[50%_26%] opacity-55"
-        />
-        {/* solid at top so the transparent site nav stays legible, dark again at the bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0D2226] via-[#0D2226]/45 to-[#0D2226]/90" />
-        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 pt-36 pb-16 w-full text-center">
+      {/* HERO - solid brand color, no photo */}
+      <div className="relative w-full bg-[#0D2226] border-b-4 border-[#C9A96A]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-36 pb-20 w-full text-center">
           <span className="text-xs font-bold uppercase tracking-[0.35em] text-[#C9A96A]">
             The Friedman Team · Free for the Neighborhood
           </span>
-          <h1 className="font-serif text-5xl sm:text-7xl font-bold text-[#FAF8F5] leading-[1.03] mt-4">
+          <div className="w-12 h-px bg-[#C9A96A]/60 mx-auto mt-6" />
+          <h1 className="font-serif text-5xl sm:text-7xl font-bold text-[#FAF8F5] leading-[1.03] mt-6">
             Good Mail Still Exists
           </h1>
-          <p className="text-sm sm:text-base text-[#F5F1E8]/85 mt-5 max-w-xl mx-auto font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-[#F5F1E8]/80 mt-6 max-w-xl mx-auto font-light leading-relaxed">
             Free Baltimore sports schedule magnets, a card that makes you 3% smarter every month, and a
-            once-a-month read on the local market. No spam — opt out anytime.
+            once-a-month read on the local market. No spam, opt out anytime.
           </p>
           <a
             href="#signup"
-            className="inline-flex items-center gap-2 mt-8 px-8 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+            className="inline-flex items-center gap-2 mt-9 px-8 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
           >
             Claim Your Free Schedules
           </a>
@@ -237,7 +229,7 @@ export const MailingListPage: React.FC = () => {
               <div className="p-6 sm:p-7 text-center border-t border-[#C9A96A]/20">
                 <h3 className="font-serif text-xl font-bold text-[#0D2226]">Baltimore Football Schedule</h3>
                 <p className="text-xs text-[#1C2B2E]/65 mt-2 leading-relaxed">
-                  Every 2026 game on a fridge magnet — dates, kickoff times, home and away. Tap to enlarge.
+                  Every 2026 game on a fridge magnet. Dates, kickoff times, home and away. Tap to enlarge.
                 </p>
                 {addChip('football')}
               </div>
@@ -252,7 +244,7 @@ export const MailingListPage: React.FC = () => {
               <div className="p-6 sm:p-7 text-center border-t border-[#C9A96A]/20">
                 <h3 className="font-serif text-xl font-bold text-[#0D2226]">Baltimore Baseball Schedule</h3>
                 <p className="text-xs text-[#1C2B2E]/65 mt-2 leading-relaxed">
-                  The full 2026 season on a magnet — every series, first-pitch times, home and away. Tap to enlarge.
+                  The full 2026 season on a magnet. Every series, first-pitch times, home and away. Tap to enlarge.
                 </p>
                 {addChip('baseball')}
               </div>
@@ -277,7 +269,7 @@ export const MailingListPage: React.FC = () => {
               </h2>
               <p className="text-sm text-[#1C2B2E]/70 mt-4 leading-relaxed font-light">
                 One card in your mailbox a month: this day in history, a genuinely useful life hack, an
-                astonishing fact, and a riddle. No pitch, no ask — just a reason to smile at the mail.
+                astonishing fact, and a riddle. No pitch, no ask, just a reason to smile at the mail.
               </p>
 
               <div className="flex flex-wrap gap-2 mt-6">
@@ -340,7 +332,7 @@ export const MailingListPage: React.FC = () => {
           <h2 className="font-serif text-2xl sm:text-3xl font-bold mt-3">The monthly market read</h2>
           <p className="text-sm text-[#F5F1E8]/85 mt-4 max-w-2xl mx-auto font-light leading-relaxed">
             Once a month by email: what homes are actually doing in Carroll, Baltimore, Howard, and
-            Frederick County — prices, days on market, what it means if you’re thinking about a move —
+            Frederick County: prices, days on market, what it means if you’re thinking about a move,
             plus local news worth knowing.
           </p>
           <Link
@@ -384,7 +376,7 @@ export const MailingListPage: React.FC = () => {
             <div>
               <h3 className="font-serif text-xl font-bold text-[#0D2226]">Your details</h3>
               <p className="text-xs text-[#1C2B2E]/55 mt-1">
-                Just your name and one way to reach you — email, phone, or a mailing address.
+                Just your name and one way to reach you: email, phone, or a mailing address.
               </p>
             </div>
 
@@ -401,7 +393,7 @@ export const MailingListPage: React.FC = () => {
               <p className="text-[11px] font-bold uppercase tracking-widest text-[#0F5C63] mb-2">
                 Mailing address
                 {wantsMailedGift && !hasAddress && (
-                  <span className="text-[#B5544A] normal-case font-normal tracking-normal"> — needed to mail the magnets/card</span>
+                  <span className="text-[#B5544A] normal-case font-normal tracking-normal"> (needed to mail the magnets or card)</span>
                 )}
               </p>
               <input className={`${inputClass} mb-3`} type="text" placeholder="Street address" value={street} onChange={(e) => setStreet(e.target.value)} />
