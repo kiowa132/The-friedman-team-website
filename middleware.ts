@@ -327,6 +327,11 @@ export default function middleware(request: Request): Response | undefined {
     title = 'Financing Options | The Friedman Team';
     description = 'A real, plain-language overview of conventional, FHA, VA, USDA, and Maryland Mortgage Program loans.';
     image = GENERIC_DEFAULT_IMAGE;
+  } else if (path === '/mailing-list') {
+    title = 'Join the Mailing List | Free Baltimore Sports Schedules | The Friedman Team';
+    description =
+      'Free 2026 Baltimore football and baseball schedule magnets, a monthly "3% Smarter" card, and local Maryland market updates - straight to your mailbox and inbox.';
+    image = GENERIC_DEFAULT_IMAGE;
   } else if (path === '/luxury') {
     title = 'Fine Homes & Estate Properties | The Friedman Team';
     description = 'Distinctive homes and estate properties across Carroll, Howard, Frederick, and Baltimore County, marketed and represented with the presentation they deserve.';
@@ -362,7 +367,7 @@ export const config = {
     '/about', '/team', '/sell', '/sell/marketing-strategy', '/buy', '/listings', '/listings/:slug*', '/contact',
     '/testimonials', '/giving-back', '/privacy-policy', '/terms-of-use',
     '/calculators', '/calculators/mortgage', '/calculators/affordability', '/calculators/net-proceeds',
-    '/past-transactions', '/transactions/:slug*', '/videos', '/financing-options',
+    '/past-transactions', '/transactions/:slug*', '/videos', '/financing-options', '/mailing-list',
     '/luxury', '/zillow-showcase', '/senior-relocation',
   ],
 };

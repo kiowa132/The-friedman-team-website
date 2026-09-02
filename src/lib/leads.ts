@@ -1,7 +1,20 @@
 // Shared helper for sending form submissions to the backend, which forwards
 // them to Follow Up Boss. See server.js for the actual FUB integration.
 
-export type LeadType = 'Seller Inquiry' | 'General Inquiry' | 'Property Inquiry' | 'Registration' | 'Network Inquiry';
+export type LeadType =
+  | 'Seller Inquiry'
+  | 'General Inquiry'
+  | 'Property Inquiry'
+  | 'Registration'
+  | 'Network Inquiry'
+  | 'Mailing List';
+
+export interface LeadAddress {
+  street?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+}
 
 export interface LeadSubmission {
   name: string;
@@ -9,6 +22,12 @@ export interface LeadSubmission {
   phone?: string;
   type: LeadType;
   message?: string;
+  /** Physical mailing address - used for the mailing-list signup so the
+   *  schedule magnets and monthly cards can actually be sent. Forwarded to
+   *  Follow Up Boss as a structured person address. */
+  address?: LeadAddress;
+  /** FUB tags, e.g. ['Mailing List', 'Baltimore Football Schedule']. */
+  tags?: string[];
 }
 
 export interface LeadSubmissionResult {

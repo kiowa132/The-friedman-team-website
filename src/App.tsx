@@ -61,6 +61,7 @@ const VideosPage = React.lazy(() => import('./pages/VideosPage').then(m => ({ de
 const FinancingOptionsPage = React.lazy(() => import('./pages/FinancingOptionsPage').then(m => ({ default: m.FinancingOptionsPage })));
 const SellerProcessPage = React.lazy(() => import('./pages/SellerProcessPage').then(m => ({ default: m.SellerProcessPage })));
 const GuideDetailPage = React.lazy(() => import('./pages/GuideDetailPage').then(m => ({ default: m.GuideDetailPage })));
+const MailingListPage = React.lazy(() => import('./pages/MailingListPage').then(m => ({ default: m.MailingListPage })));
 
 // Maps a URL path to the tab name every existing page component already
 // expects (e.g. "/about" -> "about"). This lets every page keep using the
@@ -400,6 +401,8 @@ export default function App() {
           <Route path="/financing-options" element={
             <FinancingOptionsPage onOpenConsultation={() => setIsConsultationOpen(true)} />
           } />
+
+          <Route path="/mailing-list" element={<MailingListPage />} />
         </Routes>
         </Suspense>
         </m.div>

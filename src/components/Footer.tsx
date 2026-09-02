@@ -150,6 +150,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li><FLink to="/blog" className="hover:text-[#C9A96A] transition-colors">Market Intelligence Report</FLink></li>
               <li><FLink to="/team" className="hover:text-[#C9A96A] transition-colors">Meet the Team</FLink></li>
               <li><FLink to="/guides" className="hover:text-[#C9A96A] transition-colors">Free Buyer & Seller Guides</FLink></li>
+              <li><FLink to="/mailing-list" className="hover:text-[#C9A96A] transition-colors">Free Sports Schedules & Mailing List</FLink></li>
               <li><FLink to="/videos" className="hover:text-[#C9A96A] transition-colors">Maryland Market Videos</FLink></li>
               <li><FLink to="/financing-options" className="hover:text-[#C9A96A] transition-colors">Financing Options</FLink></li>
               <li><FLink to="/calculators" className="hover:text-[#C9A96A] transition-colors">Real Estate Calculators</FLink></li>

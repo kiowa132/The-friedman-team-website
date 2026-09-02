@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, email, phone, type, message } = req.body || {};
+    const { name, email, phone, type, message, address, tags } = req.body || {};
 
     if (!name || (!email && !phone)) {
       return res.status(400).json({ ok: false, error: 'Name and at least one of email/phone are required.' });
@@ -27,17 +27,42 @@ export default async function handler(req, res) {
     const [firstName, ...rest] = String(name).trim().split(/\s+/);
     const lastName = rest.join(' ') || '-';
 
+    const person = {
+      firstName,
+      lastName,
+      emails: email ? [{ value: email }] : [],
+      phones: phone ? [{ value: phone }] : [],
+    };
+
+    // Structured mailing address (mailing-list signup) so Kyle can pull an
+    // actual mail-merge list out of Follow Up Boss by tag.
+    if (address && (address.street || address.city || address.zip)) {
+      person.addresses = [
+        {
+          type: 'home',
+          street: address.street || '',
+          city: address.city || '',
+          state: address.state || 'MD',
+          code: address.zip || '',
+        },
+      ];
+    }
+
+    if (Array.isArray(tags) && tags.length) {
+      person.tags = tags.map((t) => String(t)).slice(0, 20);
+    }
+
+    // "Mailing List" isn't a Follow Up Boss event type - send it as a
+    // Registration and let the person's tags do the segmenting. Every other
+    // value passes through unchanged (existing forms already work).
+    const eventType = type === 'Mailing List' ? 'Registration' : type || 'General Inquiry';
+
     const fubPayload = {
       source: FUB_SOURCE,
       system: 'CustomWebsite',
-      type: type || 'General Inquiry',
+      type: eventType,
       message: message || '',
-      person: {
-        firstName,
-        lastName,
-        emails: email ? [{ value: email }] : [],
-        phones: phone ? [{ value: phone }] : [],
-      },
+      person,
     };
 
     const fubResponse = await fetch('https://api.followupboss.com/v1/events', {
