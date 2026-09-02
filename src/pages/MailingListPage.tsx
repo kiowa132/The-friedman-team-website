@@ -187,6 +187,11 @@ export const MailingListPage: React.FC = () => {
       {/* HERO - solid brand color, no photo */}
       <div className="relative w-full bg-[#0D2226] border-b-4 border-[#C9A96A]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-36 pb-20 w-full text-center">
+          <img
+            src="/images/brand/friedman-f-mark.png"
+            alt="The Friedman Team"
+            className="h-16 w-auto mx-auto mb-6 drop-shadow-[0_4px_10px_rgba(0,0,0,0.35)]"
+          />
           <span className="text-xs font-bold uppercase tracking-[0.35em] text-[#C9A96A]">
             The Friedman Team · Free for the Neighborhood
           </span>
