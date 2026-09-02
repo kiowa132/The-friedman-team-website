@@ -57,10 +57,25 @@ export const MailingListPage: React.FC = () => {
 
   const selectedLabels = GIFT_OPTIONS.filter((g) => gifts.includes(g.id)).map((g) => g.label);
 
+  const hasAddress = street.trim() !== '' && city.trim() !== '' && zip.trim() !== '';
+  const wantsMailedGift = gifts.length > 0;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
     setError(null);
+
+    // Only need 2 of 4: name is the anchor, plus at least one way to reach
+    // them (email, phone, or a mailing address).
+    if (firstName.trim() === '') {
+      setError('Please add your first name.');
+      return;
+    }
+    if (email.trim() === '' && phone.trim() === '' && !hasAddress) {
+      setError('Add at least one of: email, phone, or a full mailing address so we can reach you.');
+      return;
+    }
+
+    setSubmitting(true);
 
     const wants = selectedLabels.length ? selectedLabels.join('; ') : 'Email updates only';
     const { ok, error: err } = await submitLead({
@@ -75,7 +90,9 @@ export const MailingListPage: React.FC = () => {
         ...(gifts.includes('baseball') ? ['Baltimore Baseball Schedule'] : []),
         ...(gifts.includes('card') ? ['Monthly Card'] : []),
       ],
-      message: `Mailing list signup. Send: ${wants}. Mailing address: ${street}, ${city}, ${state} ${zip}.`,
+      message: hasAddress
+        ? `Mailing list signup. Send: ${wants}. Mailing address: ${street}, ${city}, ${state} ${zip}.`
+        : `Mailing list signup. Wants: ${wants}. NO MAILING ADDRESS PROVIDED - follow up for an address before sending anything physical.`,
     });
 
     setSubmitting(false);
