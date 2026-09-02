@@ -14,8 +14,13 @@ export default async function handler(req, res) {
   try {
     const { name, email, phone, type, message, address, tags } = req.body || {};
 
-    if (!name || (!email && !phone)) {
-      return res.status(400).json({ ok: false, error: 'Name and at least one of email/phone are required.' });
+    const hasUsableAddress =
+      address && String(address.street || '').trim() && String(address.zip || '').trim();
+
+    if (!name || (!email && !phone && !hasUsableAddress)) {
+      return res
+        .status(400)
+        .json({ ok: false, error: 'Name and at least one of email, phone, or a mailing address are required.' });
     }
 
     const FUB_API_KEY = process.env.FUB_API_KEY;

@@ -57,7 +57,7 @@ export const MailingListPage: React.FC = () => {
 
   const selectedLabels = GIFT_OPTIONS.filter((g) => gifts.includes(g.id)).map((g) => g.label);
 
-  const hasAddress = street.trim() !== '' && city.trim() !== '' && zip.trim() !== '';
+  const hasAddress = street.trim() !== '' && zip.trim() !== '';
   const wantsMailedGift = gifts.length > 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -159,25 +159,32 @@ export const MailingListPage: React.FC = () => {
             {/* Form */}
             <form onSubmit={handleSubmit} className="border border-[#0D2226]/15 bg-white rounded-xs p-6 sm:p-8 space-y-5">
               <div>
-                <h2 className="font-serif text-xl font-bold text-[#0D2226]">Where should we send it?</h2>
+                <h2 className="font-serif text-xl font-bold text-[#0D2226]">Your details</h2>
                 <p className="text-xs text-[#1C2B2E]/55 mt-1">
-                  The magnets and cards are mailed, so we need a real address. It's never shared or sold.
+                  Just your name and one way to reach you — email, phone, or a mailing address. Never shared or sold.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input className={inputClass} type="text" required placeholder="First name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                <input className={inputClass} type="text" required placeholder="Last name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                <input className={inputClass} type="text" placeholder="Last name (optional)" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input className={inputClass} type="email" required placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input className={inputClass} type="tel" placeholder="Phone (optional)" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <input className={inputClass} type="email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input className={inputClass} type="tel" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
               </div>
-              <input className={inputClass} type="text" required placeholder="Street address" value={street} onChange={(e) => setStreet(e.target.value)} />
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <input className={`${inputClass} col-span-2 sm:col-span-1`} type="text" required placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-                <input className={inputClass} type="text" required placeholder="State" value={state} onChange={(e) => setState(e.target.value)} maxLength={2} />
-                <input className={inputClass} type="text" required placeholder="ZIP" value={zip} onChange={(e) => setZip(e.target.value)} inputMode="numeric" />
+              <div className="pt-1">
+                <p className="text-[11px] font-bold uppercase tracking-widest text-[#0F5C63] mb-2">
+                  Mailing address {wantsMailedGift && !hasAddress && (
+                    <span className="text-[#B5544A] normal-case font-normal tracking-normal"> — needed to mail the magnets/card</span>
+                  )}
+                </p>
+                <input className={`${inputClass} mb-3`} type="text" placeholder="Street address" value={street} onChange={(e) => setStreet(e.target.value)} />
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <input className={`${inputClass} col-span-2 sm:col-span-1`} type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
+                  <input className={inputClass} type="text" placeholder="State" value={state} onChange={(e) => setState(e.target.value)} maxLength={2} />
+                  <input className={inputClass} type="text" placeholder="ZIP" value={zip} onChange={(e) => setZip(e.target.value)} inputMode="numeric" />
+                </div>
               </div>
 
               <fieldset className="pt-1">
