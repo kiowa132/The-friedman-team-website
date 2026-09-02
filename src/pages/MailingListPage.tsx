@@ -9,9 +9,9 @@ import { ReviewsSection } from '../components/ReviewsSection';
 
 const IMG = {
   hero: '/images/mailing-list/hero.jpg',
-  football: '/images/mailing-list/football-schedule.jpg',
-  baseball: '/images/mailing-list/baseball-schedule.jpg',
-  amCard: '/images/mailing-list/am-card.jpg',
+  football: '/images/mailing-list/football-schedule.png',
+  baseball: '/images/mailing-list/baseball-schedule.png',
+  amCard: '/images/mailing-list/am-card.png',
 };
 
 const GIFT_OPTIONS = [
