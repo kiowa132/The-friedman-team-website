@@ -22,7 +22,11 @@ import { Listing } from './types';
 
 // Route-level code splitting - each page's JS only downloads when someone
 // actually navigates to it, instead of every page shipping in one bundle.
-const ListingDetailPage = React.lazy(() => import('./pages/ListingDetailPage').then(m => ({ default: m.ListingDetailPage })));
+// /listings/:mlsNumber serves both hand-curated "sign listing" pages
+// (e.g. /listings/listing-1, /listings/active) and live MLS-number pages;
+// ListingRouteSwitch picks which, and lazy-loads the heavy MLS page only
+// when the URL isn't a curated slug.
+const ListingRouteSwitch = React.lazy(() => import('./pages/ListingRouteSwitch').then(m => ({ default: m.ListingRouteSwitch })));
 const AboutPage = React.lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
 const SellPage = React.lazy(() => import('./pages/SellPage').then(m => ({ default: m.SellPage })));
 const BuyersPage = React.lazy(() => import('./pages/BuyersPage').then(m => ({ default: m.BuyersPage })));
@@ -284,7 +288,7 @@ export default function App() {
           } />
 
           <Route path="/listings/:mlsNumber" element={
-            <ListingDetailPage
+            <ListingRouteSwitch
               savedListings={savedListings}
               onToggleSave={handleToggleSave}
               onScheduleShowing={handleScheduleShowing}

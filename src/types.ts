@@ -69,6 +69,30 @@ export interface Listing {
   listOfficeName?: string;
 }
 
+// A hand-curated "sign listing" - the property page a For Sale sign's QR
+// code points at. Separate from `Listing` (that's live MLS/IDX data).
+// One markdown file per slot in content/listings/. Kyle edits these in
+// Decap CMS (/admin). The one with `active: true` is what /listings/active
+// redirects to, so a single printed QR always shows the current home.
+export interface SignListing {
+  slug: string;
+  active: boolean;
+  status: string;
+  streetAddress: string;
+  cityStateZip: string;
+  listPrice: string;
+  beds: string;
+  baths: string;
+  sqft: string;
+  lotSize: string;
+  yearBuilt: string;
+  mlsId: string;
+  tourUrl: string;
+  heroImage: string;
+  photos: string[];
+  highlightsHtml: string;
+}
+
 export interface Neighborhood {
   id: string;
   name: string;

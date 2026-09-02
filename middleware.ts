@@ -63,6 +63,7 @@
 
 import { TOWNS } from './src/data/towns';
 import blogManifest from './src/data/blogManifest.json';
+import listingsManifest from './src/data/listingsManifest.json';
 import { HANDBOOK_GUIDES } from './src/data/guides';
 import { NETWORK_MEMBERS, isPlaceholder } from './src/data/network';
 import { MENTOR_TRANSACTIONS } from './src/data/mentorTransactions';
@@ -233,19 +234,42 @@ export default function middleware(request: Request): Response | undefined {
     title = 'Find a Home in Carroll or Baltimore County, MD | The Friedman Team';
     description = 'Searching for a home in Carroll, Howard, Frederick, or Baltimore County? The Friedman Team helps buyers find the right property with a real strategy, not just a search.';
     image = GENERIC_DEFAULT_IMAGE;
+  } else if (path.startsWith('/listings/')) {
+    // Hand-curated "sign listing" pages (content/listings/*.md), imported
+    // here via the generated listingsManifest.json - the same disk-read
+    // manifest pattern as blogManifest. Live MLS-number pages
+    // (/listings/:mlsNumber) and the /listings/active redirect aren't in
+    // the manifest and fall through to the general /listings preview.
+    const slug = path.slice('/listings/'.length);
+    const listing = (listingsManifest as {
+      slug: string; status: string; streetAddress: string; cityStateZip: string;
+      listPrice: string; beds: string; baths: string; sqft: string; heroImage: string;
+    }[]).find((l) => l.slug === slug);
+    if (listing) {
+      title = `${[listing.streetAddress, listing.cityStateZip].filter(Boolean).join(', ')} | The Friedman Team`;
+      const facts = [
+        listing.beds && `${listing.beds} bed`,
+        listing.baths && `${listing.baths} bath`,
+        listing.sqft && `${listing.sqft} sq ft`,
+      ].filter(Boolean).join(' / ');
+      description = [listing.status, listing.listPrice, facts].filter(Boolean).join(' · ')
+        + ' — presented by Kyle Friedman, The Friedman Team.';
+      image = listing.heroImage
+        ? (listing.heroImage.startsWith('http') ? listing.heroImage : `${SITE_URL}${listing.heroImage}`)
+        : GENERIC_DEFAULT_IMAGE;
+    } else {
+      title = 'Homes for Sale | Carroll, Baltimore, Howard & Frederick County, MD';
+      description = 'Search current homes for sale across Carroll, Baltimore, Howard, and Frederick County, Maryland with The Friedman Team.';
+      image = GENERIC_DEFAULT_IMAGE;
+    }
   } else if (path === '/listings') {
     title = 'Homes for Sale | Carroll, Baltimore, Howard & Frederick County, MD';
     description = 'Search current homes for sale across Carroll, Baltimore, Howard, and Frederick County, Maryland with The Friedman Team.';
     image = GENERIC_DEFAULT_IMAGE;
-    // Individual listing pages (/listings/:mlsNumber) are intentionally
-    // not covered - that data is live MLS data fetched client-side at
-    // runtime (see src/lib/mlsApi.ts), not a static file this middleware
-    // can import the way towns/guides/network/transactions are. A crawler
-    // hitting a specific listing URL falls through to this same general
-    // listings preview rather than a broken one. Making that fully
-    // per-listing would mean this middleware fetching the live MLS API
-    // itself on every crawler hit - a real, separate feature, not
-    // something to bolt on here without testing it properly first.
+    // Live MLS-number listing pages (/listings/:mlsNumber) are still not
+    // covered - that data is fetched client-side at runtime (see
+    // src/lib/mlsApi.ts), not a static file. A crawler hitting one falls
+    // through to this general listings preview rather than a broken one.
   } else if (path === '/contact') {
     title = 'Contact The Friedman Team | Kyle Friedman, eXp Realty';
     description = 'Get in touch with Kyle Friedman and The Friedman Team - buying, selling, or just exploring your options in Carroll, Baltimore, Howard, or Frederick County, Maryland.';
@@ -335,7 +359,7 @@ export const config = {
   matcher: [
     '/', '/neighborhoods', '/neighborhoods/:slug*', '/blog/:slug*', '/guides/:slug*',
     '/network', '/network/directory', '/network/members/:slug*', '/network/join', '/network/about', '/network/events',
-    '/about', '/team', '/sell', '/sell/marketing-strategy', '/buy', '/listings', '/contact',
+    '/about', '/team', '/sell', '/sell/marketing-strategy', '/buy', '/listings', '/listings/:slug*', '/contact',
     '/testimonials', '/giving-back', '/privacy-policy', '/terms-of-use',
     '/calculators', '/calculators/mortgage', '/calculators/affordability', '/calculators/net-proceeds',
     '/past-transactions', '/transactions/:slug*', '/videos', '/financing-options',

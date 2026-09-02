@@ -118,3 +118,47 @@ collections:
         widget: "list"
         required: false
         hint: "Send Kyle's real PDF over and he'll convert it into these page images for you - once added here, the guide shows a real interactive page-turning book, no third-party service needed."
+
+  - name: "listings"
+    label: "Sign Listings (For Sale Sign QR)"
+    folder: "content/listings"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{status}} - {{streetAddress}}"
+    fields:
+      - label: "Show on the sign QR (/listings/active)"
+        name: "active"
+        widget: "boolean"
+        default: true
+        hint: "Turn this ON for the one listing your For Sale sign's QR code should currently show. Turn it OFF on the old one when you switch. Only one should be ON at a time."
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["Coming Soon", "Active", "Pending", "Under Contract", "Sold"]
+        default: "Active"
+      - { label: "Street Address", name: "streetAddress", widget: "string", hint: "e.g. 315 Park Ave" }
+      - { label: "City, State ZIP", name: "cityStateZip", widget: "string", hint: "e.g. Salisbury, MD 21801" }
+      - { label: "List Price", name: "listPrice", widget: "string", hint: "Type it exactly as it should show, e.g. $199,999" }
+      - { label: "Bedrooms", name: "beds", widget: "string", required: false, hint: "e.g. 6" }
+      - { label: "Bathrooms", name: "baths", widget: "string", required: false, hint: "e.g. 3  (or 3 / 1 for full/half)" }
+      - { label: "Square Feet", name: "sqft", widget: "string", required: false, hint: "e.g. 3,080" }
+      - { label: "Lot Size", name: "lotSize", widget: "string", required: false, hint: "e.g. 0.25 acres" }
+      - { label: "Year Built", name: "yearBuilt", widget: "string", required: false }
+      - { label: "MLS #", name: "mlsId", widget: "string", required: false }
+      - { label: "Virtual Tour / Video URL", name: "tourUrl", widget: "string", required: false, hint: "Matterport or YouTube link - optional" }
+      - { label: "Hero / Main Photo", name: "heroImage", widget: "image", required: false, hint: "The big photo at the top. Recommended 1600x900px, under 500KB." }
+      - label: "Photo Gallery"
+        name: "photos"
+        widget: "list"
+        required: false
+        hint: "Add the rest of the listing photos here, in order. Under 400KB each is best."
+        field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Highlights / Description"
+        name: "body"
+        widget: "markdown"
+        required: false
+        hint: "Optional. Write the property description or a bulleted highlights list. Paste from another tool as plain text first (Ctrl+Shift+V / Cmd+Shift+V), then format with the toolbar."
+        modes: ["rich_text", "raw"]
+        default_mode: "rich_text"
+        buttons: ["bold", "italic", "link", "heading-one", "heading-two", "quote", "bulleted-list", "numbered-list"]
+        editor_components: ["image"]

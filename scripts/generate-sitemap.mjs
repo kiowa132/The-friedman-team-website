@@ -139,6 +139,12 @@ function generate() {
     entries.push(urlEntry({ loc: `${SITE_URL}/guides/${slug}`, lastmod: today, changefreq: 'monthly', priority: '0.6' }));
   }
 
+  // Hand-curated "sign listing" pages (content/listings/*.md). The
+  // /listings/active URL is a redirect, not a page, so it isn't listed.
+  for (const slug of getMarkdownSlugs('content/listings')) {
+    entries.push(urlEntry({ loc: `${SITE_URL}/listings/${slug}`, lastmod: today, changefreq: 'weekly', priority: '0.5' }));
+  }
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>\n`;
 
   const outPath = path.join(ROOT, 'public/sitemap.xml');

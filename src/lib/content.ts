@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import { marked } from 'marked';
-import { BlogPost, Guide } from '../types';
+import { BlogPost, Guide, SignListing } from '../types';
 import { normalizePublishDate } from './formatDate';
 
 // gray-matter (a common frontmatter-parsing library) relies on Node.js's
@@ -98,6 +98,7 @@ function parseFrontmatter(raw: string): { data: Record<string, any>; content: st
 // one entry in the CMS admin screen.
 const blogFiles = import.meta.glob('/content/blog/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>;
 const guideFiles = import.meta.glob('/content/guides/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>;
+const listingFiles = import.meta.glob('/content/listings/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>;
 
 function slugFromPath(path: string): string {
   const parts = path.split('/');
@@ -139,5 +140,32 @@ export const GUIDES: Guide[] = Object.entries(guideFiles).map(([path, raw]) => {
     fullContentHtml: marked.parse(content || '') as string,
     publuuEmbedUrl: data.publuuEmbedUrl || undefined,
     flipbookPages: data.flipbookPages || undefined,
+  };
+});
+
+// Hand-curated "sign listings" - one .md per slot in content/listings/.
+// These back /listings/<slug> pages and the /listings/active redirect
+// (see src/pages/SignListingPage.tsx and ActiveListingRedirect). Kept
+// deliberately simple: whatever fields are filled in show, blanks are
+// skipped on the page.
+export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([path, raw]) => {
+  const { data, content } = parseFrontmatter(raw);
+  return {
+    slug: slugFromPath(path),
+    active: data.active === true || data.active === 'true',
+    status: data.status || 'Active',
+    streetAddress: data.streetAddress || '',
+    cityStateZip: data.cityStateZip || '',
+    listPrice: data.listPrice || '',
+    beds: data.beds != null ? String(data.beds) : '',
+    baths: data.baths != null ? String(data.baths) : '',
+    sqft: data.sqft != null ? String(data.sqft) : '',
+    lotSize: data.lotSize != null ? String(data.lotSize) : '',
+    yearBuilt: data.yearBuilt != null ? String(data.yearBuilt) : '',
+    mlsId: data.mlsId || '',
+    tourUrl: data.tourUrl || '',
+    heroImage: data.heroImage || '',
+    photos: Array.isArray(data.photos) ? data.photos : [],
+    highlightsHtml: marked.parse(content || '') as string,
   };
 });
