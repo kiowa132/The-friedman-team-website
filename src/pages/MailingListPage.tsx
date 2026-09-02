@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { m } from 'motion/react';
-import { CheckCircle2, Loader2, Mail, Sparkles, PenLine, MailPlus, CalendarClock } from 'lucide-react';
+import { CheckCircle2, Loader2, Mail, Sparkles, PenLine, MailPlus, CalendarClock, ZoomIn, X, Check, Plus } from 'lucide-react';
 import { submitLead } from '../lib/leads';
 import { usePageMeta } from '../lib/usePageMeta';
 import { Reveal, RevealItem } from '../components/Reveal';
@@ -9,9 +9,9 @@ import { ReviewsSection } from '../components/ReviewsSection';
 
 const IMG = {
   hero: '/images/mailing-list/hero.jpg',
-  football: '/images/mailing-list/football-schedule.png',
-  baseball: '/images/mailing-list/baseball-schedule.png',
-  amCard: '/images/mailing-list/am-card.png',
+  football: '/images/mailing-list/football-schedule.jpg',
+  baseball: '/images/mailing-list/baseball-schedule.jpg',
+  amCard: '/images/mailing-list/am-card.jpg',
 };
 
 const GIFT_OPTIONS = [
@@ -79,10 +79,26 @@ export const MailingListPage: React.FC = () => {
   const [success, setSuccess] = useState(false);
 
   const [peek, setPeek] = useState(0);
+  const [peekPaused, setPeekPaused] = useState(false);
+  const [zoom, setZoom] = useState<{ src: string; alt: string } | null>(null);
+
   useEffect(() => {
+    if (peekPaused) return;
     const t = setInterval(() => setPeek((p) => (p + 1) % CARD_PEEKS.length), 5000);
     return () => clearInterval(t);
-  }, []);
+  }, [peekPaused]);
+
+  useEffect(() => {
+    if (!zoom) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setZoom(null);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [zoom]);
+
+  const pickPeek = (i: number) => {
+    setPeek(i);
+    setPeekPaused(true);
+  };
 
   const toggleGift = (id: string) =>
     setGifts((prev) => (prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id]));
@@ -135,22 +151,60 @@ export const MailingListPage: React.FC = () => {
   const inputClass =
     'w-full border border-[#0D2226]/20 p-3.5 text-sm bg-white focus:border-[#0F5C63] focus:outline-none placeholder:text-[#1C2B2E]/40';
 
+  // "Add to my list" chip that syncs with the form's gift checkboxes.
+  const addChip = (id: string) => {
+    const on = gifts.includes(id);
+    return (
+      <button
+        type="button"
+        onClick={() => toggleGift(id)}
+        className={`inline-flex items-center gap-1.5 mt-4 px-4 py-2 text-[11px] font-bold uppercase tracking-widest rounded-xs border transition-colors ${
+          on ? 'bg-[#0F5C63] border-[#0F5C63] text-[#FAF8F5]' : 'border-[#C9A96A] text-[#0F5C63] hover:bg-[#C9A96A]/10'
+        }`}
+      >
+        {on ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+        {on ? 'On my list' : 'Add to my list'}
+      </button>
+    );
+  };
+
+  // Product image wrapped as a click-to-zoom button.
+  const zoomable = (src: string, alt: string, label: string, wrapClass: string, ratio: string) => (
+    <button
+      type="button"
+      onClick={() => setZoom({ src, alt })}
+      className={`relative block cursor-zoom-in group/z ${wrapClass}`}
+    >
+      <Figure src={src} alt={alt} label={label} ratio={ratio} />
+      <span className="absolute inset-0 flex items-center justify-center bg-[#0D2226]/0 group-hover/z:bg-[#0D2226]/20 transition-colors">
+        <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover/z:opacity-100 transition-opacity drop-shadow" />
+      </span>
+    </button>
+  );
+
   return (
     <div className="bg-[#FAF8F5]">
       {/* HERO */}
-      <div className="relative min-h-[520px] w-full overflow-hidden flex items-end bg-[#0D2226]">
-        <Figure src={IMG.hero} alt="" label="" hideOnError className="absolute inset-0 w-full h-full object-cover opacity-70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226] via-[#0D2226]/70 to-[#0D2226]/35" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-32 pb-16 w-full text-center">
+      <div className="relative min-h-[460px] w-full overflow-hidden flex items-end bg-[#0D2226]">
+        <Figure
+          src={IMG.hero}
+          alt=""
+          label=""
+          hideOnError
+          className="absolute inset-0 w-full h-full object-cover object-[50%_26%] opacity-55"
+        />
+        {/* solid at top so the transparent site nav stays legible, dark again at the bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D2226] via-[#0D2226]/45 to-[#0D2226]/90" />
+        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 pt-36 pb-16 w-full text-center">
           <span className="text-xs font-bold uppercase tracking-[0.35em] text-[#C9A96A]">
-            The Friedman Team · Free for Neighbors
+            The Friedman Team · Free for the Neighborhood
           </span>
-          <h1 className="font-serif text-4xl sm:text-6xl font-bold text-[#FAF8F5] leading-tight mt-3">
-            Stay in Touch — and Get Something for It
+          <h1 className="font-serif text-5xl sm:text-7xl font-bold text-[#FAF8F5] leading-[1.03] mt-4">
+            Good Mail Still Exists
           </h1>
-          <p className="font-serif italic text-lg text-[#F5F1E8]/90 mt-4 max-w-2xl mx-auto">
-            Baltimore sports schedules for the fridge. A card that makes you 3% smarter, every month.
-            A once-a-month read on the local market. No spam, opt out anytime.
+          <p className="text-sm sm:text-base text-[#F5F1E8]/85 mt-5 max-w-xl mx-auto font-light leading-relaxed">
+            Free Baltimore sports schedule magnets, a card that makes you 3% smarter every month, and a
+            once-a-month read on the local market. No spam — opt out anytime.
           </p>
           <a
             href="#signup"
@@ -178,15 +232,14 @@ export const MailingListPage: React.FC = () => {
           <RevealItem className="group">
             <div className="border border-[#C9A96A]/30 bg-white shadow-xl overflow-hidden transition-transform duration-500 group-hover:-translate-y-1">
               <div className="p-6 sm:p-8 flex justify-center bg-[#F4F1EA]">
-                <div className="w-2/3 rotate-[-3deg] shadow-2xl">
-                  <Figure src={IMG.football} alt="Free 2026 Baltimore football schedule magnet" label="Football schedule" ratio="aspect-[5/12]" />
-                </div>
+                {zoomable(IMG.football, 'Free 2026 Baltimore football schedule magnet', 'Football schedule', 'w-2/3 rotate-[-3deg] shadow-2xl', 'aspect-[5/12]')}
               </div>
               <div className="p-6 sm:p-7 text-center border-t border-[#C9A96A]/20">
                 <h3 className="font-serif text-xl font-bold text-[#0D2226]">Baltimore Football Schedule</h3>
                 <p className="text-xs text-[#1C2B2E]/65 mt-2 leading-relaxed">
-                  Every 2026 game on a fridge magnet — dates, kickoff times, home and away.
+                  Every 2026 game on a fridge magnet — dates, kickoff times, home and away. Tap to enlarge.
                 </p>
+                {addChip('football')}
               </div>
             </div>
           </RevealItem>
@@ -194,15 +247,14 @@ export const MailingListPage: React.FC = () => {
           <RevealItem className="group">
             <div className="border border-[#C9A96A]/30 bg-white shadow-xl overflow-hidden transition-transform duration-500 group-hover:-translate-y-1">
               <div className="p-6 sm:p-8 flex justify-center bg-[#F4F1EA]">
-                <div className="w-2/3 rotate-[3deg] shadow-2xl">
-                  <Figure src={IMG.baseball} alt="Free 2026 Baltimore baseball schedule magnet" label="Baseball schedule" ratio="aspect-[5/12]" />
-                </div>
+                {zoomable(IMG.baseball, 'Free 2026 Baltimore baseball schedule magnet', 'Baseball schedule', 'w-2/3 rotate-[3deg] shadow-2xl', 'aspect-[5/12]')}
               </div>
               <div className="p-6 sm:p-7 text-center border-t border-[#C9A96A]/20">
                 <h3 className="font-serif text-xl font-bold text-[#0D2226]">Baltimore Baseball Schedule</h3>
                 <p className="text-xs text-[#1C2B2E]/65 mt-2 leading-relaxed">
-                  The full 2026 season on a magnet — every series, first-pitch times, home and away.
+                  The full 2026 season on a magnet — every series, first-pitch times, home and away. Tap to enlarge.
                 </p>
+                {addChip('baseball')}
               </div>
             </div>
           </RevealItem>
@@ -214,9 +266,7 @@ export const MailingListPage: React.FC = () => {
         <Reveal className="border border-[#C9A96A]/30 bg-white shadow-xl overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="p-6 sm:p-10 bg-[#F4F1EA] flex items-center justify-center">
-              <div className="w-full shadow-2xl">
-                <Figure src={IMG.amCard} alt="The monthly 3% Smarter card from The Friedman Team" label="The monthly card" ratio="aspect-[4/3]" />
-              </div>
+              {zoomable(IMG.amCard, 'The monthly 3% Smarter card from The Friedman Team', 'The monthly card', 'w-full shadow-2xl', 'aspect-[4/3]')}
             </div>
             <div className="p-8 sm:p-12 flex flex-col justify-center">
               <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-[#C9A96A]">
@@ -230,26 +280,30 @@ export const MailingListPage: React.FC = () => {
                 astonishing fact, and a riddle. No pitch, no ask — just a reason to smile at the mail.
               </p>
 
-              <div className="mt-7 border-l-[3px] border-[#C9A96A] pl-5 min-h-[132px]">
+              <div className="flex flex-wrap gap-2 mt-6">
+                {CARD_PEEKS.map((c, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => pickPeek(i)}
+                    className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-xs border transition-colors ${
+                      i === peek
+                        ? 'bg-[#0F5C63] border-[#0F5C63] text-[#FAF8F5]'
+                        : 'border-[#C9A96A]/50 text-[#0F5C63] hover:border-[#C9A96A]'
+                    }`}
+                  >
+                    {c.tag}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-4 border-l-[3px] border-[#C9A96A] pl-5 min-h-[120px]">
                 <m.div key={peek} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#0F5C63]">
-                    {CARD_PEEKS[peek].tag}
-                  </span>
-                  <p className="text-sm text-[#0D2226]/90 mt-1.5 leading-relaxed italic font-serif">
+                  <p className="text-sm text-[#0D2226]/90 leading-relaxed italic font-serif">
                     {CARD_PEEKS[peek].text}
                   </p>
                 </m.div>
               </div>
-              <div className="flex gap-1.5 mt-4">
-                {CARD_PEEKS.map((_, i) => (
-                  <button
-                    key={i}
-                    aria-label={`Show sample ${i + 1}`}
-                    onClick={() => setPeek(i)}
-                    className={`h-1.5 rounded-full transition-all ${i === peek ? 'w-6 bg-[#0F5C63]' : 'w-1.5 bg-[#C9A96A]/50'}`}
-                  />
-                ))}
-              </div>
+              {addChip('card')}
             </div>
           </div>
         </Reveal>
@@ -400,6 +454,32 @@ export const MailingListPage: React.FC = () => {
       <div className="pt-16">
         <ReviewsSection />
       </div>
+
+      {/* LIGHTBOX */}
+      {zoom && (
+        <m.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          onClick={() => setZoom(null)}
+          className="fixed inset-0 z-[100] bg-[#0D2226]/92 flex items-center justify-center p-4 sm:p-10 cursor-zoom-out"
+        >
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={() => setZoom(null)}
+            className="absolute top-4 right-4 text-white/80 hover:text-white"
+          >
+            <X className="w-7 h-7" />
+          </button>
+          <img
+            src={zoom.src}
+            alt={zoom.alt}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-full max-w-full object-contain shadow-2xl cursor-default"
+          />
+        </m.div>
+      )}
     </div>
   );
 };
