@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Bed, Bath, Maximize2, Trees, CalendarClock, MapPin, Phone, MessageSquareText, Mail, Play } from 'lucide-react';
-import { SignListing, Listing } from '../types';
+import { SignListing } from '../types';
 import { usePageMeta } from '../lib/usePageMeta';
-import { fetchMlsListings, fetchMlsListingDetails } from '../lib/mlsApi';
 
 const PHONE = '4437893101';
 const PHONE_DISPLAY = '443-789-3101';
@@ -13,77 +12,30 @@ interface Props {
   listing?: SignListing;
 }
 
-// The page a For Sale sign's QR code lands on. Data comes from three
-// sources, in this priority order:
+// The page a For Sale sign's QR code lands on. Everything on it is baked at
+// BUILD time (src/lib/content.ts -> SIGN_LISTINGS), layered in this order:
 //   1. Whatever Kyle typed into the CMS entry (content/listings/<slug>.md)
-//   2. A live Lofty lookup by MLS number (fills every blank text field)
+//   2. A Lofty lookup by MLS number, run once per deploy by
+//      scripts/fetch-sign-listing-data.mjs (fills every blank field)
 //   3. Batch-uploaded photos in public/images/listings/<slug>/
-// So the normal workflow is: set `active`, paste the MLS number, drop the
-// photos in the folder - and everything else fills itself in.
+// No live API call happens here - the page is static and instant.
 export const SignListingPage: React.FC<Props> = ({ listing }) => {
-  const [mls, setMls] = useState<Listing | null>(null);
-  const [mlsExtra, setMlsExtra] = useState<{ gallery: string[]; description: string } | null>(null);
-  const [mlsState, setMlsState] = useState<'idle' | 'loading' | 'ok' | 'not_connected' | 'not_found'>('idle');
-
-  // Live Lofty pull by MLS number - same /api/mls endpoints the IDX pages
-  // use. Two calls: /search finds the listing (address, price, beds...),
-  // then /details tries to get the full photo gallery + remarks. Fails
-  // quietly: if Lofty isn't connected (LOFTY_API_KEY not set in Vercel) the
-  // page just uses whatever's in the CMS entry.
-  useEffect(() => {
-    const id = listing?.mlsId?.trim();
-    if (!id) return;
-    let cancelled = false;
-    setMlsState('loading');
-    fetchMlsListings({ q: id, top: 12 })
-      .then(async (res) => {
-        if (cancelled) return;
-        if (res.status === 'not_configured') { setMlsState('not_connected'); return; }
-        if (res.status !== 'ok' || !res.listings.length) { setMlsState('not_found'); return; }
-        const hit =
-          res.listings.find((l) => (l.mlsNumber || '').toLowerCase() === id.toLowerCase()) || res.listings[0];
-        if (!hit) { setMlsState('not_found'); return; }
-        setMls(hit);
-        setMlsState('ok');
-        const det = await fetchMlsListingDetails(hit.id || hit.mlsNumber || id);
-        if (!cancelled && det.status === 'ok' && (det.gallery.length || det.description)) {
-          setMlsExtra({ gallery: det.gallery, description: det.description });
-        }
-      })
-      .catch(() => { if (!cancelled) setMlsState('not_found'); });
-    return () => {
-      cancelled = true;
-    };
-  }, [listing?.mlsId]);
-
-  // Merge: CMS value if set, otherwise the Lofty value. All null-safe so
-  // this can run before the "no listing" guard below (hooks stay
-  // unconditional).
   const v = {
-    status: listing?.status || mls?.status || 'For Sale',
-    streetAddress: listing?.streetAddress || mls?.address || '',
-    cityStateZip:
-      listing?.cityStateZip ||
-      (mls ? [mls.city, `MD ${mls.zip}`.trim()].filter((s) => s && s !== 'MD').join(', ') : ''),
-    listPrice: listing?.listPrice || mls?.formattedPrice || '',
-    beds: listing?.beds || (mls?.beds ? String(mls.beds) : ''),
-    baths: listing?.baths || (mls?.baths ? String(mls.baths) : ''),
-    sqft: listing?.sqft || (mls?.sqft ? mls.sqft.toLocaleString() : ''),
-    lotSize: listing?.lotSize || (mls?.acres ? `${mls.acres} acres` : ''),
-    yearBuilt: listing?.yearBuilt || (mls?.yearBuilt ? String(mls.yearBuilt) : ''),
-    tourUrl: listing?.tourUrl || mls?.virtualTourUrl || '',
+    status: listing?.status || 'For Sale',
+    streetAddress: listing?.streetAddress || '',
+    cityStateZip: listing?.cityStateZip || '',
+    listPrice: listing?.listPrice || '',
+    beds: listing?.beds || '',
+    baths: listing?.baths || '',
+    sqft: listing?.sqft || '',
+    lotSize: listing?.lotSize || '',
+    yearBuilt: listing?.yearBuilt || '',
+    tourUrl: listing?.tourUrl || '',
   };
 
-  // Photos: CMS gallery -> photo folder -> Lofty full gallery -> Lofty preview pic.
-  const photos = listing?.photos?.length
-    ? listing.photos
-    : mlsExtra?.gallery?.length
-    ? mlsExtra.gallery
-    : mls?.gallery || [];
-  const heroImage = listing?.heroImage || photos[0] || mls?.heroImage || '';
-  const loftyDescription = mlsExtra?.description || mls?.description || '';
-  const highlightsHtml =
-    listing?.highlightsHtml || (loftyDescription ? `<p>${loftyDescription}</p>` : '');
+  const photos = listing?.photos?.length ? listing.photos : [];
+  const heroImage = listing?.heroImage || photos[0] || '';
+  const highlightsHtml = listing?.highlightsHtml || '';
 
   const addressLine = [v.streetAddress, v.cityStateZip].filter(Boolean).join(', ');
 
@@ -164,9 +116,6 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
           </h1>
           {v.cityStateZip && <p className="text-base text-[#1C2B2E]/70">{v.cityStateZip}</p>}
           {v.listPrice && <p className="font-serif text-2xl sm:text-3xl font-bold text-[#0F5C63]">{v.listPrice}</p>}
-          {listing.mlsId && mlsState === 'loading' && !mls && (
-            <p className="text-[11px] uppercase tracking-widest text-[#1C2B2E]/40">Pulling the latest details…</p>
-          )}
         </div>
 
         {/* Hero image */}

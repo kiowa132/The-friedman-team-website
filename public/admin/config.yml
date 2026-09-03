@@ -9,6 +9,22 @@ backend:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
+# --- Optional: batch photo upload + auto-compression (~2 min one-time setup) ---
+# The built-in media picker adds gallery photos one slot at a time, and a raw
+# phone photo (~15 MB) can break the build. Switching on Cloudinary's free
+# media library fixes both: multi-select upload AND automatic compression.
+#   1. Free account: https://cloudinary.com/users/register_free
+#   2. Dashboard -> Product Environment -> copy "Cloud name" and "API Key"
+#      (the API Key is publishable; do NOT put the API Secret here)
+#   3. Fill both in below, then remove the leading "# " from the 6 lines
+#   4. Commit. The media picker in /admin becomes Cloudinary (multi-select).
+# media_library:
+#   name: cloudinary
+#   config:
+#     cloud_name: YOUR_CLOUD_NAME
+#     api_key: YOUR_API_KEY
+#     multiple: true
+
 collections:
   - name: "blog"
     label: "The Friedman Report (Blog)"
@@ -135,7 +151,7 @@ collections:
         name: "mlsId"
         widget: "string"
         required: false
-        hint: "Paste your listing's MLS number. The address, price, beds, baths, sq ft, year, status, and description all pull in live from Lofty. Every field below is optional and only needed to override what Lofty has, or if you have no MLS number yet."
+        hint: "Paste your listing's MLS number. On each publish, the address, price, beds, baths, sq ft, year, status, and description are pulled from Lofty and baked into the page (no slow live lookup). Every field below is optional - only fill one to override what Lofty has, or if Lofty doesn't carry this listing (e.g. Eastern Shore), or you have no MLS number yet."
       - { label: "Status (override)", name: "status", widget: "string", required: false, hint: "Leave blank to use Lofty's status. Or type: Coming Soon / Active / Pending / Under Contract / Sold" }
       - { label: "Street Address (override)", name: "streetAddress", widget: "string", required: false, hint: "e.g. 315 Park Ave" }
       - { label: "City, State ZIP (override)", name: "cityStateZip", widget: "string", required: false, hint: "e.g. Salisbury, MD 21801" }

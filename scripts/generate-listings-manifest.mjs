@@ -69,25 +69,39 @@ function readField(frontmatter, field) {
   return value.trim();
 }
 
+// Build-time Lofty data baked by scripts/fetch-sign-listing-data.mjs, which
+// runs before this script in "prebuild". Merged UNDER any CMS override so
+// crawler link previews (middleware.ts) still show a real address/price when
+// Kyle leaves the override fields blank.
+let bakedLofty = {};
+try {
+  bakedLofty = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/signListingsData.json'), 'utf-8'));
+} catch {
+  bakedLofty = {};
+}
+const fill = (cms, lofty) => (cms && String(cms).trim() ? String(cms) : lofty ? String(lofty) : '');
+
 const listings = [];
 for (const slug of getMarkdownSlugs('content/listings')) {
   const raw = fs.readFileSync(path.join(ROOT, 'content/listings', `${slug}.md`), 'utf-8');
   const fm = extractFrontmatterBlock(raw);
   const { hero, photos } = getFolderPhotos(slug);
+  const lofty = bakedLofty[slug] || {};
+  const loftyGallery = Array.isArray(lofty.gallery) ? lofty.gallery : [];
   listings.push({
     slug,
     active: readField(fm, 'active') === 'true',
-    status: readField(fm, 'status') || 'Active',
-    streetAddress: readField(fm, 'streetAddress') || '',
-    cityStateZip: readField(fm, 'cityStateZip') || '',
-    listPrice: readField(fm, 'listPrice') || '',
-    beds: readField(fm, 'beds') || '',
-    baths: readField(fm, 'baths') || '',
-    sqft: readField(fm, 'sqft') || '',
+    status: fill(readField(fm, 'status'), lofty.status) || 'Active',
+    streetAddress: fill(readField(fm, 'streetAddress'), lofty.streetAddress),
+    cityStateZip: fill(readField(fm, 'cityStateZip'), lofty.cityStateZip),
+    listPrice: fill(readField(fm, 'listPrice'), lofty.listPrice),
+    beds: fill(readField(fm, 'beds'), lofty.beds),
+    baths: fill(readField(fm, 'baths'), lofty.baths),
+    sqft: fill(readField(fm, 'sqft'), lofty.sqft),
     mlsId: readField(fm, 'mlsId') || '',
     heroImage: readField(fm, 'heroImage') || '',
-    hero, // from the photo folder
-    photos, // from the photo folder
+    hero: hero || loftyGallery[0] || '', // photo folder first, else Lofty's first photo
+    photos: photos.length ? photos : loftyGallery,
   });
 }
 

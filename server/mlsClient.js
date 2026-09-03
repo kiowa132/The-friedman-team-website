@@ -334,6 +334,82 @@ function matchesKeyword(listing, q) {
   );
 }
 
+// Normalizes a mapped Lofty listing + optional details into the flat shape
+// the sign listing pages bake into src/data/signListingsData.json.
+function toSignData(hit, details) {
+  const gallery =
+    (details && Array.isArray(details.gallery) && details.gallery.length ? details.gallery : hit.gallery) || [];
+  const description = (details && details.description) || hit.description || '';
+  return {
+    mlsNumber: hit.mlsNumber || '',
+    status: hit.status === 'Sold' ? 'Sold' : hit.status === 'Pending' ? 'Pending' : 'Active',
+    streetAddress: hit.address || '',
+    cityStateZip: hit.city ? `${hit.city}, MD ${hit.zip || ''}`.trim() : '',
+    listPrice: hit.formattedPrice && hit.formattedPrice !== 'Call for Price' ? hit.formattedPrice : '',
+    beds: hit.beds ? String(hit.beds) : '',
+    baths: hit.baths ? String(hit.baths) : '',
+    sqft: hit.sqft ? hit.sqft.toLocaleString() : '',
+    lotSize: hit.acres ? `${hit.acres} acres` : '',
+    yearBuilt: hit.yearBuilt ? String(hit.yearBuilt) : '',
+    tourUrl: hit.virtualTourUrl || '',
+    gallery,
+    description,
+  };
+}
+
+async function tryGetDetails(hit) {
+  try {
+    return await getListingDetails(hit.id || hit.mlsNumber);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Look up ONE listing by its MLS number and return the flat "sign data"
+ * shape (or null if not in the feed). Used at BUILD TIME by
+ * scripts/fetch-sign-listing-data.mjs so the For Sale sign pages never do a
+ * live fetch. Two strategies, in order:
+ *   1. A direct server-side MLS-number filter (one small page). If Lofty
+ *      honors it we get an instant exact hit. If Lofty ignores the filter
+ *      (it does that for some fields - returns the full unfiltered feed),
+ *      we detect that the page isn't actually targeted and fall through.
+ *   2. The existing multi-page keyword scan, widened (__maxPages: 40).
+ */
+export async function fetchListingByMls(mlsId) {
+  if (!isMlsConfigured()) return null;
+  const id = String(mlsId || '').trim();
+  if (!id) return null;
+
+  // Strategy 1: direct filter. Try a few plausible field names; trust the
+  // result only if the response is small/targeted (a full page with one
+  // incidental match just means the filter was ignored).
+  for (const field of ['mlsNumber', 'mlsListingId', 'mlsId']) {
+    try {
+      const { rawListings } = await fetchLoftyPage({
+        filterConditions: { location: { state: ['MD'] }, [field]: [id] },
+        pageSize: 25,
+        pageNum: 1,
+      });
+      if (rawListings.length > 0 && rawListings.length < 25) {
+        const hit = rawListings
+          .map(mapListing)
+          .find((l) => (l.mlsNumber || '').toLowerCase() === id.toLowerCase());
+        if (hit) return toSignData(hit, await tryGetDetails(hit));
+      }
+    } catch {
+      /* fall through to the scan */
+    }
+  }
+
+  // Strategy 2: widened keyword scan.
+  const res = await searchListings({ q: id, __maxPages: 40 });
+  const hit =
+    res.listings.find((l) => (l.mlsNumber || '').toLowerCase() === id.toLowerCase()) || res.listings[0];
+  if (!hit) return null;
+  return toSignData(hit, await tryGetDetails(hit));
+}
+
 export async function searchListings(params = {}) {
   if (!isMlsConfigured()) {
     const err = new Error('MLS feed is not configured (LOFTY_API_KEY missing).');
@@ -363,7 +439,11 @@ export async function searchListings(params = {}) {
     // target property could be anywhere in a large multi-state feed, not
     // just the most recent page. Capped to avoid excessive requests/timeouts.
     const PAGE_SIZE = 100;
-    const MAX_PAGES = 20; // scans up to 2,000 raw listings (up from 800) -
+    // Build-time callers (fetch-sign-listing-data.mjs via fetchListingByMls)
+    // can afford a deeper scan than a serverless request; they pass
+    // __maxPages to widen coverage for listings outside Kyle's core
+    // Carroll/Baltimore/Howard/Frederick area (e.g. Eastern Shore).
+    const MAX_PAGES = Number(params.__maxPages) || 20; // scans up to 2,000 raw listings (up from 800) -
     // still a fraction of the full ~34,000 listing feed, but meaningfully
     // better coverage without excessive request time. The address filter
     // above didn't pan out (Lofty silently ignores it rather than

@@ -6,6 +6,11 @@ import { normalizePublishDate } from './formatDate';
 // here only for the per-listing photo folder scan (public/images/listings/
 // <slug>/) so a batch photo upload shows up without any CMS photo entry.
 import listingsManifest from '../data/listingsManifest.json';
+// Generated in "prebuild" by scripts/fetch-sign-listing-data.mjs - one
+// build-time Lofty pull per sign listing (address, price, beds/baths/sqft,
+// status, photo gallery, remarks), so the page renders instantly with no
+// live API call. Merged below UNDER any CMS override field.
+import signListingsData from '../data/signListingsData.json';
 
 // gray-matter (a common frontmatter-parsing library) relies on Node.js's
 // Buffer internally, which doesn't exist in the browser and crashes the
@@ -149,36 +154,58 @@ export const GUIDES: Guide[] = Object.entries(guideFiles).map(([path, raw]) => {
 
 // Hand-curated "sign listings" - one .md per slot in content/listings/.
 // These back /listings/<slug> pages and the /listings/active redirect
-// (see src/pages/SignListingPage.tsx and ActiveListingRedirect). Any field
-// left blank falls back to the photo folder (public/images/listings/<slug>/)
-// and then, on the page itself, to a live Lofty lookup by MLS number.
+// (see src/pages/SignListingPage.tsx and ActiveListingRedirect). Each field
+// layers: CMS override -> Lofty data baked at build time
+// (signListingsData.json) -> the batch-uploaded photo folder
+// (public/images/listings/<slug>/). No runtime API call.
 const listingMediaBySlug = Object.fromEntries(
   (listingsManifest as { slug: string; hero?: string; photos?: string[] }[]).map((m) => [m.slug, m])
 );
+const bakedLoftyBySlug = signListingsData as Record<string, Record<string, any>>;
+
+// First non-empty value wins. Used to layer: CMS override -> baked Lofty -> ''.
+const firstFilled = (...vals: any[]): string => {
+  for (const v of vals) {
+    if (v != null && String(v).trim() !== '') return String(v);
+  }
+  return '';
+};
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([path, raw]) => {
   const { data, content } = parseFrontmatter(raw);
   const slug = slugFromPath(path);
   const media = listingMediaBySlug[slug] || {};
+  const lofty = bakedLoftyBySlug[slug] || {};
   const folderPhotos = Array.isArray(media.photos) ? media.photos : [];
   const cmsPhotos = Array.isArray(data.photos) ? data.photos : [];
-  const photos = folderPhotos.length ? folderPhotos : cmsPhotos;
+  const loftyPhotos = Array.isArray(lofty.gallery) ? lofty.gallery : [];
+  // Photos: what Kyle put in the CMS, else the batch-uploaded folder, else
+  // whatever Lofty had.
+  const photos = cmsPhotos.length ? cmsPhotos : folderPhotos.length ? folderPhotos : loftyPhotos;
+
+  const bodyHtml = content && content.trim() ? (marked.parse(content) as string) : '';
+  const loftyDescHtml = lofty.description
+    ? `<p>${escapeHtml(String(lofty.description)).replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br/>')}</p>`
+    : '';
+
   return {
     slug,
     active: data.active === true || data.active === 'true',
-    status: data.status || '',
-    streetAddress: data.streetAddress || '',
-    cityStateZip: data.cityStateZip || '',
-    listPrice: data.listPrice || '',
-    beds: data.beds != null ? String(data.beds) : '',
-    baths: data.baths != null ? String(data.baths) : '',
-    sqft: data.sqft != null ? String(data.sqft) : '',
-    lotSize: data.lotSize != null ? String(data.lotSize) : '',
-    yearBuilt: data.yearBuilt != null ? String(data.yearBuilt) : '',
+    status: firstFilled(data.status, lofty.status),
+    streetAddress: firstFilled(data.streetAddress, lofty.streetAddress),
+    cityStateZip: firstFilled(data.cityStateZip, lofty.cityStateZip),
+    listPrice: firstFilled(data.listPrice, lofty.listPrice),
+    beds: firstFilled(data.beds, lofty.beds),
+    baths: firstFilled(data.baths, lofty.baths),
+    sqft: firstFilled(data.sqft, lofty.sqft),
+    lotSize: firstFilled(data.lotSize, lofty.lotSize),
+    yearBuilt: firstFilled(data.yearBuilt, lofty.yearBuilt),
     mlsId: data.mlsId || '',
-    tourUrl: data.tourUrl || '',
-    heroImage: data.heroImage || media.hero || photos[0] || '',
+    tourUrl: firstFilled(data.tourUrl, lofty.tourUrl),
+    heroImage: firstFilled(data.heroImage, media.hero, photos[0]),
     photos,
-    highlightsHtml: marked.parse(content || '') as string,
+    highlightsHtml: bodyHtml || loftyDescHtml,
   };
 });
