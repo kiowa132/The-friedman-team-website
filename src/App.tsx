@@ -35,6 +35,7 @@ const NeighborhoodsPage = React.lazy(() => import('./pages/NeighborhoodsPage').t
 const NeighborhoodDetailPage = React.lazy(() => import('./pages/NeighborhoodDetailPage').then(m => ({ default: m.NeighborhoodDetailPage })));
 const ListingsPage = React.lazy(() => import('./pages/ListingsPage').then(m => ({ default: m.ListingsPage })));
 const ContactPage = React.lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 const BlogListPage = React.lazy(() => import('./pages/BlogListPage').then(m => ({ default: m.BlogListPage })));
 const BlogPostPage = React.lazy(() => import('./pages/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
 const GuidesListPage = React.lazy(() => import('./pages/GuidesListPage').then(m => ({ default: m.GuidesListPage })));
@@ -413,6 +414,7 @@ export default function App() {
           } />
 
           <Route path="/mailing-list" element={<MailingListPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         </Suspense>
         </m.div>
