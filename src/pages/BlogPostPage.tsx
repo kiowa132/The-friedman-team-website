@@ -7,6 +7,7 @@ import { NEIGHBORHOODS } from '../data/mockData';
 import { SUBSTACK_SUBDOMAIN } from '../lib/siteConfig';
 import { formatDisplayDate } from '../lib/formatDate';
 import { BlogScrollGate } from '../components/BlogScrollGate';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface BlogPostPageProps {
   onOpenConsultation: () => void;
@@ -16,6 +17,16 @@ interface BlogPostPageProps {
 export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, onOpenValuation }) => {
   const { slug } = useParams<{ slug: string }>();
   const post = BLOG_POSTS.find((p) => p.slug === slug);
+
+  // Crawlers (Google, Facebook, etc.) already get the right title/description
+  // for this exact URL from middleware.ts, but that only fires for known bot
+  // user agents. Real visitors get the client-rendered SPA, so without this
+  // their browser tab (and page title generally) was stuck on the generic
+  // homepage title for every single blog post.
+  usePageMeta(
+    post ? `${post.title} | The Friedman Team` : 'Post Not Found | The Friedman Team',
+    post?.metaDescription || 'This article may have moved. Check the full list of Friedman Report posts.'
+  );
 
   if (!post) {
     return (

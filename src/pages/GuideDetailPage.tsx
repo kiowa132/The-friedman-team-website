@@ -2,10 +2,20 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getHandbookGuide } from '../data/guides';
 import { HandbookLandingPage } from '../components/HandbookLandingPage';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export const GuideDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const guide = slug ? getHandbookGuide(slug) : undefined;
+
+  // Crawlers get this guide's real title/description from middleware.ts,
+  // but that only fires for known bot user agents - real visitors need this
+  // client-side call too, or their tab (and page title) stays on the
+  // generic homepage default for every guide.
+  usePageMeta(
+    guide ? `${guide.title} | The Friedman Team` : 'Guide Not Found | The Friedman Team',
+    guide?.description || 'This guide may have moved. Check the full list of guides.'
+  );
 
   if (!guide) {
     return (

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { BLOG_POSTS } from '../lib/content';
 import { formatDisplayDate } from '../lib/formatDate';
+import { usePageMeta } from '../lib/usePageMeta';
 
 interface BlogListPageProps {
   setActiveTab: (tab: string) => void;
@@ -15,6 +16,11 @@ type Filter = (typeof FILTERS)[number];
 
 export const BlogListPage: React.FC<BlogListPageProps> = () => {
   const [activeFilter, setActiveFilter] = useState<Filter>('All');
+
+  usePageMeta(
+    'The Friedman Report | Market Reports & Local Insights | The Friedman Team',
+    'Weekly, straight-talk market data and real estate insights for Carroll, Baltimore, Howard, and Frederick County, Maryland.'
+  );
 
   const filteredPosts = activeFilter === 'All'
     ? BLOG_POSTS
