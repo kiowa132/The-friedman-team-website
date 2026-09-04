@@ -13,6 +13,7 @@ import { HomeValuationModal } from './components/HomeValuationModal';
 import { StrategyConsultationModal } from './components/StrategyConsultationModal';
 import { FloatingContactButton } from './components/FloatingContactButton';
 import { fade } from './lib/motion';
+import { trackPageview } from './lib/analytics';
 
 import { HomePage } from './pages/HomePage';
 
@@ -149,6 +150,15 @@ export default function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  // GA4 doesn't know a route changed on its own in a single-page app - the
+  // gtag snippet in index.html only fires once, on the real browser load.
+  // This sends the actual page_view on every navigation (including the
+  // first one), so Analytics shows real per-page traffic instead of every
+  // visit landing on whatever URL was first requested.
+  useEffect(() => {
+    trackPageview(location.pathname + location.search);
+  }, [location.pathname, location.search]);
 
   // Same function signature every page already used with local state -
   // now it navigates to a real URL instead. No page component needed to change.
