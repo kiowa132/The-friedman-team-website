@@ -9,21 +9,16 @@ backend:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
-# --- Optional: batch photo upload + auto-compression (~2 min one-time setup) ---
-# The built-in media picker adds gallery photos one slot at a time, and a raw
-# phone photo (~15 MB) can break the build. Switching on Cloudinary's free
-# media library fixes both: multi-select upload AND automatic compression.
-#   1. Free account: https://cloudinary.com/users/register_free
-#   2. Dashboard -> Product Environment -> copy "Cloud name" and "API Key"
-#      (the API Key is publishable; do NOT put the API Secret here)
-#   3. Fill both in below, then remove the leading "# " from the 6 lines
-#   4. Commit. The media picker in /admin becomes Cloudinary (multi-select).
-# media_library:
-#   name: cloudinary
-#   config:
-#     cloud_name: YOUR_CLOUD_NAME
-#     api_key: YOUR_API_KEY
-#     multiple: true
+# Batch photo upload via Cloudinary's free media library: multi-select upload
+# + automatic compression (a raw ~15 MB phone photo no longer breaks the build).
+# cloud_name + api_key are publishable and safe here. The API *secret* is never
+# used by this widget and must not go in this file.
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: nz8ywyg0
+    api_key: "166132664384538"
+    multiple: true
 
 collections:
   - name: "blog"
