@@ -20,6 +20,12 @@
 const LOFTY_API_BASE = 'https://api.lofty.com';
 const LOFTY_API_KEY = process.env.LOFTY_API_KEY;
 const DEBUG_MLS = process.env.DEBUG_MLS === 'true';
+// If you change this in Vercel and a plain "Redeploy" doesn't seem to take
+// effect: Vercel's Redeploy button reuses the existing build cache by
+// default, which can serve the OLD value of this env var instead of the new
+// one. Either uncheck "Use existing Build Cache" on that redeploy, or push
+// any new commit - a deploy triggered by a fresh commit always picks up the
+// current environment variables.
 
 export function isMlsConfigured() {
   return Boolean(LOFTY_API_KEY);
