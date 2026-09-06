@@ -4,8 +4,7 @@ metaDescription: "Maryland's housing market held steady the week of August 31 to
 category: Market Reports
 publishDate: "2026-09-07"
 heroImage: /images/uploads/maryland-real-estate-market-report-week-of-august-31-september-6-2026-hero.jpg
-carouselImages:
-  - /images/uploads/maryland-real-estate-market-report-week-of-august-31-september-6-2026-snapshot.jpg
+carouselImages: []
 youtubeVideoId: ""
 ---
 Renee and Theo Alvarez started looking for a house in April.
@@ -57,6 +56,8 @@ For the week of August 31 to September 6, 2026, the Maryland real estate market 
 </div>
 
 All figures are drawn from Bright MLS data for residential sales across Maryland for the seven-day period of August 31 to September 6, 2026. The mortgage rate is the Freddie Mac Primary Mortgage Market Survey 30-year fixed average released September 3, 2026. "Median Days to Contract" uses this report's own weekly Bright MLS pull (median cumulative days on market for closed sales).
+
+<img src="/images/uploads/maryland-real-estate-market-report-week-of-august-31-september-6-2026-snapshot.jpg" alt="Whiteboard summary of the Maryland housing market for the week of August 31 to September 6, 2026: 1,150 homes sold, 2,016 new listings, 518 pending, $440,000 median price down $10,000, 21 days to contract, 6.71% mortgage rate, Friedman Market Momentum Index 50, signal steady" style="width:100%;height:auto;margin:24px 0;border-radius:6px;" />
 
 ## What This Week's Numbers Mean for Maryland Buyers and Sellers
 
@@ -176,9 +177,9 @@ Talbot County and Garrett County, both higher-priced, second-home-heavy markets,
 
 ## This Week's Maryland Home Price Extremes
 
-**Priciest listing on the market: 5289 Ferry Neck Rd, Royal Oak, MD 21662, listed at $6,890,000.** This is a 145.85-acre waterfront estate on Fox Hole Cove in Talbot County, with roughly 1,000 feet of shoreline, three ponds, white-fenced pasture and paddocks, a five-stall barn, a two-bedroom guest house, a resort-style pool with its own pool house, a private pier and boathouse, and a Colonial main residence (4 bedrooms, 4 full and 1 half baths, 9,117 square feet above grade, built in 1900) with heart-pine floors and water views from nearly every main-level room. It first listed in the spring at $7,445,000, went off the market over the summer, and returned to active this week at $6,890,000, a $555,000 reduction.
+**Priciest listing on the market: [5289 Ferry Neck Rd, Royal Oak, MD 21662](https://kylefriedman.expportal.com/listing-detail/1178635004/5289-FERRY-NECK-RD-Royal-Oak-MD?source=search&siteId=182488&condition=%7B%22location%22%3A%7B%22streetAddress%22%3A%5B%225289%20FERRY%20NECK%20RD%2C%20Royal%20Oak%2C%20MD%2021662%22%5D%7D%7D&timezone=GMT-0400&), listed at $6,890,000.** This is a 145.85-acre waterfront estate on Fox Hole Cove in Talbot County, with roughly 1,000 feet of shoreline, three ponds, white-fenced pasture and paddocks, a five-stall barn, a two-bedroom guest house, a resort-style pool with its own pool house, a private pier and boathouse, and a Colonial main residence (4 bedrooms, 4 full and 1 half baths, 9,117 square feet above grade, built in 1900) with heart-pine floors and water views from nearly every main-level room. It first listed in the spring at $7,445,000, went off the market over the summer, and returned to active this week at $6,890,000, a $555,000 reduction.
 
-**Most affordable listing on the market: 2818 Presstman St, Baltimore, MD 21216, listed at $10,000.** This is an online auction property in the Northwest Community Action neighborhood of west Baltimore, a two-story brick rowhouse with 3 bedrooms, 1 full and 1 half baths, and 1,400 square feet above grade, built in 1940. The $10,000 figure is the opening bid only; bidding runs September 29 to 30 and the final sale price will land higher.
+**Most affordable listing on the market: [2818 Presstman St, Baltimore, MD 21216](https://kylefriedman.expportal.com/listing-detail/1188629049/2818-PRESSTMAN-ST-Baltimore-MD?source=search&siteId=182488&condition=%7B%22location%22%3A%7B%22streetAddress%22%3A%5B%222818%20PRESSTMAN%20ST%2C%20Baltimore%2C%20MD%2021216%22%5D%7D%7D&timezone=GMT-0400&), listed at $10,000.** This is an online auction property in the Northwest Community Action neighborhood of west Baltimore, a two-story brick rowhouse with 3 bedrooms, 1 full and 1 half baths, and 1,400 square feet above grade, built in 1940. The $10,000 figure is the opening bid only; bidding runs September 29 to 30 and the final sale price will land higher.
 
 Same state, same seven-day window, a spread of nearly $6.9 million. It is a reminder that Maryland's statewide $440,000 median sits on top of an enormous range of inventory, from raw rehab opportunities to trophy waterfront estates.
 
