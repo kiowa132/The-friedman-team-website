@@ -463,13 +463,15 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ onOpenConsultation, 
         {relatedPosts.length > 0 && (
           <div className="mb-10">
             <h3 className="font-serif text-xl font-bold text-[#0D2226] mb-5 text-center">More From The Friedman Report</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-1 gap-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {relatedPosts.map((p) => (
-                <Link key={p.slug} to={`/blog/${p.slug}`} className="group block relative h-[220px] overflow-hidden">
-                  <img src={p.heroImage} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-4 py-4">
+                <Link key={p.slug} to={`/blog/${p.slug}`} className="group flex flex-col overflow-hidden bg-white ring-1 ring-[#0D2226]/5">
+                  <div className="overflow-hidden">
+                    <img src={p.heroImage} alt={p.title} className="w-full aspect-[16/9] object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </div>
+                  <div className="px-4 py-3">
                     <span className="text-[9px] font-bold uppercase tracking-widest text-[#C9A96A]">{formatDisplayDate(p.publishDate)}</span>
-                    <h4 className="font-serif text-sm font-bold text-white leading-snug mt-1 line-clamp-2">{p.title}</h4>
+                    <h4 className="font-serif text-sm font-bold text-[#0D2226] group-hover:text-[#0F5C63] transition-colors leading-snug mt-1 line-clamp-2">{p.title}</h4>
                   </div>
                 </Link>
               ))}

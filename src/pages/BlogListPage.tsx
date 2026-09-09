@@ -62,42 +62,38 @@ export const BlogListPage: React.FC<BlogListPageProps> = () => {
           No posts in this category yet. Check back soon.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-1 gap-y-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPosts.map((post) => (
             <Link
               key={post.slug}
               to={`/blog/${post.slug}`}
-              className="group block relative h-[420px] overflow-hidden"
+              className="group flex flex-col overflow-hidden bg-white ring-1 ring-[#0D2226]/5"
             >
-              <img
-                src={post.heroImage}
-                alt={post.title}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.5]"
-              />
-              {/* Caption overlay - always covers the bottom of the image,
-                  small and white by default, grows taller with a dark
-                  scrim and reveals the excerpt plus a Read Article button
-                  on hover. Card height never changes, so there's never a
-                  gap of bare image or blank space either way. */}
-              <div className="absolute inset-x-0 bottom-0 bg-white group-hover:bg-transparent group-hover:bg-gradient-to-t group-hover:from-black/90 group-hover:via-black/60 group-hover:to-transparent px-5 py-5 group-hover:pt-24 transition-all duration-300">
+              {/* Full 16:9 hero - shown whole, never side-cropped, so any
+                  headline text baked into the image stays readable. */}
+              <div className="overflow-hidden">
+                <img
+                  src={post.heroImage}
+                  alt={post.title}
+                  loading="lazy"
+                  className="w-full aspect-[16/9] object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-1 flex-col px-5 py-4">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96A]">
                   {formatDisplayDate(post.publishDate)} | {post.category}
                 </span>
-                <h2 className="font-serif text-lg font-bold text-[#0D2226] group-hover:text-white transition-colors leading-snug mt-1">
+                <h2 className="font-serif text-lg font-bold text-[#0D2226] group-hover:text-[#0F5C63] transition-colors leading-snug mt-1 line-clamp-2">
                   {post.title}
                 </h2>
-                <p className="hidden group-hover:block text-xs text-white/70 line-clamp-2 mt-2">
+                <p className="text-xs text-[#1C2B2E]/60 line-clamp-2 mt-2">
                   {post.metaDescription}
                 </p>
-                <div className="flex items-center justify-end pt-2 group-hover:hidden">
+                <div className="mt-auto flex items-center justify-end pt-3">
                   <span className="text-xs font-bold text-[#0F5C63] flex items-center gap-1">
                     Read <ArrowRight className="w-3 h-3" />
                   </span>
                 </div>
-                <span className="hidden group-hover:inline-block mt-4 px-5 py-2 bg-white text-[#0D2226] text-[11px] font-bold uppercase tracking-widest">
-                  Read Article
-                </span>
               </div>
             </Link>
           ))}
