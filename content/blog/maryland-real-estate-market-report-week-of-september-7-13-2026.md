@@ -410,11 +410,11 @@ New listings jumped 17.4% to 2,366 largely because of a seasonal pattern: many s
 
 ### What is the most expensive home for sale in Maryland right now?
 
-The most expensive active listing in Maryland this week is a 20.58-acre waterfront estate at 6920 Travelers Rest Cir in Easton, Talbot County, listed at $9,950,000. It includes 529 feet of water frontage on the Tred Avon River, a private pier with three boat slips and two boat lifts, a heated pool, and a separate guest house.
+The most expensive active listing in Maryland this week is a 20.58-acre waterfront estate at [6920 Travelers Rest Cir in Easton, Talbot County](https://kylefriedman.expportal.com/listing-detail/1188776262/6920-TRAVELERS-REST-CIR-Easton-MD), listed at $9,950,000. It includes 529 feet of water frontage on the Tred Avon River, a private pier with three boat slips and two boat lifts, a heated pool, and a separate guest house.
 
 ### What is the cheapest home for sale in Maryland right now?
 
-The most affordable active listing in Maryland this week is a manufactured home at 10509 Burton Park in Frostburg, Allegany County, listed at $15,000. It sits on a rented lot with monthly lot rent of $450 plus $100 for water, sewer, and trash, and is being sold strictly as-is.
+The most affordable active listing in Maryland this week is a manufactured home at [10509 Burton Park in Frostburg, Allegany County](https://kylefriedman.expportal.com/listing-detail/1173819236/10509-BURTON-PARK-Frostburg-MD), listed at $15,000. It sits on a rented lot with monthly lot rent of $450 plus $100 for water, sewer, and trash, and is being sold strictly as-is.
 
 ### Is Baltimore County a good place to buy a house right now?
 
