@@ -1,0 +1,15 @@
+<svg viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg" font-family="Avenir Next, Arial, sans-serif">
+<line x1="406.5" y1="5" x2="406.5" y2="140" stroke="#B5544A" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="406.5" y="0" font-size="9.5" fill="#B5544A" text-anchor="middle" font-weight="700">STATEWIDE AVG 3.3x</text>
+<text x="0" y="26" font-size="12.5" font-weight="600" fill="#0D2226">Prince George's County</text>
+<rect x="170" y="13" width="408.8" height="22" rx="3" fill="#0f5c63"/>
+<text x="586.8" y="28" font-size="12.5" font-weight="700" fill="#0D2226">5.7x</text>
+<text x="0" y="70" font-size="12.5" font-weight="600" fill="#0D2226">Baltimore City</text>
+<rect x="170" y="57" width="337.2" height="22" rx="3" fill="#145d63"/>
+<text x="515.2" y="72" font-size="12.5" font-weight="700" fill="#0D2226">4.7x</text>
+<text x="0" y="114" font-size="12.5" font-weight="600" fill="#0D2226">Montgomery County</text>
+<rect x="170" y="101" width="322.5" height="22" rx="3" fill="#185d63"/>
+<text x="500.5" y="116" font-size="12.5" font-weight="700" fill="#0D2226">4.5x</text>
+<text x="0" y="150" font-size="10" fill="#1C2B2E" fill-opacity="0.5">New listings this week &#247; closings this week, by county. Higher = supply outpacing sales = more buyer leverage.</text>
+<text x="0" y="164" font-size="10" fill="#1C2B2E" fill-opacity="0.5">A new, one-week metric &#8212; directional, not yet a trend.</text>
+</svg>
