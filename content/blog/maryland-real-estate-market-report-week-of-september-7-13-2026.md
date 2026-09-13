@@ -340,6 +340,8 @@ The takeaway for sellers: this is not a week to flinch at the size of the new-li
 
 The last real tomatoes of the season are still coming off Eastern Shore vines right now, before the first cool snap ends the run. This is the week to use them: a simple, fresh pico de gallo that lets a countertop full of end-of-summer tomatoes speak for itself.
 
+<img src="/images/uploads/maryland-real-estate-market-report-week-of-september-7-13-2026-pico-de-gallo.png" alt="Before and after: diced tomatoes, onion, and jalapeno in a bowl, then mixed into finished end-of-garden pico de gallo" style="width:100%;height:auto;margin:20px 0;border-radius:6px;" />
+
 **Makes about 3 cups**
 
 - 4 to 5 ripe tomatoes, diced, seeds and excess liquid removed
