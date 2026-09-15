@@ -65,12 +65,14 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
   }
 
   const stats = [
-    v.beds && { icon: Bed, label: 'Bedrooms', value: v.beds },
-    v.baths && { icon: Bath, label: 'Bathrooms', value: v.baths },
+    v.beds && { icon: Bed, label: 'Beds', value: v.beds },
+    v.baths && { icon: Bath, label: 'Baths', value: v.baths },
     v.sqft && { icon: Maximize2, label: 'Sq Ft', value: v.sqft },
     v.lotSize && { icon: Trees, label: 'Lot', value: v.lotSize },
-    v.yearBuilt && { icon: CalendarClock, label: 'Year Built', value: v.yearBuilt },
+    v.yearBuilt && { icon: CalendarClock, label: 'Built', value: v.yearBuilt },
   ].filter(Boolean) as { icon: React.ElementType; label: string; value: string }[];
+
+  const galleryPhotos = photos.filter((p) => p !== heroImage);
 
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`;
   const smsBody = `Hi Kyle, I scanned the sign at ${addressLine || 'your listing'} and would like more info.`;
@@ -102,43 +104,57 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
   };
 
   return (
-    <div className="pt-20 pb-20 bg-[#FAF8F5]">
+    <div className="pb-20 bg-[#FAF8F5]">
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="pt-8 pb-6 space-y-3">
-          <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#0F5C63] border border-[#0F5C63]/40 rounded-full px-3 py-1">
-            {v.status}
-          </span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] leading-tight">
-            {v.streetAddress || 'Featured Listing'}
-          </h1>
-          {v.cityStateZip && <p className="text-base text-[#1C2B2E]/70">{v.cityStateZip}</p>}
-          {v.listPrice && <p className="font-serif text-2xl sm:text-3xl font-bold text-[#0F5C63]">{v.listPrice}</p>}
-        </div>
-
-        {/* Hero image */}
+      {/* Hero — full-bleed, photo or an ambient gradient plate when there's none yet */}
+      <div className="relative w-full h-[62vh] min-h-[440px] max-h-[720px] overflow-hidden flex items-end">
         {heroImage ? (
-          <div className="aspect-[16/9] max-h-[460px] overflow-hidden rounded-xs mb-6">
-            <img src={heroImage} alt={addressLine} className="w-full h-full object-cover" />
-          </div>
+          <img
+            src={heroImage}
+            alt={addressLine}
+            className="absolute inset-0 w-full h-full object-cover animate-kenburns"
+          />
         ) : (
-          <div className="aspect-[16/9] max-h-[380px] rounded-xs mb-6 border border-[#C9A96A]/40 bg-[#EFEBE2] flex items-center justify-center text-center px-6">
-            <p className="text-xs uppercase tracking-widest text-[#1C2B2E]/50">Photos coming soon</p>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0F5C63] via-[#0D2226] to-[#0D2226]">
+            <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(201,169,106,0.35),transparent_55%)]" />
           </div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226] via-[#0D2226]/55 to-[#0D2226]/10" />
 
-        {/* Stat row */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-10 sm:pb-14">
+          <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C9A96A]">
+            The Friedman Team Presents
+          </span>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#0D2226] bg-[#C9A96A] rounded-full px-3 py-1">
+              {v.status}
+            </span>
+            {!heroImage && (
+              <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#F5F1E8]/80 border border-[#F5F1E8]/30 rounded-full px-3 py-1">
+                Photos &amp; 3D Tour Coming Soon
+              </span>
+            )}
+          </div>
+          <h1 className="font-serif text-4xl sm:text-6xl font-bold text-[#FAF8F5] leading-tight mt-4">
+            {v.streetAddress || 'Featured Listing'}
+          </h1>
+          {v.cityStateZip && <p className="text-base sm:text-lg text-[#F5F1E8]/80 mt-2">{v.cityStateZip}</p>}
+          {v.listPrice && (
+            <p className="font-serif text-3xl sm:text-4xl font-bold gold-gradient-text mt-3">{v.listPrice}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        {/* Stat row — editorial, floating up over the hero seam */}
         {stats.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+          <div className="glass-luxury rounded-xs shadow-lg shadow-[#0D2226]/10 -mt-8 sm:-mt-10 relative z-10 mb-10 px-4 sm:px-8 py-6 flex flex-wrap justify-center sm:justify-between gap-x-6 gap-y-5">
             {stats.map((s) => (
-              <div key={s.label} className="border border-[#C9A96A]/40 rounded-xs bg-white px-4 py-3 flex items-center gap-3">
-                <s.icon className="w-5 h-5 text-[#C9A96A] shrink-0" />
-                <div>
-                  <div className="font-serif text-lg font-bold text-[#0D2226] leading-none">{s.value}</div>
-                  <div className="text-[10px] uppercase tracking-widest text-[#1C2B2E]/50 mt-1">{s.label}</div>
-                </div>
+              <div key={s.label} className="text-center w-[calc(33%-1rem)] sm:w-auto">
+                <s.icon className="w-4 h-4 text-[#C9A96A] mx-auto mb-1.5" />
+                <div className="font-serif text-xl sm:text-2xl font-bold text-[#0D2226] leading-none">{s.value}</div>
+                <div className="text-[10px] uppercase tracking-widest text-[#1C2B2E]/50 mt-1.5">{s.label}</div>
               </div>
             ))}
           </div>
@@ -150,10 +166,10 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
             href={v.tourUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-3 mb-8 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#0F5C63] transition-colors"
+            className="flex items-center justify-center gap-2 w-full py-4 mb-10 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#0F5C63] transition-colors"
           >
             <Play className="w-4 h-4" />
-            Watch the Virtual Tour
+            Watch the 3D Walkthrough
           </a>
         )}
 
@@ -177,36 +193,52 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
           />
         )}
 
-        {/* Photo gallery (everything except the one already shown as the hero) */}
-        {photos.filter((p) => p !== heroImage).length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-10">
-            {photos.filter((p) => p !== heroImage).map((src, i) => (
-              <a key={i} href={src} target="_blank" rel="noopener noreferrer" className="block aspect-[4/3] overflow-hidden rounded-xs">
-                <img
-                  src={src}
-                  alt={`${addressLine || 'Listing'} photo ${i + 1}`}
-                  loading="lazy"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                />
-              </a>
-            ))}
+        {/* Photo gallery — bento layout, first photo leads larger */}
+        {galleryPhotos.length > 0 && (
+          <div className="mb-10">
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63] mb-4">Gallery</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 auto-rows-[110px] sm:auto-rows-[140px] gap-2">
+              {galleryPhotos.map((src, i) => (
+                <a
+                  key={i}
+                  href={src}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`block overflow-hidden rounded-xs group ${
+                    i === 0 ? 'col-span-2 row-span-2' : ''
+                  }`}
+                >
+                  <img
+                    src={src}
+                    alt={`${addressLine || 'Listing'} photo ${i + 1}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </a>
+              ))}
+            </div>
           </div>
         )}
+      </div>
 
-        {/* Contact CTA */}
-        <div className="bg-[#0D2226] text-[#FAF8F5] rounded-xs p-6 sm:p-8 text-center space-y-4 mb-8">
-          <h2 className="font-serif text-2xl font-bold">Want the details or a private showing?</h2>
-          <p className="text-sm text-[#A8B2A1]">
+      {/* Contact CTA — full-bleed dark band */}
+      <div className="bg-[#0D2226] text-[#FAF8F5] py-14 my-4">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center space-y-4">
+          <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C9A96A]">
+            Private Showings Available
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold">Want the details or a private showing?</h2>
+          <p className="text-sm text-[#A8B2A1] max-w-md mx-auto">
             Kyle Friedman is the listing agent. Text, call, or email for disclosures, comps, and a walkthrough.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-            <a href={smsUrl} className="flex items-center justify-center gap-2 py-3 bg-[#C9A96A] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#D4AF37] transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+            <a href={smsUrl} className="flex items-center justify-center gap-2 py-3.5 bg-[#C9A96A] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#D4AF37] transition-colors">
               <MessageSquareText className="w-4 h-4" /> Text Kyle
             </a>
-            <a href={`tel:${PHONE}`} className="flex items-center justify-center gap-2 py-3 border border-[#C9A96A] text-[#C9A96A] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#C9A96A] hover:text-[#0D2226] transition-colors">
+            <a href={`tel:${PHONE}`} className="flex items-center justify-center gap-2 py-3.5 border border-[#C9A96A] text-[#C9A96A] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#C9A96A] hover:text-[#0D2226] transition-colors">
               <Phone className="w-4 h-4" /> Call
             </a>
-            <a href={mailUrl} className="flex items-center justify-center gap-2 py-3 border border-[#C9A96A] text-[#C9A96A] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#C9A96A] hover:text-[#0D2226] transition-colors">
+            <a href={mailUrl} className="flex items-center justify-center gap-2 py-3.5 border border-[#C9A96A] text-[#C9A96A] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#C9A96A] hover:text-[#0D2226] transition-colors">
               <Mail className="w-4 h-4" /> Email
             </a>
           </div>
@@ -219,7 +251,9 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
             </a>
           )}
         </div>
+      </div>
 
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Cross-links */}
         <div className="flex flex-col sm:flex-row gap-3">
           <Link to="/listings" className="flex-1 text-center py-3 border border-[#C9A96A]/50 rounded-xs text-xs font-bold uppercase tracking-widest text-[#0F5C63] hover:border-[#C9A96A] transition-colors">
