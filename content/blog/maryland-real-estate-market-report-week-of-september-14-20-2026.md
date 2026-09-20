@@ -316,7 +316,11 @@ Two threads stand out. First, the mortgage rate has now risen four weeks in a ro
 
 <img src="/images/uploads/maryland-real-estate-market-report-week-of-september-14-20-2026-fmmi.png" alt="Gauge showing the Friedman Market Momentum Index at 44 out of 100, Balanced Market, Cooling, with Demand 54, Seller Strength 55, Market Speed 42, and Rate Environment 24" style="width:100%;height:auto;margin:20px 0;border-radius:6px;" />
 
+<p style="text-align:center;font-weight:700;color:#0F5C63;text-transform:uppercase;letter-spacing:0.08em;font-size:13px;">Balanced Market, Cooling</p>
+
 The Friedman Market Momentum Index is a 0 to 100 read on which direction Maryland's housing market is leaning, built from four components: demand, seller strength, market speed, and the rate environment. This week it reads **44 out of 100**, down four points from last week.
+
+<img src="/images/uploads/maryland-real-estate-market-report-week-of-september-14-20-2026-fmmi-subscores.png" alt="Horizontal bar chart of FMMI sub-scores: Demand 54%, Seller Strength 55%, Market Speed 42%, Rate Environment 24%" style="width:100%;height:auto;margin:20px 0;border-radius:6px;" />
 
 - **Demand Score: 54.** Closings rose 39.0% off the holiday week but sit 14.4% below the pre-holiday pace, and pending contracts were flat at 482. A rebound, not a surge.
 - **Seller Strength Score: 55.** Median sold price rose 1.1% and price reductions fell 11.2%, offset by the sold-to-original-list ratio slipping to 98.4% and a 4.1% dip in the median new-listing price.
