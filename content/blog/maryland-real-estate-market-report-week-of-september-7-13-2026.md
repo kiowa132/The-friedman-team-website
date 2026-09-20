@@ -274,7 +274,7 @@ Two threads stand out across the three weeks. First, the mortgage rate has now r
 
 The Friedman Market Momentum Index is a 0 to 100 read on which direction Maryland's housing market is leaning, built from four components: demand, seller strength, market speed, and the rate environment. This week it reads **48 out of 100**, down two points from last week, though the internal components moved in different directions for a specific reason.
 
-<img src="/images/uploads/charts/sep7-sep13/fmmi-subscores.svg" alt="Horizontal bar chart showing FMMI sub-scores: Demand 43, Seller Strength 56, Market Speed 60, Rate Environment 32" style="width:100%;height:auto;margin:20px 0;" />
+<img src="/images/uploads/charts/sep7-sep13/fmmi-subscores.svg" alt="Horizontal bar chart showing FMMI sub-scores: Demand 43%, Seller Strength 56%, Market Speed 60%, Rate Environment 32%" style="width:100%;height:auto;margin:20px 0;" />
 
 - **Demand Score: 43.** Closed sales fell 38.4% and pending contracts fell 7.1%. Even accounting for the Labor Day settlement lull, this reflects a real, likely temporary, pullback in transaction volume.
 - **Seller Strength Score: 56.** The median sold price rose 1.1%, price reductions fell 4.1%, and the sold-to-original-list ratio improved to 99.6% from 99.0%. Sellers gained ground this week, not lost it.
