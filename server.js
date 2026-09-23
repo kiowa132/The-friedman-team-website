@@ -27,6 +27,25 @@ const PORT = process.env.PORT || 3001;
 
 const FUB_API_KEY = process.env.FUB_API_KEY;
 const FUB_SOURCE = process.env.FUB_SOURCE || 'TheFriedmanTeam.com';
+const CRM_INTAKE_URL = process.env.CRM_INTAKE_URL;
+const CRM_INTAKE_SECRET = process.env.CRM_INTAKE_SECRET;
+
+// Dual-send while phasing out FUB (2026-09-22) — see api/leads.js for the
+// full comment. Its own try/catch means a CRM problem never affects the
+// visitor's submission or the FUB call.
+async function forwardToCrm(payload) {
+  if (!CRM_INTAKE_URL || !CRM_INTAKE_SECRET) return;
+  try {
+    const res = await fetch(CRM_INTAKE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-intake-secret': CRM_INTAKE_SECRET },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) console.error('CRM lead intake rejected the lead:', res.status, await res.text());
+  } catch (err) {
+    console.error('Could not reach the CRM lead intake endpoint:', err);
+  }
+}
 
 app.use(express.json());
 
@@ -83,6 +102,8 @@ app.post('/api/leads', async (req, res) => {
       console.error('Follow Up Boss rejected the lead:', fubResponse.status, errText);
       return res.status(502).json({ ok: false, error: 'Follow Up Boss rejected the submission.' });
     }
+
+    await forwardToCrm({ name, email, phone, type: type || 'General Inquiry', message, source: FUB_SOURCE });
 
     return res.json({ ok: true });
   } catch (err) {
