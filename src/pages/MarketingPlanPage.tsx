@@ -239,7 +239,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
         <div className="pointer-events-none absolute -top-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-[#0F5C63]/40 blur-3xl animate-pulse" />
         <div className="pointer-events-none absolute -bottom-32 right-0 w-[26rem] h-[26rem] rounded-full bg-[#C9A96A]/20 blur-3xl animate-pulse" />
 
-        <m.div style={{ opacity: heroFade }} className="relative max-w-6xl mx-auto px-4 sm:px-6 w-full pt-24">
+        <m.div style={{ opacity: heroFade }} className="relative max-w-6xl mx-auto px-4 sm:px-6 w-full pt-32">
           <m.span
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -275,8 +275,8 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
 
       {/* Everything below keeps the sticky range bar in view */}
       <div>
-        <div className="sticky top-20 z-30 bg-[#0D2226]/90 backdrop-blur-md border-y border-[#C9A96A]/30">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 overflow-x-auto">
+        <div className="sticky top-[68px] lg:top-[55px] z-30 bg-[#0D2226]/90 backdrop-blur-md border-y border-[#C9A96A]/30">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96A] shrink-0 hidden sm:inline">Your price range</span>
             {TIERS.map((t) => {
               const activeTier = t.id === tierId;
@@ -565,7 +565,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
 
           {/* Summary */}
           <aside className="lg:col-span-1">
-            <div className="lg:sticky lg:top-44 bg-[#0D2226] text-[#FAF8F5] p-7 rounded-xs space-y-5 border border-[#C9A96A]/40 shadow-2xl">
+            <div className="lg:sticky lg:top-40 bg-[#0D2226] text-[#FAF8F5] p-7 rounded-xs space-y-5 border border-[#C9A96A]/40 shadow-2xl">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A96A]">Your plan</p>
                 <h3 className="font-serif text-2xl font-bold mt-1">{tier.name}</h3>
