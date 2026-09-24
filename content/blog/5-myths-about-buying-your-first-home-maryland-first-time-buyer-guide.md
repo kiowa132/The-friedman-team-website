@@ -1,6 +1,6 @@
 ---
 title: "5 Myths About Buying Your First Home in Maryland (and What Is Actually True)"
-metaDescription: "You don't need 20% down, perfect credit, or perfect rates. Five first-time buyer myths busted, with real Maryland numbers on down payment, rent, and credit."
+metaDescription: "You don't need 20% down or perfect credit. Five first-time buyer myths busted, with real Maryland numbers on down payment, rent, credit, and rates."
 category: Buy a Home
 publishDate: "2026-07-08"
 heroImage: /images/uploads/first-home-myths-hero.jpg
