@@ -531,7 +531,11 @@ export function createHouseScene(container: HTMLElement, getProgress: () => numb
     // Camera
     posCurve.getPoint(p, tmpPos);
     lookCurve.getPoint(p, tmpLook);
-    if (aspect < 0.85) tmpPos.multiplyScalar(1.3);
+    if (aspect < 0.85) {
+      // Portrait phones: pull back and lift the house above the text card.
+      tmpPos.multiplyScalar(1.3);
+      tmpLook.y -= 1.7;
+    }
     camera.position.copy(tmpPos);
     camera.lookAt(tmpLook);
 
