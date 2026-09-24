@@ -195,11 +195,11 @@ export function createHouseScene(container: HTMLElement, getProgress: () => numb
   scene.add(world);
 
   // ---- Ground ----
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), std(0xe6dfd0, 1));
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), std(0xe9e3d6, 1));
   ground.rotation.x = -Math.PI / 2;
   ground.receiveShadow = true;
   world.add(ground);
-  const lawn = rbox(30, 0.06, 22, std(0xa2b18f, 1), 0.02, false);
+  const lawn = rbox(30, 0.06, 22, std(0xc9cdb8, 1), 0.02, false);
   lawn.position.set(0, 0.03, 5);
   world.add(lawn);
   const gravel = rbox(30, 0.05, 6, std(0xd9d3c6, 1), 0.02, false);
@@ -341,15 +341,9 @@ export function createHouseScene(container: HTMLElement, getProgress: () => numb
     g.position.set(x, 0, z);
     world.add(g);
   };
-  olive(-8.5, 4.5, 1.2);
-  olive(9.4, 5.6, 1.1);
-  olive(-9.5, -1.5, 1.3);
-  olive(8.4, -3, 1.0);
-  olive(-12.5, 10, 1.1);
-  olive(13, 11, 1.2);
 
   const cypress = (x: number, z: number, h: number) => {
-    const c = new THREE.Mesh(new THREE.ConeGeometry(0.55, h, 10), std(0x455f4b, 0.95));
+    const c = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.44, h, 24), std(0x4b5e4f, 0.95));
     c.position.set(x, h / 2, z);
     c.castShadow = true;
     world.add(c);
@@ -361,9 +355,6 @@ export function createHouseScene(container: HTMLElement, getProgress: () => numb
     h.position.set(x, 0.45, z);
     world.add(h);
   };
-  hedge(-7.5, 10.6, 6);
-  hedge(4.4, 10.6, 5);
-  hedge(-12, 6, 4);
 
   // Landscape uplights (they catch the bloom)
   const upMat = std(0xffd9a0, 0.5, 0, 0xffc477, 2.6);
