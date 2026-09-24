@@ -82,18 +82,19 @@ function item(category: Category, name: string, codes: string, detail?: string):
 // Delivered on every listing, no matter the price.
 export const FOUNDATION: { name: string; detail: string }[] = [
   { name: 'Data-backed pricing strategy', detail: 'Comps and pricing scenarios so you see real options, not one guess.' },
-  { name: 'Professional-quality photography', detail: 'Edited and ready for every site.' },
-  { name: 'MLS listing on every major site', detail: 'Syndicated to Zillow, Realtor.com, Redfin, Trulia, Homes.com and more.' },
-  { name: 'Dedicated property website', detail: 'A website built for your home.' },
-  { name: 'Email to our buyer and client network', detail: 'Past clients and active buyers hear about your home.' },
+  { name: 'Professional-quality photography', detail: 'Daytime photography, edited and ready for every site.' },
+  { name: 'Coordinated launch on every major site', detail: 'MLS, Zillow, Redfin, Realtor.com, Trulia, Homes.com and more, plus a dedicated property website built for your home.' },
+  { name: 'Coming Soon and go-live strategy', detail: 'A Coming Soon phase to build early buzz and, when useful, test pricing. Off-market exposure where it makes sense.' },
+  { name: 'Email to our network', detail: 'Past clients, active buyers, and agents across surrounding brokerages hear about your home.' },
+  { name: 'Personal phone outreach', detail: 'We call agents and neighbors to surface buyers who have not seen your home online yet.' },
   { name: 'Social media posts', detail: 'Your listing promoted on our channels.' },
-  { name: 'Yard sign and showing setup', detail: 'Sign, lockbox and showing scheduling.' },
-  { name: 'Launch timing plan', detail: 'Coming Soon and go-live strategy for your home.' },
-  { name: 'Showing feedback', detail: 'What buyers said after they toured.' },
+  { name: 'Signage with a QR code and 24-hour info line', detail: 'Buyers can reach us any time, day or night, and their contact information is captured immediately.' },
+  { name: 'Showing setup and feedback within 48 hours', detail: 'Lockbox and scheduling, and what buyers said after every showing within 48 hours.' },
+  { name: 'A weekly call', detail: 'We review activity and pricing together every week.' },
+  { name: 'Fast, reliable communication', detail: 'Available for your calls Monday through Saturday, with same-day returned calls and emails, often within the hour.' },
   { name: 'Disclosure and contract paperwork', detail: 'Prepared and reviewed with you.' },
-  { name: 'Negotiation', detail: 'Price, terms and contingencies handled with your equity in mind.' },
-  { name: 'Weekly updates', detail: 'You always know where things stand.' },
-  { name: 'Transaction coordination', detail: 'Managed through closing.' },
+  { name: 'Negotiation strategy', detail: 'A plan in place before an offer ever comes in, covering price, terms and contingencies with your equity in mind.' },
+  { name: 'Transaction coordination', detail: 'A dedicated coordinator manages every deadline and document through closing.' },
   { name: 'Vendor coordination and prep timeline', detail: 'We schedule your prep vendors and set the order so everything is finished before photo day.' },
 ];
 
@@ -103,6 +104,7 @@ export const FOUNDATION: { name: string; detail: string }[] = [
 export const ITEMS: Item[] = [
   // Prep & Protect
   item('Prep & Protect', 'Home Prep Advisor walkthrough and room-by-room plan', 'ARRRR', 'Kyle tells you honestly whether your home needs one.'),
+  item('Prep & Protect', 'Staging consultation (decluttering, furniture placement, virtual staging where it helps)', 'ARRRR'),
   item('Prep & Protect', 'Professional cleaning', 'NWWWW'),
   item('Prep & Protect', 'Pre-listing home inspection', 'NWWWW'),
   item('Prep & Protect', 'Landscaping refresh (mulch, trim, edging)', 'NWWWW'),
@@ -125,7 +127,7 @@ export const ITEMS: Item[] = [
   // Video
   item('Video', 'Social media video', 'NAAPP'),
   item('Video', 'SkyTour drone 3D flyover', 'NAAPP'),
-  item('Video', 'Walkthrough video', 'NNEEE'),
+  item('Video', 'Walkthrough video', 'AAEEE'),
   item('Video', 'Property tour video with Kyle', 'NNFFF'),
 
   // Online Reach
@@ -133,11 +135,11 @@ export const ITEMS: Item[] = [
   item('Online Reach', 'Showcase priority search placement', 'NAZZZ'),
   item('Online Reach', 'Showcase filters and special search results', 'NAZZZ'),
   item('Online Reach', 'Dedicated Showcase email alerts to serious buyers', 'NAZZZ'),
-  item('Online Reach', 'Paid social ad boost', 'NNEEE'),
-  item('Online Reach', 'Targeted buyer ads', 'NNEEE'),
+  item('Online Reach', 'Paid digital and social media campaign', 'AAEEE', 'Puts your home in front of targeted buyers across Maryland.'),
+  item('Online Reach', 'Targeted buyer ads', 'AAEEE'),
 
   // Local & Print
-  item('Local & Print', 'Just-listed neighborhood postcards', 'NEEEE'),
+  item('Local & Print', 'Targeted print postcard campaign', 'AEEEE', 'Just-listed postcards to the neighborhood and likely buyers.'),
   item('Local & Print', 'Feature flyer and brochure', 'NEEEE'),
   item('Local & Print', 'Open house door hangers', 'NNEEE'),
 
@@ -145,7 +147,7 @@ export const ITEMS: Item[] = [
   item('Launch & Events', 'Saturday open house', 'NIIII'),
   item('Launch & Events', 'Sunday open house', 'NNIII'),
   item('Launch & Events', 'Open house promotion (email and social)', 'NIIII'),
-  item('Launch & Events', 'Agent preview event', 'NNEEI'),
+  item('Launch & Events', 'Brokers Open with a social media kit', 'AAEEI', 'Local agents tour in person and get a kit to push your home to their buyers.'),
   item('Launch & Events', 'Neighbor preview event', 'NNEEE'),
 ];
 
@@ -153,7 +155,7 @@ export const ITEMS: Item[] = [
 export const DEFAULT_PREP_PICK = 'Professional cleaning';
 export const DEFAULT_EXTRAS: Record<TierId, string[]> = {
   t1: [],
-  t2: ['Just-listed neighborhood postcards'],
+  t2: ['Targeted print postcard campaign'],
   t3a: ['Twilight photos'],
   t3b: ['Twilight photos'],
   t4: ['Partial professional staging (living room, primary bedroom, kitchen)', 'Twilight photos'],
@@ -169,7 +171,7 @@ export function pickCost(status: Status): number {
 }
 
 export const ZS_NOTE =
-  'ZS marks the Zillow Showcase package. Choose any one ZS item and you get the whole package for your price range. ZS+ marks the upgraded level with drone, SkyTour and social video.';
+  'ZS marks the Zillow Showcase package. Choose any one ZS item and you get the whole package for your price range. ZS+ marks the upgraded level with drone, SkyTour and social video. Showcase is not available on every listing, and Kyle will tell you honestly whether yours qualifies.';
 
 export const SAME_KYLE = 'Same Kyle, same service, same negotiation at every price. What changes is how much marketing we put behind your home.';
 
@@ -182,4 +184,29 @@ export const ADVISOR_BULLETS: string[] = [
   'Builds a room-by-room preparation plan and timeline',
   'Advises on curb appeal and staging',
   'Coordinates vendors so your home is fully market-ready before photography and launch',
+];
+
+export const GUARANTEE_POINTS: string[] = [
+  'Feedback within 48 hours of every showing',
+  'A weekly call to review activity and pricing',
+  'Available for your calls Monday through Saturday',
+  'Same-day returned calls and emails, often within the hour',
+];
+
+export const TEAM: { role: string; detail: string }[] = [
+  { role: 'Listing Agent', detail: 'Leads strategy and negotiation for your home.' },
+  { role: 'Home Prep Advisor', detail: 'Trained to help your home show its best.' },
+  { role: 'Transaction Coordinator', detail: 'Manages every deadline and document through closing.' },
+];
+
+export const PERFORMANCE_NOTE =
+  'Ask Kyle for current, verified numbers on list to sale ratio, average days on market, and listing reach, sourced from Bright MLS for the most recent reporting period.';
+
+export interface Step { title: string; text: string }
+export const STEPS: Step[] = [
+  { title: 'Before we go live', text: 'Your Home Prep Advisor walkthrough, staging consultation, cleaning and any prep work, all scheduled so everything is finished before photo day. Then a Coming Soon phase builds early buzz, backed by signage with a QR code and, if you choose it, a postcard campaign.' },
+  { title: 'Imagery and launch', text: 'Professional photography, and for many homes a 3D tour and floor plan, with walkthrough video and drone where your plan includes them. Then a coordinated launch across the MLS, Zillow, Redfin and your own property website.' },
+  { title: 'Getting the word out', text: 'A targeted email goes to our full network, including agents at surrounding brokerages, along with a Brokers Open where local agents tour in person and get a social media kit to push your home to their own buyers.' },
+  { title: 'Paid reach and personal network', text: 'Paid digital and social campaigns put your home in front of targeted buyers across Maryland, backed by personal phone calls to agents and neighbors to reach buyers who have not seen it online yet.' },
+  { title: 'Showings, offers and closing', text: 'Open houses, showing feedback within 48 hours, a weekly call, negotiation strategy set before an offer arrives, and a coordinator managing every deadline until you close.' },
 ];

@@ -9,8 +9,12 @@ import {
   DEFAULT_EXTRAS,
   DEFAULT_PREP_PICK,
   FOUNDATION,
+  GUARANTEE_POINTS,
   ITEMS,
+  PERFORMANCE_NOTE,
   SAME_KYLE,
+  STEPS,
+  TEAM,
   TIERS,
   ZS_NOTE,
   pickCost,
@@ -382,6 +386,67 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
         </aside>
       </section>
 
+      {/* How it unfolds */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+        <div className="text-center space-y-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">The Seller Process</span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226]">What Happens When You List With Us</h2>
+          <p className="text-sm text-[#1C2B2E]/70 max-w-2xl mx-auto">
+            Most agents talk about marketing in buzzwords. Here is what actually happens, step by step. Your plan above decides how much of it is included and which extras you add.
+          </p>
+        </div>
+        <div className="space-y-4">
+          {STEPS.map((st, idx) => (
+            <div key={st.title} className="flex gap-5 bg-[#FAF8F5] border border-[#C9A96A]/30 p-6 rounded-xs">
+              <span className="font-serif text-3xl font-bold text-[#C9A96A]/60 shrink-0 w-10">{idx + 1}</span>
+              <div className="space-y-1">
+                <h3 className="font-serif text-xl font-bold text-[#0D2226]">{st.title}</h3>
+                <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">{st.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Guarantee + team */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-[#0D2226] text-[#FAF8F5] p-8 rounded-xs space-y-4 border border-[#C9A96A]/40">
+          <h2 className="font-serif text-2xl font-bold">Our Communication Guarantee</h2>
+          <p className="text-sm text-[#A8B2A1] leading-relaxed">
+            Poor communication is the number one complaint sellers have about their agent. So we guarantee:
+          </p>
+          <ul className="space-y-2 text-sm">
+            {GUARANTEE_POINTS.map((g) => (
+              <li key={g} className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#C9A96A] shrink-0 mt-0.5" />
+                <span>{g}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="bg-[#FAF8F5] border border-[#C9A96A]/40 p-8 rounded-xs space-y-4">
+          <h2 className="font-serif text-2xl font-bold text-[#0D2226]">Your Team, Not Just One Person</h2>
+          <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">
+            You are not relying on a single overloaded agent. You get:
+          </p>
+          <ul className="space-y-3">
+            {TEAM.map((t) => (
+              <li key={t.role} className="text-sm text-[#0D2226]">
+                <span className="font-bold">{t.role}.</span> <span className="text-[#1C2B2E]/75">{t.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Numbers note */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="bg-[#FAF8F5] border border-[#C9A96A]/40 p-8 rounded-xs space-y-3 text-center">
+          <h2 className="font-serif text-2xl font-bold text-[#0D2226]">The Numbers That Matter</h2>
+          <p className="text-sm text-[#1C2B2E]/80 leading-relaxed">{PERFORMANCE_NOTE}</p>
+        </div>
+      </section>
+
       {/* Easy exit + links */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4">
         <div className="inline-flex items-center gap-2 text-sm text-[#0D2226] font-semibold">
@@ -389,11 +454,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
           <span>{CANCEL_LINE}</span>
         </div>
         <p className="text-xs text-[#1C2B2E]/60">
-          Curious how it all works step by step?{' '}
-          <Link to="/sell/marketing-strategy" className="text-[#0F5C63] font-bold underline hover:text-[#C9A96A]">
-            See what happens when you list
-          </Link>
-          . Want to know more about Showcase?{' '}
+          Want to know more about Showcase?{' '}
           <Link to="/zillow-showcase" className="text-[#0F5C63] font-bold underline hover:text-[#C9A96A]">
             Read about Zillow Showcase
           </Link>

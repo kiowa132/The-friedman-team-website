@@ -120,7 +120,7 @@ Coming Soon is a tool for building interest, so it does not fit every listing.
 2. Settle on the price with recent sales, not hope. Our [net proceeds calculator](/calculators/net-proceeds) shows what different prices leave in your pocket.
 3. Choose your Saturday open house date, then count back six days for Coming Soon and forward to the Thursday you will go Active.
 4. Line up the marketing: signage, neighbor outreach, and digital campaigns ready to start the day you enter Coming Soon.
-5. Read how we launch every listing on our [marketing strategy page](/sell/marketing-strategy).
+5. Read how we launch every listing on our [marketing plan page](/sell/marketing-plan).
 
 ## The Bottom Line
 

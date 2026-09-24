@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, LazyMotion, m, MotionConfig } from 'motion/react';
 
 // Loads the actual animation engine as its own separate chunk, in parallel
@@ -61,7 +61,6 @@ const PastTransactionsPage = React.lazy(() => import('./pages/PastTransactionsPa
 const TransactionDetailPage = React.lazy(() => import('./pages/TransactionDetailPage').then(m => ({ default: m.TransactionDetailPage })));
 const VideosPage = React.lazy(() => import('./pages/VideosPage').then(m => ({ default: m.VideosPage })));
 const FinancingOptionsPage = React.lazy(() => import('./pages/FinancingOptionsPage').then(m => ({ default: m.FinancingOptionsPage })));
-const SellerProcessPage = React.lazy(() => import('./pages/SellerProcessPage').then(m => ({ default: m.SellerProcessPage })));
 const MarketingPlanPage = React.lazy(() => import('./pages/MarketingPlanPage').then(m => ({ default: m.MarketingPlanPage })));
 const GuideDetailPage = React.lazy(() => import('./pages/GuideDetailPage').then(m => ({ default: m.GuideDetailPage })));
 const MailingListPage = React.lazy(() => import('./pages/MailingListPage').then(m => ({ default: m.MailingListPage })));
@@ -74,7 +73,6 @@ const PATH_TO_TAB: Record<string, string> = {
   '/': 'home',
   '/about': 'about',
   '/sell': 'sell',
-  '/sell/marketing-strategy': 'sell',
   '/sell/marketing-plan': 'sell',
   '/buy': 'buy',
   '/neighborhoods': 'neighborhoods',
@@ -262,12 +260,7 @@ export default function App() {
             />
           } />
 
-          <Route path="/sell/marketing-strategy" element={
-            <SellerProcessPage
-              onOpenValuation={() => setIsValuationOpen(true)}
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-            />
-          } />
+          <Route path="/sell/marketing-strategy" element={<Navigate to="/sell/marketing-plan" replace />} />
 
           <Route path="/sell/marketing-plan" element={
             <MarketingPlanPage

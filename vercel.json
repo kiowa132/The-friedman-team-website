@@ -4,6 +4,7 @@
   "outputDirectory": "dist",
   "redirects": [
     { "source": "/sell-your-home", "destination": "/sell", "permanent": true },
+    { "source": "/sell/marketing-strategy", "destination": "/sell/marketing-plan", "permanent": true },
     { "source": "/market-reports", "destination": "/blog", "permanent": true }
   ],
   "rewrites": [
