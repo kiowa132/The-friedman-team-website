@@ -527,7 +527,7 @@ export function createHouseScene(container: HTMLElement, getProgress: () => numb
     }
     aspect = w / h;
     camera.aspect = aspect;
-    camera.fov = aspect < 0.85 ? 50 : 34;
+    camera.fov = 34;
     camera.updateProjectionMatrix();
   };
   resize();
@@ -555,10 +555,10 @@ export function createHouseScene(container: HTMLElement, getProgress: () => numb
     const u = toParam(p);
     posCurve.getPoint(u, tmpPos);
     lookCurve.getPoint(u, tmpLook);
-    if (aspect < 0.85) {
-      tmpPos.multiplyScalar(1.35);
-      tmpLook.y -= 1.2;
-    }
+    // Fit the house to the screen shape: pull back on tall or narrow screens.
+    const fit = aspect >= 1.2 ? 1 : Math.min(2.0, Math.pow(1.2 / aspect, 0.8));
+    tmpPos.multiplyScalar(fit);
+    if (aspect < 0.85) tmpLook.y -= 1.4;
     camera.position.copy(tmpPos);
     camera.lookAt(tmpLook);
 
