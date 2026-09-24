@@ -497,9 +497,13 @@ const PlanSummary: React.FC<{ tierId: TierId; prepPick: string; picks: string[] 
   const chosenPicks = picks.filter((n) => groups.some((g) => g.items.some((i) => i.name === n)));
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h2 className="font-serif text-xl font-bold text-[#0D2226]">With every listing</h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+      <details className="group border border-[#0D2226]/10 rounded-xs bg-[#FAF8F5]">
+        <summary className="cursor-pointer list-none flex items-center justify-between gap-3 p-4 font-serif text-xl font-bold text-[#0D2226]">
+          <span>With every listing ({FOUNDATION.length} services)</span>
+          <span className="text-xs font-sans font-bold uppercase tracking-widest text-[#0F5C63] group-open:hidden">Show</span>
+          <span className="text-xs font-sans font-bold uppercase tracking-widest text-[#0F5C63] hidden group-open:inline">Hide</span>
+        </summary>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 px-4 pb-4">
           {FOUNDATION.map((f) => (
             <li key={f.name} className="flex items-start gap-2 text-sm text-[#0D2226]">
               <CheckCircle2 className="w-4 h-4 text-[#0F5C63] shrink-0 mt-0.5" />
@@ -507,7 +511,7 @@ const PlanSummary: React.FC<{ tierId: TierId; prepPick: string; picks: string[] 
             </li>
           ))}
         </ul>
-      </div>
+      </details>
       {groups.map((g) => {
         const inc = g.items.filter((i) => isIncluded(statusFor(i, tierId)));
         if (inc.length === 0) return null;
