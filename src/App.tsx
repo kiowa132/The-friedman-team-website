@@ -62,6 +62,7 @@ const TransactionDetailPage = React.lazy(() => import('./pages/TransactionDetail
 const VideosPage = React.lazy(() => import('./pages/VideosPage').then(m => ({ default: m.VideosPage })));
 const FinancingOptionsPage = React.lazy(() => import('./pages/FinancingOptionsPage').then(m => ({ default: m.FinancingOptionsPage })));
 const SellerProcessPage = React.lazy(() => import('./pages/SellerProcessPage').then(m => ({ default: m.SellerProcessPage })));
+const MarketingPlanPage = React.lazy(() => import('./pages/MarketingPlanPage').then(m => ({ default: m.MarketingPlanPage })));
 const GuideDetailPage = React.lazy(() => import('./pages/GuideDetailPage').then(m => ({ default: m.GuideDetailPage })));
 const MailingListPage = React.lazy(() => import('./pages/MailingListPage').then(m => ({ default: m.MailingListPage })));
 
@@ -74,6 +75,7 @@ const PATH_TO_TAB: Record<string, string> = {
   '/about': 'about',
   '/sell': 'sell',
   '/sell/marketing-strategy': 'sell',
+  '/sell/marketing-plan': 'sell',
   '/buy': 'buy',
   '/neighborhoods': 'neighborhoods',
   '/listings': 'listings',
@@ -262,6 +264,13 @@ export default function App() {
 
           <Route path="/sell/marketing-strategy" element={
             <SellerProcessPage
+              onOpenValuation={() => setIsValuationOpen(true)}
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          } />
+
+          <Route path="/sell/marketing-plan" element={
+            <MarketingPlanPage
               onOpenValuation={() => setIsValuationOpen(true)}
               onOpenConsultation={() => setIsConsultationOpen(true)}
             />

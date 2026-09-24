@@ -142,6 +142,14 @@ export const SellPage: React.FC<SellPageProps> = ({
             <span>See Exactly What Happens, Step by Step, When You List With Us</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
+          <span className="mx-3 text-[#C9A96A]">|</span>
+          <Link
+            to="/sell/marketing-plan"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#0F5C63] hover:text-[#C9A96A] transition-colors border-b border-[#0F5C63]/40 pb-1"
+          >
+            <span>See What Is Included for Your Home</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
