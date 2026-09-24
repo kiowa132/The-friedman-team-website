@@ -83,7 +83,7 @@ function item(category: Category, name: string, codes: string, detail?: string):
 export const FOUNDATION: { name: string; detail: string }[] = [
   { name: 'Data-backed pricing strategy', detail: 'Comps and pricing scenarios so you see real options, not one guess.' },
   { name: 'Professional-quality photography', detail: 'Daytime photography, edited and ready for every site.' },
-  { name: 'Coordinated launch on every major site', detail: 'MLS, Zillow, Redfin, Realtor.com, Trulia, Homes.com and more, plus a dedicated property website built for your home.' },
+  { name: 'Coordinated launch on every major site', detail: 'MLS, Zillow, Redfin, Realtor.com, Trulia, Homes.com and more.' },
   { name: 'Coming Soon and go-live strategy', detail: 'A Coming Soon phase to build early buzz and, when useful, test pricing. Off-market exposure where it makes sense.' },
   { name: 'Email to our network', detail: 'Past clients, active buyers, and agents across surrounding brokerages hear about your home.' },
   { name: 'Personal phone outreach', detail: 'We call agents and neighbors to surface buyers who have not seen your home online yet.' },
@@ -131,6 +131,7 @@ export const ITEMS: Item[] = [
   item('Video', 'Property tour video with Kyle', 'NNFFF'),
 
   // Online Reach
+  item('Online Reach', 'Dedicated property website', 'AIIII', 'A website built for your home.'),
   item('Online Reach', '3D tour search tags and buyer email alerts on Zillow and Trulia', 'NIIII', 'Comes with the 3D tour.'),
   item('Online Reach', 'Showcase priority search placement', 'NAZZZ'),
   item('Online Reach', 'Showcase filters and special search results', 'NAZZZ'),
@@ -241,3 +242,38 @@ export const STEPS: Step[] = [
     image: '/images/marketing-plan/step-5.jpg',
   },
 ];
+
+// Which plan a home falls into, from the seller's estimated value. The
+// seller never sees this: the page only shows them the options that apply.
+export function tierForValue(value: number): TierId {
+  if (value < 300000) return 't1';
+  if (value <= 500000) return 't2';
+  if (value < 650000) return 't3a';
+  if (value <= 800000) return 't3b';
+  if (value <= 1200000) return 't4';
+  return 't5';
+}
+
+export type StepSlug = 'home' | 'prep' | 'visuals' | 'reach' | 'launch' | 'plan';
+
+export interface PlanStep {
+  slug: StepSlug;
+  label: string;
+  title: string;
+  intro: string;
+  categories: Category[];
+}
+
+export const PLAN_STEPS: PlanStep[] = [
+  { slug: 'home', label: 'Your home', title: 'Tell us about your home', intro: 'About what do you think it is worth? A rough guess is perfect.', categories: [] },
+  { slug: 'prep', label: 'Getting ready', title: 'First, we get your home ready', intro: 'Your Home Prep Advisor figures out what is worth doing, and we line up everything else.', categories: ['Prep & Protect'] },
+  { slug: 'visuals', label: 'Showing it off', title: 'Then we show it off', intro: 'Photos, tours and video that make buyers stop scrolling.', categories: ['Photography & Visuals', 'Video'] },
+  { slug: 'reach', label: 'Getting it seen', title: 'Then we get it seen', intro: 'Every major site, our buyer network and paid reach put your home in front of the right people.', categories: ['Online Reach', 'Local & Print'] },
+  { slug: 'launch', label: 'Buyers at the door', title: 'Then we bring buyers through the door', intro: 'Open houses, showings and events to turn interest into offers.', categories: ['Launch & Events'] },
+  { slug: 'plan', label: 'Your plan', title: 'Your plan', intro: 'Here is everything, all in one place.', categories: [] },
+];
+
+// The items in a step's categories that apply at this price (hides "not offered").
+export function itemsForStep(step: PlanStep, tier: TierId): Item[] {
+  return ITEMS.filter((i) => step.categories.includes(i.category) && statusFor(i, tier) !== 'na');
+}

@@ -74,6 +74,12 @@ const PATH_TO_TAB: Record<string, string> = {
   '/about': 'about',
   '/sell': 'sell',
   '/sell/marketing-plan': 'sell',
+  '/sell/marketing-plan/home': 'sell',
+  '/sell/marketing-plan/prep': 'sell',
+  '/sell/marketing-plan/visuals': 'sell',
+  '/sell/marketing-plan/reach': 'sell',
+  '/sell/marketing-plan/launch': 'sell',
+  '/sell/marketing-plan/plan': 'sell',
   '/buy': 'buy',
   '/neighborhoods': 'neighborhoods',
   '/listings': 'listings',
@@ -262,7 +268,7 @@ export default function App() {
 
           <Route path="/sell/marketing-strategy" element={<Navigate to="/sell/marketing-plan" replace />} />
 
-          <Route path="/sell/marketing-plan" element={
+          <Route path="/sell/marketing-plan/:step?" element={
             <MarketingPlanPage
               onOpenValuation={() => setIsValuationOpen(true)}
               onOpenConsultation={() => setIsConsultationOpen(true)}
