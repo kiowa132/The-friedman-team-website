@@ -103,8 +103,7 @@ export const FOUNDATION: { name: string; detail: string }[] = [
 // E extra (1 pick), F extra (2 picks), A ask Kyle, N not offered.
 export const ITEMS: Item[] = [
   // Prep & Protect
-  item('Prep & Protect', 'Home Prep Advisor walkthrough and room-by-room plan', 'ARRRR', 'Kyle tells you honestly whether your home needs one.'),
-  item('Prep & Protect', 'Staging consultation (decluttering, furniture placement, virtual staging where it helps)', 'ARRRR'),
+  item('Prep & Protect', 'Home Prep Advisor walkthrough', 'ARRRR', 'Includes a staging consultation (decluttering, furniture placement, virtual staging where it helps) and a room-by-room plan. Kyle tells you honestly whether your home needs one.'),
   item('Prep & Protect', 'Professional cleaning', 'NWWWW'),
   item('Prep & Protect', 'Pre-listing home inspection', 'NWWWW'),
   item('Prep & Protect', 'Landscaping refresh (mulch, trim, edging)', 'NWWWW'),
@@ -254,7 +253,7 @@ export function tierForValue(value: number): TierId {
   return 't5';
 }
 
-export type StepSlug = 'home' | 'prep' | 'visuals' | 'reach' | 'launch' | 'plan';
+export type StepSlug = 'home' | 'prep' | 'visuals' | 'reach' | 'launch' | 'plan' | 'book';
 
 export interface PlanStep {
   slug: StepSlug;
@@ -271,9 +270,17 @@ export const PLAN_STEPS: PlanStep[] = [
   { slug: 'reach', label: 'Getting it seen', title: 'Then we get it seen', intro: 'Every major site, our buyer network and paid reach put your home in front of the right people.', categories: ['Online Reach', 'Local & Print'] },
   { slug: 'launch', label: 'Buyers at the door', title: 'Then we bring buyers through the door', intro: 'Open houses, showings and events to turn interest into offers.', categories: ['Launch & Events'] },
   { slug: 'plan', label: 'Your plan', title: 'Your plan', intro: 'Here is everything, all in one place.', categories: [] },
+  { slug: 'book', label: 'Book', title: 'Pick a time to meet', intro: 'Choose a day and time for your listing consultation. We will go over your plan in person and start scheduling your vendors.', categories: [] },
 ];
 
 // The items in a step's categories that apply at this price (hides "not offered").
 export function itemsForStep(step: PlanStep, tier: TierId): Item[] {
   return ITEMS.filter((i) => step.categories.includes(i.category) && statusFor(i, tier) !== 'na');
 }
+
+// Consultation scheduling. Kyle confirms every request, so these are the
+// windows he is willing to be asked for, not live availability.
+export const CONSULT_SLOTS = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM'];
+export const CONSULT_CLOSED_DAYS = [0]; // 0 = Sunday
+export const CONSULT_DAYS_AHEAD = 30;
+export const CONSULT_PLACES = ['At my home', "At Kyle's office in Fulton"];

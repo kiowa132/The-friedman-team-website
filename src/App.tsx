@@ -80,6 +80,7 @@ const PATH_TO_TAB: Record<string, string> = {
   '/sell/marketing-plan/reach': 'sell',
   '/sell/marketing-plan/launch': 'sell',
   '/sell/marketing-plan/plan': 'sell',
+  '/sell/marketing-plan/book': 'sell',
   '/buy': 'buy',
   '/neighborhoods': 'neighborhoods',
   '/listings': 'listings',

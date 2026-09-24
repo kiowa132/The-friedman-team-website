@@ -7,9 +7,11 @@ import { EASE_PREMIUM } from '../lib/motion';
 import { submitLead } from '../lib/leads';
 import { TcpaConsent } from '../components/TcpaConsent';
 import { ScrollIntro } from '../components/plan/ScrollIntro';
+import { ConsultCalendar, prettyDate } from '../components/plan/ConsultCalendar';
 import {
   ADVISOR_BULLETS,
   CANCEL_LINE,
+  CONSULT_PLACES,
   DEFAULT_EXTRAS,
   DEFAULT_PREP_PICK,
   FOUNDATION,
@@ -94,6 +96,9 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
   const [phone, setPhone] = useState('');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [consultDate, setConsultDate] = useState<string | null>(null);
+  const [consultTime, setConsultTime] = useState<string | null>(null);
+  const [place, setPlace] = useState<string>(CONSULT_PLACES[0]);
   const [error, setError] = useState<string | null>(null);
 
   const tierId: TierId = value == null ? 't2' : tierForValue(value);
@@ -120,7 +125,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
 
   // Steps that have something to show at this price. The seller never sees
   // why a step is shorter or missing: they just see their options.
-  const steps: PlanStep[] = PLAN_STEPS.filter((s) => s.slug === 'home' || s.slug === 'plan' || itemsForStep(s, tierId).length > 0);
+  const steps: PlanStep[] = PLAN_STEPS.filter((s) => s.slug === 'home' || s.slug === 'plan' || s.slug === 'book' || itemsForStep(s, tierId).length > 0);
   const idx = steps.findIndex((s) => s.slug === step);
 
   const lastIdx = useRef(idx);
@@ -179,6 +184,8 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
       `Plan level (internal): ${tier.name}`,
       allItems.some((i) => statusFor(i, tierId) === 'swap') ? `Prep pick: ${prepPick}` : null,
       chosen.length ? `Extras chosen: ${chosen.join('; ')}` : null,
+      consultDate && consultTime ? `Requested consultation: ${prettyDate(consultDate)} at ${consultTime} Eastern` : null,
+      `Meeting place: ${place}`,
     ]
       .filter(Boolean)
       .join('\n');
@@ -188,7 +195,41 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
     else setError(res.error || 'Something went wrong. Please call or email Kyle directly.');
   };
 
+  const downloadIcs = () => {
+    if (!consultDate || !consultTime) return;
+    const m = /^(\d+):(\d+) (AM|PM)$/.exec(consultTime);
+    if (!m) return;
+    let h = Number(m[1]) % 12;
+    if (m[3] === 'PM') h += 12;
+    const [y, mo, d] = consultDate.split('-');
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const start = `${y}${mo}${d}T${pad(h)}${m[2]}00`;
+    const end = `${y}${mo}${d}T${pad(h + 1)}${m[2]}00`;
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//The Friedman Team//Plan//EN',
+      'BEGIN:VEVENT',
+      `UID:${Date.now()}@friedmanreteam.com`,
+      `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
+      `DTSTART:${start}`,
+      `DTEND:${end}`,
+      'SUMMARY:Listing consultation with Kyle Friedman (requested)',
+      `LOCATION:${place === CONSULT_PLACES[0] ? address || 'Your home' : '8115 Maple Lawn Blvd, Suite 350, Fulton, MD 20759'}`,
+      'DESCRIPTION:Requested time. Kyle will confirm.',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ].join('\r\n');
+    const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'listing-consultation.ics';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const isPlan = cur.slug === 'plan';
+  const isBook = cur.slug === 'book';
   const isHome = cur.slug === 'home';
 
   return (
@@ -304,9 +345,9 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
 
                   {swapItems.length > 0 && (
                     <div className="space-y-3">
-                      <h2 className="font-serif text-xl font-bold text-[#0D2226]">Choose your prep service</h2>
+                      <h2 className="font-serif text-xl font-bold text-[#0D2226]">Your included prep service</h2>
                       <p className="text-sm text-[#1C2B2E]/75 leading-relaxed">
-                        One prep service is on us. We start you with professional cleaning. Pick what you think your home needs today. After your Advisor walkthrough you can swap it for something better suited, so you are never stuck.
+                        Professional cleaning is included with your listing. If your home needs something else more, you can swap the cleaning for one of the services below. After your Advisor walkthrough you can change your mind, so you are never stuck. Anything beyond one service is a conversation with Kyle.
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {swapItems.map((it) => {
@@ -391,27 +432,70 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
                   </div>
 
                   <p className="text-sm text-[#0F5C63] font-semibold">
-                    Everything here can change after your Home Prep Advisor walkthrough. Want more than your plan includes? That is a conversation, not a price tag. Book your strategy session and we will build in everything your home deserves.
+                    Everything here can change after your Home Prep Advisor walkthrough. Want more than your plan includes? That is a conversation, not a price tag. Next, pick a time to meet and we will build in everything your home deserves.
                   </p>
+                  <p className="text-xs text-[#0D2226]/50">{SAME_KYLE}</p>
+                </div>
+              )}
 
+              {/* BOOK */}
+              {isBook && (
+                <div className="space-y-8">
                   {sent ? (
-                    <div className="bg-[#0F5C63] text-white p-6 rounded-xs space-y-2">
-                      <h2 className="font-serif text-2xl font-bold">Thank you, {name.split(' ')[0] || 'friend'}!</h2>
-                      <p className="text-sm text-white/90">Kyle has your plan and will be in touch soon to book your strategy session.</p>
+                    <div className="bg-[#0F5C63] text-white p-6 rounded-xs space-y-4">
+                      <h2 className="font-serif text-2xl font-bold">You are on the calendar request, {name.split(' ')[0] || 'friend'}!</h2>
+                      <p className="text-sm text-white/90">
+                        {consultDate && consultTime ? `${prettyDate(consultDate)} at ${consultTime} (${place}).` : ''} Kyle has your plan and will confirm your time shortly. At the meeting we will go over everything and start scheduling your vendors.
+                      </p>
+                      <button onClick={downloadIcs} className="px-5 py-3 bg-white text-[#0F5C63] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#FAF8F5]">
+                        Add to my calendar
+                      </button>
                     </div>
                   ) : (
-                    <form onSubmit={submit} className="space-y-4 border-t border-[#0D2226]/10 pt-6">
-                      <h2 className="font-serif text-xl font-bold text-[#0D2226]">Where should we send your plan?</h2>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" className="sm:col-span-2 border border-[#0D2226]/20 focus:border-[#0F5C63] outline-none px-4 py-3 text-base rounded-xs bg-[#FAF8F5]" />
-                        <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" autoComplete="email" className="border border-[#0D2226]/20 focus:border-[#0F5C63] outline-none px-4 py-3 text-base rounded-xs bg-[#FAF8F5]" />
-                        <input required type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" autoComplete="tel" className="border border-[#0D2226]/20 focus:border-[#0F5C63] outline-none px-4 py-3 text-base rounded-xs bg-[#FAF8F5]" />
+                    <form onSubmit={submit} className="space-y-8">
+                      <ConsultCalendar
+                        date={consultDate}
+                        time={consultTime}
+                        onDate={(d) => {
+                          setConsultDate(d);
+                          setConsultTime(null);
+                        }}
+                        onTime={setConsultTime}
+                      />
+
+                      <div className="space-y-3">
+                        <h2 className="font-serif text-xl font-bold text-[#0D2226]">Where would you like to meet?</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {CONSULT_PLACES.map((pl) => {
+                            const on = place === pl;
+                            return (
+                              <label key={pl} className={'flex items-center gap-3 p-4 border rounded-xs cursor-pointer transition-all ' + (on ? 'bg-[#0F5C63]/10 border-[#0F5C63]' : 'bg-white border-[#0D2226]/15 hover:border-[#0F5C63]')}>
+                                <input type="radio" name="place" checked={on} onChange={() => setPlace(pl)} className="accent-[#0F5C63]" />
+                                <span className="text-sm font-medium text-[#0D2226]">{pl}</span>
+                              </label>
+                            );
+                          })}
+                        </div>
                       </div>
-                      <TcpaConsent />
+
+                      <div className="space-y-3">
+                        <h2 className="font-serif text-xl font-bold text-[#0D2226]">Where should we send the confirmation?</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" className="sm:col-span-2 border border-[#0D2226]/20 focus:border-[#0F5C63] outline-none px-4 py-3 text-base rounded-xs bg-[#FAF8F5]" />
+                          <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" autoComplete="email" className="border border-[#0D2226]/20 focus:border-[#0F5C63] outline-none px-4 py-3 text-base rounded-xs bg-[#FAF8F5]" />
+                          <input required type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" autoComplete="tel" className="border border-[#0D2226]/20 focus:border-[#0F5C63] outline-none px-4 py-3 text-base rounded-xs bg-[#FAF8F5]" />
+                        </div>
+                        <TcpaConsent />
+                      </div>
+
                       {error && <p className="text-sm text-red-600">{error}</p>}
-                      <button type="submit" disabled={sending} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#0F5C63] hover:bg-[#0D2226] disabled:opacity-60 text-white font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-colors">
+                      <button
+                        type="submit"
+                        disabled={sending || !consultDate || !consultTime}
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#0F5C63] hover:bg-[#0D2226] disabled:opacity-40 text-white font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-colors"
+                      >
                         <Phone className="w-4 h-4" />
-                        {sending ? 'Sending...' : 'Book my strategy session'}
+                        {sending ? 'Sending...' : 'Request this time'}
                       </button>
                       <p className="flex items-center gap-2 text-xs text-[#0D2226]/70">
                         <ShieldCheck className="w-4 h-4 text-[#0F5C63]" />
@@ -419,7 +503,6 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
                       </p>
                     </form>
                   )}
-                  <p className="text-xs text-[#0D2226]/50">{SAME_KYLE}</p>
                 </div>
               )}
 
@@ -429,13 +512,13 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
                   <ArrowLeft className="w-4 h-4" />
                   {idx === 0 ? 'Intro' : 'Back'}
                 </button>
-                {!isPlan && (
+                {!isBook && (
                   <button
                     onClick={goNext}
                     disabled={isHome && value == null}
                     className="inline-flex items-center gap-2 px-7 py-3 bg-[#0F5C63] hover:bg-[#0D2226] disabled:opacity-40 text-white font-bold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all hover:-translate-y-0.5"
                   >
-                    {isHome ? 'See my plan' : 'Next'}
+                    {isHome ? 'See my plan' : isPlan ? 'Book my consultation' : 'Next'}
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 )}
