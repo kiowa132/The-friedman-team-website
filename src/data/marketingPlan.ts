@@ -283,4 +283,3 @@ export function itemsForStep(step: PlanStep, tier: TierId): Item[] {
 export const CONSULT_SLOTS = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM'];
 export const CONSULT_CLOSED_DAYS = [0]; // 0 = Sunday
 export const CONSULT_DAYS_AHEAD = 30;
-export const CONSULT_PLACES = ['At my home', "At Kyle's office in Fulton"];

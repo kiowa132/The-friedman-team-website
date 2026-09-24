@@ -11,7 +11,6 @@ import { ConsultCalendar, prettyDate } from '../components/plan/ConsultCalendar'
 import {
   ADVISOR_BULLETS,
   CANCEL_LINE,
-  CONSULT_PLACES,
   DEFAULT_EXTRAS,
   DEFAULT_PREP_PICK,
   FOUNDATION,
@@ -98,9 +97,11 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
   const [sent, setSent] = useState(false);
   const [consultDate, setConsultDate] = useState<string | null>(null);
   const [consultTime, setConsultTime] = useState<string | null>(null);
-  const [place, setPlace] = useState<string>(CONSULT_PLACES[0]);
+  const [placeMode, setPlaceMode] = useState<'property' | 'other'>('property');
+  const [otherAddress, setOtherAddress] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  const meetAddress = (placeMode === 'property' ? address : otherAddress).trim();
   const tierId: TierId = value == null ? 't2' : tierForValue(value);
   const tier = TIERS.find((t) => t.id === tierId) || TIERS[1];
   const effectivePicks = picks ?? DEFAULT_EXTRAS[tierId];
@@ -185,7 +186,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
       allItems.some((i) => statusFor(i, tierId) === 'swap') ? `Prep pick: ${prepPick}` : null,
       chosen.length ? `Extras chosen: ${chosen.join('; ')}` : null,
       consultDate && consultTime ? `Requested consultation: ${prettyDate(consultDate)} at ${consultTime} Eastern` : null,
-      `Meeting place: ${place}`,
+      `Meeting address: ${meetAddress || 'not given'}`,
     ]
       .filter(Boolean)
       .join('\n');
@@ -215,7 +216,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
       `DTSTART:${start}`,
       `DTEND:${end}`,
       'SUMMARY:Listing consultation with Kyle Friedman (requested)',
-      `LOCATION:${place === CONSULT_PLACES[0] ? address || 'Your home' : '8115 Maple Lawn Blvd, Suite 350, Fulton, MD 20759'}`,
+      `LOCATION:${meetAddress || 'Your home'}`,
       'DESCRIPTION:Requested time. Kyle will confirm.',
       'END:VEVENT',
       'END:VCALENDAR',
@@ -445,7 +446,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
                     <div className="bg-[#0F5C63] text-white p-6 rounded-xs space-y-4">
                       <h2 className="font-serif text-2xl font-bold">You are on the calendar request, {name.split(' ')[0] || 'friend'}!</h2>
                       <p className="text-sm text-white/90">
-                        {consultDate && consultTime ? `${prettyDate(consultDate)} at ${consultTime} (${place}).` : ''} Kyle has your plan and will confirm your time shortly. At the meeting we will go over everything and start scheduling your vendors.
+                        {consultDate && consultTime ? `${prettyDate(consultDate)} at ${consultTime}, ${meetAddress}.` : ''} Kyle has your plan and will confirm your time shortly. At the meeting we will go over everything and start scheduling your vendors.
                       </p>
                       <button onClick={downloadIcs} className="px-5 py-3 bg-white text-[#0F5C63] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#FAF8F5]">
                         Add to my calendar
@@ -464,18 +465,29 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
                       />
 
                       <div className="space-y-3">
-                        <h2 className="font-serif text-xl font-bold text-[#0D2226]">Where would you like to meet?</h2>
+                        <h2 className="font-serif text-xl font-bold text-[#0D2226]">Where should we meet?</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          {CONSULT_PLACES.map((pl) => {
-                            const on = place === pl;
+                          {([
+                            ['property', 'At my property'],
+                            ['other', 'At a different address'],
+                          ] as const).map(([mode, label]) => {
+                            const on = placeMode === mode;
                             return (
-                              <label key={pl} className={'flex items-center gap-3 p-4 border rounded-xs cursor-pointer transition-all ' + (on ? 'bg-[#0F5C63]/10 border-[#0F5C63]' : 'bg-white border-[#0D2226]/15 hover:border-[#0F5C63]')}>
-                                <input type="radio" name="place" checked={on} onChange={() => setPlace(pl)} className="accent-[#0F5C63]" />
-                                <span className="text-sm font-medium text-[#0D2226]">{pl}</span>
+                              <label key={mode} className={'flex items-center gap-3 p-4 border rounded-xs cursor-pointer transition-all ' + (on ? 'bg-[#0F5C63]/10 border-[#0F5C63]' : 'bg-white border-[#0D2226]/15 hover:border-[#0F5C63]')}>
+                                <input type="radio" name="place" checked={on} onChange={() => setPlaceMode(mode)} className="accent-[#0F5C63]" />
+                                <span className="text-sm font-medium text-[#0D2226]">{label}</span>
                               </label>
                             );
                           })}
                         </div>
+                        <input
+                          required
+                          value={placeMode === 'property' ? address : otherAddress}
+                          onChange={(e) => (placeMode === 'property' ? setAddress(e.target.value) : setOtherAddress(e.target.value))}
+                          placeholder={placeMode === 'property' ? 'Your property address' : 'Meeting address'}
+                          autoComplete="street-address"
+                          className="w-full border border-[#0D2226]/20 focus:border-[#0F5C63] outline-none px-4 py-3 text-base rounded-xs bg-[#FAF8F5]"
+                        />
                       </div>
 
                       <div className="space-y-3">
@@ -491,7 +503,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
                       {error && <p className="text-sm text-red-600">{error}</p>}
                       <button
                         type="submit"
-                        disabled={sending || !consultDate || !consultTime}
+                        disabled={sending || !consultDate || !consultTime || !meetAddress}
                         className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#0F5C63] hover:bg-[#0D2226] disabled:opacity-40 text-white font-bold text-xs uppercase tracking-widest rounded-xs shadow-lg transition-colors"
                       >
                         <Phone className="w-4 h-4" />

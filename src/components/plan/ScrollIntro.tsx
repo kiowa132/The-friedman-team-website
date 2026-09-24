@@ -45,6 +45,9 @@ const CHAPTERS: Chapter[] = [
 
 const N = CHAPTERS.length;
 
+const GRAIN =
+  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
+
 type Mode = 'loading' | '3d' | 'fallback';
 
 // One chapter of copy. Everything is driven directly by scroll position
@@ -130,6 +133,7 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   });
   const barScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
+  const bracketOpacity = useTransform(scrollYProgress, [0.4, 0.46, 0.6, 0.66], [0, 1, 1, 0]);
 
   // Load the 3D scene on demand. If anything fails, fall back to photos.
   useEffect(() => {
@@ -177,6 +181,20 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
       <div className={'sticky top-0 h-screen overflow-hidden ' + (mode === 'fallback' ? '' : 'bg-gradient-to-b from-[#BFE3F5] via-[#E3F1F0] to-[#FAF8F5]')}>
         {/* 3D canvas is attached here */}
         <div ref={stageRef} className="absolute inset-0" />
+
+        {mode === '3d' && (
+          <>
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(13,34,38,0.32) 100%)' }} />
+            <div className="absolute inset-0 pointer-events-none opacity-[0.08] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
+            <m.div style={{ opacity: bracketOpacity }} className="absolute inset-x-[6%] sm:inset-x-[12%] inset-y-[18%] pointer-events-none">
+              <span className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#C9A96A]" />
+              <span className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#C9A96A]" />
+              <span className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#C9A96A]" />
+              <span className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#C9A96A]" />
+              <span className="absolute top-2 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-[0.35em] text-[#0D2226]/80">Photo &middot; 3D tour &middot; Drone &middot; Video</span>
+            </m.div>
+          </>
+        )}
 
         {CHAPTERS.map((c, i) => (
           <Layer key={c.title} progress={scrollYProgress} index={i} chapter={c} onStart={onStart} mode={mode} />
