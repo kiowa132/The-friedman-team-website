@@ -88,7 +88,7 @@ export const FOUNDATION: { name: string; detail: string }[] = [
   { name: 'Email to our network', detail: 'Past clients, active buyers, and agents across surrounding brokerages hear about your home.' },
   { name: 'Personal phone outreach', detail: 'We call agents and neighbors to surface buyers who have not seen your home online yet.' },
   { name: 'Social media posts', detail: 'Your listing promoted on our channels.' },
-  { name: 'Signage with a QR code and 24-hour info line', detail: 'Buyers can reach us any time, day or night, and their contact information is captured immediately.' },
+  { name: 'A for-sale sign built to promote your home', detail: 'Your home is the star of the sign, not your agent. It carries a QR code and a 24-hour info line, so buyers can reach us any time and their contact information is captured immediately.' },
   { name: 'Showing setup and feedback within 48 hours', detail: 'Lockbox and scheduling, and what buyers said after every showing within 48 hours.' },
   { name: 'A weekly call', detail: 'We review activity and pricing together every week.' },
   { name: 'Fast, reliable communication', detail: 'Available for your calls Monday through Saturday, with same-day returned calls and emails, often within the hour.' },
@@ -202,11 +202,42 @@ export const TEAM: { role: string; detail: string }[] = [
 export const PERFORMANCE_NOTE =
   'Ask Kyle for current, verified numbers on list to sale ratio, average days on market, and listing reach, sourced from Bright MLS for the most recent reporting period.';
 
-export interface Step { title: string; text: string }
+export interface Step {
+  title: string;
+  text: string;
+  categories: Category[];
+  image: string;
+}
+
 export const STEPS: Step[] = [
-  { title: 'Before we go live', text: 'Your Home Prep Advisor walkthrough, staging consultation, cleaning and any prep work, all scheduled so everything is finished before photo day. Then a Coming Soon phase builds early buzz, backed by signage with a QR code and, if you choose it, a postcard campaign.' },
-  { title: 'Imagery and launch', text: 'Professional photography, and for many homes a 3D tour and floor plan, with walkthrough video and drone where your plan includes them. Then a coordinated launch across the MLS, Zillow, Redfin and your own property website.' },
-  { title: 'Getting the word out', text: 'A targeted email goes to our full network, including agents at surrounding brokerages, along with a Brokers Open where local agents tour in person and get a social media kit to push your home to their own buyers.' },
-  { title: 'Paid reach and personal network', text: 'Paid digital and social campaigns put your home in front of targeted buyers across Maryland, backed by personal phone calls to agents and neighbors to reach buyers who have not seen it online yet.' },
-  { title: 'Showings, offers and closing', text: 'Open houses, showing feedback within 48 hours, a weekly call, negotiation strategy set before an offer arrives, and a coordinator managing every deadline until you close.' },
+  {
+    title: 'Before we go live',
+    text: 'Your Home Prep Advisor walkthrough, staging consultation, cleaning and any prep work, all scheduled so everything is finished before photo day. Then a Coming Soon phase builds early buzz, backed by a for-sale sign that promotes your home.',
+    categories: ['Prep & Protect'],
+    image: '/images/marketing-plan/step-1.jpg',
+  },
+  {
+    title: 'Imagery and launch',
+    text: 'Professional photography, and for many homes a 3D tour and floor plan, with walkthrough video and drone where your plan includes them. Then a coordinated launch across the MLS, Zillow, Redfin and your own property website.',
+    categories: ['Photography & Visuals', 'Video'],
+    image: '/images/marketing-plan/step-2.jpg',
+  },
+  {
+    title: 'Getting the word out',
+    text: 'A targeted email goes to our full network, including agents at surrounding brokerages, with a print campaign to the neighborhood if you choose it, and personal calls to agents and neighbors to reach buyers who have not seen your home online.',
+    categories: ['Local & Print'],
+    image: '/images/marketing-plan/step-3.jpg',
+  },
+  {
+    title: 'Paid reach and online exposure',
+    text: 'Paid digital and social campaigns put your home in front of targeted buyers across Maryland, and Zillow Showcase gives eligible homes premium placement, interactive floor plans and priority in search.',
+    categories: ['Online Reach'],
+    image: '/images/marketing-plan/step-4.jpg',
+  },
+  {
+    title: 'Showings, offers and closing',
+    text: 'Open houses, a Brokers Open where local agents tour in person, showing feedback within 48 hours, a weekly call, a negotiation strategy set before an offer arrives, and a coordinator managing every deadline until you close.',
+    categories: ['Launch & Events'],
+    image: '/images/marketing-plan/step-5.jpg',
+  },
 ];
