@@ -516,7 +516,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
                   <button
                     onClick={goNext}
                     disabled={isHome && value == null}
-                    className="inline-flex items-center gap-2 px-7 py-3 bg-[#0F5C63] hover:bg-[#0D2226] disabled:opacity-40 text-white font-bold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-2 whitespace-nowrap px-5 sm:px-7 py-3 bg-[#0F5C63] hover:bg-[#0D2226] disabled:opacity-40 text-white font-bold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all hover:-translate-y-0.5"
                   >
                     {isHome ? 'See my plan' : isPlan ? 'Book my consultation' : 'Next'}
                     <ArrowRight className="w-4 h-4" />
