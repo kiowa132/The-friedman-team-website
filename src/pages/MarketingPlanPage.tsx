@@ -544,8 +544,8 @@ const IncludedList: React.FC<{ title: string; items: Item[]; tierId: TierId }> =
     <h2 className="font-serif text-xl font-bold text-[#0D2226]">{title}</h2>
     <ul className="space-y-2">
       {items.map((it) => (
-        <li key={it.name} className="flex items-start justify-between gap-3 bg-[#FAF8F5] border border-[#0D2226]/10 p-3.5 rounded-xs">
-          <div className="flex items-start gap-3">
+        <li key={it.name} className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2 bg-[#FAF8F5] border border-[#0D2226]/10 p-3.5 rounded-xs">
+          <div className="flex items-start gap-3 min-w-0 flex-1">
             <CheckCircle2 className="w-4 h-4 text-[#0F5C63] shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-bold text-[#0D2226]">{it.name}</p>
