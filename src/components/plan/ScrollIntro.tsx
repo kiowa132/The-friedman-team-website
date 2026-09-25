@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
+import type { MotionValue } from 'motion/react';
 import { m, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 
 // Cinematic intro: one continuous home-tour shot (a drone descending to the
-// front door, then a walk through the house) played as real video. Scrolling
-// into a new chapter plays the camera forward to that chapter's stopping
-// point, where it holds for the text; scrolling back jumps to the earlier stop
-// with a soft dip. Real video (not scrubbed stills) keeps it smooth and sharp.
+// front door, then a walk through the house). Your scroll position IS the
+// playhead, so you control it: scroll down to travel forward, up to go back,
+// fast or slow. Each chapter holds the camera on a beautiful stop while the
+// text is up, then the next stretch of scroll flies the camera to the next
+// stop. The clip is encoded with a keyframe every few frames so scrubbing stays
+// smooth in both directions (see the technique notes in scroll-craft, MIT).
 // Source, permission and credit terms: notes/footage-permissions.md in the brain.
-const VIDEO = { desktop: '/video/tour-1080.mp4', mobile: '/video/tour-720.mp4' };
+const VIDEO = { desktop: '/video/scrub-1080.mp4', mobile: '/video/scrub-720.mp4' };
 const still = (i: number) => `/images/marketing-plan/still-${i}.jpg`;
 
 // Seconds into the (trimmed) video where the camera rests for each chapter:
@@ -33,86 +36,106 @@ const CHAPTERS: Chapter[] = [
 ];
 
 const N = CHAPTERS.length;
+const CELL_VH = 110; // scroll per chapter
+const HOLD = 0.4; // first 40% of each chapter: camera rests, text is up. The rest: fly to the next stop.
+
+const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+const lin = (v: number, a: number, b: number) => clamp01((v - a) / (b - a));
+
+// Scroll progress (0..1 over the whole intro) to a video time in seconds.
+const timeAt = (p: number) => {
+  const q = clamp01(p) * N;
+  const i = Math.min(N - 1, Math.floor(q));
+  if (i === N - 1) return STOPS[N - 1];
+  const f = q - i;
+  if (f < HOLD) return STOPS[i];
+  const s = (f - HOLD) / (1 - HOLD);
+  const eased = 0.5 * s + 0.5 * (s * s * (3 - 2 * s)); // gentle ease in and out
+  return STOPS[i] + (STOPS[i + 1] - STOPS[i]) * eased;
+};
 
 const GRAIN =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
 
-// Plays the camera toward the target chapter's stop. Reports -1 while moving
-// and the chapter index once it has arrived and is holding.
-const TourVideo: React.FC<{ target: number; mobile: boolean; onArrive: (i: number) => void }> = ({ target, mobile, onArrive }) => {
+// The scrubbed video. The whole clip is fetched into memory first so seeking is
+// instant (no network range requests), then the playhead eases toward the
+// scroll-driven target each frame; a new seek is never queued while one is
+// still resolving, so a fast flick can't jam the decoder.
+const TourVideo: React.FC<{ progressRef: React.MutableRefObject<number>; mobile: boolean }> = ({ progressRef, mobile }) => {
   const vref = useRef<HTMLVideoElement>(null);
-  const [dip, setDip] = useState(false);
   const panRef = useRef<HTMLDivElement>(null);
-  const arriveRef = useRef(onArrive);
-  arriveRef.current = onArrive;
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const v = vref.current;
     if (!v) return;
-    const t = STOPS[target];
-    let raf = 0;
-    let timer = 0;
     let cancelled = false;
+    let raf = 0;
+    let url = '';
+    let cur = STOPS[0];
+    let seekStart = 0;
 
-    const arrive = () => {
-      if (cancelled) return;
-      v.pause();
-      v.currentTime = t;
-      arriveRef.current(target);
-    };
-
-    if (Math.abs(v.currentTime - t) < 0.06) {
-      arrive();
-      return;
-    }
-    arriveRef.current(-1);
-
-    if (t > v.currentTime) {
-      // Fast fly-through that eases to a stop: speed follows the distance left.
-      let rate = 5;
-      let manual = false;
-      let last = performance.now();
-      const loop = (now: number) => {
+    fetch(mobile ? VIDEO.mobile : VIDEO.desktop)
+      .then((r) => {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.blob();
+      })
+      .then((blob) => {
         if (cancelled) return;
-        rate = Math.min(5, Math.max(0.9, (t - v.currentTime) * 2));
-        v.playbackRate = rate;
-        if (manual) {
-          v.currentTime = Math.min(t, v.currentTime + ((now - last) / 1000) * rate);
-        }
-        last = now;
-        if (v.currentTime >= t - 0.02) {
-          arrive();
-          return;
-        }
-        raf = requestAnimationFrame(loop);
-      };
-      const p = v.play();
-      if (p) p.catch(() => (manual = true)); // e.g. low-power mode blocks play(): step time by hand
-      raf = requestAnimationFrame(loop);
-    } else {
-      // Going back: dip to cream, jump to the earlier stop, dip back in.
-      setDip(true);
-      timer = window.setTimeout(() => {
-        if (cancelled) return;
-        v.pause();
-        const done = () => {
-          v.removeEventListener('seeked', done);
+        url = URL.createObjectURL(blob);
+        v.src = url;
+        v.load();
+        const start = () => {
           if (cancelled) return;
-          setDip(false);
-          timer = window.setTimeout(arrive, 250);
+          try {
+            v.currentTime = 0.001;
+          } catch {
+            /* ignore */
+          }
+          setReady(true);
+          raf = requestAnimationFrame(tick);
         };
-        v.addEventListener('seeked', done);
-        v.currentTime = t;
-      }, 260);
-    }
+        v.addEventListener('loadeddata', start, { once: true });
+      })
+      .catch(() => {
+        /* poster stays; the copy still works */
+      });
+
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      const dur = v.duration;
+      if (!dur || !isFinite(dur)) return;
+      const target = Math.min(dur - 0.05, timeAt(progressRef.current));
+      cur += (target - cur) * 0.2;
+      if (Math.abs(target - cur) < 0.004) cur = target;
+      if (v.seeking) {
+        // A seek stuck for over 700ms would freeze the clip through this guard, so nudge it.
+        if (performance.now() - seekStart > 700) {
+          try {
+            v.currentTime = v.currentTime + 0.001;
+          } catch {
+            /* ignore */
+          }
+          seekStart = performance.now();
+        }
+        return;
+      }
+      if (Math.abs(v.currentTime - cur) > 1 / 60) {
+        seekStart = performance.now();
+        try {
+          v.currentTime = cur;
+        } catch {
+          /* ignore */
+        }
+      }
+    };
 
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
-      window.clearTimeout(timer);
-      v.pause();
+      if (url) URL.revokeObjectURL(url);
     };
-  }, [target]);
+  }, [mobile, progressRef]);
 
   // Cursor parallax: the picture drifts a little as the mouse moves, so the scene feels alive.
   useEffect(() => {
@@ -131,54 +154,61 @@ const TourVideo: React.FC<{ target: number; mobile: boolean; onArrive: (i: numbe
   return (
     <div className="absolute inset-0 bg-[#E9E3D6] overflow-hidden">
       <div ref={panRef} className="absolute inset-0 transition-transform duration-500 ease-out" style={mobile ? undefined : { transform: 'scale(1.06)' }}>
-      <video
-        ref={vref}
-        src={mobile ? VIDEO.mobile : VIDEO.desktop}
-        poster={still(0)}
-        muted
-        playsInline
-        preload="auto"
-        disablePictureInPicture
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+        {/* The poster shows until the clip has loaded, so there is never a blank frame. */}
+        <img src={still(0)} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <video
+          ref={vref}
+          muted
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          className={'absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ' + (ready ? 'opacity-100' : 'opacity-0')}
+        />
       </div>
-      <div className={'absolute inset-0 bg-[#FAF8F5] pointer-events-none transition-opacity duration-300 ' + (dip ? 'opacity-100' : 'opacity-0')} />
     </div>
   );
 };
 
-// One chapter of copy; visible only while the camera is holding on its stop.
-const TextLayer: React.FC<{ index: number; chapter: Chapter; visible: boolean; mobile: boolean; onStart: () => void }> = ({ index, chapter, visible, mobile, onStart }) => {
+// One chapter of copy: up while the camera rests on its stop, gone while it flies.
+const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapter: Chapter; mobile: boolean; onStart: () => void }> = ({ progress, index, chapter, mobile, onStart }) => {
+  const first = index === 0;
   const last = index === N - 1;
+  const textOpacity = useTransform(progress, (p) => {
+    const f = p * N - index; // 0..1 across this chapter
+    const fadeIn = first ? 1 : lin(f, 0.04, 0.16);
+    const fadeOut = last ? 1 : 1 - lin(f, HOLD - 0.1, HOLD + 0.04);
+    return fadeIn * fadeOut;
+  });
+  const textY = useTransform(progress, (p) => {
+    const f = p * N - index;
+    return first ? 0 : 40 * (1 - lin(f, 0.04, 0.16));
+  });
+  const interactive = useTransform(textOpacity, (o) => (o > 0.6 ? 'auto' : 'none'));
+
   return (
     <div className="absolute inset-0 pointer-events-none">
       <div
         className={mobile ? 'absolute left-0 right-0 px-4' : 'relative h-full max-w-6xl mx-auto px-4 sm:px-8 flex items-center pt-16'}
         style={mobile ? { top: 'calc(4.5rem + 56.25vw + 0.9rem)' } : undefined}
       >
-        <div
-          className={
-            'max-w-md sm:max-w-lg space-y-3 sm:space-y-4 bg-white/80 backdrop-blur-md border border-white/70 shadow-[0_20px_60px_-20px_rgba(13,34,38,0.35)] rounded-sm p-5 sm:p-8 transition-all duration-700 ease-out ' +
-            (visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6')
-          }
+        <m.div
+          style={{ opacity: textOpacity, y: textY }}
+          className="max-w-md sm:max-w-lg space-y-3 sm:space-y-4 bg-white/80 backdrop-blur-md border border-white/70 shadow-[0_20px_60px_-20px_rgba(13,34,38,0.35)] rounded-sm p-5 sm:p-8"
         >
           <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63]">{chapter.kicker}</span>
           <h1 className="font-serif text-2xl sm:text-5xl font-bold leading-[1.08] text-[#0D2226]">{chapter.title}</h1>
           <p className="text-sm sm:text-lg text-[#1C2B2E]/80 leading-relaxed">{chapter.text}</p>
           {last && (
-            <button
+            <m.button
+              style={{ pointerEvents: interactive }}
               onClick={onStart}
-              tabIndex={visible ? 0 : -1}
-              className={
-                'inline-flex items-center gap-2 px-8 py-4 bg-[#0F5C63] hover:bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-xl transition-all hover:-translate-y-0.5 ' +
-                (visible ? 'pointer-events-auto' : 'pointer-events-none')
-              }
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#0F5C63] hover:bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-xl transition-colors"
             >
               Build my plan
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </m.button>
           )}
-        </div>
+        </m.div>
       </div>
     </div>
   );
@@ -193,14 +223,18 @@ const Credit: React.FC<{ className?: string; style?: React.CSSProperties }> = ({
 export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   const reduce = !!useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const progressRef = useRef(0);
   const [mobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
-  const [target, setTarget] = useState(0);
-  const [shown, setShown] = useState(0);
+  const [active, setActive] = useState(0);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    setTarget(Math.min(N - 1, Math.max(0, Math.floor(v * N))));
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    progressRef.current = p;
+    setActive(Math.min(N - 1, Math.max(0, Math.floor(p * N + 0.2))));
   });
+  const barScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const cueOpacity = useTransform(scrollYProgress, (p) => 1 - lin(p, 0.01, 0.05));
+
   const jumpTo = (i: number) => {
     const el = ref.current;
     if (!el) return;
@@ -208,7 +242,6 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
     const top = el.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top: top + (i / N) * total + 4, behavior: 'smooth' });
   };
-  const barScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   // Reduced motion: a plain stack of chapters with a still from each.
   if (reduce) {
@@ -234,15 +267,15 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   }
 
   return (
-    <div ref={ref} className="relative bg-[#FAF8F5]" style={{ height: `${N * 70 + 30}vh` }}>
+    <div ref={ref} className="relative bg-[#FAF8F5]" style={{ height: `${N * CELL_VH + 100}vh` }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#E9E3D6]">
         {/* Desktop: footage fills the screen. Phones: a 16:9 window so nothing is cropped or blown up. */}
         {mobile ? (
           <div className="absolute left-0 right-0 aspect-video overflow-hidden shadow-xl" style={{ top: '4.5rem' }}>
-            <TourVideo target={target} mobile onArrive={setShown} />
+            <TourVideo progressRef={progressRef} mobile />
           </div>
         ) : (
-          <TourVideo target={target} mobile={false} onArrive={setShown} />
+          <TourVideo progressRef={progressRef} mobile={false} />
         )}
 
         {/* Legibility + finish (desktop): soft light wash on the text side, vignette, film grain */}
@@ -255,7 +288,7 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
         )}
 
         {CHAPTERS.map((c, i) => (
-          <TextLayer key={c.title} index={i} chapter={c} visible={shown === i} mobile={mobile} onStart={onStart} />
+          <TextLayer key={c.title} progress={scrollYProgress} index={i} chapter={c} mobile={mobile} onStart={onStart} />
         ))}
 
         {/* Progress line */}
@@ -263,35 +296,22 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
           <m.div className="h-full bg-[#0F5C63] origin-left" style={{ scaleX: barScale }} />
         </div>
 
-        {/* Scroll cue: shown only on the opening view */}
-        <div
-          className={
-            'absolute bottom-8 left-5 sm:left-8 flex items-center gap-3 text-[#0F5C63] text-xs font-bold uppercase tracking-[0.3em] pointer-events-none transition-opacity duration-500 ' +
-            (shown === 0 && target === 0 ? 'opacity-100' : 'opacity-0')
-          }
-        >
+        {/* Scroll cue */}
+        <m.div style={{ opacity: cueOpacity }} className="absolute bottom-8 left-5 sm:left-8 flex items-center gap-3 text-[#0F5C63] text-xs font-bold uppercase tracking-[0.3em] pointer-events-none">
           <span className="inline-block w-px h-10 bg-[#0F5C63] animate-pulse" />
           Scroll
-        </div>
+        </m.div>
 
         {/* Room jump: tap to fly to any stop */}
-        <nav
-          aria-label="Tour stops"
-          className={mobile ? 'absolute right-4 bottom-16 flex gap-2.5 z-10' : 'absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 items-end z-10'}
-        >
+        <nav aria-label="Tour stops" className={mobile ? 'absolute right-4 bottom-16 flex gap-2.5 z-10' : 'absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 items-end z-10'}>
           {STOP_LABELS.map((label, i) => (
-            <button
-              key={label}
-              onClick={() => jumpTo(i)}
-              aria-label={label}
-              className="group flex items-center gap-3 pointer-events-auto"
-            >
+            <button key={label} onClick={() => jumpTo(i)} aria-label={label} className="group flex items-center gap-3 pointer-events-auto">
               {!mobile && (
-                <span className={'text-[11px] font-bold uppercase tracking-widest transition-opacity drop-shadow ' + (target === i ? 'opacity-100 text-white' : 'opacity-0 group-hover:opacity-100 text-white')}>
+                <span className={'text-[11px] font-bold uppercase tracking-widest transition-opacity drop-shadow text-white ' + (active === i ? 'opacity-100' : 'opacity-0 group-hover:opacity-100')}>
                   {label}
                 </span>
               )}
-              <span className={'block rounded-full border-2 border-white shadow transition-all ' + (target === i ? 'w-3.5 h-3.5 bg-[#C9A84C]' : 'w-3 h-3 bg-white/40 hover:bg-white')} />
+              <span className={'block rounded-full border-2 border-white shadow transition-all ' + (active === i ? 'w-3.5 h-3.5 bg-[#C9A84C]' : 'w-3 h-3 bg-white/40 hover:bg-white')} />
             </button>
           ))}
         </nav>
