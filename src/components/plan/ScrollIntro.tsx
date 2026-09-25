@@ -3,18 +3,18 @@ import type { MotionValue } from 'motion/react';
 import { m, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 
-// Scroll-scrubbed footage: a real home-tour video, cut into frames, drawn on a
-// canvas by scroll position. Scroll down and it plays forward; scroll up and
-// it rewinds. The frames are pre-cut into public/images/marketing-plan/scrub
+// Scroll-scrubbed footage: one continuous home-tour shot (a drone descending
+// to the front door, then a walk through the house), cut into frames and drawn
+// on a canvas by scroll position. Scroll down and you travel forward through
+// the home; scroll up and you go back. The frames are pre-cut into public/images/marketing-plan/scrub
 // (see notes/footage-permissions.md in the brain for the source and credit).
 const FRAMES = {
-  desktop: { dir: '/images/marketing-plan/scrub/d/', count: 175, perChapter: 35, w: 1280, h: 720 },
-  mobile: { dir: '/images/marketing-plan/scrub/m/', count: 105, perChapter: 21, w: 720, h: 406 },
+  desktop: { dir: '/images/marketing-plan/scrub/d/', count: 241, perChapter: 48, w: 1280, h: 720 },
+  mobile: { dir: '/images/marketing-plan/scrub/m/', count: 144, perChapter: 29, w: 720, h: 406 },
 };
 const frameUrl = (set: 'desktop' | 'mobile', n: number) => `${FRAMES[set].dir}${String(n).padStart(4, '0')}.webp`;
 
-const CREDIT_URL = 'https://www.graceandnell.com/';
-const CREDIT_TEXT = 'Home tour footage courtesy of Grace & Nell Homes, Artisan Home Tour, Greater Kansas City';
+const CREDIT_TEXT = 'Home tour footage courtesy of Brent Sledd, The Rob Ellerman Team, Reece Nichols Real Estate';
 
 interface Chapter {
   kicker: string;
@@ -23,11 +23,11 @@ interface Chapter {
 }
 
 const CHAPTERS: Chapter[] = [
-  { kicker: 'The Friedman Team', title: "Let's sell your home the right way.", text: 'Scroll to see how we do it. Then build your own plan in a few easy steps.' },
+  { kicker: 'The Friedman Team', title: "Let's sell your home the right way.", text: 'Scroll to follow the tour from the air, through the front door and room by room. Then build your own plan in a few easy steps.' },
   { kicker: 'Step one', title: 'First, we get it ready.', text: 'Your Home Prep Advisor walks the home, tells you what is worth doing, and lines up the vendors.' },
   { kicker: 'Step two', title: 'Then we show it off.', text: 'Beautiful photos, 3D tours, drone views and video that make buyers stop scrolling.' },
   { kicker: 'Step three', title: 'Then we get it seen.', text: 'Every major site, our buyer network and paid reach put your home in front of the right people.' },
-  { kicker: 'Step four', title: 'Then we bring buyers through the door.', text: 'Open houses, showings, feedback within 48 hours, and a negotiation plan set before the first offer.' },
+  { kicker: 'Step four', title: 'Then we bring buyers through every room.', text: 'Open houses, showings, feedback within 48 hours, and a negotiation plan set before the first offer.' },
 ];
 
 const N = CHAPTERS.length;
@@ -156,7 +156,7 @@ const FootageStage: React.FC<{ progressRef: React.MutableRefObject<number>; mobi
 };
 
 // One chapter of copy, scrubbed by scroll position.
-const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapter: Chapter; onStart: () => void }> = ({ progress, index, chapter, onStart }) => {
+const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapter: Chapter; mobile: boolean; onStart: () => void }> = ({ progress, index, chapter, mobile, onStart }) => {
   const s = index / N;
   const e = (index + 1) / N;
   const first = index === 0;
@@ -174,13 +174,16 @@ const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapte
 
   return (
     <div className="absolute inset-0 pointer-events-none">
-      <div className="relative h-full max-w-6xl mx-auto px-4 sm:px-8 flex items-end sm:items-center pb-28 sm:pb-0 pt-16">
+      <div
+        className={mobile ? 'absolute left-0 right-0 px-4' : 'relative h-full max-w-6xl mx-auto px-4 sm:px-8 flex items-center pt-16'}
+        style={mobile ? { top: 'calc(4.5rem + 56.25vw + 0.9rem)' } : undefined}
+      >
         <m.div
           style={{ opacity: textOpacity, y: textY }}
-          className="max-w-md sm:max-w-lg space-y-4 bg-white/75 backdrop-blur-md border border-white/70 shadow-[0_20px_60px_-20px_rgba(13,34,38,0.35)] rounded-sm p-6 sm:p-8"
+          className="max-w-md sm:max-w-lg space-y-3 sm:space-y-4 bg-white/80 backdrop-blur-md border border-white/70 shadow-[0_20px_60px_-20px_rgba(13,34,38,0.35)] rounded-sm p-5 sm:p-8"
         >
           <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63]">{chapter.kicker}</span>
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold leading-[1.05] text-[#0D2226]">{chapter.title}</h1>
+          <h1 className="font-serif text-2xl sm:text-5xl font-bold leading-[1.08] text-[#0D2226]">{chapter.title}</h1>
           <p className="text-sm sm:text-lg text-[#1C2B2E]/80 leading-relaxed">{chapter.text}</p>
           {last && (
             <button
@@ -198,14 +201,7 @@ const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapte
 };
 
 const Credit: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <a
-    href={CREDIT_URL}
-    target="_blank"
-    rel="noopener noreferrer"
-    className={'text-[10px] leading-snug text-[#0D2226]/80 hover:text-[#0F5C63] bg-white/70 backdrop-blur px-3 py-1.5 rounded-full underline-offset-2 hover:underline ' + className}
-  >
-    {CREDIT_TEXT}
-  </a>
+  <span className={'text-[10px] leading-snug text-[#0D2226]/80 bg-white/75 backdrop-blur px-3 py-1.5 rounded-full ' + className}>{CREDIT_TEXT}</span>
 );
 
 export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
@@ -246,17 +242,28 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   }
 
   return (
-    <div ref={ref} className="relative bg-[#FAF8F5]" style={{ height: `${N * 110 + 40}vh` }}>
+    <div ref={ref} className="relative bg-[#FAF8F5]" style={{ height: `${N * 125 + 40}vh` }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#E9E3D6]">
-        <FootageStage progressRef={progressRef} mobile={mobile} />
+        {/* Desktop: footage fills the screen. Phones: a 16:9 window so nothing is cropped or blown up. */}
+        {mobile ? (
+          <div className="absolute left-0 right-0 aspect-video overflow-hidden shadow-xl" style={{ top: '4.5rem' }}>
+            <FootageStage progressRef={progressRef} mobile />
+          </div>
+        ) : (
+          <FootageStage progressRef={progressRef} mobile={false} />
+        )}
 
-        {/* Legibility + finish: soft light wash on the text side, vignette, film grain */}
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[#FAF8F5]/55 via-[#FAF8F5]/10 to-transparent" />
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(13,34,38,0.28) 100%)' }} />
-        <div className="absolute inset-0 pointer-events-none opacity-[0.07] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
+        {/* Legibility + finish (desktop): soft light wash on the text side, vignette, film grain */}
+        {!mobile && (
+          <>
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[#FAF8F5]/55 via-[#FAF8F5]/10 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(13,34,38,0.28) 100%)' }} />
+            <div className="absolute inset-0 pointer-events-none opacity-[0.07] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
+          </>
+        )}
 
         {CHAPTERS.map((c, i) => (
-          <TextLayer key={c.title} progress={scrollYProgress} index={i} chapter={c} onStart={onStart} />
+          <TextLayer key={c.title} progress={scrollYProgress} index={i} chapter={c} mobile={mobile} onStart={onStart} />
         ))}
 
         {/* Progress line */}
@@ -271,9 +278,9 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
         </m.div>
 
         {/* Footage credit */}
-        <Credit className="absolute bottom-3 right-3 sm:right-6 max-w-[62%] sm:max-w-md text-right" />
+        <Credit className="absolute bottom-3 right-3 sm:right-6 max-w-[64%] sm:max-w-md text-right pointer-events-none" />
 
-        <button onClick={onStart} className="absolute top-24 right-5 sm:right-8 text-[11px] font-bold uppercase tracking-widest text-[#0D2226]/70 hover:text-[#0F5C63] underline underline-offset-4">
+        <button onClick={onStart} className={'absolute right-4 sm:right-8 text-[11px] font-bold uppercase tracking-widest underline underline-offset-4 ' + (mobile ? 'top-[4.9rem] text-white drop-shadow' : 'top-24 text-[#0D2226]/70 hover:text-[#0F5C63]')}>
           Skip the intro
         </button>
       </div>
