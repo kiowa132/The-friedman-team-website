@@ -162,12 +162,15 @@ const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapte
   const first = index === 0;
   const last = index === N - 1;
 
-  const textOpacity = useTransform(
-    progress,
-    first ? [0, e - 0.07, e - 0.02] : last ? [s + 0.02, s + 0.07, 1] : [s + 0.02, s + 0.07, e - 0.07, e - 0.02],
-    first ? [1, 1, 0] : last ? [0, 1, 1] : [0, 1, 1, 0]
-  );
-  const textY = useTransform(progress, first ? [0, 0.001] : [s + 0.02, s + 0.08], first ? [0, 0] : [48, 0]);
+  // Direct calculation (no interpolation table) so a chapter is fully faded
+  // out everywhere outside its own stretch of the scroll.
+  const lin = (v: number, a: number, b: number) => Math.min(1, Math.max(0, (v - a) / (b - a)));
+  const textOpacity = useTransform(progress, (v) => {
+    const fadeIn = first ? 1 : lin(v, s + 0.02, s + 0.07);
+    const fadeOut = last ? 1 : 1 - lin(v, e - 0.07, e - 0.02);
+    return fadeIn * fadeOut;
+  });
+  const textY = useTransform(progress, (v) => (first ? 0 : 48 * (1 - lin(v, s + 0.02, s + 0.08))));
 
   return (
     <div className="absolute inset-0 pointer-events-none">
