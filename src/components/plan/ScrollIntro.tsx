@@ -14,6 +14,7 @@ const still = (i: number) => `/images/marketing-plan/still-${i}.jpg`;
 // Seconds into the (trimmed) video where the camera rests for each chapter:
 // aerial, arched front door, dining room, great room, kitchen.
 const STOPS = [0, 8.4, 14, 25, 35];
+const STOP_LABELS = ['The aerial', 'Front door', 'Dining room', 'Great room', 'Kitchen'];
 
 const CREDIT_TEXT = 'Home tour footage courtesy of Brent Sledd, The Rob Ellerman Team, Reece Nichols Real Estate';
 
@@ -41,6 +42,7 @@ const GRAIN =
 const TourVideo: React.FC<{ target: number; mobile: boolean; onArrive: (i: number) => void }> = ({ target, mobile, onArrive }) => {
   const vref = useRef<HTMLVideoElement>(null);
   const [dip, setDip] = useState(false);
+  const panRef = useRef<HTMLDivElement>(null);
   const arriveRef = useRef(onArrive);
   arriveRef.current = onArrive;
 
@@ -66,13 +68,14 @@ const TourVideo: React.FC<{ target: number; mobile: boolean; onArrive: (i: numbe
     arriveRef.current(-1);
 
     if (t > v.currentTime) {
-      // Travel forward at the video's own speed, faster over long stretches.
-      const rate = Math.min(2.5, Math.max(1, (t - v.currentTime) / 4));
-      v.playbackRate = rate;
+      // Fast fly-through that eases to a stop: speed follows the distance left.
+      let rate = 4;
       let manual = false;
       let last = performance.now();
       const loop = (now: number) => {
         if (cancelled) return;
+        rate = Math.min(4, Math.max(0.6, (t - v.currentTime) * 1.4));
+        v.playbackRate = rate;
         if (manual) {
           v.currentTime = Math.min(t, v.currentTime + ((now - last) / 1000) * rate);
         }
@@ -111,8 +114,23 @@ const TourVideo: React.FC<{ target: number; mobile: boolean; onArrive: (i: numbe
     };
   }, [target]);
 
+  // Cursor parallax: the picture drifts a little as the mouse moves, so the scene feels alive.
+  useEffect(() => {
+    if (mobile) return;
+    const el = panRef.current;
+    if (!el) return;
+    const move = (e: MouseEvent) => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      el.style.transform = `translate3d(${(-x * 34).toFixed(1)}px, ${(-y * 20).toFixed(1)}px, 0) scale(1.06)`;
+    };
+    window.addEventListener('mousemove', move);
+    return () => window.removeEventListener('mousemove', move);
+  }, [mobile]);
+
   return (
-    <div className="absolute inset-0 bg-[#E9E3D6]">
+    <div className="absolute inset-0 bg-[#E9E3D6] overflow-hidden">
+      <div ref={panRef} className="absolute inset-0 transition-transform duration-500 ease-out" style={mobile ? undefined : { transform: 'scale(1.06)' }}>
       <video
         ref={vref}
         src={mobile ? VIDEO.mobile : VIDEO.desktop}
@@ -123,6 +141,7 @@ const TourVideo: React.FC<{ target: number; mobile: boolean; onArrive: (i: numbe
         disablePictureInPicture
         className="absolute inset-0 w-full h-full object-cover"
       />
+      </div>
       <div className={'absolute inset-0 bg-[#FAF8F5] pointer-events-none transition-opacity duration-300 ' + (dip ? 'opacity-100' : 'opacity-0')} />
     </div>
   );
@@ -182,6 +201,13 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     setTarget(Math.min(N - 1, Math.max(0, Math.floor(v * N))));
   });
+  const jumpTo = (i: number) => {
+    const el = ref.current;
+    if (!el) return;
+    const total = el.offsetHeight - window.innerHeight;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + (i / N) * total + 4, behavior: 'smooth' });
+  };
   const barScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   // Reduced motion: a plain stack of chapters with a still from each.
@@ -208,7 +234,7 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   }
 
   return (
-    <div ref={ref} className="relative bg-[#FAF8F5]" style={{ height: `${N * 90 + 40}vh` }}>
+    <div ref={ref} className="relative bg-[#FAF8F5]" style={{ height: `${N * 70 + 30}vh` }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#E9E3D6]">
         {/* Desktop: footage fills the screen. Phones: a 16:9 window so nothing is cropped or blown up. */}
         {mobile ? (
@@ -247,6 +273,28 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
           <span className="inline-block w-px h-10 bg-[#0F5C63] animate-pulse" />
           Scroll
         </div>
+
+        {/* Room jump: tap to fly to any stop */}
+        <nav
+          aria-label="Tour stops"
+          className={mobile ? 'absolute right-4 bottom-16 flex gap-2.5 z-10' : 'absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 items-end z-10'}
+        >
+          {STOP_LABELS.map((label, i) => (
+            <button
+              key={label}
+              onClick={() => jumpTo(i)}
+              aria-label={label}
+              className="group flex items-center gap-3 pointer-events-auto"
+            >
+              {!mobile && (
+                <span className={'text-[11px] font-bold uppercase tracking-widest transition-opacity drop-shadow ' + (target === i ? 'opacity-100 text-white' : 'opacity-0 group-hover:opacity-100 text-white')}>
+                  {label}
+                </span>
+              )}
+              <span className={'block rounded-full border-2 border-white shadow transition-all ' + (target === i ? 'w-3.5 h-3.5 bg-[#C9A84C]' : 'w-3 h-3 bg-white/40 hover:bg-white')} />
+            </button>
+          ))}
+        </nav>
 
         {/* Footage credit */}
         {mobile ? (
