@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sell Your Home the Right Way | The Friedman Team</title>
+<meta name="description" content="Follow one home from the air to the front door and through every room, then build the marketing plan for yours with The Friedman Team, eXp Realty.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230F5C63'/><text x='16' y='23' font-size='20' text-anchor='middle' fill='%23FAF8F5' font-family='Georgia,serif' font-weight='700'>F</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="scrollcraft.css">
+<style>
+  :root {
+    --sc-canvas:     #FAF8F5;
+    --sc-surface:    #FFFFFF;
+    --sc-ink:        #0D2226;
+    --sc-ink-soft:   #3D5357;
+    --sc-accent:     #0F5C63;
+    --sc-accent-ink: #FAF8F5;
+    --sc-font-display: "Playfair Display", Georgia, serif;
+    --sc-font-text:    "Inter", system-ui, sans-serif;
+    --gold: #C9A84C;
+    --bar-h: 3.6rem;
+  }
+
+  /* ---- site bar: the brand and the one call to action, same label everywhere ---- */
+  .bar {
+    position: fixed; inset: 0 0 auto 0; z-index: 70; height: var(--bar-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding-inline: var(--sc-gutter);
+    background: color-mix(in oklab, var(--sc-canvas) 84%, transparent);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--sc-hairline);
+  }
+  .bar__mark { font-family: var(--sc-font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--sc-ink); text-decoration: none; }
+  .bar__mark small { font-family: var(--sc-font-text); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sc-accent); margin-left: 0.7rem; }
+  .bar__cta {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--sc-accent-ink); background: var(--sc-accent); text-decoration: none;
+    padding: 0.62rem 1.1rem; border-radius: 3px;
+    transition: background var(--sc-d-base) var(--sc-ease-out), transform var(--sc-d-base) var(--sc-ease-out);
+  }
+  .bar__cta:hover { background: var(--sc-ink); transform: translateY(-1px); }
+
+  /* ---- copy: one glass card per stop, anchor varies, never over the middle of the footage ---- */
+  .c {
+    position: absolute; z-index: var(--sc-z-copy);
+    width: min(29rem, 86vw);
+    padding: clamp(1.25rem, 2.4vw, 2rem);
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(16px) saturate(1.1); -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(13,34,38,.10), 0 22px 44px -18px rgba(13,34,38,.34);
+  }
+  .c h1, .c h2 { margin: 0; font-family: var(--sc-font-display); font-weight: 700; color: var(--sc-ink); line-height: 1.06; letter-spacing: -0.02em; text-wrap: balance; }
+  .c h1 { font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.6rem); }
+  .c h2 { font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.6rem); }
+  .c p { margin: 0.9rem 0 0; color: var(--sc-ink-soft); font-size: var(--sc-t-base); line-height: 1.6; max-width: 46ch; text-wrap: pretty; }
+  .c--l { left: var(--sc-gutter); bottom: clamp(3.6rem, 11vh, 8rem); }
+  .c--r { right: var(--sc-gutter); bottom: clamp(3.6rem, 11vh, 8rem); }
+  .c--fin { left: 50%; bottom: clamp(3.4rem, 9vh, 6rem); translate: -50% 0; width: min(33rem, 90vw); text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .c--fin p { margin-inline: auto; }
+
+  /* ---- signature move: the closing button is the arched front door, and it opens ---- */
+  .door { display: inline-flex; flex-direction: column; align-items: center; gap: 0.85rem; margin-top: 1.4rem; text-decoration: none; color: var(--sc-ink); }
+  .door__arch {
+    position: relative; display: block; width: 8.2rem; height: 6.4rem; overflow: hidden;
+    border-radius: 4.1rem 4.1rem 0 0;
+    border: 3px solid var(--gold); border-bottom-width: 0;
+    background: radial-gradient(ellipse at 50% 100%, #fff6dc 0%, #f3dc9d 45%, #e2c46f 100%);
+    box-shadow: inset 0 0 22px rgba(201, 168, 76, .55);
+  }
+  .door__leaf {
+    position: absolute; top: 0; bottom: 0; width: 50%; background: var(--sc-accent);
+    transition: transform 620ms var(--sc-ease-drawer);
+    box-shadow: inset 0 0 0 5px color-mix(in oklab, var(--sc-accent) 70%, #000);
+  }
+  .door__leaf::after { content: ""; position: absolute; top: 52%; width: 0.42rem; height: 0.42rem; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 2px rgba(0,0,0,.15); }
+  .door__leaf--l { left: 0; transform-origin: 0 50%; }
+  .door__leaf--l::after { right: 0.5rem; }
+  .door__leaf--r { right: 0; transform-origin: 100% 50%; }
+  .door__leaf--r::after { left: 0.5rem; }
+  .door:is(:hover, :focus-visible, .is-open) .door__leaf--l { transform: translateX(-104%); }
+  .door:is(:hover, :focus-visible, .is-open) .door__leaf--r { transform: translateX(104%); }
+  .door__label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .door:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 6px; }
+
+  /* ---- route rail: tap a room to fly there ---- */
+  .rail { position: fixed; z-index: 65; right: 1.4rem; top: 50%; translate: 0 -50%; display: flex; flex-direction: column; gap: 0.9rem; align-items: flex-end; }
+  .rail button { all: unset; cursor: pointer; display: flex; align-items: center; gap: 0.7rem; padding: 0.15rem; }
+  .rail span.n { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.55); opacity: 0; transition: opacity var(--sc-d-base) var(--sc-ease-out); }
+  .rail button:is(:hover, :focus-visible) span.n, .rail button[aria-current="true"] span.n { opacity: 1; }
+  .rail i { display: block; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: rgba(255,255,255,.55); border: 2px solid #fff; box-shadow: 0 1px 6px rgba(0,0,0,.35); transition: transform var(--sc-d-base) var(--sc-ease-out), background var(--sc-d-base); }
+  .rail button[aria-current="true"] i { background: var(--gold); transform: scale(1.35); }
+  .rail button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  /* ---- footage credit, always on screen ---- */
+  .credit {
+    position: fixed; z-index: 66; left: var(--sc-gutter); bottom: 0.9rem; max-width: min(34rem, 60vw);
+    font-size: 0.66rem; line-height: 1.35; color: var(--sc-ink);
+    background: color-mix(in oklab, #fff 78%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    padding: 0.4rem 0.8rem; border-radius: 999px;
+  }
+
+  /* ---- desktop: soft vignette so the frame feels lit, not flat ---- */
+  .lens { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(ellipse at 50% 45%, transparent 62%, rgba(13,34,38,.20) 100%); }
+  /* pointer drift uses the individual scale/translate properties, so it composes with the engine's own transforms */
+  @media (hover: hover) and (pointer: fine) {
+    .sc-world__seg > :is(video, img) { scale: 1.05; translate: var(--dx, 0px) var(--dy, 0px); transition: translate 500ms var(--sc-ease-out); }
+  }
+
+  /* ---- phones: art directed. The 16:9 footage sits in a window under the bar, nothing is cropped or blown up ---- */
+  @media (max-width: 820px) {
+    .bar__mark small { display: none; }
+    .sc-world__seg > :is(video, img) { top: var(--bar-h); bottom: auto; height: 56.25vw; }
+    .lens { display: none; }
+    .sc-world { background: linear-gradient(180deg, #DCE7E8 0%, #FAF8F5 46%, #F6EEDD 100%); }
+    .rail { right: auto; left: 50%; translate: -50% 0; top: calc(var(--bar-h) + 56.25vw + 0.6rem); flex-direction: row; gap: 0.9rem; }
+    .rail span.n { display: none; }
+    .rail i { background: rgba(13,34,38,.22); border-color: var(--sc-accent); box-shadow: none; }
+    .rail button[aria-current="true"] i { background: var(--gold); }
+    .c { left: 1rem !important; right: 1rem !important; translate: 0 0 !important; bottom: auto !important; width: auto; top: calc(var(--bar-h) + 56.25vw + 2.6rem); padding: 1.1rem 1.15rem; }
+    .c--fin { align-items: flex-start; text-align: left; }
+    .c--fin p { margin-inline: 0; }
+    .credit { left: 0.5rem; right: 0.5rem; max-width: none; top: calc(var(--bar-h) + 56.25vw - 1.9rem); bottom: auto; text-align: center; border-radius: 6px; }
+    .door { margin-top: 1rem; }
+    .door__arch { width: 6.6rem; height: 5.2rem; border-radius: 3.3rem 3.3rem 0 0; }
+  }
+</style>
+</head>
+<body>
+
+<span data-sc-progress></span>
+<div class="sc-grain" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="bar__mark" href="/">The Friedman Team<small>eXp Realty</small></a>
+  <a class="bar__cta" href="/sell/marketing-plan/home">Build my plan</a>
+</header>
+
+<div class="lens" aria-hidden="true"></div>
+
+<nav class="rail" aria-label="Rooms">
+  <button type="button" data-stop="0"><span class="n">The aerial</span><i></i></button>
+  <button type="button" data-stop="1"><span class="n">Front door</span><i></i></button>
+  <button type="button" data-stop="2"><span class="n">Dining room</span><i></i></button>
+  <button type="button" data-stop="3"><span class="n">Great room</span><i></i></button>
+  <button type="button" data-stop="4"><span class="n">Kitchen</span><i></i></button>
+</nav>
+
+<p class="credit">Home tour footage courtesy of Brent Sledd, The Rob Ellerman Team, Reece Nichols Real Estate</p>
+
+<main id="top" data-sc-mode="worldflight" data-sc-seam="0.16">
+
+  <div data-sc-world>
+    <div data-sc-segment data-sc-w="1.02" data-sc-linger="0.35" data-sc-waypoint="The aerial">
+      <img class="sc-world__poster" src="assets/p1.webp" alt="" decoding="async" fetchpriority="high">
+      <video data-sc-src="assets/leg1.mp4" data-sc-src-mobile="assets/leg1-m.mp4" muted playsinline></video>
+    </div>
+    <div data-sc-segment data-sc-w="0.68" data-sc-linger="0.35" data-sc-waypoint="Front door">
+      <img class="sc-world__poster" src="assets/p2.webp" alt="" decoding="async">
+      <video data-sc-src="assets/leg2.mp4" data-sc-src-mobile="assets/leg2-m.mp4" muted playsinline></video>
+    </div>
+    <div data-sc-segment data-sc-w="1.33" data-sc-linger="0.35" data-sc-waypoint="Dining room">
+      <img class="sc-world__poster" src="assets/p3.webp" alt="" decoding="async">
+      <video data-sc-src="assets/leg3.mp4" data-sc-src-mobile="assets/leg3-m.mp4" muted playsinline></video>
+    </div>
+    <div data-sc-segment data-sc-w="1.21" data-sc-linger="0.35" data-sc-waypoint="Great room">
+      <img class="sc-world__poster" src="assets/p4.webp" alt="" decoding="async">
+      <video data-sc-src="assets/leg4.mp4" data-sc-src-mobile="assets/leg4-m.mp4" muted playsinline></video>
+    </div>
+  </div>
+
+  <div data-sc-world-copy>
+    <div class="c c--l" data-sc-copy data-sc-window="hero">
+      <h1>Let's sell your home the right way.</h1>
+      <p>Follow one home from the air to the front door and through every room, then build the plan for yours.</p>
+    </div>
+
+    <div class="c c--r" data-sc-copy data-sc-window="0.19 0.30">
+      <h2>First, we get it ready.</h2>
+      <p>Your Home Prep Advisor walks the home with you, tells you what is worth doing, and lines up the vendors.</p>
+    </div>
+
+    <div class="c c--l" data-sc-copy data-sc-window="0.345 0.455">
+      <h2>Then we show it off.</h2>
+      <p>Beautiful photos, 3D tours, drone views and video that make buyers stop scrolling.</p>
+    </div>
+
+    <div class="c c--r" data-sc-copy data-sc-window="0.66 0.775">
+      <h2>Then we get it seen.</h2>
+      <p>Every major site, our buyer network and paid reach put your home in front of the right people.</p>
+    </div>
+
+    <div class="c c--fin" data-sc-copy data-sc-window="finale">
+      <h2>Then we bring buyers through every room.</h2>
+      <p>Open houses, showings, feedback within 48 hours, and a negotiation plan set before the first offer.</p>
+      <a class="door" href="/sell/marketing-plan/home" id="door">
+        <span class="door__arch" aria-hidden="true"><span class="door__leaf door__leaf--l"></span><span class="door__leaf door__leaf--r"></span></span>
+        <span class="door__label">Build my plan</span>
+      </a>
+    </div>
+  </div>
+
+  <div data-sc-spacer aria-hidden="true"></div>
+</main>
+
+<script src="scrollcraft.js"></script>
+<script>
+  ScrollCraft.mount(document);
+  window.__sc = ScrollCraft.instances[0]; // exposed for the verification scripts
+
+  // The engine sizes the scroll track once at mount; re-measure when the window and fonts settle.
+  function relayout() { dispatchEvent(new Event('resize')); }
+  addEventListener('load', relayout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+
+  // ---- route rail: five rooms, tap to fly there (stops sit on the leg boundaries) ----
+  var WEIGHTS = [1.02, 0.68, 1.33, 1.21];
+  var STOPS = [0]; WEIGHTS.forEach(function (w) { STOPS.push(STOPS[STOPS.length - 1] + w); });
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.rail button'));
+  function nearest() {
+    var t = window.scrollY / window.innerHeight, best = 0, d = 1e9;
+    STOPS.forEach(function (s, i) { var dd = Math.abs(s - t); if (dd < d) { d = dd; best = i; } });
+    return best;
+  }
+  function mark() { var n = nearest(); buttons.forEach(function (b, i) { b.setAttribute('aria-current', String(i === n)); }); }
+  addEventListener('scroll', mark, { passive: true }); mark();
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      window.scrollTo({ top: STOPS[+b.dataset.stop] * window.innerHeight + 2, behavior: 'smooth' });
+    });
+  });
+
+  // ---- the door opens before the link follows ----
+  var door = document.getElementById('door');
+  door.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    e.preventDefault();
+    door.classList.add('is-open');
+    setTimeout(function () { location.href = door.href; }, 520);
+  });
+
+  // ---- desktop: the picture drifts a little with the pointer ----
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    addEventListener('mousemove', function (e) {
+      var x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
+      document.documentElement.style.setProperty('--dx', (-x * 30).toFixed(1) + 'px');
+      document.documentElement.style.setProperty('--dy', (-y * 18).toFixed(1) + 'px');
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
