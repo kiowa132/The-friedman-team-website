@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import type { MotionValue } from 'motion/react';
 import { m, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 
-// Scroll-scrubbed footage: one continuous home-tour shot (a drone descending
-// to the front door, then a walk through the house), cut into frames and drawn
-// on a canvas by scroll position. Scroll down and you travel forward through
-// the home; scroll up and you go back. The frames are pre-cut into public/images/marketing-plan/scrub
-// (see notes/footage-permissions.md in the brain for the source and credit).
-const FRAMES = {
-  desktop: { dir: '/images/marketing-plan/scrub/d/', count: 241, perChapter: 48, w: 1280, h: 720 },
-  mobile: { dir: '/images/marketing-plan/scrub/m/', count: 144, perChapter: 29, w: 720, h: 406 },
-};
-const frameUrl = (set: 'desktop' | 'mobile', n: number) => `${FRAMES[set].dir}${String(n).padStart(4, '0')}.webp`;
+// Cinematic intro: one continuous home-tour shot (a drone descending to the
+// front door, then a walk through the house) played as real video. Scrolling
+// into a new chapter plays the camera forward to that chapter's stopping
+// point, where it holds for the text; scrolling back jumps to the earlier stop
+// with a soft dip. Real video (not scrubbed stills) keeps it smooth and sharp.
+// Source, permission and credit terms: notes/footage-permissions.md in the brain.
+const VIDEO = { desktop: '/video/tour-1080.mp4', mobile: '/video/tour-720.mp4' };
+const still = (i: number) => `/images/marketing-plan/still-${i}.jpg`;
+
+// Seconds into the (trimmed) video where the camera rests for each chapter:
+// aerial, arched front door, dining room, great room, kitchen.
+const STOPS = [0, 8.4, 14, 25, 35];
 
 const CREDIT_TEXT = 'Home tour footage courtesy of Brent Sledd, The Rob Ellerman Team, Reece Nichols Real Estate';
 
@@ -35,152 +36,112 @@ const N = CHAPTERS.length;
 const GRAIN =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
 
-// Draws the footage. Frames load in a smart order (a sparse pass first so
-// scrubbing works almost immediately, then the gaps), and the canvas blends
-// between neighbouring frames so motion looks smooth, not stepped.
-const FootageStage: React.FC<{ progressRef: React.MutableRefObject<number>; mobile: boolean }> = ({ progressRef, mobile }) => {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const set = mobile ? 'mobile' : 'desktop';
+// Plays the camera toward the target chapter's stop. Reports -1 while moving
+// and the chapter index once it has arrived and is holding.
+const TourVideo: React.FC<{ target: number; mobile: boolean; onArrive: (i: number) => void }> = ({ target, mobile, onArrive }) => {
+  const vref = useRef<HTMLVideoElement>(null);
+  const [dip, setDip] = useState(false);
+  const arriveRef = useRef(onArrive);
+  arriveRef.current = onArrive;
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    const canvas = canvasRef.current;
-    if (!wrap || !canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const cfg = FRAMES[set];
-    const total = cfg.count;
-    const imgs: (HTMLImageElement | null)[] = new Array(total).fill(null);
-    let dirty = true;
+    const v = vref.current;
+    if (!v) return;
+    const t = STOPS[target];
+    let raf = 0;
+    let timer = 0;
     let cancelled = false;
 
-    // Load order: every 6th frame first, then everything else.
-    const order: number[] = [];
-    for (let i = 0; i < total; i += 6) order.push(i);
-    for (let i = 0; i < total; i++) if (i % 6 !== 0) order.push(i);
-    let next = 0;
-    const worker = async () => {
-      while (!cancelled && next < order.length) {
-        const i = order[next++];
-        await new Promise<void>((resolve) => {
-          const im = new Image();
-          im.decoding = 'async';
-          im.onload = () => {
-            imgs[i] = im;
-            dirty = true;
-            resolve();
-          };
-          im.onerror = () => resolve();
-          im.src = frameUrl(set, i + 1);
-        });
-      }
-    };
-    for (let k = 0; k < 6; k++) void worker();
-
-    const nearest = (i: number): HTMLImageElement | null => {
-      if (imgs[i]) return imgs[i];
-      for (let d = 1; d < total; d++) {
-        if (i - d >= 0 && imgs[i - d]) return imgs[i - d];
-        if (i + d < total && imgs[i + d]) return imgs[i + d];
-      }
-      return null;
+    const arrive = () => {
+      if (cancelled) return;
+      v.pause();
+      v.currentTime = t;
+      arriveRef.current(target);
     };
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-    const size = () => {
-      canvas.width = Math.max(1, Math.round(wrap.clientWidth * dpr));
-      canvas.height = Math.max(1, Math.round(wrap.clientHeight * dpr));
-      dirty = true;
-    };
-    size();
-    const ro = new ResizeObserver(size);
-    ro.observe(wrap);
+    if (Math.abs(v.currentTime - t) < 0.06) {
+      arrive();
+      return;
+    }
+    arriveRef.current(-1);
 
-    const drawCover = (im: HTMLImageElement, alpha: number) => {
-      const cw = canvas.width;
-      const ch = canvas.height;
-      const s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
-      const w = im.naturalWidth * s;
-      const h = im.naturalHeight * s;
-      ctx.globalAlpha = alpha;
-      ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
-    };
-
-    let visible = true;
-    const io = new IntersectionObserver((e) => {
-      visible = e.some((x) => x.isIntersecting);
-    });
-    io.observe(wrap);
-
-    let cur = progressRef.current;
-    let shown = -1;
-    let raf = 0;
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
-      if (!visible) return;
-      cur += (progressRef.current - cur) * 0.14;
-      if (Math.abs(progressRef.current - cur) < 0.00005) cur = progressRef.current;
-      if (!dirty && Math.abs(cur - shown) < 0.00012) return;
-      shown = cur;
-      dirty = false;
-      const pos = Math.min(1, Math.max(0, cur)) * (total - 1);
-      const i0 = Math.floor(pos);
-      const f = pos - i0;
-      const a = nearest(i0);
-      const b = nearest(Math.min(total - 1, i0 + 1));
-      if (!a) return;
-      ctx.globalCompositeOperation = 'source-over';
-      drawCover(a, 1);
-      if (b && b !== a && f > 0.02) drawCover(b, f);
-      ctx.globalAlpha = 1;
-    };
-    raf = requestAnimationFrame(tick);
+    if (t > v.currentTime) {
+      // Travel forward at the video's own speed, faster over long stretches.
+      const rate = Math.min(2.5, Math.max(1, (t - v.currentTime) / 4));
+      v.playbackRate = rate;
+      let manual = false;
+      let last = performance.now();
+      const loop = (now: number) => {
+        if (cancelled) return;
+        if (manual) {
+          v.currentTime = Math.min(t, v.currentTime + ((now - last) / 1000) * rate);
+        }
+        last = now;
+        if (v.currentTime >= t - 0.02) {
+          arrive();
+          return;
+        }
+        raf = requestAnimationFrame(loop);
+      };
+      const p = v.play();
+      if (p) p.catch(() => (manual = true)); // e.g. low-power mode blocks play(): step time by hand
+      raf = requestAnimationFrame(loop);
+    } else {
+      // Going back: dip to cream, jump to the earlier stop, dip back in.
+      setDip(true);
+      timer = window.setTimeout(() => {
+        if (cancelled) return;
+        v.pause();
+        const done = () => {
+          v.removeEventListener('seeked', done);
+          if (cancelled) return;
+          setDip(false);
+          timer = window.setTimeout(arrive, 250);
+        };
+        v.addEventListener('seeked', done);
+        v.currentTime = t;
+      }, 260);
+    }
 
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
-      ro.disconnect();
-      io.disconnect();
+      window.clearTimeout(timer);
+      v.pause();
     };
-  }, [set, progressRef]);
+  }, [target]);
 
   return (
-    <div ref={wrapRef} className="absolute inset-0">
-      {/* The first frame shows instantly while the rest load. */}
-      <img src={frameUrl(set, 1)} alt="" className="absolute inset-0 w-full h-full object-cover" />
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+    <div className="absolute inset-0 bg-[#E9E3D6]">
+      <video
+        ref={vref}
+        src={mobile ? VIDEO.mobile : VIDEO.desktop}
+        poster={still(0)}
+        muted
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className={'absolute inset-0 bg-[#FAF8F5] pointer-events-none transition-opacity duration-300 ' + (dip ? 'opacity-100' : 'opacity-0')} />
     </div>
   );
 };
 
-// One chapter of copy, scrubbed by scroll position.
-const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapter: Chapter; mobile: boolean; onStart: () => void }> = ({ progress, index, chapter, mobile, onStart }) => {
-  const s = index / N;
-  const e = (index + 1) / N;
-  const first = index === 0;
+// One chapter of copy; visible only while the camera is holding on its stop.
+const TextLayer: React.FC<{ index: number; chapter: Chapter; visible: boolean; mobile: boolean; onStart: () => void }> = ({ index, chapter, visible, mobile, onStart }) => {
   const last = index === N - 1;
-
-  // Direct calculation (no interpolation table) so a chapter is fully faded
-  // out everywhere outside its own stretch of the scroll.
-  const lin = (v: number, a: number, b: number) => Math.min(1, Math.max(0, (v - a) / (b - a)));
-  const textOpacity = useTransform(progress, (v) => {
-    const fadeIn = first ? 1 : lin(v, s + 0.02, s + 0.07);
-    const fadeOut = last ? 1 : 1 - lin(v, e - 0.07, e - 0.02);
-    return fadeIn * fadeOut;
-  });
-  const textY = useTransform(progress, (v) => (first ? 0 : 48 * (1 - lin(v, s + 0.02, s + 0.08))));
-
   return (
     <div className="absolute inset-0 pointer-events-none">
       <div
         className={mobile ? 'absolute left-0 right-0 px-4' : 'relative h-full max-w-6xl mx-auto px-4 sm:px-8 flex items-center pt-16'}
         style={mobile ? { top: 'calc(4.5rem + 56.25vw + 0.9rem)' } : undefined}
       >
-        <m.div
-          style={{ opacity: textOpacity, y: textY }}
-          className="max-w-md sm:max-w-lg space-y-3 sm:space-y-4 bg-white/80 backdrop-blur-md border border-white/70 shadow-[0_20px_60px_-20px_rgba(13,34,38,0.35)] rounded-sm p-5 sm:p-8"
+        <div
+          className={
+            'max-w-md sm:max-w-lg space-y-3 sm:space-y-4 bg-white/80 backdrop-blur-md border border-white/70 shadow-[0_20px_60px_-20px_rgba(13,34,38,0.35)] rounded-sm p-5 sm:p-8 transition-all duration-700 ease-out ' +
+            (visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6')
+          }
         >
           <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63]">{chapter.kicker}</span>
           <h1 className="font-serif text-2xl sm:text-5xl font-bold leading-[1.08] text-[#0D2226]">{chapter.title}</h1>
@@ -188,43 +149,48 @@ const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapte
           {last && (
             <button
               onClick={onStart}
-              className="pointer-events-auto inline-flex items-center gap-2 px-8 py-4 bg-[#0F5C63] hover:bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-xl transition-all hover:-translate-y-0.5"
+              tabIndex={visible ? 0 : -1}
+              className={
+                'inline-flex items-center gap-2 px-8 py-4 bg-[#0F5C63] hover:bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs shadow-xl transition-all hover:-translate-y-0.5 ' +
+                (visible ? 'pointer-events-auto' : 'pointer-events-none')
+              }
             >
               Build my plan
               <ArrowRight className="w-4 h-4" />
             </button>
           )}
-        </m.div>
+        </div>
       </div>
     </div>
   );
 };
 
 const Credit: React.FC<{ className?: string; style?: React.CSSProperties }> = ({ className = '', style }) => (
-  <span style={style} className={'text-[10px] leading-snug text-[#0D2226]/80 bg-white/75 backdrop-blur px-3 py-1.5 rounded-full ' + className}>{CREDIT_TEXT}</span>
+  <span style={style} className={'text-[10px] leading-snug text-[#0D2226]/80 bg-white/75 backdrop-blur px-3 py-1.5 rounded-full ' + className}>
+    {CREDIT_TEXT}
+  </span>
 );
 
 export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   const reduce = !!useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const progressRef = useRef(0);
   const [mobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [target, setTarget] = useState(0);
+  const [shown, setShown] = useState(0);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    progressRef.current = v;
+    setTarget(Math.min(N - 1, Math.max(0, Math.floor(v * N))));
   });
   const barScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const cueOpacity = useTransform(scrollYProgress, (v) => 1 - Math.min(1, Math.max(0, v / 0.06)));
 
   // Reduced motion: a plain stack of chapters with a still from each.
   if (reduce) {
-    const set = mobile ? 'mobile' : 'desktop';
     return (
       <div className="bg-[#FAF8F5] pt-24 pb-16 space-y-12 max-w-3xl mx-auto px-5">
         {CHAPTERS.map((c, i) => (
           <div key={c.title} className="space-y-3">
-            <img src={frameUrl(set, FRAMES[set].perChapter * i + 1)} alt="" className="w-full aspect-video object-cover rounded-xs" />
+            <img src={still(i)} alt="" className="w-full aspect-video object-cover rounded-xs" />
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63]">{c.kicker}</p>
             <h2 className="font-serif text-3xl font-bold text-[#0D2226]">{c.title}</h2>
             <p className="text-sm text-[#1C2B2E]/80">{c.text}</p>
@@ -242,28 +208,28 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   }
 
   return (
-    <div ref={ref} className="relative bg-[#FAF8F5]" style={{ height: `${N * 125 + 40}vh` }}>
+    <div ref={ref} className="relative bg-[#FAF8F5]" style={{ height: `${N * 90 + 40}vh` }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#E9E3D6]">
         {/* Desktop: footage fills the screen. Phones: a 16:9 window so nothing is cropped or blown up. */}
         {mobile ? (
           <div className="absolute left-0 right-0 aspect-video overflow-hidden shadow-xl" style={{ top: '4.5rem' }}>
-            <FootageStage progressRef={progressRef} mobile />
+            <TourVideo target={target} mobile onArrive={setShown} />
           </div>
         ) : (
-          <FootageStage progressRef={progressRef} mobile={false} />
+          <TourVideo target={target} mobile={false} onArrive={setShown} />
         )}
 
         {/* Legibility + finish (desktop): soft light wash on the text side, vignette, film grain */}
         {!mobile && (
           <>
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[#FAF8F5]/55 via-[#FAF8F5]/10 to-transparent" />
-            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(13,34,38,0.28) 100%)' }} />
-            <div className="absolute inset-0 pointer-events-none opacity-[0.07] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(13,34,38,0.22) 100%)' }} />
+            <div className="absolute inset-0 pointer-events-none opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
           </>
         )}
 
         {CHAPTERS.map((c, i) => (
-          <TextLayer key={c.title} progress={scrollYProgress} index={i} chapter={c} mobile={mobile} onStart={onStart} />
+          <TextLayer key={c.title} index={i} chapter={c} visible={shown === i} mobile={mobile} onStart={onStart} />
         ))}
 
         {/* Progress line */}
@@ -271,11 +237,16 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
           <m.div className="h-full bg-[#0F5C63] origin-left" style={{ scaleX: barScale }} />
         </div>
 
-        {/* Scroll cue */}
-        <m.div style={{ opacity: cueOpacity }} className="absolute bottom-8 left-5 sm:left-8 flex items-center gap-3 text-[#0F5C63] text-xs font-bold uppercase tracking-[0.3em] pointer-events-none">
+        {/* Scroll cue: shown only on the opening view */}
+        <div
+          className={
+            'absolute bottom-8 left-5 sm:left-8 flex items-center gap-3 text-[#0F5C63] text-xs font-bold uppercase tracking-[0.3em] pointer-events-none transition-opacity duration-500 ' +
+            (shown === 0 && target === 0 ? 'opacity-100' : 'opacity-0')
+          }
+        >
           <span className="inline-block w-px h-10 bg-[#0F5C63] animate-pulse" />
           Scroll
-        </m.div>
+        </div>
 
         {/* Footage credit */}
         {mobile ? (
@@ -284,7 +255,13 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
           <Credit className="absolute bottom-3 right-6 max-w-md text-right pointer-events-none" />
         )}
 
-        <button onClick={onStart} className={'absolute right-4 sm:right-8 text-[11px] font-bold uppercase tracking-widest underline underline-offset-4 ' + (mobile ? 'top-[4.9rem] text-white drop-shadow' : 'top-24 text-[#0D2226]/70 hover:text-[#0F5C63]')}>
+        <button
+          onClick={onStart}
+          className={
+            'absolute right-4 sm:right-8 text-[11px] font-bold uppercase tracking-widest underline underline-offset-4 ' +
+            (mobile ? 'top-[4.9rem] text-white drop-shadow' : 'top-24 text-[#0D2226]/70 hover:text-[#0F5C63]')
+          }
+        >
           Skip the intro
         </button>
       </div>
