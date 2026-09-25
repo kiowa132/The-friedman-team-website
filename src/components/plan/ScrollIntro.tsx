@@ -69,12 +69,12 @@ const TourVideo: React.FC<{ target: number; mobile: boolean; onArrive: (i: numbe
 
     if (t > v.currentTime) {
       // Fast fly-through that eases to a stop: speed follows the distance left.
-      let rate = 4;
+      let rate = 5;
       let manual = false;
       let last = performance.now();
       const loop = (now: number) => {
         if (cancelled) return;
-        rate = Math.min(4, Math.max(0.6, (t - v.currentTime) * 1.4));
+        rate = Math.min(5, Math.max(0.9, (t - v.currentTime) * 2));
         v.playbackRate = rate;
         if (manual) {
           v.currentTime = Math.min(t, v.currentTime + ((now - last) / 1000) * rate);
