@@ -219,7 +219,7 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
     progressRef.current = v;
   });
   const barScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
+  const cueOpacity = useTransform(scrollYProgress, (v) => 1 - Math.min(1, Math.max(0, v / 0.06)));
 
   // Reduced motion: a plain stack of chapters with a still from each.
   if (reduce) {
