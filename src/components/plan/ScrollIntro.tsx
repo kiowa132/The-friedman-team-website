@@ -200,8 +200,8 @@ const TextLayer: React.FC<{ progress: MotionValue<number>; index: number; chapte
   );
 };
 
-const Credit: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <span className={'text-[10px] leading-snug text-[#0D2226]/80 bg-white/75 backdrop-blur px-3 py-1.5 rounded-full ' + className}>{CREDIT_TEXT}</span>
+const Credit: React.FC<{ className?: string; style?: React.CSSProperties }> = ({ className = '', style }) => (
+  <span style={style} className={'text-[10px] leading-snug text-[#0D2226]/80 bg-white/75 backdrop-blur px-3 py-1.5 rounded-full ' + className}>{CREDIT_TEXT}</span>
 );
 
 export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
@@ -278,7 +278,11 @@ export const ScrollIntro: React.FC<{ onStart: () => void }> = ({ onStart }) => {
         </m.div>
 
         {/* Footage credit */}
-        <Credit className="absolute bottom-3 right-3 sm:right-6 max-w-[64%] sm:max-w-md text-right pointer-events-none" />
+        {mobile ? (
+          <Credit className="absolute left-2 right-2 text-center pointer-events-none" style={{ top: 'calc(4.5rem + 56.25vw - 2.6rem)' }} />
+        ) : (
+          <Credit className="absolute bottom-3 right-6 max-w-md text-right pointer-events-none" />
+        )}
 
         <button onClick={onStart} className={'absolute right-4 sm:right-8 text-[11px] font-bold uppercase tracking-widest underline underline-offset-4 ' + (mobile ? 'top-[4.9rem] text-white drop-shadow' : 'top-24 text-[#0D2226]/70 hover:text-[#0F5C63]')}>
           Skip the intro
