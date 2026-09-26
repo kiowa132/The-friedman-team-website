@@ -6,7 +6,6 @@ import { usePageMeta } from '../lib/usePageMeta';
 import { EASE_PREMIUM } from '../lib/motion';
 import { submitLead } from '../lib/leads';
 import { TcpaConsent } from '../components/TcpaConsent';
-import { ScrollIntro } from '../components/plan/ScrollIntro';
 import { ConsultCalendar, prettyDate } from '../components/plan/ConsultCalendar';
 import {
   ADVISOR_BULLETS,
@@ -137,7 +136,7 @@ export const MarketingPlanPage: React.FC<MarketingPlanPageProps> = ({ onOpenValu
 
   const go = (slug: StepSlug) => navigate(`${BASE}/${slug}`);
 
-  if (!step) return <ScrollIntro onStart={() => go('home')} />;
+  if (!step) return <IntroRedirect />;
   if (idx === -1) return <Navigate to={BASE} replace />;
   const cur = steps[idx];
   if (cur.slug !== 'home' && value == null) return <Navigate to={`${BASE}/home`} replace />;
@@ -646,3 +645,11 @@ const PlanSummary: React.FC<{ tierId: TierId; prepPick: string; picks: string[] 
     </div>
   );
 };
+
+// The cinematic scroll intro is a standalone page (public/sell-intro). Its final door button comes back to /sell/marketing-plan/home.
+function IntroRedirect() {
+  useEffect(() => {
+    window.location.replace('/sell-intro/index.html');
+  }, []);
+  return null;
+}

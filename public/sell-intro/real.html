@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI footage test | The Friedman Team</title>
+<title>Sell Your Home the Right Way | The Friedman Team</title>
 <meta name="description" content="Follow one home from the air to the front door and through every room, then build the marketing plan for yours with The Friedman Team, eXp Realty.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230F5C63'/><text x='16' y='23' font-size='20' text-anchor='middle' fill='%23FAF8F5' font-family='Georgia,serif' font-weight='700'>F</text></svg>">
@@ -143,18 +143,34 @@
 
 <div class="lens" aria-hidden="true"></div>
 
-<p class="credit">Illustrative AI-generated imagery of a fictional home. Test build.</p>
+<nav class="rail" aria-label="Rooms">
+  <button type="button" data-stop="0"><span class="n">The aerial</span><i></i></button>
+  <button type="button" data-stop="1"><span class="n">Front door</span><i></i></button>
+  <button type="button" data-stop="2"><span class="n">Dining room</span><i></i></button>
+  <button type="button" data-stop="3"><span class="n">Great room</span><i></i></button>
+  <button type="button" data-stop="4"><span class="n">Kitchen</span><i></i></button>
+</nav>
+
+<p class="credit">Home tour footage courtesy of Brent Sledd, The Rob Ellerman Team, Reece Nichols Real Estate</p>
 
 <main id="top" data-sc-mode="worldflight" data-sc-seam="0.16">
 
   <div data-sc-world>
-    <div data-sc-segment data-sc-w="1.05" data-sc-linger="0.3" data-sc-waypoint="The aerial">
-      <img class="sc-world__poster" src="ai/p1.webp" alt="" decoding="async" fetchpriority="high">
-      <video data-sc-src="ai/leg1.mp4" data-sc-src-mobile="ai/leg1-m.mp4" muted playsinline></video>
+    <div data-sc-segment data-sc-w="1.02" data-sc-linger="0.35" data-sc-waypoint="The aerial">
+      <img class="sc-world__poster" src="assets/p1.webp" alt="" decoding="async" fetchpriority="high">
+      <video data-sc-src="assets/leg1.mp4" data-sc-src-mobile="assets/leg1-m.mp4" muted playsinline></video>
     </div>
-    <div data-sc-segment data-sc-w="1.05" data-sc-linger="0.3" data-sc-waypoint="Front door">
-      <img class="sc-world__poster" src="ai/p2.webp" alt="" decoding="async">
-      <video data-sc-src="ai/leg2.mp4" data-sc-src-mobile="ai/leg2-m.mp4" muted playsinline></video>
+    <div data-sc-segment data-sc-w="0.68" data-sc-linger="0.35" data-sc-waypoint="Front door">
+      <img class="sc-world__poster" src="assets/p2.webp" alt="" decoding="async">
+      <video data-sc-src="assets/leg2.mp4" data-sc-src-mobile="assets/leg2-m.mp4" muted playsinline></video>
+    </div>
+    <div data-sc-segment data-sc-w="1.33" data-sc-linger="0.35" data-sc-waypoint="Dining room">
+      <img class="sc-world__poster" src="assets/p3.webp" alt="" decoding="async">
+      <video data-sc-src="assets/leg3.mp4" data-sc-src-mobile="assets/leg3-m.mp4" muted playsinline></video>
+    </div>
+    <div data-sc-segment data-sc-w="1.21" data-sc-linger="0.35" data-sc-waypoint="Great room">
+      <img class="sc-world__poster" src="assets/p4.webp" alt="" decoding="async">
+      <video data-sc-src="assets/leg4.mp4" data-sc-src-mobile="assets/leg4-m.mp4" muted playsinline></video>
     </div>
   </div>
 
@@ -163,9 +179,25 @@
       <h1>Let's sell your home the right way.</h1>
       <p>Follow one home from the air to the front door and through every room, then build the plan for yours.</p>
     </div>
-    <div class="c c--l" data-sc-copy data-sc-window="finale">
+
+    <div class="c c--r" data-sc-copy data-sc-window="0.19 0.30">
       <h2>First, we get it ready.</h2>
       <p>Your Home Prep Advisor walks the home with you, tells you what is worth doing, and lines up the vendors.</p>
+    </div>
+
+    <div class="c c--l" data-sc-copy data-sc-window="0.345 0.455">
+      <h2>Then we show it off.</h2>
+      <p>Beautiful photos, 3D tours, drone views and video that make buyers stop scrolling.</p>
+    </div>
+
+    <div class="c c--r" data-sc-copy data-sc-window="0.66 0.775">
+      <h2>Then we get it seen.</h2>
+      <p>Every major site, our buyer network and paid reach put your home in front of the right people.</p>
+    </div>
+
+    <div class="c c--fin" data-sc-copy data-sc-window="finale">
+      <h2>Then we bring buyers through every room.</h2>
+      <p>Open houses, showings, feedback within 48 hours, and a negotiation plan set before the first offer.</p>
       <a class="door" href="/sell/marketing-plan/home" id="door">
         <span class="door__arch" aria-hidden="true"><span class="door__leaf door__leaf--l"></span><span class="door__leaf door__leaf--r"></span></span>
         <span class="door__label">Build my plan</span>
@@ -185,6 +217,23 @@
   function relayout() { dispatchEvent(new Event('resize')); }
   addEventListener('load', relayout);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+
+  // ---- route rail: five rooms, tap to fly there (stops sit on the leg boundaries) ----
+  var WEIGHTS = [1.02, 0.68, 1.33, 1.21];
+  var STOPS = [0]; WEIGHTS.forEach(function (w) { STOPS.push(STOPS[STOPS.length - 1] + w); });
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.rail button'));
+  function nearest() {
+    var t = window.scrollY / window.innerHeight, best = 0, d = 1e9;
+    STOPS.forEach(function (s, i) { var dd = Math.abs(s - t); if (dd < d) { d = dd; best = i; } });
+    return best;
+  }
+  function mark() { var n = nearest(); buttons.forEach(function (b, i) { b.setAttribute('aria-current', String(i === n)); }); }
+  addEventListener('scroll', mark, { passive: true }); mark();
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      window.scrollTo({ top: STOPS[+b.dataset.stop] * window.innerHeight + 2, behavior: 'smooth' });
+    });
+  });
 
   // ---- the door opens before the link follows ----
   var door = document.getElementById('door');
