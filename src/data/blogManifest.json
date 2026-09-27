@@ -1,5 +1,23 @@
 [
   {
+    "slug": "10-things-buyers-notice-the-second-they-walk-in-maryland-sellers-checklist",
+    "title": "10 Things Buyers Notice the Second They Walk In (and How Maryland Sellers Can Fix Them)",
+    "metaDescription": "Buyers decide fast. The 10 first-minute impressions, from smell and light to noise and small repairs, and what Maryland sellers can fix before showings.",
+    "heroImage": "/images/uploads/buyers-notice-first-minute-hero.jpg"
+  },
+  {
+    "slug": "1031-exchange-maryland-what-it-means-for-buyers-and-sellers",
+    "title": "1031 Exchange in Maryland: What It Actually Means for Sellers and for Buyers",
+    "metaDescription": "A 1031 exchange defers capital gains, but the 45 and 180 day clocks are strict. What Maryland investors and the buyers on the other side need to know.",
+    "heroImage": "/images/uploads/1031-exchange-maryland-hero.jpg"
+  },
+  {
+    "slug": "5-myths-about-buying-your-first-home-maryland-first-time-buyer-guide",
+    "title": "5 Myths About Buying Your First Home in Maryland (and What Is Actually True)",
+    "metaDescription": "You don't need 20% down or perfect credit. Five first-time buyer myths busted, with real Maryland numbers on down payment, rent, credit, and rates.",
+    "heroImage": "/images/uploads/first-home-myths-hero.jpg"
+  },
+  {
     "slug": "baltimore-county-maryland-real-estate-market-report-week-of-june-1-7-2026",
     "title": "Baltimore County Maryland Real Estate Market Report: Week of June 1–7, 2026",
     "metaDescription": "Baltimore County's housing market shows genuine strength in some pockets and quiet softening in others during the week of June 1–7, 2026.",
@@ -12,10 +30,22 @@
     "heroImage": "/images/uploads/big-story-07-27-2026-11.jpg"
   },
   {
+    "slug": "can-you-afford-to-move-up-maryland-how-to-calculate-your-equity-and-budget",
+    "title": "Can You Afford to Move Up? How Maryland Homeowners Can Calculate Their Real Budget",
+    "metaDescription": "Your equity is probably higher than you think. Here is the three-step math for Maryland move-up buyers: usable equity, the new payment, and hidden costs.",
+    "heroImage": "/images/uploads/can-you-afford-to-move-up-hero.jpg"
+  },
+  {
     "slug": "cnbc-says-maryland-has-the-2nd-worst-economy-in-america-bright-mls-says-otherwise",
     "title": "CNBC Says Maryland Has the 2nd Worst Economy in America. Bright MLS Says Otherwise",
     "metaDescription": "My phone hasn’t stopped buzzing this week. Clients, past clients, my own mother everyone’s sending me the same headline: CNBC just ranked Maryland the 2nd worst economy in America.",
     "heroImage": "/images/uploads/big-story-07-27-2026-18.jpg"
+  },
+  {
+    "slug": "coming-soon-strategy-maryland-timing-your-listing",
+    "title": "The Coming Soon Strategy: How to Time Your Maryland Listing for a Stronger First Weekend",
+    "metaDescription": "Coming Soon status in Bright MLS, explained: what it allows, when it helps Maryland sellers, and the best day to go Active for a strong first weekend.",
+    "heroImage": "/images/uploads/coming-soon-strategy-hero.jpg"
   },
   {
     "slug": "curb-appeal-isnt-staging-its-math",
@@ -24,10 +54,34 @@
     "heroImage": "/images/uploads/big-story-07-27-2026-3.jpg"
   },
   {
+    "slug": "fastest-selling-housing-markets-maryland-fulton-woodstock-north-east-bel-air-timonium",
+    "title": "Maryland's Fastest Selling Housing Markets: Why Fulton, Woodstock, North East, Bel Air and Timonium Move So Fast",
+    "metaDescription": "Five Maryland markets sold in 4 to 23 days while the state took 32 to 48. Prices, the lifestyle draw, and what it means for buyers and sellers there.",
+    "heroImage": "/images/uploads/fastest-selling-markets-maryland-hero.jpg"
+  },
+  {
+    "slug": "gen-z-home-buyers-maryland-my-own-generation-just-showed-up-to-buy",
+    "title": "I'm 28 and I Sell Houses. My Own Generation Just Showed Up to Buy Them: What Gen Z Buyers Want in Maryland",
+    "metaDescription": "Gen Z was 20% of Q2 2026 purchase rate locks. A 28-year-old Maryland agent on why they are buying now, where they look, and what they want in a home.",
+    "heroImage": "/images/uploads/gen-z-home-buyers-maryland-hero.jpg"
+  },
+  {
+    "slug": "how-early-should-you-start-preparing-to-sell-your-maryland-home-timeline",
+    "title": "How Early Should You Start Preparing to Sell? A Maryland Home Seller's Timeline",
+    "metaDescription": "Start 3 to 4 months before listing, or 6 if repairs are big. A phase-by-phase Maryland prep timeline, from decluttering to photos to listing week.",
+    "heroImage": "/images/uploads/how-early-prepare-to-sell-hero.jpg"
+  },
+  {
     "slug": "how-much-money-do-you-need-to-buy-a-house-in-maryland",
     "title": "How Much Money Do You Actually Need to Buy a House in Maryland?",
     "metaDescription": "A full breakdown of every cost to buy a home in Maryland - earnest money, inspections, appraisal, closing costs, and county-by-county taxes.",
-    "heroImage": ""
+    "heroImage": "/images/uploads/buyer-costs-agent-consultation-hero.webp"
+  },
+  {
+    "slug": "low-appraisal-maryland-what-to-do-when-your-home-appraises-below-contract-price",
+    "title": "The $27,000 a Bank Refused to See: What to Do When a Maryland Home Appraises Below Contract Price",
+    "metaDescription": "A low appraisal doesn't have to kill your deal. See how a Reconsideration of Value closed most of a $27,000 gap on a Sykesville farm, plus your options.",
+    "heroImage": "/images/uploads/low-appraisal-maryland-hero.jpg"
   },
   {
     "slug": "maryland-housing-market-update-week-of-august-10-16-2026",
@@ -48,10 +102,46 @@
     "heroImage": "/images/uploads/firefly-3-.png"
   },
   {
+    "slug": "maryland-real-estate-market-report-week-of-august-24-30-2026",
+    "title": "Maryland Real Estate Market Report: New Listings Nearly Double, Week of August 24-30, 2026",
+    "metaDescription": "Maryland new listings and closings both nearly doubled this week. Full statewide and 24-county Bright MLS data, the Friedman Market Momentum Index, and mortgage rates.",
+    "heroImage": "/images/uploads/maryland-real-estate-market-report-week-of-august-24-30-2026-hero.jpg"
+  },
+  {
+    "slug": "maryland-real-estate-market-report-week-of-august-31-september-6-2026",
+    "title": "Maryland Real Estate Market Report: Week of August 31 to September 6, 2026",
+    "metaDescription": "Maryland's housing market held steady the week of August 31 to September 6, 2026. The median sold price eased to $440,000, homes took a median of 21 days to go under contract, and the 30-year mortgage rate rose to 6.71%. Full county-by-county Bright MLS data, the Friedman Market Momentum Index, price extremes, and what it means for buyers and sellers.",
+    "heroImage": "/images/uploads/maryland-real-estate-market-report-week-of-august-31-september-6-2026-hero.jpg"
+  },
+  {
+    "slug": "maryland-real-estate-market-report-week-of-september-14-20-2026",
+    "title": "Maryland Real Estate Market Report: Week of September 14 to 20, 2026",
+    "metaDescription": "Maryland home prices held the week of September 14 to 20, 2026, with the median sold price up 1.1% to $449,900, but the median time to contract stretched from 20 to 25 days as the Freddie Mac 30-year rate jumped 19 basis points to 6.95%. Full county-by-county Bright MLS data, supply pressure, the Friedman Market Momentum Index, and what it means for buyers and sellers.",
+    "heroImage": "/images/uploads/maryland-real-estate-market-report-week-of-september-14-20-2026-hero.jpg"
+  },
+  {
+    "slug": "maryland-real-estate-market-report-week-of-september-21-27-2026",
+    "title": "Maryland Real Estate Market Report: Week of September 21 to 27, 2026",
+    "metaDescription": "Maryland's median sold price fell 5.5% to $425,000 the week of September 21 to 27, 2026, as price reductions jumped 30.4% to a record 2,329 and the Freddie Mac 30-year rate crossed 7% for the first time. Full county-by-county Bright MLS data, supply pressure, the Friedman Market Momentum Index, and what it means for buyers and sellers.",
+    "heroImage": "/images/uploads/maryland-real-estate-market-report-week-of-september-21-27-2026-hero.jpg"
+  },
+  {
+    "slug": "maryland-real-estate-market-report-week-of-september-7-13-2026",
+    "title": "Maryland Real Estate Market Report: Week of September 7 to 13, 2026",
+    "metaDescription": "Maryland's housing market saw its biggest new-listing surge on record the week of September 7 to 13, 2026, up 17.4% to 2,366, while closed sales fell to 708 during the Labor Day settlement week. The median sold price rose to $445,000 and sellers held 99.6% of original list price. Full county-by-county Bright MLS data, a new supply-pressure breakdown, the Friedman Market Momentum Index, price extremes, and what it means for buyers and sellers.",
+    "heroImage": "/images/uploads/maryland-real-estate-market-report-week-of-september-7-13-2026-hero.jpg"
+  },
+  {
     "slug": "maryland-real-estate-market-update-june-15-21-2026-prices-inventory-trends",
     "title": "Maryland Real Estate Market Update (June 15–21, 2026): Prices, Inventory & Trends",
     "metaDescription": "A seller almost waited too long to list — here's what Maryland's prices and inventory actually did the week of June 15–21, 2026.",
     "heroImage": "/images/uploads/big-story-07-27-2026-14.jpg"
+  },
+  {
+    "slug": "popcorn-ceiling-removal-cost-2026-maryland-sellers-guide",
+    "title": "Popcorn Ceiling Removal Cost (2026): Is It Worth Doing Before You Sell a Maryland Home?",
+    "metaDescription": "What popcorn ceiling removal costs in 2026, why you must test for asbestos first, DIY vs pro, and whether it helps a Maryland home sell.",
+    "heroImage": "/images/uploads/popcorn-ceiling-removal-hero.jpg"
   },
   {
     "slug": "should-you-replace-your-roof-before-selling-a-maryland-sellers-guide",
@@ -60,10 +150,22 @@
     "heroImage": "/images/uploads/big-story-07-27-2026-24.jpg"
   },
   {
+    "slug": "should-you-sell-before-you-buy-maryland-move-up-decision-guide",
+    "title": "Should You Sell Before You Buy? How I Walk Maryland Homeowners Through the Decision",
+    "metaDescription": "Sell first or buy first? The real tradeoffs, plus HELOCs, bridge loans, rent-backs and sale contingencies for Maryland move-up buyers.",
+    "heroImage": "/images/uploads/sell-before-you-buy-hero.jpg"
+  },
+  {
     "slug": "something-happened-this-week-that-isnt-supposed-to-happen-the-friedman-maryland-report-week-of-july-27-august-2-2026",
     "title": "Something happened this week that isn’t supposed to happen | The Friedman Maryland Report | Week of July 27 – August 2, 2026",
     "metaDescription": "[Mortgage rates](/calculators/mortgage) climbed for the fifth week in a row",
     "heroImage": "/images/uploads/big-story-07-27-2026-15.jpg"
+  },
+  {
+    "slug": "the-clause-that-wins-bidding-wars-escalation-and-appraisal-gaps-maryland",
+    "title": "The Clause That Wins Bidding Wars: Escalation Clauses and Appraisal Gaps in Maryland",
+    "metaDescription": "How escalation clauses and appraisal gap coverage actually work in Maryland contracts, how the two combine in a competitive offer, and what to line up first.",
+    "heroImage": "/images/uploads/bidding-wars-hero.png"
   },
   {
     "slug": "the-full-year-broken-down-when-home-prices-actually-peak-and-dip",
@@ -76,6 +178,12 @@
     "title": "The Most Important Number This Week Wasn't a Home Price",
     "metaDescription": "[Mortgage rates](/calculators/mortgage) climbed for a fourth straight week as buyer demand cooled and Maryland's market shifted into a more balanced phase.",
     "heroImage": "/images/uploads/big-story-07-27-2026-5.jpg"
+  },
+  {
+    "slug": "the-two-mortgage-problem-maryland-move-up-buyers",
+    "title": "The Two-Mortgage Problem: How to Buy Your Next Maryland Home Without Carrying Two Loans",
+    "metaDescription": "Rent-backs, bridge loans, HELOCs and contingent offers compared - how Carroll, Howard and Frederick County move-up buyers bridge the gap between two houses.",
+    "heroImage": "/images/uploads/two-mortgage-problem-hero.jpg"
   },
   {
     "slug": "what-buying-above-500k-actually-looks-like-in-carroll-county-maryland",
@@ -94,5 +202,11 @@
     "title": "What Zillow Doesn't Tell You: The Truth About Zestimate Accuracy in Maryland",
     "metaDescription": "Zillow's own data shows Zestimates miss by 7% or more on unlisted homes. Here's what the algorithm can't see, and why Carroll, Baltimore, Howard, and Frederick County homeowners need an accurate valuation before listing.",
     "heroImage": "/images/uploads/image-1-.jpg"
+  },
+  {
+    "slug": "your-home-isnt-selling-is-it-the-price-maryland-seller-diagnosis",
+    "title": "Your Home Isn't Selling: Is It Really the Price? A Maryland Seller's Diagnosis",
+    "metaDescription": "Six weeks on the market and no offers? Signs it's the price, signs to wait, and how to cut once so it works. A Maryland seller's evidence-based checklist.",
+    "heroImage": "/images/uploads/home-not-selling-price-hero.jpg"
   }
 ]

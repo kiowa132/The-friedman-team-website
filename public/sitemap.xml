@@ -2,261 +2,471 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.friedmanreteam.com/</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/about</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/sell</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/sell/marketing-strategy</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/buy</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/listings</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/contact</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/blog</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/guides</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.friedmanreteam.com/mailing-list</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.friedmanreteam.com/luxury</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/team</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/giving-back</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://www.friedmanreteam.com/privacy-policy</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/terms-of-use</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/calculators</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/calculators/mortgage</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/calculators/affordability</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/calculators/net-proceeds</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/past-transactions</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/videos</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/financing-options</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/network</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/network/directory</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/network/about</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/network/events</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/network/join</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/westminster</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/eldersburg</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/sykesville</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/mount-airy</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/taneytown</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/hampstead</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/manchester</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/new-windsor</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/columbia</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/ellicott-city</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/elkridge</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/clarksville</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/fulton</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/highland</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/savage</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/towson</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/timonium</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/cockeysville</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/owings-mills</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/reisterstown</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/hunt-valley</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/catonsville</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/parkville</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/downtown-frederick</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/urbana</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/new-market</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/walkersville</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/middletown</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/brunswick</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/neighborhoods/emmitsburg</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/4327-16th-st-n-arlington-va</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/9209-vendome-drive-bethesda-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/626-a-old-county-road-severna-park-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/6302-30th-st-nw-washington-dc</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/7812-preakness-ln-fairfax-station-va</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/6920-mystic-woods-way-columbia-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/803-c-st-ne-washington-dc</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/7106-stratos-ln-gaithersburg-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/6614-eastern-avenue-nw-washington-dc</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/5-orleans-ter-kensington-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/5809-tudor-ln-rockville-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/2291-stratton-dr-potomac-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/30-sharpstead-lane-gaithersburg-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/321-linden-ave-annapolis-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/6815-kincaid-ave-falls-church-va</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/3413-metzerott-road-college-park-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/transactions/13503-stonebridge-ter-germantown-md</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/10-things-buyers-notice-the-second-they-walk-in-maryland-sellers-checklist</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/1031-exchange-maryland-what-it-means-for-buyers-and-sellers</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/5-myths-about-buying-your-first-home-maryland-first-time-buyer-guide</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.friedmanreteam.com/blog/baltimore-county-maryland-real-estate-market-report-week-of-june-1-7-2026</loc>
@@ -271,8 +481,104 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.friedmanreteam.com/blog/can-you-afford-to-move-up-maryland-how-to-calculate-your-equity-and-budget</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/cnbc-says-maryland-has-the-2nd-worst-economy-in-america-bright-mls-says-otherwise</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/coming-soon-strategy-maryland-timing-your-listing</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.friedmanreteam.com/blog/curb-appeal-isnt-staging-its-math</loc>
     <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/fastest-selling-housing-markets-maryland-fulton-woodstock-north-east-bel-air-timonium</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/gen-z-home-buyers-maryland-my-own-generation-just-showed-up-to-buy</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/how-early-should-you-start-preparing-to-sell-your-maryland-home-timeline</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/how-much-money-do-you-need-to-buy-a-house-in-maryland</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/low-appraisal-maryland-what-to-do-when-your-home-appraises-below-contract-price</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/maryland-housing-market-update-week-of-august-10-16-2026</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/maryland-housing-market-update-week-of-august-3-9-2026</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/maryland-real-estate-market-report-week-of-august-17-23-2026</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/maryland-real-estate-market-report-week-of-august-24-30-2026</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/maryland-real-estate-market-report-week-of-august-31-september-6-2026</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/maryland-real-estate-market-report-week-of-september-14-20-2026</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/maryland-real-estate-market-report-week-of-september-21-27-2026</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/maryland-real-estate-market-report-week-of-september-7-13-2026</loc>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -283,8 +589,38 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.friedmanreteam.com/blog/popcorn-ceiling-removal-cost-2026-maryland-sellers-guide</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/should-you-replace-your-roof-before-selling-a-maryland-sellers-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/should-you-sell-before-you-buy-maryland-move-up-decision-guide</loc>
+    <lastmod>2026-06-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.friedmanreteam.com/blog/something-happened-this-week-that-isnt-supposed-to-happen-the-friedman-maryland-report-week-of-july-27-august-2-2026</loc>
     <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/the-clause-that-wins-bidding-wars-escalation-and-appraisal-gaps-maryland</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/the-full-year-broken-down-when-home-prices-actually-peak-and-dip</loc>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -295,9 +631,45 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.friedmanreteam.com/guides/first-time-buyer-checklist</loc>
-    <lastmod>2026-08-04</lastmod>
+    <loc>https://www.friedmanreteam.com/blog/the-two-mortgage-problem-maryland-move-up-buyers</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/what-buying-above-500k-actually-looks-like-in-carroll-county-maryland</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/what-happens-after-your-home-goes-under-contract</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/what-zillow-doesnt-tell-you-the-truth-about-zestimate-accuracy-in-maryland</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/blog/your-home-isnt-selling-is-it-the-price-maryland-seller-diagnosis</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/listings/261-magothy-bridge-rd</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.friedmanreteam.com/listings/listing-1</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

@@ -130,5 +130,144 @@
         "note": ""
       }
     ]
+  },
+  {
+    "date": "2026-08-31",
+    "score": 58,
+    "label": "Balanced Market, Surging Activity",
+    "signal": "Surging",
+    "sourceSlug": "maryland-real-estate-market-report-week-of-august-24-30-2026",
+    "subScores": [
+      {
+        "name": "Demand",
+        "score": 78,
+        "previousScore": 62,
+        "note": ""
+      },
+      {
+        "name": "Seller Strength",
+        "score": 50,
+        "previousScore": 60,
+        "note": ""
+      },
+      {
+        "name": "Market Speed",
+        "score": 66,
+        "previousScore": 55,
+        "note": ""
+      },
+      {
+        "name": "Rate Environment",
+        "score": 39,
+        "previousScore": 42,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "date": "2026-09-07",
+    "score": 50,
+    "label": "Balanced Market, Holding Steady",
+    "signal": "Steady",
+    "sourceSlug": "maryland-real-estate-market-report-week-of-august-31-september-6-2026"
+  },
+  {
+    "date": "2026-09-14",
+    "score": 48,
+    "label": "Balanced Market, Pricing Power Returns",
+    "signal": "Resetting",
+    "sourceSlug": "maryland-real-estate-market-report-week-of-september-7-13-2026",
+    "subScores": [
+      {
+        "name": "Demand",
+        "score": 43,
+        "previousScore": 78,
+        "note": ""
+      },
+      {
+        "name": "Seller Strength",
+        "score": 56,
+        "previousScore": 50,
+        "note": ""
+      },
+      {
+        "name": "Market Speed",
+        "score": 60,
+        "previousScore": 66,
+        "note": ""
+      },
+      {
+        "name": "Rate Environment",
+        "score": 32,
+        "previousScore": 39,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "date": "2026-09-21",
+    "score": 44,
+    "label": "Balanced Market, Cooling",
+    "signal": "Cooling",
+    "sourceSlug": "maryland-real-estate-market-report-week-of-september-14-20-2026",
+    "subScores": [
+      {
+        "name": "Demand",
+        "score": 54,
+        "previousScore": 43,
+        "note": ""
+      },
+      {
+        "name": "Seller Strength",
+        "score": 55,
+        "previousScore": 56,
+        "note": ""
+      },
+      {
+        "name": "Market Speed",
+        "score": 42,
+        "previousScore": 60,
+        "note": ""
+      },
+      {
+        "name": "Rate Environment",
+        "score": 24,
+        "previousScore": 32,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "date": "2026-09-28",
+    "score": 34,
+    "label": "Balanced Market, Cooling Sharply",
+    "signal": "Repricing",
+    "sourceSlug": "maryland-real-estate-market-report-week-of-september-21-27-2026",
+    "subScores": [
+      {
+        "name": "Demand",
+        "score": 40,
+        "previousScore": 54,
+        "note": ""
+      },
+      {
+        "name": "Seller Strength",
+        "score": 30,
+        "previousScore": 55,
+        "note": ""
+      },
+      {
+        "name": "Market Speed",
+        "score": 46,
+        "previousScore": 42,
+        "note": ""
+      },
+      {
+        "name": "Rate Environment",
+        "score": 21,
+        "previousScore": 24,
+        "note": ""
+      }
+    ]
   }
 ]
