@@ -649,7 +649,7 @@ const PlanSummary: React.FC<{ tierId: TierId; prepPick: string; picks: string[] 
 // The cinematic scroll intro is a standalone page (public/sell-intro). Its final door button comes back to /sell/marketing-plan/home.
 function IntroRedirect() {
   useEffect(() => {
-    window.location.replace('/sell-intro/index.html');
+    window.location.replace('/sell-intro/story.html');
   }, []);
   return null;
 }
