@@ -289,9 +289,9 @@ Talbot County posted a 175-day average on just 6 closings, too small to read as 
 
 ## This Week's Maryland Home Price Extremes
 
-**Highest-priced new listing:** 5906 Cedar Pkwy, Chevy Chase, MD 20815, listed at $5,250,000. A 1908 Colonial Revival on a double lot over 20,000 square feet, backing directly to a private golf course, in the incorporated Chevy Chase Village. The listing markets it as a renovation and expansion opportunity, already paired with a named architect and builder to reimagine the home.
+**Highest-priced new listing:** [5906 Cedar Pkwy, Chevy Chase, MD 20815](https://kylefriedman.expportal.com/listing-detail/1189768179/5906-CEDAR-PKWY-Chevy-Chase-MD?source=search&siteId=182488&condition=%7B%22location%22%3A%7B%22streetAddress%22%3A%5B%225906%20CEDAR%20PKWY%2C%20Chevy%20Chase%2C%20MD%2020815%22%5D%7D%7D&timezone=GMT-0400&), listed at $5,250,000. A 1908 Colonial Revival on a double lot over 20,000 square feet, backing directly to a private golf course, in the incorporated Chevy Chase Village. The listing markets it as a renovation and expansion opportunity, already paired with a named architect and builder to reimagine the home.
 
-**Lowest-priced new listing:** 1709 N Dukeland St, Baltimore, MD 21216, listed at $24,900. A bank-owned rowhouse near Coppin State University, sold subject to ground rent and in need of a full rehab, back on the market after a prior buyer failed to show up to settlement.
+**Lowest-priced new listing:** [1709 N Dukeland St, Baltimore, MD 21216](https://kylefriedman.expportal.com/listing-detail/1177716486/1709-N-DUKELAND-ST-Baltimore-MD?source=search&siteId=182488&condition=%7B%22location%22%3A%7B%22streetAddress%22%3A%5B%221709%20N%20DUKELAND%20ST%2C%20Baltimore%2C%20MD%2021216%22%5D%7D%7D&timezone=GMT-0400&), listed at $24,900. A bank-owned rowhouse near Coppin State University, sold subject to ground rent and in need of a full rehab, back on the market after a prior buyer failed to show up to settlement.
 
 Both are real new listings from this week's Bright MLS pull, not featured Friedman Team properties.
 
