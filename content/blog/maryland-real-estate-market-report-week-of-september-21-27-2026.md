@@ -1,6 +1,6 @@
 ---
 title: "Maryland Real Estate Market Report: Week of September 21 to 27, 2026"
-metaDescription: "Maryland's median sold price fell 5.5% to $425,000 the week of September 21 to 27, 2026, as price reductions jumped 30.4% to a record 2,329 and the Freddie Mac 30-year rate crossed 7% for the first time. Full county-by-county Bright MLS data, supply pressure, the Friedman Market Momentum Index, and what it means for buyers and sellers."
+metaDescription: "Maryland's median sold price fell 5.5% to $425,000 the week of September 21 to 27, 2026, as price reductions jumped 30.4% to a record 2,329 and the Freddie Mac 30-year rate broke back above 7%. Full county-by-county Bright MLS data, supply pressure, the Friedman Market Momentum Index, and what it means for buyers and sellers."
 category: Market Reports
 publishDate: "2026-09-28"
 heroImage: /images/uploads/maryland-real-estate-market-report-week-of-september-21-27-2026-hero.jpg
