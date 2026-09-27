@@ -130,16 +130,34 @@
     .door__arch { width: 6.6rem; height: 5.2rem; border-radius: 3.3rem 3.3rem 0 0; }
   }
 
+
   :root { --cream: #FAF8F5; }
-  /* ---- checklist cards: what each turn around the house adds ---- */
-  .ticks { list-style: none; margin: .9rem 0 0; padding: 0; display: grid; gap: .45rem; }
-  .ticks li { display: flex; align-items: center; gap: .6rem; font-size: .92rem; font-weight: 600; color: var(--sc-ink); }
-  .ticks li::before { content: "\2713"; flex: none; width: 1.3rem; height: 1.3rem; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; font-weight: 800; background: var(--gold); color: var(--sc-ink); }
+  /* ---- one continuous story: the same house, four different transitions ---- */
+  .plane { position: absolute; left: 50%; top: 50%; width: max(100vw, calc(100svh * 1.7778)); height: max(56.25vw, 100svh); translate: -50% -50%; transform-origin: 50% 60.5%;
+    --w1: clamp(0, calc((var(--sc-p, 0) - 0.05) / 0.19), 1);
+    --w2: clamp(0, calc((var(--sc-p, 0) - 0.32) / 0.17), 1);
+    --w3: clamp(0, calc((var(--sc-p, 0) - 0.56) / 0.17), 1);
+    --z:  clamp(0, calc((var(--sc-p, 0) - 0.74) / 0.14), 1);
+    --c:  clamp(0, calc((var(--sc-p, 0) - 0.83) / 0.07), 1);
+    transform: scale(calc(1 + var(--z) * 5.5)); }
+  .plane > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .s1 { clip-path: inset(0 calc((1 - var(--w1)) * 100%) 0 0); }
+  .s2 { clip-path: circle(calc(var(--w2) * 78%) at 50% 60.5%); }
+  .s3 { -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0, #000 calc(var(--w3) * 64px), transparent calc(var(--w3) * 64px), transparent 64px);
+        mask-image: repeating-linear-gradient(to bottom, #000 0, #000 calc(var(--w3) * 64px), transparent calc(var(--w3) * 64px), transparent 64px); }
+  .light { position: absolute; inset: 0; opacity: calc(var(--c) * 40); background: radial-gradient(ellipse at 50% 60.5%, #FFF6DC 0, var(--cream) calc(var(--c) * 100%), transparent calc(var(--c) * 100% + 3%)); }
+  .edge { position: absolute; top: 0; bottom: 0; left: calc(var(--w1) * 100%); width: 2px; background: #fff; box-shadow: 0 0 18px rgba(255,255,255,.9); opacity: calc(min(var(--w1), 1 - var(--w1)) * 20); }
+  .edge::after { content: ""; position: absolute; top: 50%; left: 50%; width: 2.6rem; height: 2.6rem; translate: -50% -50%; border-radius: 50%; background: rgba(255,255,255,.92); box-shadow: 0 6px 22px rgba(13,34,38,.35); }
+  .marks { position: absolute; left: 50%; top: 50%; width: max(100vw, calc(100svh * 1.7778)); height: max(56.25vw, 100svh); translate: -50% -50%; pointer-events: none; }
+  .tag { position: absolute; z-index: 5; display: inline-flex; align-items: center; gap: .55rem; padding: .5rem .85rem; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--sc-ink); background: rgba(255,255,255,.93); box-shadow: 0 8px 26px -8px rgba(13,34,38,.5); white-space: nowrap; }
+  .tag::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(201,168,76,.3); }
+  .tag--red::before { background: #D64545; box-shadow: 0 0 0 4px rgba(214,69,69,.28); }
   .c--dark { color: #fff; background: rgba(13, 34, 38, 0.80); border-color: rgba(255,255,255,.14); }
   .c--dark h2, .c--dark h1 { color: #fff; }
   .c--dark p { color: rgba(255,255,255,.84); }
-  .c--dark .ticks li { color: #fff; }
-  /* ---- side checklist that fills as the house improves ---- */
+  .fin { position: absolute; z-index: var(--sc-z-copy); left: 50%; top: 50%; translate: -50% -50%; width: min(40rem, 90vw); text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .fin h2 { margin: 0; font-family: var(--sc-font-display); font-weight: 700; color: var(--sc-ink); font-size: clamp(2rem, 1.3rem + 3vw, 3.8rem); line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+  .fin p { margin: 1rem auto 0; color: var(--sc-ink-soft); max-width: 44ch; }
   .steps { position: fixed; z-index: 65; right: 1.4rem; top: 50%; translate: 0 -50%; display: flex; flex-direction: column; gap: .7rem; align-items: flex-end; margin: 0; padding: 0; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
   .steps li { list-style: none; display: flex; align-items: center; gap: .6rem; opacity: .55; transition: opacity var(--sc-d-base); }
   .steps li i { width: 1.15rem; height: 1.15rem; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 6px rgba(0,0,0,.4); display: grid; place-items: center; font-style: normal; font-size: .62rem; line-height: 1; }
@@ -148,149 +166,121 @@
   .steps li.done i::after { content: "\2713"; }
   .steps.dark { color: var(--sc-ink); text-shadow: none; }
   .steps.dark li i { border-color: var(--sc-ink); }
-  /* ---- the light that spreads from the open door at the end, into the plan ---- */
-  .light { position: fixed; inset: 0; z-index: 12; pointer-events: none; --c: 0;
-    opacity: calc(var(--c) * 40);
-    background: radial-gradient(ellipse at 50% 54%, #FFF6DC 0, var(--cream) calc(var(--c) * 100%), transparent calc(var(--c) * 100% + 3%)); }
-  .fade { position: fixed; inset: 0; z-index: 90; background: var(--cream); opacity: 0; pointer-events: none; transition: opacity 520ms ease; }
-  .fade.on { opacity: 1; }
-  .c--fin .door { margin-top: 1.1rem; }
-  .hint { margin: .9rem 0 0; font-size: .74rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--sc-accent); }
-  @media (max-width: 820px) { .steps { display: none; } }
+  .credit { z-index: 66; }
+  .win { position: absolute; inset: 0; overflow: hidden; }
+  @media (max-width: 820px) {
+    .win { inset: auto; left: 0; right: 0; top: var(--bar-h); height: 56.25vw; }
+    .plane { left: 0; top: 0; width: 100vw; height: 56.25vw; translate: none; }
+    .marks { left: 0; top: 0; width: 100vw; height: 56.25vw; translate: none; }
+    .tag { font-size: .58rem; padding: .28rem .5rem; gap: .35rem; }
+    .tag::before { width: .4rem; height: .4rem; }
+    .steps { display: none; }
+    .fin { top: calc(var(--bar-h) + 56.25vw + 1.4rem); translate: -50% 0; }
+  }
 
 </style>
 </head>
 <body>
-
 <span data-sc-progress></span>
-<div class="sc-grain" aria-hidden="true"></div>
-
 <header class="bar">
   <a class="bar__mark" href="/">The Friedman Team<small>eXp Realty</small></a>
   <a class="bar__cta" href="/sell/marketing-plan/home">Build my plan</a>
 </header>
 
-<div class="lens" aria-hidden="true"></div>
-<div class="light" id="light" aria-hidden="true"></div>
-<div class="fade" id="fade" aria-hidden="true"></div>
-
 <ul class="steps" aria-label="Your plan so far" id="steps">
-  <li data-at="0.21"><i></i>Prep</li>
-  <li data-at="0.42"><i></i>Photos</li>
-  <li data-at="0.62"><i></i>Reach</li>
+  <li data-at="0.24"><i></i>Prep</li>
+  <li data-at="0.50"><i></i>Photos</li>
+  <li data-at="0.74"><i></i>Reach</li>
   <li data-at="0.93"><i></i>Offers</li>
 </ul>
 
-<p class="credit">Illustrative AI-generated imagery of a fictional home.</p>
+<main id="top">
+  <section id="act" data-sc-act="pin" data-sc-span="11">
+    <div data-sc-stage>
+      <div class="win">
+        <div class="plane">
+          <img src="imp/before.webp" alt="The house today: patchy lawn, stained stone, bins and clutter" fetchpriority="high">
+          <img class="s1" src="imp/after.webp" alt="The same house after preparation: cleaned, landscaped and ready to sell">
+          <img class="s2" src="imp/twilight.webp" alt="The same house photographed at twilight with every window glowing">
+          <img class="s3" src="imp/openhouse.webp" alt="The same house on open house day with a yard sign and cars in the drive">
+          <div class="edge" aria-hidden="true"></div>
+          <div class="light" aria-hidden="true"></div>
+        </div>
+        <div class="marks">
+          <span class="tag" style="left:12%;top:78%" data-sc-cue="0.13 0.33"><span>Lawn restored and striped</span></span>
+          <span class="tag" style="left:41%;top:71%" data-sc-cue="0.16 0.33"><span>Walkway pressure washed</span></span>
+          <span class="tag" style="left:22%;top:28%" data-sc-cue="0.19 0.33"><span>Roof and stone cleaned</span></span>
+          <span class="tag" style="left:10%;top:52%" data-sc-cue="0.22 0.33"><span>Clutter cleared</span></span>
 
-<main id="top" data-sc-mode="worldflight" data-sc-seam="0.16">
+          <span class="tag" style="left:12%;top:14%" data-sc-cue="0.37 0.58"><span>Twilight photography</span></span>
+          <span class="tag" style="left:38%;top:44%" data-sc-cue="0.41 0.58"><span>3D tour and video</span></span>
+          <span class="tag" style="left:66%;top:18%" data-sc-cue="0.45 0.58"><span>Drone aerials</span></span>
 
-  <div data-sc-world>
-    <div data-sc-segment data-sc-w="1.15" data-sc-linger="0.3" data-sc-waypoint="Front, today">
-      <img class="sc-world__poster" src="spin/p1.webp" alt="" decoding="async" fetchpriority="high">
-      <video data-sc-src="spin/leg1.mp4" data-sc-src-mobile="spin/leg1-m.mp4" muted playsinline></video>
-    </div>
-    <div data-sc-segment data-sc-w="1.15" data-sc-linger="0.3" data-sc-waypoint="Left side, prepared">
-      <img class="sc-world__poster" src="spin/p2.webp" alt="" decoding="async">
-      <video data-sc-src="spin/leg2.mp4" data-sc-src-mobile="spin/leg2-m.mp4" muted playsinline></video>
-    </div>
-    <div data-sc-segment data-sc-w="1.15" data-sc-linger="0.3" data-sc-waypoint="Back, twilight">
-      <img class="sc-world__poster" src="spin/p3.webp" alt="" decoding="async">
-      <video data-sc-src="spin/leg3.mp4" data-sc-src-mobile="spin/leg3-m.mp4" muted playsinline></video>
-    </div>
-    <div data-sc-segment data-sc-w="1.05" data-sc-linger="0.12" data-sc-waypoint="Right side, open house">
-      <img class="sc-world__poster" src="spin/p4.webp" alt="" decoding="async">
-      <video data-sc-src="spin/leg4.mp4" data-sc-src-mobile="spin/leg4-m.mp4" muted playsinline></video>
-    </div>
-    <div data-sc-segment data-sc-w="1.05" data-sc-linger="0.08" data-sc-waypoint="Front door">
-      <img class="sc-world__poster" src="spin/p5.webp" alt="" decoding="async">
-      <video data-sc-src="spin/leg5.mp4" data-sc-src-mobile="spin/leg5-m.mp4" muted playsinline></video>
-    </div>
-  </div>
+          <span class="tag" style="left:12%;top:14%" data-sc-cue="0.61 0.80"><span>Every major listing site</span></span>
+          <span class="tag" style="left:20%;top:58%" data-sc-cue="0.64 0.80"><span>Yard sign with a QR code</span></span>
+          <span class="tag" style="left:54%;top:70%" data-sc-cue="0.67 0.80"><span>Open houses all weekend</span></span>
+          <span class="tag tag--red" style="left:24%;top:44%" data-sc-cue="0.72 0.80"><span>Under contract</span></span>
+        </div>
+      </div>
 
-  <div data-sc-world-copy>
-    <div class="c c--l" data-sc-copy data-sc-window="hero">
-      <h1>Let's sell your home the right way.</h1>
-      <p>Scroll and watch one home go from overlooked to under contract.</p>
-    </div>
+      <div class="c c--l" data-sc-cue="0 0.06 0">
+        <h1>Let's sell your home the right way.</h1>
+        <p>Scroll and watch one home go from overlooked to under contract.</p>
+      </div>
+      <div class="c c--r" data-sc-cue="0.19 0.30">
+        <h2>First, we get it ready.</h2>
+        <p>Your Home Prep Advisor decides what is worth doing, and we line up the vendors.</p>
+      </div>
+      <div class="c c--l c--dark" data-sc-cue="0.43 0.55">
+        <h2>Then we show it off.</h2>
+        <p>Beautiful photos, 3D tours, drone views and video that make buyers stop scrolling.</p>
+      </div>
+      <div class="c c--r" data-sc-cue="0.68 0.78">
+        <h2>Then we get it seen.</h2>
+        <p>Every major site, our buyer network and paid reach, plus open houses that fill the driveway.</p>
+      </div>
 
-    <div class="c c--r" data-sc-copy data-sc-window="0.155 0.265">
-      <h2>First, we get it ready.</h2>
-      <ul class="ticks"><li>Deep clean and pressure wash</li><li>Landscaping and curb appeal</li><li>Clutter cleared</li></ul>
-    </div>
+      <div class="fin" data-sc-cue="0.88 1.01 0.45 0">
+        <h2>Then we bring buyers through your front door.</h2>
+        <p>Feedback within 48 hours, a weekly call, and a negotiation plan set before the first offer. Now build the plan for your home.</p>
+        <a class="door" href="/sell/marketing-plan/home" id="door">
+          <span class="door__arch" aria-hidden="true"><span class="door__leaf door__leaf--l"></span><span class="door__leaf door__leaf--r"></span></span>
+          <span class="door__label">Build my plan</span>
+        </a>
+      </div>
 
-    <div class="c c--l c--dark" data-sc-copy data-sc-window="0.36 0.47">
-      <h2>Then we show it off.</h2>
-      <ul class="ticks"><li>Twilight photography</li><li>Drone aerials and 3D tour</li><li>Video that stops the scroll</li></ul>
+      <p class="credit">Illustrative AI-generated imagery of a fictional home.</p>
     </div>
-
-    <div class="c c--r" data-sc-copy data-sc-window="0.565 0.685">
-      <h2>Then we get it seen.</h2>
-      <ul class="ticks"><li>Every major listing site</li><li>Yard sign with a QR code</li><li>Open houses all weekend</li></ul>
-    </div>
-
-    <div class="c c--l c--fin" data-sc-copy data-sc-window="finale" style="translate:0 0;left:var(--sc-gutter);width:min(30rem,90vw);text-align:left;align-items:flex-start">
-      <h2>Then we bring buyers through your front door.</h2>
-      <p>Feedback within 48 hours, a weekly call, and a negotiation plan set before the first offer.</p>
-      <a class="door" href="/sell/marketing-plan/home" id="door">
-        <span class="door__arch" aria-hidden="true"><span class="door__leaf door__leaf--l"></span><span class="door__leaf door__leaf--r"></span></span>
-        <span class="door__label">Build my plan</span>
-      </a>
-    </div>
-  </div>
-
-  <div data-sc-spacer aria-hidden="true"></div>
+  </section>
 </main>
 
 <script src="scrollcraft.js"></script>
 <script>
-  ScrollCraft.mount(document);
-  window.__sc = ScrollCraft.instances[0]; // exposed for the verification scripts
+  ScrollCraft.mount(document.body);
   function relayout() { dispatchEvent(new Event('resize')); }
   addEventListener('load', relayout);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
 
-  var NEXT = '/sell/marketing-plan/home';
-  var light = document.getElementById('light'), fade = document.getElementById('fade'), door = document.getElementById('door');
-  var steps = document.getElementById('steps'), items = Array.prototype.slice.call(steps.querySelectorAll('li'));
-  var timer = 0, opened = false;
-  var armed = !sessionStorage.getItem('story-advanced') && !navigator.webdriver && !/noadvance/.test(location.search);
-
-  function progress() { var max = document.documentElement.scrollHeight - innerHeight; return max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0; }
-
-  function go() {
-    sessionStorage.setItem('story-advanced', '1');
-    fade.classList.add('on');
-    setTimeout(function () { location.href = NEXT; }, 560);
-  }
-
+  // checklist that ticks as each layer lands
+  var act = document.getElementById('act'), items = Array.prototype.slice.call(document.querySelectorAll('#steps li')), steps = document.getElementById('steps');
   function tick() {
-    var p = progress(), cur = -1;
-    // checklist
+    var p = parseFloat(getComputedStyle(act).getPropertyValue('--sc-p')) || 0, cur = -1;
     items.forEach(function (li, i) {
       var at = parseFloat(li.dataset.at);
       li.classList.toggle('done', p >= at);
       if (p < at && cur < 0) cur = i;
       li.classList.toggle('on', i === cur || p >= at);
     });
-    steps.classList.toggle('dark', p > 0.9);
-    // light from the open door, filling the screen by the end
-    light.style.setProperty('--c', Math.min(1, Math.max(0, (p - 0.9) / 0.07)).toFixed(3));
-    // re-arm the automatic hand-off once the reader scrolls back up
-    if (p < 0.85 && !navigator.webdriver && !/noadvance/.test(location.search)) { armed = true; sessionStorage.removeItem('story-advanced'); }
-    // at the very end: the door opens by itself, then the plan begins. No click needed.
-    if (p >= 0.985 && armed) {
-      if (!opened) { opened = true; door.classList.add('is-open'); timer = setTimeout(function () { if (progress() >= 0.97) go(); else { opened = false; door.classList.remove('is-open'); } }, 1100); }
-    } else if (p < 0.97 && opened) {
-      opened = false; clearTimeout(timer); door.classList.remove('is-open');
-    }
+    steps.classList.toggle('dark', p > 0.88);
   }
-  addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); addEventListener('pageshow', function () { fade.classList.remove('on'); tick(); }); tick();
+  addEventListener('scroll', tick, { passive: true }); tick();
 
-  // clicking the door still works, for anyone who wants to
+  // the door opens before the link follows
+  var door = document.getElementById('door');
   door.addEventListener('click', function (e) {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
-    e.preventDefault(); door.classList.add('is-open'); setTimeout(go, 420);
+    e.preventDefault(); door.classList.add('is-open');
+    setTimeout(function () { location.href = door.href; }, 520);
   });
 </script>
 </body>
