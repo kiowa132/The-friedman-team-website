@@ -6,6 +6,7 @@ import { usePageMeta } from '../lib/usePageMeta';
 import { HeroMedia, HeroMode } from '../components/listing/HeroMedia';
 import { Lightbox } from '../components/listing/Lightbox';
 import { RoomGallery } from '../components/listing/RoomGallery';
+import { FactsAndFeatures } from '../components/listing/FactsAndFeatures';
 
 const PHONE = '4437893101';
 const PHONE_DISPLAY = '443-789-3101';
@@ -217,6 +218,16 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
               onExpand={setLightboxIndex}
               resolvePhotoIndex={(src) => photos.indexOf(src)}
             />
+            {photos.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setLightboxIndex(0)}
+                className="inline-flex items-center gap-2 border border-[#0D2226]/20 hover:border-[#0D2226]/40 text-[#0D2226] font-bold text-sm rounded-xs px-5 py-2.5 -mt-6 mb-10 transition-colors"
+              >
+                See all media
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            )}
           </>
         ) : (
           galleryPhotos.length > 0 && (
@@ -244,6 +255,8 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
             </div>
           )
         )}
+
+        {listing?.factGroups?.length ? <FactsAndFeatures groups={listing.factGroups} /> : null}
       </div>
 
       {/* Contact CTA — full-bleed dark band */}

@@ -207,6 +207,24 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
       .map((n) => photoByNumber[n]),
   }));
 
+  // Facts & Features groups: same parallel-flat-list trick as roomGroups.
+  // factGroupItems entries are "Label: Value" pairs joined with "|".
+  const factGroupNames: string[] = Array.isArray(data.factGroups) ? data.factGroups : [];
+  const factGroupItems: string[] = Array.isArray(data.factGroupItems) ? data.factGroupItems : [];
+  const factGroups = factGroupNames.map((title, i) => ({
+    title,
+    items: (factGroupItems[i] || '')
+      .split('|')
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .map((pair) => {
+        const idx = pair.indexOf(':');
+        return idx === -1
+          ? { label: pair, value: '' }
+          : { label: pair.slice(0, idx).trim(), value: pair.slice(idx + 1).trim() };
+      }),
+  }));
+
   const bodyHtml = content && content.trim() ? (marked.parse(content) as string) : '';
   const loftyDescHtml = lofty.description
     ? `<p>${escapeHtml(String(lofty.description)).replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br/>')}</p>`
@@ -230,6 +248,7 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     photos,
     floorPlanImages: Array.isArray(data.floorPlanImages) ? data.floorPlanImages : [],
     roomGroups,
+    factGroups,
     highlightsHtml: bodyHtml || loftyDescHtml,
   };
 });
