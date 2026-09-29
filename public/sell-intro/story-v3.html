@@ -293,8 +293,12 @@
 
     var already = false;
     try { already = sessionStorage.getItem('story-advanced') === '1'; } catch (e) {}
-    if (p >= 0.985 && !already) go();
-    if (p < 0.95 && already) { try { sessionStorage.removeItem('story-advanced'); } catch (e) {} advanced = false; }
+    // Fires right as the screen finishes going cream (zoom and light wash
+    // both complete at 0.88), not after an extra scroll's worth of a
+    // separate "door screen." The line gets a brief flash, then it's gone,
+    // there is nothing left to scroll or swipe past.
+    if (p >= 0.89 && !already) go();
+    if (p < 0.85 && already) { try { sessionStorage.removeItem('story-advanced'); } catch (e) {} advanced = false; }
   }
   // --sc-p is driven by scrollcraft's own requestAnimationFrame loop, not
   // gated on a native 'scroll' event, so a plain scroll listener can miss
