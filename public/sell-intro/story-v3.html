@@ -138,13 +138,12 @@
     --w2: clamp(0, calc((var(--sc-p, 0) - 0.32) / 0.17), 1);
     --w3: clamp(0, calc((var(--sc-p, 0) - 0.56) / 0.17), 1);
     --z:  clamp(0, calc((var(--sc-p, 0) - 0.74) / 0.14), 1);
-    --c:  clamp(0, calc((var(--sc-p, 0) - 0.83) / 0.07), 1);
-    transform: scale(calc(1 + var(--z) * 5.5)); }
+    --c:  clamp(0, calc((var(--sc-p, 0) - 0.78) / 0.10), 1);
+    transform: scale(calc(1 + var(--z) * 2.6)); }
   .plane > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .s1 { clip-path: inset(0 calc((1 - var(--w1)) * 100%) 0 0); }
   .s2 { clip-path: circle(calc(var(--w2) * 78%) at 50% 60.5%); }
-  .s3 { -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0, #000 calc(var(--w3) * 64px), transparent calc(var(--w3) * 64px), transparent 64px);
-        mask-image: repeating-linear-gradient(to bottom, #000 0, #000 calc(var(--w3) * 64px), transparent calc(var(--w3) * 64px), transparent 64px); }
+  .s3 { opacity: var(--w3); }
   .light { position: absolute; inset: 0; opacity: calc(var(--c) * 40); background: radial-gradient(ellipse at 50% 60.5%, #FFF6DC 0, var(--cream) calc(var(--c) * 100%), transparent calc(var(--c) * 100% + 3%)); }
   .edge { position: absolute; top: 0; bottom: 0; left: calc(var(--w1) * 100%); width: 2px; background: #fff; box-shadow: 0 0 18px rgba(255,255,255,.9); opacity: calc(min(var(--w1), 1 - var(--w1)) * 20); }
   .edge::after { content: ""; position: absolute; top: 50%; left: 50%; width: 2.6rem; height: 2.6rem; translate: -50% -50%; border-radius: 50%; background: rgba(255,255,255,.92); box-shadow: 0 6px 22px rgba(13,34,38,.35); }
@@ -207,19 +206,19 @@
           <div class="light" aria-hidden="true"></div>
         </div>
         <div class="marks">
-          <span class="tag" style="left:12%;top:78%" data-sc-cue="0.13 0.33"><span>Lawn restored and striped</span></span>
-          <span class="tag" style="left:41%;top:71%" data-sc-cue="0.16 0.33"><span>Walkway pressure washed</span></span>
-          <span class="tag" style="left:22%;top:28%" data-sc-cue="0.19 0.33"><span>Roof and stone cleaned</span></span>
-          <span class="tag" style="left:10%;top:52%" data-sc-cue="0.22 0.33"><span>Clutter cleared</span></span>
+          <span class="tag" style="left:12%;top:78%" data-sc-cue="0.13 0.25"><span>Lawn restored and striped</span></span>
+          <span class="tag" style="left:26%;top:71%" data-sc-cue="0.17 0.29"><span>Walkway pressure washed</span></span>
+          <span class="tag" style="left:22%;top:28%" data-sc-cue="0.21 0.33"><span>Roof and stone cleaned</span></span>
+          <span class="tag" style="left:10%;top:52%" data-sc-cue="0.25 0.37"><span>Clutter cleared</span></span>
 
-          <span class="tag" style="left:12%;top:14%" data-sc-cue="0.37 0.58"><span>Twilight photography</span></span>
-          <span class="tag" style="left:38%;top:44%" data-sc-cue="0.41 0.58"><span>3D tour and video</span></span>
-          <span class="tag" style="left:66%;top:18%" data-sc-cue="0.45 0.58"><span>Drone aerials</span></span>
+          <span class="tag" style="left:12%;top:14%" data-sc-cue="0.37 0.51"><span>Twilight photography</span></span>
+          <span class="tag" style="left:38%;top:44%" data-sc-cue="0.42 0.56"><span>3D tour and video</span></span>
+          <span class="tag" style="left:66%;top:18%" data-sc-cue="0.47 0.61"><span>Drone aerials</span></span>
 
-          <span class="tag" style="left:12%;top:14%" data-sc-cue="0.61 0.80"><span>Every major listing site</span></span>
-          <span class="tag" style="left:20%;top:58%" data-sc-cue="0.64 0.80"><span>Yard sign with a QR code</span></span>
-          <span class="tag" style="left:54%;top:70%" data-sc-cue="0.67 0.80"><span>Open houses all weekend</span></span>
-          <span class="tag tag--red" style="left:24%;top:44%" data-sc-cue="0.72 0.80"><span>Under contract</span></span>
+          <span class="tag" style="left:12%;top:14%" data-sc-cue="0.61 0.73"><span>Every major listing site</span></span>
+          <span class="tag" style="left:20%;top:58%" data-sc-cue="0.65 0.77"><span>Yard sign with a QR code</span></span>
+          <span class="tag" style="left:36%;top:70%" data-sc-cue="0.69 0.81"><span>Open houses all weekend</span></span>
+          <span class="tag tag--red" style="left:24%;top:44%" data-sc-cue="0.74 0.90"><span>Under contract</span></span>
         </div>
       </div>
 
