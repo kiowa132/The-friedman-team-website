@@ -34,7 +34,11 @@ export const HeroMedia: React.FC<Props> = ({ photos, floorPlanImages, tourUrl, a
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    // absolute, not relative: the parent hero is a flex row (for the text
+    // block that sits on top), and a `relative` div here would compete for
+    // width as a flex sibling instead of just filling the background, the
+    // same bug the original single <img absolute inset-0> never had.
+    <div className="absolute inset-0 overflow-hidden">
       {mode === 'photos' && (
         <HeroCarousel photos={photos} alt={address} onExpand={(i) => onExpand(resolvePhotoIndex(photos[i]))} />
       )}
