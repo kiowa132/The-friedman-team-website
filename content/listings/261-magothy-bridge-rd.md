@@ -6,8 +6,8 @@ streetAddress: "261 Magothy Bridge Rd"
 cityStateZip: "Pasadena, MD 21122"
 listPrice: "$489,999"
 beds: "5"
-baths: "3"
-sqft: "2,456"
+baths: "2.5"
+sqft: "2,320"
 lotSize: "0.3 acres"
 yearBuilt: "1967"
 tourUrl: "https://www.zillow.com/view-imx/7608d6ca-7f83-4a34-abdc-fc9d472c3d90?initialViewType=pano"
@@ -41,7 +41,7 @@ factGroups:
   - "Community"
   - "Financial & Listing Details"
 factGroupItems:
-  - "Bedrooms: 5|Bathrooms: 3|Square Footage: 2,456 sq ft|Year Built: 1967|Flooring: Refinished hardwood|Kitchen: Fully remodeled, new appliances|Bathroom Renovation: Fully remodeled|Crown Molding: Added upstairs|Closets: Enlarged in 4 of 5 bedrooms"
+  - "Bedrooms: 5|Bathrooms: 2.5|Square Footage: 2,320 sq ft|Year Built: 1967|Flooring: Refinished hardwood|Kitchen: Fully remodeled, new appliances|Bathroom Renovation: Fully remodeled|Crown Molding: Added upstairs|Closets: Enlarged in 4 of 5 bedrooms"
   - "Lower Level: Finished|Flooring: New carpet|Waterproofing: New discharge/drainage system at back door (below grade)|Laundry: Upgraded room, new washing machine"
   - "Lot Size: 0.3 acres|Patio: Hardscaped back patio|Pool: Above ground|Retaining Wall: Replaced (front)|Gutters: New"
   - "Roof: New, torn off and replaced|HVAC: New system|Plumbing: New CPVC/PVC|Insulation: New in upstairs exterior walls|Ventilation: Increased air flow to upstairs bedrooms, new bathroom exhaust fans"
@@ -49,10 +49,10 @@ factGroupItems:
   - "Garage: 1 car, new opener, new lighting, 220V welder circuit"
   - "Home Type: Single Family"
   - "HOA: None|Amenities: Deeded access to Magothy Forge private community amenities"
-  - "List Price: $489,999|Price per Sq Ft: $200|Status: Coming Soon"
+  - "List Price: $489,999|Price per Sq Ft: $211|Status: Coming Soon"
 ---
 
-Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 3 bath home in Pasadena's Magothy Forge community, offering 2,456 finished square feet on a 0.3 acre lot, deeded access to the neighborhood's private amenities, and no HOA.
+Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 2.5 bath home in Pasadena's Magothy Forge community, offering 2,320 finished square feet on a 0.3 acre lot, deeded access to the neighborhood's private amenities, and no HOA.
 
 Every major system was replaced in the renovation: the roof was torn off and replaced, new HVAC was installed, and all new CPVC/PVC plumbing runs throughout. The kitchen was updated with new stainless appliances, and all three bathrooms were rebuilt with new fixtures and finishes. Refinished hardwood floors run through the main level, new carpet warms the finished lower level, and crown molding plus enlarged closets in four of the five bedrooms round out the upstairs.
 
