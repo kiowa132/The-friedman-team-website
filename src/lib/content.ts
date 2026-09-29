@@ -206,6 +206,7 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     tourUrl: firstFilled(data.tourUrl, lofty.tourUrl),
     heroImage: firstFilled(data.heroImage, media.hero, photos[0]),
     photos,
+    floorPlanImages: Array.isArray(data.floorPlanImages) ? data.floorPlanImages : [],
     highlightsHtml: bodyHtml || loftyDescHtml,
   };
 });

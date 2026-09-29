@@ -90,6 +90,7 @@ export interface SignListing {
   tourUrl: string;
   heroImage: string;
   photos: string[];
+  floorPlanImages: string[];
   highlightsHtml: string;
 }
 
