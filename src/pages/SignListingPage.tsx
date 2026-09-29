@@ -5,6 +5,7 @@ import { SignListing } from '../types';
 import { usePageMeta } from '../lib/usePageMeta';
 import { HeroMedia, HeroMode } from '../components/listing/HeroMedia';
 import { Lightbox } from '../components/listing/Lightbox';
+import { RoomGallery } from '../components/listing/RoomGallery';
 
 const PHONE = '4437893101';
 const PHONE_DISPLAY = '443-789-3101';
@@ -205,30 +206,43 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
           />
         )}
 
-        {/* Photo gallery — bento layout, first photo leads larger */}
-        {galleryPhotos.length > 0 && (
-          <div className="mb-10">
+        {/* Photo gallery — room-labeled sections when curated, else a flat
+            bento layout with the first photo leading larger */}
+        {listing?.roomGroups?.length ? (
+          <>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63] mb-4">Gallery</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 auto-rows-[110px] sm:auto-rows-[140px] gap-2">
-              {galleryPhotos.map((src, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setLightboxIndex(photos.indexOf(src))}
-                  className={`block overflow-hidden rounded-xs group cursor-zoom-in ${
-                    i === 0 ? 'col-span-2 row-span-2' : ''
-                  }`}
-                >
-                  <img
-                    src={src}
-                    alt={`${addressLine || 'Listing'} photo ${i + 1}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </button>
-              ))}
+            <RoomGallery
+              groups={listing.roomGroups}
+              alt={addressLine || 'Listing'}
+              onExpand={setLightboxIndex}
+              resolvePhotoIndex={(src) => photos.indexOf(src)}
+            />
+          </>
+        ) : (
+          galleryPhotos.length > 0 && (
+            <div className="mb-10">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63] mb-4">Gallery</p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 auto-rows-[110px] sm:auto-rows-[140px] gap-2">
+                {galleryPhotos.map((src, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setLightboxIndex(photos.indexOf(src))}
+                    className={`block overflow-hidden rounded-xs group cursor-zoom-in ${
+                      i === 0 ? 'col-span-2 row-span-2' : ''
+                    }`}
+                  >
+                    <img
+                      src={src}
+                      alt={`${addressLine || 'Listing'} photo ${i + 1}`}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )
         )}
       </div>
 

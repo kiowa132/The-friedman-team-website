@@ -91,6 +91,7 @@ export interface SignListing {
   heroImage: string;
   photos: string[];
   floorPlanImages: string[];
+  roomGroups: { room: string; photos: string[] }[];
   highlightsHtml: string;
 }
 
