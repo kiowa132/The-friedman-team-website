@@ -47,10 +47,10 @@ factGroupItems:
   - "List Price: $489,999|Price per Sq Ft: $200|Status: Coming Soon"
 ---
 
-Fully renovated from the roof down, 261 Magothy Bridge Rd is a move-in ready 5-bedroom, 3-bath home in Pasadena's Magothy Forge community, offering 2,456 finished square feet on a 0.3 acre lot with deeded access to the neighborhood's private amenities.
+Fully renovated from the roof down, 261 Magothy Bridge Rd is a move-in ready 5-bedroom, 3-bath home in Pasadena's Magothy Forge community, offering 2,456 finished square feet on a 0.3 acre lot, deeded access to the neighborhood's private amenities, and no HOA.
 
-Every major system here is new: a full tear-off roof, new HVAC, and all-new CPVC/PVC plumbing throughout. The kitchen was fully remodeled with new stainless appliances, and all three bathrooms were fully remodeled with new fixtures and finishes. Refinished hardwood floors run through the main level, new carpet warms the finished lower level, and crown molding and enlarged closets in four of the five bedrooms round out the upstairs living space.
+Every major system was replaced in the renovation: a full tear-off roof, new HVAC, and all-new CPVC/PVC plumbing throughout. The kitchen was updated with new stainless appliances, and all three bathrooms were rebuilt with new fixtures and finishes. Refinished hardwood floors run through the main level, new carpet warms the finished lower level, and crown molding plus enlarged closets in four of the five bedrooms round out the upstairs.
 
-Outside, a hardscaped patio and an above-ground pool make the 0.3 acre backyard ready for summer, backed by a replaced retaining wall, new gutters, and a new drainage system at the rear entry. The garage got its own upgrade too, with a new opener, new lighting, and a 220V circuit ready for a workshop, a welder, or an EV charger.
+Outside, a hardscaped patio and an above-ground pool turn the backyard into a summer gathering spot, backed by a replaced retaining wall, new gutters, and a new drainage system at the rear entry. The garage adds its own upgrade: a new opener, new lighting, and a 220V circuit ready for a workshop, a welder, or an EV charger.
 
-Homes renovated this completely do not come up often in Pasadena's current market. Schedule a private showing before this one is under contract.
+In a market where renovated homes are going under contract in days, this one is ready to move on day one. Schedule a private showing before it's gone.
