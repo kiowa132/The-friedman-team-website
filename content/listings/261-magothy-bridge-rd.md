@@ -11,8 +11,8 @@ sqft: "2,456"
 lotSize: "0.3 acres"
 yearBuilt: "1967"
 tourUrl: "https://www.zillow.com/view-imx/7608d6ca-7f83-4a34-abdc-fc9d472c3d90?initialViewType=pano"
-heroImage: "/images/listings/261-magothy-bridge-rd/hero.jpg"
-heroPhotoIndexes: "41,1,2,3,4,5,6,7,8"
+heroImage: "/images/listings/261-magothy-bridge-rd/41-print-Magothy-Bridge-Rd-S2909-041.png"
+heroPhotoIndexes: "1,2,3,4,5,6,7,8,9"
 photos: []
 floorPlanImages:
   - "/images/listings/261-magothy-bridge-rd/floorplan/floor-1.jpg"
