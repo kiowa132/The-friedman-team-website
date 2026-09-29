@@ -13,6 +13,7 @@ interface Props {
   resolvePhotoIndex: (src: string) => number;
   mode: HeroMode;
   onModeChange: (mode: HeroMode) => void;
+  roomGroups?: { room: string; photos: string[] }[]; // lets the floor plan jump straight to a room's photos
 }
 
 // The Zillow-Showcase-style tab strip under the hero: Photos / Floor Plan /
@@ -21,7 +22,17 @@ interface Props {
 // is controlled by the parent page, which also needs it to decide whether
 // to show its own address/price overlay and gradient (only makes sense
 // over a photo, not over a floor plan or a map).
-export const HeroMedia: React.FC<Props> = ({ photos, floorPlanImages, tourUrl, address, onExpand, resolvePhotoIndex, mode, onModeChange }) => {
+export const HeroMedia: React.FC<Props> = ({
+  photos,
+  floorPlanImages,
+  tourUrl,
+  address,
+  onExpand,
+  resolvePhotoIndex,
+  mode,
+  onModeChange,
+  roomGroups = [],
+}) => {
   const [floorIdx, setFloorIdx] = useState(0);
 
   const tabs: { id: HeroMode; label: string; thumb?: string; icon?: React.ElementType }[] = [
@@ -69,6 +80,26 @@ export const HeroMedia: React.FC<Props> = ({ photos, floorPlanImages, tourUrl, a
                 <ChevronRight className="w-5 h-5" />
               </button>
             </>
+          )}
+
+          {/* Makes the floor plan interactive the way Zillow Showcase's is:
+              tap a room, jump straight to that room's photos, instead of
+              the floor plan being a dead static image. */}
+          {roomGroups.some((g) => g.photos.length > 0) && (
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex flex-wrap justify-center gap-2 px-4 max-w-full">
+              {roomGroups
+                .filter((g) => g.photos.length > 0)
+                .map((g) => (
+                  <button
+                    key={g.room}
+                    type="button"
+                    onClick={() => onExpand(resolvePhotoIndex(g.photos[0]))}
+                    className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[#0D2226] bg-[#FAF8F5] border border-[#0D2226]/20 hover:border-[#C9A96A] hover:bg-[#C9A96A]/20 rounded-full px-3 py-1.5 transition-colors whitespace-nowrap"
+                  >
+                    {g.room}
+                  </button>
+                ))}
+            </div>
           )}
         </div>
       )}

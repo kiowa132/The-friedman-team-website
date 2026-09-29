@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bed, Bath, Maximize2, Trees, CalendarClock, MapPin, Phone, MessageSquareText, Mail } from 'lucide-react';
 import { SignListing } from '../types';
@@ -26,6 +26,24 @@ interface Props {
 export const SignListingPage: React.FC<Props> = ({ listing }) => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [heroMode, setHeroMode] = useState<HeroMode>('photos');
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [showStickyTabs, setShowStickyTabs] = useState(false);
+  const [navHeight, setNavHeight] = useState(84);
+
+  // Mirrors Zillow Showcase: once the hero scrolls out of view, a slim tab
+  // bar takes its place right under the site header so Photos/Floor Plan/3D
+  // Tour/Map stay reachable without scrolling back up.
+  useEffect(() => {
+    const onScroll = () => {
+      if (!heroRef.current) return;
+      const headerHeight = document.querySelector('header')?.getBoundingClientRect().height ?? 84;
+      setNavHeight(headerHeight);
+      setShowStickyTabs(heroRef.current.getBoundingClientRect().bottom <= headerHeight);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const v = {
     status: listing?.status || 'For Sale',
@@ -83,6 +101,13 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
     );
   }
 
+  const stickyTabs: { id: HeroMode; label: string }[] = [
+    { id: 'photos', label: 'Photos' },
+    ...(listing?.floorPlanImages?.length ? [{ id: 'floorplan' as HeroMode, label: 'Floor Plan' }] : []),
+    ...(v.tourUrl ? [{ id: 'tour' as HeroMode, label: '3D Tour' }] : []),
+    { id: 'map', label: 'Map' },
+  ];
+
   const stats = [
     v.beds && { icon: Bed, label: 'Beds', value: v.beds },
     v.baths && { icon: Bath, label: 'Baths', value: v.baths },
@@ -127,11 +152,12 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
 
       {/* Hero — full-bleed carousel, or an ambient gradient plate when there are no photos yet */}
-      <div className="relative w-full h-[62vh] min-h-[440px] max-h-[720px] overflow-hidden flex items-end">
+      <div ref={heroRef} className="relative w-full h-[62vh] min-h-[440px] max-h-[720px] overflow-hidden flex items-end">
         {heroRotation.length > 0 ? (
           <HeroMedia
             photos={heroRotation}
             floorPlanImages={listing?.floorPlanImages || []}
+            roomGroups={listing?.roomGroups}
             tourUrl={v.tourUrl}
             address={addressLine}
             onExpand={setLightboxIndex}
@@ -176,6 +202,41 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
           </>
         )}
       </div>
+
+      {/* Sticky media tabs — takes over from the hero's own tab strip once
+          it scrolls out of view, so Photos/Floor Plan/3D Tour/Map stay
+          reachable without scrolling back up, matching Zillow Showcase. */}
+      {heroRotation.length > 0 && (
+        <div
+          className={`fixed left-0 right-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-sm border-b border-[#0D2226]/10 shadow-sm transition-[top] duration-300 ${
+            showStickyTabs ? '' : 'pointer-events-none'
+          }`}
+          // A percentage-based translate to hide this only clears its OWN
+          // height, which isn't enough at the top of the page: the header
+          // there is a transparent-to-solid gradient, so the bar showed
+          // through the transparent part. Moving it to a fixed off-screen
+          // top instead guarantees it's actually hidden regardless of the
+          // header's height or transparency.
+          style={{ top: showStickyTabs ? navHeight : -200 }}
+        >
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 flex gap-6 overflow-x-auto">
+            {stickyTabs.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setHeroMode(t.id)}
+                className={`py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap border-b-2 transition-colors ${
+                  heroMode === t.id
+                    ? 'text-[#0D2226] border-[#C9A96A]'
+                    : 'text-[#1C2B2E]/50 border-transparent hover:text-[#0D2226]'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Stat row — editorial, floating up over the hero seam */}
