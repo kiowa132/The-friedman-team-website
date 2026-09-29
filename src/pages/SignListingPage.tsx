@@ -137,40 +137,37 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
             <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(201,169,106,0.35),transparent_55%)]" />
           </div>
         )}
-        {/* Full-strength wash over a photo (needed for the white text below
-            to read); much lighter over the floor plan / map / 3D tour so
-            they don't get muddied, just enough for the address to stay
-            legible. */}
-        <div
-          className={
-            heroMode === 'photos'
-              ? 'absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0D2226] via-[#0D2226]/55 to-[#0D2226]/10'
-              : 'absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/15 to-transparent'
-          }
-        />
-
-        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-10 sm:pb-14">
-          <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C9A96A]">
-            The Friedman Team Presents
-          </span>
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#0D2226] bg-[#C9A96A] rounded-full px-3 py-1">
-              {v.status}
-            </span>
-            {!heroImage && (
-              <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#F5F1E8]/80 border border-[#F5F1E8]/30 rounded-full px-3 py-1">
-                Photos &amp; 3D Tour Coming Soon
+        {/* The address/price overlay only makes sense over a photo - it sits
+            bottom-anchored across the full hero height, which collided with
+            centered content on every other tab (the floor plan image, the
+            3D tour card, even the map), so it's Photos-only now. */}
+        {heroMode === 'photos' && (
+          <>
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0D2226] via-[#0D2226]/55 to-[#0D2226]/10" />
+            <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-10 sm:pb-14">
+              <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C9A96A]">
+                The Friedman Team Presents
               </span>
-            )}
-          </div>
-          <h1 className="font-serif text-4xl sm:text-6xl font-bold text-[#FAF8F5] leading-tight mt-4">
-            {v.streetAddress || 'Featured Listing'}
-          </h1>
-          {v.cityStateZip && <p className="text-base sm:text-lg text-[#F5F1E8]/80 mt-2">{v.cityStateZip}</p>}
-          {v.listPrice && (
-            <p className="font-serif text-3xl sm:text-4xl font-bold gold-gradient-text mt-3">{v.listPrice}</p>
-          )}
-        </div>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#0D2226] bg-[#C9A96A] rounded-full px-3 py-1">
+                  {v.status}
+                </span>
+                {!heroImage && (
+                  <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#F5F1E8]/80 border border-[#F5F1E8]/30 rounded-full px-3 py-1">
+                    Photos &amp; 3D Tour Coming Soon
+                  </span>
+                )}
+              </div>
+              <h1 className="font-serif text-4xl sm:text-6xl font-bold text-[#FAF8F5] leading-tight mt-4">
+                {v.streetAddress || 'Featured Listing'}
+              </h1>
+              {v.cityStateZip && <p className="text-base sm:text-lg text-[#F5F1E8]/80 mt-2">{v.cityStateZip}</p>}
+              {v.listPrice && (
+                <p className="font-serif text-3xl sm:text-4xl font-bold gold-gradient-text mt-3">{v.listPrice}</p>
+              )}
+            </div>
+          </>
+        )}
       </div>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6">

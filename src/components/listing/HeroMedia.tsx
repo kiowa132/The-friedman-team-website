@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, MapPin, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Box, MapPin, Image as ImageIcon, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { HeroCarousel } from './HeroCarousel';
 
 export type HeroMode = 'photos' | 'floorplan' | 'tour' | 'map';
@@ -73,13 +73,26 @@ export const HeroMedia: React.FC<Props> = ({ photos, floorPlanImages, tourUrl, a
         </div>
       )}
 
+      {/* Zillow blocks its 3D tours from loading inside an iframe on another
+          domain (a bot-check that never resolves, even for real visitors),
+          so this opens the tour in a new tab instead of embedding it. */}
       {mode === 'tour' && tourUrl && (
-        <iframe
-          src={tourUrl}
-          title={`${address} 3D tour`}
-          className="absolute inset-0 w-full h-full border-0"
-          allow="autoplay; fullscreen; picture-in-picture"
-        />
+        <div className="absolute inset-0 bg-[#0D2226] flex flex-col items-center justify-center gap-4 px-6 text-center">
+          <Box className="w-10 h-10 text-[#C9A96A]" />
+          <p className="text-[#FAF8F5] font-serif text-xl sm:text-2xl font-bold max-w-sm">
+            Walk through {address || 'this home'} in 3D
+          </p>
+          <a
+            href={tourUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#C9A96A] text-[#0D2226] font-bold text-sm uppercase tracking-widest rounded-xs px-6 py-3 hover:bg-[#dab97e] transition-colors"
+          >
+            Open 3D Tour
+            <ExternalLink className="w-4 h-4" />
+          </a>
+          <p className="text-[#FAF8F5]/50 text-xs">Opens in a new tab</p>
+        </div>
       )}
 
       {mode === 'map' && (
