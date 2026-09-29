@@ -210,7 +210,7 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
             bento layout with the first photo leading larger */}
         {listing?.roomGroups?.length ? (
           <>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63] mb-4">Gallery</p>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63] mb-4">Featured Rooms</p>
             <RoomGallery
               groups={listing.roomGroups}
               alt={addressLine || 'Listing'}
