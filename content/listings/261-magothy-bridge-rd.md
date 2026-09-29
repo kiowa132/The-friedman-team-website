@@ -22,11 +22,13 @@ roomNames:
   - "Kitchen"
   - "Primary Bedroom"
   - "Backyard"
+  - "Exterior"
 roomPhotoIndexes:
   - "7,8,9"
   - "13,14,17"
   - "31,32,33"
-  - "42,40,44"
+  - "42,43,45"
+  - "41,1,3"
 factGroups:
   - "Interior"
   - "Basement"
