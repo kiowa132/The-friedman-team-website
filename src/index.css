@@ -63,6 +63,31 @@
   animation: kenburns 30s ease-in-out infinite alternate;
 }
 
+/* Hero carousel: each slide gets one of four pan variants so consecutive
+   photos don't all drift the same direction (Zillow Showcase does this).
+   Plays once per mount (the carousel remounts the <img> via a key on every
+   slide change), duration matches the slide's on-screen time. */
+@keyframes kb-zoom {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.12) translate(0, 0); }
+}
+@keyframes kb-pan-left {
+  from { transform: scale(1.06) translate(2%, 0); }
+  to   { transform: scale(1.16) translate(-2%, 0); }
+}
+@keyframes kb-pan-right {
+  from { transform: scale(1.06) translate(-2%, 0); }
+  to   { transform: scale(1.16) translate(2%, 0); }
+}
+@keyframes kb-pan-up {
+  from { transform: scale(1.06) translate(0, 1.5%); }
+  to   { transform: scale(1.16) translate(0, -1.5%); }
+}
+.animate-kb-zoom { animation: kb-zoom var(--kb-duration, 7s) ease-out forwards; }
+.animate-kb-pan-left { animation: kb-pan-left var(--kb-duration, 7s) ease-out forwards; }
+.animate-kb-pan-right { animation: kb-pan-right var(--kb-duration, 7s) ease-out forwards; }
+.animate-kb-pan-up { animation: kb-pan-up var(--kb-duration, 7s) ease-out forwards; }
+
 /* Shimmer sweep for image loading skeletons (listing cards, etc.) */
 @keyframes shimmer {
   0% {
