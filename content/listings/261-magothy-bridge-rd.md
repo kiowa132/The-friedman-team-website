@@ -4,15 +4,15 @@ mlsId: ""
 status: "Coming Soon"
 streetAddress: "261 Magothy Bridge Rd"
 cityStateZip: "Pasadena, MD 21122"
-listPrice: "$489,000"
-beds: "4"
+listPrice: "$489,999"
+beds: "5"
 baths: "3"
 sqft: "2,456"
 lotSize: "0.3 acres"
 yearBuilt: "1967"
 tourUrl: ""
-heroImage: ""
+heroImage: "/images/listings/261-magothy-bridge-rd/hero.jpg"
 photos: []
 ---
 
-Fully renovated top to bottom, with a finished lower level, new kitchen, cabinets, countertops, flooring, plumbing, drywall, paint, and carpet. 1-car garage, 0.3 acre lot in Magothy Forge.
+Fully renovated top to bottom: new roof with full tear-off, new HVAC, and all-new CPVC/PVC plumbing. Kitchen and all bathrooms fully remodeled with new appliances. All 5 bedrooms revamped, enlarged closets in 4 of 5, refinished hardwood floors. Hardscaped back patio with an above-ground pool. Garage upgraded with a new opener, new lighting, and a 220V welder circuit. Finished lower level, 1-car garage, 0.3 acre lot, and deeded access to Magothy Forge's private community amenities.
