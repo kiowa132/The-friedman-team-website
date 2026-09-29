@@ -47,4 +47,10 @@ factGroupItems:
   - "List Price: $489,999|Price per Sq Ft: $200|Status: Coming Soon"
 ---
 
-Fully renovated top to bottom: new roof with full tear-off, new HVAC, and all-new CPVC/PVC plumbing. Kitchen and all bathrooms fully remodeled with new appliances. All 5 bedrooms revamped, enlarged closets in 4 of 5, refinished hardwood floors. Hardscaped back patio with an above-ground pool. Garage upgraded with a new opener, new lighting, and a 220V welder circuit. Finished lower level, 1-car garage, 0.3 acre lot, and deeded access to Magothy Forge's private community amenities.
+Fully renovated from the roof down, 261 Magothy Bridge Rd is a move-in ready 5-bedroom, 3-bath home in Pasadena's Magothy Forge community, offering 2,456 finished square feet on a 0.3 acre lot with deeded access to the neighborhood's private amenities.
+
+Every major system here is new: a full tear-off roof, new HVAC, and all-new CPVC/PVC plumbing throughout. The kitchen was fully remodeled with new stainless appliances, and all three bathrooms were fully remodeled with new fixtures and finishes. Refinished hardwood floors run through the main level, new carpet warms the finished lower level, and crown molding and enlarged closets in four of the five bedrooms round out the upstairs living space.
+
+Outside, a hardscaped patio and an above-ground pool make the 0.3 acre backyard ready for summer, backed by a replaced retaining wall, new gutters, and a new drainage system at the rear entry. The garage got its own upgrade too, with a new opener, new lighting, and a 220V circuit ready for a workshop, a welder, or an EV charger.
+
+Homes renovated this completely do not come up often in Pasadena's current market. Schedule a private showing before this one is under contract.
