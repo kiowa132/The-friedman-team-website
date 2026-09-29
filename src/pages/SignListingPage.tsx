@@ -224,7 +224,10 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
               <button
                 key={t.id}
                 type="button"
-                onClick={() => setHeroMode(t.id)}
+                onClick={() => {
+                  setHeroMode(t.id);
+                  heroRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
                 className={`py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap border-b-2 transition-colors ${
                   heroMode === t.id
                     ? 'text-[#0D2226] border-[#C9A96A]'
