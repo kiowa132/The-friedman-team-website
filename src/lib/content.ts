@@ -185,6 +185,28 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
   // whatever Lofty had.
   const photos = cmsPhotos.length ? cmsPhotos : folderPhotos.length ? folderPhotos : loftyPhotos;
 
+  // Room-labeled gallery groups: two parallel flat lists in frontmatter
+  // (roomNames / roomPhotoIndexes, e.g. "7,8") rather than nested YAML,
+  // since parseFrontmatter above only understands simple string lists.
+  // Indexes refer to the leading number in each uploaded filename (e.g.
+  // "7-print-...007.jpg" is index 7) - matched by filename, not array
+  // position, since `photos` has hero.jpg prepended ahead of "1-...".
+  const photoByNumber: Record<number, string> = {};
+  for (const p of photos) {
+    const m = p.match(/\/(\d+)-[^/]*$/);
+    if (m) photoByNumber[parseInt(m[1], 10)] = p;
+  }
+  const roomNames: string[] = Array.isArray(data.roomNames) ? data.roomNames : [];
+  const roomPhotoIndexes: string[] = Array.isArray(data.roomPhotoIndexes) ? data.roomPhotoIndexes : [];
+  const roomGroups = roomNames.map((room, i) => ({
+    room,
+    photos: (roomPhotoIndexes[i] || '')
+      .split(',')
+      .map((s) => parseInt(s.trim(), 10))
+      .filter((n) => Number.isInteger(n) && photoByNumber[n])
+      .map((n) => photoByNumber[n]),
+  }));
+
   const bodyHtml = content && content.trim() ? (marked.parse(content) as string) : '';
   const loftyDescHtml = lofty.description
     ? `<p>${escapeHtml(String(lofty.description)).replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br/>')}</p>`
@@ -207,6 +229,7 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     heroImage: firstFilled(data.heroImage, media.hero, photos[0]),
     photos,
     floorPlanImages: Array.isArray(data.floorPlanImages) ? data.floorPlanImages : [],
+    roomGroups,
     highlightsHtml: bodyHtml || loftyDescHtml,
   };
 });
