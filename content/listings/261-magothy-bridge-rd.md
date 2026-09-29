@@ -17,6 +17,14 @@ floorPlanImages:
   - "/images/listings/261-magothy-bridge-rd/floorplan/floor-1.jpg"
   - "/images/listings/261-magothy-bridge-rd/floorplan/basement.jpg"
   - "/images/listings/261-magothy-bridge-rd/floorplan/combined.jpg"
+roomNames:
+  - "Living Room"
+  - "Kitchen"
+  - "Primary Bedroom"
+roomPhotoIndexes:
+  - "7,9,16"
+  - "13,14,17"
+  - "31,32,33"
 ---
 
 Fully renovated top to bottom: new roof with full tear-off, new HVAC, and all-new CPVC/PVC plumbing. Kitchen and all bathrooms fully remodeled with new appliances. All 5 bedrooms revamped, enlarged closets in 4 of 5, refinished hardwood floors. Hardscaped back patio with an above-ground pool. Garage upgraded with a new opener, new lighting, and a 220V welder circuit. Finished lower level, 1-car garage, 0.3 acre lot, and deeded access to Magothy Forge's private community amenities.
