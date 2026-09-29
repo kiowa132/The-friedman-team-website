@@ -25,6 +25,20 @@ roomPhotoIndexes:
   - "7,8,9"
   - "13,14,17"
   - "31,32,33"
+factGroups:
+  - "Interior"
+  - "Basement"
+  - "Exterior & Lot"
+  - "Systems"
+  - "Parking"
+  - "Community"
+factGroupItems:
+  - "Bedrooms: 5|Bathrooms: 3|Square Footage: 2,456 sq ft|Year Built: 1967|Flooring: Refinished hardwood|Kitchen: Fully remodeled, new appliances|Bathroom Renovation: Fully remodeled"
+  - "Lower Level: Finished"
+  - "Lot Size: 0.3 acres|Patio: Hardscaped back patio|Pool: Above-ground"
+  - "Roof: New, full tear-off|HVAC: New system|Plumbing: New CPVC/PVC"
+  - "Garage: 1-car, new opener, new lighting, 220V welder circuit"
+  - "Amenities: Deeded access to Magothy Forge private community amenities"
 ---
 
 Fully renovated top to bottom: new roof with full tear-off, new HVAC, and all-new CPVC/PVC plumbing. Kitchen and all bathrooms fully remodeled with new appliances. All 5 bedrooms revamped, enlarged closets in 4 of 5, refinished hardwood floors. Hardscaped back patio with an above-ground pool. Garage upgraded with a new opener, new lighting, and a 220V welder circuit. Finished lower level, 1-car garage, 0.3 acre lot, and deeded access to Magothy Forge's private community amenities.
