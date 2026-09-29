@@ -21,10 +21,12 @@ roomNames:
   - "Living Room"
   - "Kitchen"
   - "Primary Bedroom"
+  - "Backyard"
 roomPhotoIndexes:
   - "7,8,9"
   - "13,14,17"
   - "31,32,33"
+  - "42,40,44"
 factGroups:
   - "Interior"
   - "Basement"
