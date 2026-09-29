@@ -262,6 +262,25 @@
 
   // checklist that ticks as each layer lands
   var act = document.getElementById('act'), items = Array.prototype.slice.call(document.querySelectorAll('#steps li')), steps = document.getElementById('steps');
+  var door = document.getElementById('door');
+
+  // No click required at the end: reaching the bottom of the scroll IS the
+  // decision. The door opens on its own and the page carries the visitor
+  // straight into the plan, the same way scrolling drove every earlier
+  // beat. sessionStorage stops a re-fire if they land back here after
+  // Back; scrolling back up re-arms it, so it never fires from a stray
+  // scroll near the bottom before they actually finish. Skipped for
+  // webdriver (test harnesses) and ?noadvance (manual testing).
+  var advanced = false;
+  var skipAdvance = navigator.webdriver || /[?&]noadvance\b/.test(location.search);
+  function go() {
+    if (advanced || skipAdvance) return;
+    advanced = true;
+    try { sessionStorage.setItem('story-advanced', '1'); } catch (e) {}
+    door.classList.add('is-open');
+    setTimeout(function () { location.href = door.href; }, 520);
+  }
+
   function tick() {
     var p = parseFloat(getComputedStyle(act).getPropertyValue('--sc-p')) || 0, cur = -1;
     items.forEach(function (li, i) {
@@ -271,15 +290,24 @@
       li.classList.toggle('on', i === cur || p >= at);
     });
     steps.classList.toggle('dark', p > 0.88);
-  }
-  addEventListener('scroll', tick, { passive: true }); tick();
 
-  // the door opens before the link follows
-  var door = document.getElementById('door');
+    var already = false;
+    try { already = sessionStorage.getItem('story-advanced') === '1'; } catch (e) {}
+    if (p >= 0.985 && !already) go();
+    if (p < 0.95 && already) { try { sessionStorage.removeItem('story-advanced'); } catch (e) {} advanced = false; }
+  }
+  // --sc-p is driven by scrollcraft's own requestAnimationFrame loop, not
+  // gated on a native 'scroll' event, so a plain scroll listener can miss
+  // the moment it actually crosses the auto-advance threshold. Polling on
+  // rAF alongside it keeps this in lockstep with the value that's really
+  // on screen.
+  addEventListener('scroll', tick, { passive: true });
+  (function poll() { tick(); requestAnimationFrame(poll); })();
+
+  // still clickable, for anyone who gets there and doesn't want to wait
   door.addEventListener('click', function (e) {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
-    e.preventDefault(); door.classList.add('is-open');
-    setTimeout(function () { location.href = door.href; }, 520);
+    e.preventDefault(); go();
   });
 </script>
 </body>
