@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bed, Bath, Maximize2, Trees, CalendarClock, MapPin, Phone, MessageSquareText, Mail, Play } from 'lucide-react';
 import { SignListing } from '../types';
 import { usePageMeta } from '../lib/usePageMeta';
+import { HeroCarousel } from '../components/listing/HeroCarousel';
+import { Lightbox } from '../components/listing/Lightbox';
 
 const PHONE = '4437893101';
 const PHONE_DISPLAY = '443-789-3101';
@@ -20,6 +22,8 @@ interface Props {
 //   3. Batch-uploaded photos in public/images/listings/<slug>/
 // No live API call happens here - the page is static and instant.
 export const SignListingPage: React.FC<Props> = ({ listing }) => {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
   const v = {
     status: listing?.status || 'For Sale',
     streetAddress: listing?.streetAddress || '',
@@ -36,6 +40,11 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
   const photos = listing?.photos?.length ? listing.photos : [];
   const heroImage = listing?.heroImage || photos[0] || '';
   const highlightsHtml = listing?.highlightsHtml || '';
+
+  // The hero carousel rotates a curated highlight reel (first 10), not the
+  // full set, so it doesn't take 4+ minutes to loop. Every photo, hero
+  // included, is still reachable through the lightbox below.
+  const heroRotation = (heroImage ? [heroImage, ...photos.filter((p) => p !== heroImage)] : photos).slice(0, 10);
 
   const addressLine = [v.streetAddress, v.cityStateZip].filter(Boolean).join(', ');
 
@@ -107,14 +116,10 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
     <div className="pb-20 bg-[#FAF8F5]">
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
 
-      {/* Hero — full-bleed, photo or an ambient gradient plate when there's none yet */}
+      {/* Hero — full-bleed carousel, or an ambient gradient plate when there are no photos yet */}
       <div className="relative w-full h-[62vh] min-h-[440px] max-h-[720px] overflow-hidden flex items-end">
-        {heroImage ? (
-          <img
-            src={heroImage}
-            alt={addressLine}
-            className="absolute inset-0 w-full h-full object-cover animate-kenburns"
-          />
+        {heroRotation.length > 0 ? (
+          <HeroCarousel photos={heroRotation} alt={addressLine} onExpand={(i) => setLightboxIndex(photos.indexOf(heroRotation[i]))} />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#0F5C63] via-[#0D2226] to-[#0D2226]">
             <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(201,169,106,0.35),transparent_55%)]" />
@@ -199,12 +204,11 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#0F5C63] mb-4">Gallery</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 auto-rows-[110px] sm:auto-rows-[140px] gap-2">
               {galleryPhotos.map((src, i) => (
-                <a
+                <button
                   key={i}
-                  href={src}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`block overflow-hidden rounded-xs group ${
+                  type="button"
+                  onClick={() => setLightboxIndex(photos.indexOf(src))}
+                  className={`block overflow-hidden rounded-xs group cursor-zoom-in ${
                     i === 0 ? 'col-span-2 row-span-2' : ''
                   }`}
                 >
@@ -214,7 +218,7 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                </a>
+                </button>
               ))}
             </div>
           </div>
@@ -269,6 +273,16 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
           but not guaranteed. If your home is currently listed with another broker, this is not a solicitation.
         </p>
       </div>
+
+      {lightboxIndex !== null && photos.length > 0 && (
+        <Lightbox
+          photos={photos}
+          index={Math.max(0, lightboxIndex)}
+          alt={addressLine}
+          onClose={() => setLightboxIndex(null)}
+          onIndexChange={setLightboxIndex}
+        />
+      )}
     </div>
   );
 };
