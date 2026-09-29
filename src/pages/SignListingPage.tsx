@@ -174,7 +174,7 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Stat row — editorial, floating up over the hero seam */}
         {stats.length > 0 && (
-          <div className="glass-luxury rounded-xs shadow-lg shadow-[#0D2226]/10 -mt-8 sm:-mt-10 relative z-10 mb-10 px-4 sm:px-8 py-6 flex flex-wrap justify-center sm:justify-between gap-x-6 gap-y-5">
+          <div className="glass-luxury rounded-xs shadow-lg shadow-[#0D2226]/10 -mt-8 sm:-mt-10 relative z-30 mb-10 px-4 sm:px-8 py-6 flex flex-wrap justify-center sm:justify-between gap-x-6 gap-y-5">
             {stats.map((s) => (
               <div key={s.label} className="text-center w-[calc(33%-1rem)] sm:w-auto">
                 <s.icon className="w-4 h-4 text-[#C9A96A] mx-auto mb-1.5" />
