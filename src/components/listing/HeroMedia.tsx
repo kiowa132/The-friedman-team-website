@@ -91,8 +91,10 @@ export const HeroMedia: React.FC<Props> = ({ photos, floorPlanImages, tourUrl, a
         />
       )}
 
-      {/* Tab strip */}
-      <div className="absolute left-3 sm:left-4 bottom-16 sm:bottom-20 z-20 flex gap-2">
+      {/* Tab strip — pinned top-left (mirrors the expand button's top-right
+          offset) so it never fights the address/price stack anchored to the
+          hero's bottom edge, which happened at shorter hero heights. */}
+      <div className="absolute left-3 sm:left-4 top-24 sm:top-28 z-20 flex gap-2">
         {tabs.map((t) => (
           <button
             key={t.id}
