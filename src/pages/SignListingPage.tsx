@@ -46,8 +46,15 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
 
   // The hero carousel rotates a curated highlight reel (first 10), not the
   // full set, so it doesn't take 4+ minutes to loop. Every photo, hero
-  // included, is still reachable through the lightbox below.
-  const heroRotation = (heroImage ? [heroImage, ...photos.filter((p) => p !== heroImage)] : photos).slice(0, 10);
+  // included, is still reachable through the lightbox below. A listing can
+  // override which photos lead the rotation (heroPhotoIndexes in
+  // frontmatter) so a specific shot - e.g. a twilight exterior - shows up
+  // in the carousel instead of just whatever sorts first numerically.
+  const heroRotation = (
+    heroImage
+      ? [heroImage, ...(listing?.heroPhotos?.length ? listing.heroPhotos : photos).filter((p) => p !== heroImage)]
+      : photos
+  ).slice(0, 10);
 
   const addressLine = [v.streetAddress, v.cityStateZip].filter(Boolean).join(', ');
 

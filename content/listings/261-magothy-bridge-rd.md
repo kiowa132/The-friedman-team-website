@@ -12,6 +12,7 @@ lotSize: "0.3 acres"
 yearBuilt: "1967"
 tourUrl: "https://www.zillow.com/view-imx/7608d6ca-7f83-4a34-abdc-fc9d472c3d90?initialViewType=pano"
 heroImage: "/images/listings/261-magothy-bridge-rd/hero.jpg"
+heroPhotoIndexes: "41,1,2,3,4,5,6,7,8"
 photos: []
 floorPlanImages:
   - "/images/listings/261-magothy-bridge-rd/floorplan/floor-1.jpg"
@@ -21,14 +22,14 @@ roomNames:
   - "Living Room"
   - "Kitchen"
   - "Primary Bedroom"
-  - "Backyard"
   - "Exterior"
+  - "Backyard"
 roomPhotoIndexes:
   - "7,8,9"
   - "13,14,17"
   - "31,32,33"
-  - "42,43,45"
   - "41,1,3"
+  - "42,43,45"
 factGroups:
   - "Interior"
   - "Basement"

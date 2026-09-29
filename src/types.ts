@@ -92,6 +92,7 @@ export interface SignListing {
   photos: string[];
   floorPlanImages: string[];
   roomGroups: { room: string; photos: string[] }[];
+  heroPhotos: string[];
   factGroups: { title: string; items: { label: string; value: string }[] }[];
   highlightsHtml: string;
 }
