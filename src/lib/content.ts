@@ -196,6 +196,16 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     const m = p.match(/\/(\d+)-[^/]*$/);
     if (m) photoByNumber[parseInt(m[1], 10)] = p;
   }
+  // Curated hero carousel order (e.g. "41,1,2,3") - lets a specific shot
+  // like a twilight exterior lead the rotation instead of just whatever
+  // sorts first numerically. Falls back to natural order in the page when
+  // left blank.
+  const heroPhotos: string[] = String(data.heroPhotoIndexes || '')
+    .split(',')
+    .map((s) => parseInt(s.trim(), 10))
+    .filter((n) => Number.isInteger(n) && photoByNumber[n])
+    .map((n) => photoByNumber[n]);
+
   const roomNames: string[] = Array.isArray(data.roomNames) ? data.roomNames : [];
   const roomPhotoIndexes: string[] = Array.isArray(data.roomPhotoIndexes) ? data.roomPhotoIndexes : [];
   const roomGroups = roomNames.map((room, i) => ({
@@ -248,6 +258,7 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     photos,
     floorPlanImages: Array.isArray(data.floorPlanImages) ? data.floorPlanImages : [],
     roomGroups,
+    heroPhotos,
     factGroups,
     highlightsHtml: bodyHtml || loftyDescHtml,
   };
