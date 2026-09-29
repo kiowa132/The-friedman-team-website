@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bed, Bath, Maximize2, Trees, CalendarClock, MapPin, Phone, MessageSquareText, Mail, Play } from 'lucide-react';
+import { Bed, Bath, Maximize2, Trees, CalendarClock, MapPin, Phone, MessageSquareText, Mail } from 'lucide-react';
 import { SignListing } from '../types';
 import { usePageMeta } from '../lib/usePageMeta';
-import { HeroCarousel } from '../components/listing/HeroCarousel';
+import { HeroMedia, HeroMode } from '../components/listing/HeroMedia';
 import { Lightbox } from '../components/listing/Lightbox';
 
 const PHONE = '4437893101';
@@ -23,6 +23,7 @@ interface Props {
 // No live API call happens here - the page is static and instant.
 export const SignListingPage: React.FC<Props> = ({ listing }) => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [heroMode, setHeroMode] = useState<HeroMode>('photos');
 
   const v = {
     status: listing?.status || 'For Sale',
@@ -119,13 +120,32 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
       {/* Hero — full-bleed carousel, or an ambient gradient plate when there are no photos yet */}
       <div className="relative w-full h-[62vh] min-h-[440px] max-h-[720px] overflow-hidden flex items-end">
         {heroRotation.length > 0 ? (
-          <HeroCarousel photos={heroRotation} alt={addressLine} onExpand={(i) => setLightboxIndex(photos.indexOf(heroRotation[i]))} />
+          <HeroMedia
+            photos={heroRotation}
+            floorPlanImages={listing?.floorPlanImages || []}
+            tourUrl={v.tourUrl}
+            address={addressLine}
+            onExpand={setLightboxIndex}
+            resolvePhotoIndex={(src) => photos.indexOf(src)}
+            mode={heroMode}
+            onModeChange={setHeroMode}
+          />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#0F5C63] via-[#0D2226] to-[#0D2226]">
             <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(201,169,106,0.35),transparent_55%)]" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D2226] via-[#0D2226]/55 to-[#0D2226]/10" />
+        {/* Full-strength wash over a photo (needed for the white text below
+            to read); much lighter over the floor plan / map / 3D tour so
+            they don't get muddied, just enough for the address to stay
+            legible. */}
+        <div
+          className={
+            heroMode === 'photos'
+              ? 'absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0D2226] via-[#0D2226]/55 to-[#0D2226]/10'
+              : 'absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0D2226]/70 via-[#0D2226]/15 to-transparent'
+          }
+        />
 
         <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-10 sm:pb-14">
           <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C9A96A]">
@@ -163,19 +183,6 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
               </div>
             ))}
           </div>
-        )}
-
-        {/* Virtual tour */}
-        {v.tourUrl && (
-          <a
-            href={v.tourUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-4 mb-10 bg-[#0D2226] text-[#FAF8F5] font-bold text-xs uppercase tracking-widest rounded-xs hover:bg-[#0F5C63] transition-colors"
-          >
-            <Play className="w-4 h-4" />
-            Watch the 3D Walkthrough
-          </a>
         )}
 
         {/* Highlights / description */}
