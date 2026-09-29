@@ -22,7 +22,7 @@ roomNames:
   - "Kitchen"
   - "Primary Bedroom"
 roomPhotoIndexes:
-  - "7,9,16"
+  - "7,8,9"
   - "13,14,17"
   - "31,32,33"
 ---
