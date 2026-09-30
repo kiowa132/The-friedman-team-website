@@ -80,7 +80,7 @@ export const HeroMedia: React.FC<Props> = ({
     // same bug the original single <img absolute inset-0> never had.
     <div className="absolute inset-0 overflow-hidden">
       {mode === 'photos' && (
-        <HeroCarousel photos={photos} alt={address} onExpand={(i) => onExpand(resolvePhotoIndex(photos[i]))} />
+        <HeroCarousel photos={photos} videoUrl={videoUrl} alt={address} onExpand={(src) => onExpand(resolvePhotoIndex(src))} />
       )}
 
       {mode === 'floorplan' && floorPlanImages.length > 0 && (
@@ -143,10 +143,15 @@ export const HeroMedia: React.FC<Props> = ({
         </div>
       )}
 
+      {/* Muted is required for autoplay to actually work across browsers -
+          an unmuted autoplay request gets silently blocked. Controls stay
+          on so a visitor can unmute with one click. */}
       {mode === 'video' && videoUrl && (
         <video
           key={videoUrl}
           src={videoUrl}
+          autoPlay
+          muted
           controls
           playsInline
           className="absolute inset-0 w-full h-full object-cover bg-black"
