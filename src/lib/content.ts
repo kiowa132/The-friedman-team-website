@@ -270,6 +270,7 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     yearBuilt: firstFilled(data.yearBuilt, lofty.yearBuilt),
     mlsId: data.mlsId || '',
     tourUrl: firstFilled(data.tourUrl, lofty.tourUrl),
+    videoUrl: data.videoUrl || '',
     heroImage: firstFilled(data.heroImage, media.hero, photos[0]),
     photos,
     floorPlanImages: Array.isArray(data.floorPlanImages) ? data.floorPlanImages : [],
