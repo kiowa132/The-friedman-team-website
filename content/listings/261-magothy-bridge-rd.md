@@ -47,12 +47,14 @@ roomNames:
   - "Primary Bedroom"
   - "Exterior"
   - "Backyard"
+  - "Community Dock"
 roomPhotoIndexes:
   - "7,8,9"
   - "13,14,17"
   - "31,32,33"
   - "41,1,3"
   - "42,43,45"
+  - "48,49,50,51"
 factGroups:
   - "Interior"
   - "Basement"
@@ -71,11 +73,11 @@ factGroupItems:
   - "Water Supply: Public|Sewage Disposal: Septic (holding tank)|Heating: Electric, Oil|Air Conditioning: Central air, electric|Utility Provider: BGE"
   - "Garage: 1 car, new opener, new lighting, 220V welder circuit"
   - "Home Type: Single Family"
-  - "HOA: None|Amenities: Deeded access to Magothy Forge private community amenities"
+  - "HOA: None|Amenities: Deeded access to Magothy Forge's private community dock and marina"
   - "List Price: $489,999|Price per Sq Ft: $211|Status: Coming Soon"
 ---
 
-Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 2.5 bath home in Pasadena's Magothy Forge community, offering 2,320 finished square feet on a 0.3 acre lot, deeded access to the neighborhood's private amenities, and no HOA.
+Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 2.5 bath home in Pasadena's Magothy Forge community, offering 2,320 finished square feet on a 0.3 acre lot, deeded access to the community's private dock and marina, and no HOA.
 
 Every major system was replaced in the renovation: the roof was torn off and replaced, new HVAC was installed, and all new CPVC/PVC plumbing runs throughout. The kitchen was updated with new stainless appliances, and all three bathrooms were rebuilt with new fixtures and finishes. Refinished hardwood floors run through the main level, new carpet warms the finished lower level, and crown molding plus enlarged closets in four of the five bedrooms round out the upstairs.
 
