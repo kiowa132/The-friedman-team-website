@@ -11,8 +11,9 @@ import { liftHover } from '../lib/motion';
 import { usePageMeta } from '../lib/usePageMeta';
 import { submitLead } from '../lib/leads';
 import { fetchMlsListings } from '../lib/mlsApi';
+import { SIGN_LISTINGS } from '../lib/content';
 import {
-  ArrowRight, ShieldCheck, Calculator, Phone, Search
+  ArrowRight, ShieldCheck, Calculator, Phone, Search, Bed, Bath, Maximize2
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -117,6 +118,16 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   const neighborhoodScrollItems = [...neighborhoods.slice(0, 4), ...neighborhoods.slice(0, 4)];
 
+  // The single hand-curated "sign listing" flagged active: true - the same
+  // one the For Sale sign's QR code points to. Distinct from the Featured
+  // Properties section below, which pulls generic $1M+ MLS listings from
+  // any agent. Renders nothing when there isn't an active one, rather than
+  // showing a stale or empty spotlight.
+  const activeListing = SIGN_LISTINGS.find((l) => l.active);
+  const activeTeaser = activeListing?.highlightsHtml
+    ? activeListing.highlightsHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160)
+    : '';
+
   return (
     <div className="pb-0">
 
@@ -181,6 +192,69 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </section>
+
+      {/* 1.5 FEATURED LISTING - Kyle's own current sign listing (whichever
+          has active: true), not the generic MLS feed in section 5. */}
+      {activeListing && (
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center mb-10">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#0F5C63]">Kyle's Current Listing</span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D2226] mt-1">Now Showing</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 border border-[#C9A96A]/30 text-left sm:h-[520px] shadow-xl">
+            <div className="relative h-96 sm:h-full overflow-hidden">
+              <img
+                src={activeListing.heroImage || activeListing.photos[0]}
+                alt={activeListing.streetAddress}
+                className="w-full h-full object-cover"
+              />
+              {activeListing.status && (
+                <span className="absolute top-5 left-5 text-[11px] font-bold uppercase tracking-widest text-[#0D2226] bg-[#C9A96A] rounded-full px-3 py-1.5">
+                  {activeListing.status}
+                </span>
+              )}
+            </div>
+            <div className="bg-[#0D2226] text-[#FAF8F5] p-10 sm:p-14 flex flex-col justify-center space-y-5">
+              <div>
+                <h3 className="font-serif text-3xl sm:text-4xl font-bold leading-tight">{activeListing.streetAddress}</h3>
+                {activeListing.cityStateZip && (
+                  <p className="text-sm text-[#F5F1E8]/70 mt-1">{activeListing.cityStateZip}</p>
+                )}
+              </div>
+              {activeListing.listPrice && (
+                <p className="font-serif text-2xl sm:text-3xl font-bold gold-gradient-text">{activeListing.listPrice}</p>
+              )}
+              <div className="flex items-center gap-6 text-sm">
+                {activeListing.beds && (
+                  <span className="flex items-center gap-1.5">
+                    <Bed className="w-4 h-4 text-[#C9A96A]" />
+                    {activeListing.beds} beds
+                  </span>
+                )}
+                {activeListing.baths && (
+                  <span className="flex items-center gap-1.5">
+                    <Bath className="w-4 h-4 text-[#C9A96A]" />
+                    {activeListing.baths} baths
+                  </span>
+                )}
+                {activeListing.sqft && (
+                  <span className="flex items-center gap-1.5">
+                    <Maximize2 className="w-4 h-4 text-[#C9A96A]" />
+                    {activeListing.sqft} sq ft
+                  </span>
+                )}
+              </div>
+              {activeTeaser && <p className="text-sm text-[#F5F1E8]/80 leading-relaxed">{activeTeaser}...</p>}
+              <Link
+                to={`/listings/${activeListing.slug}`}
+                className="self-start px-7 py-3.5 bg-[#C9A96A] hover:bg-[#D4AF37] text-[#0D2226] font-bold text-xs uppercase tracking-widest rounded-xs transition-colors"
+              >
+                View Full Listing
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 2. DATA-DRIVEN REAL ESTATE SOLUTIONS - 3-tile grid, matches Canopy's
           exact pattern: three labeled photo tiles linking to Search, Valuation,
