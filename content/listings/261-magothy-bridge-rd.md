@@ -54,7 +54,7 @@ roomPhotoIndexes:
   - "31,32,33"
   - "41,1,3"
   - "42,43,45"
-  - "48,49,50,51"
+  - "48,49,50,51,52,53"
 factGroups:
   - "Interior"
   - "Basement"
@@ -73,11 +73,11 @@ factGroupItems:
   - "Water Supply: Public|Sewage Disposal: Septic (holding tank)|Heating: Electric, Oil|Air Conditioning: Central air, electric|Utility Provider: BGE"
   - "Garage: 1 car, new opener, new lighting, 220V welder circuit"
   - "Home Type: Single Family"
-  - "HOA: None|Amenities: Deeded access to Magothy Forge's private community park|Marina: Community boat slips available to residents for an additional fee"
+  - "HOA: None|Community Type: Water-privileged on the Magothy River|Amenities: Private picnic area, boat ramp, and community pier|Boat Slips: Available for rent at the community pier for a nominal fee"
   - "List Price: $489,999|Price per Sq Ft: $211|Status: Coming Soon"
 ---
 
-Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 2.5 bath home in Pasadena's Magothy Forge community, offering 2,320 finished square feet on a 0.3 acre lot, deeded access to the community's private park, and no HOA. Community marina boat slips are also available to residents for an additional fee.
+Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 2.5 bath home in the water-privileged Magothy Forge community on the Magothy River, offering 2,320 finished square feet on a 0.3 acre lot and no HOA. Residents enjoy a private picnic area, a boat ramp, and a community pier with boat slips available for rent at a nominal fee.
 
 Every major system was replaced in the renovation: the roof was torn off and replaced, new HVAC was installed, and all new CPVC/PVC plumbing runs throughout. The kitchen was updated with new stainless appliances, and all three bathrooms were rebuilt with new fixtures and finishes. Refinished hardwood floors run through the main level, new carpet warms the finished lower level, and crown molding plus enlarged closets in four of the five bedrooms round out the upstairs.
 
