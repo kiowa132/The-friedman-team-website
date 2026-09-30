@@ -206,6 +206,20 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     .filter((n) => Number.isInteger(n) && photoByNumber[n])
     .map((n) => photoByNumber[n]);
 
+  // Floor plan pins: "photoNumber:xPct,yPct" placing a clickable dot at
+  // that photo's actual camera position on floor-1's image, matching
+  // Zillow's interactive floor plan (dots per photo, not a room-name list).
+  const floorPlanPins = (Array.isArray(data.floorPlanPins) ? data.floorPlanPins : [])
+    .map((entry: string) => {
+      const [numPart, coords] = entry.split(':');
+      const n = parseInt(numPart, 10);
+      const [x, y] = (coords || '').split(',').map((s) => parseFloat(s.trim()));
+      return photoByNumber[n] && Number.isFinite(x) && Number.isFinite(y)
+        ? { photo: photoByNumber[n], x, y }
+        : null;
+    })
+    .filter((p): p is { photo: string; x: number; y: number } => p !== null);
+
   const roomNames: string[] = Array.isArray(data.roomNames) ? data.roomNames : [];
   const roomPhotoIndexes: string[] = Array.isArray(data.roomPhotoIndexes) ? data.roomPhotoIndexes : [];
   const roomGroups = roomNames.map((room, i) => ({
@@ -259,6 +273,7 @@ export const SIGN_LISTINGS: SignListing[] = Object.entries(listingFiles).map(([p
     floorPlanImages: Array.isArray(data.floorPlanImages) ? data.floorPlanImages : [],
     roomGroups,
     heroPhotos,
+    floorPlanPins,
     factGroups,
     highlightsHtml: bodyHtml || loftyDescHtml,
   };

@@ -157,7 +157,7 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
           <HeroMedia
             photos={heroRotation}
             floorPlanImages={listing?.floorPlanImages || []}
-            roomGroups={listing?.roomGroups}
+            floorPlanPins={listing?.floorPlanPins}
             tourUrl={v.tourUrl}
             address={addressLine}
             onExpand={setLightboxIndex}
