@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, MapPin, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Box, MapPin, Image as ImageIcon, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
 import { HeroCarousel } from './HeroCarousel';
 
 export type HeroMode = 'photos' | 'floorplan' | 'tour' | 'map';
@@ -13,7 +13,7 @@ interface Props {
   resolvePhotoIndex: (src: string) => number;
   mode: HeroMode;
   onModeChange: (mode: HeroMode) => void;
-  roomGroups?: { room: string; photos: string[] }[]; // lets the floor plan jump straight to a room's photos
+  floorPlanPins?: { photo: string; x: number; y: number }[]; // dots at each photo's spot on floor plan 1
 }
 
 // The Zillow-Showcase-style tab strip under the hero: Photos / Floor Plan /
@@ -31,9 +31,35 @@ export const HeroMedia: React.FC<Props> = ({
   resolvePhotoIndex,
   mode,
   onModeChange,
-  roomGroups = [],
+  floorPlanPins = [],
 }) => {
   const [floorIdx, setFloorIdx] = useState(0);
+  const floorPlanBoxRef = useRef<HTMLDivElement>(null);
+  const floorPlanImgRef = useRef<HTMLImageElement>(null);
+  // The rendered pixel box the floor plan image actually occupies inside
+  // its container (object-contain fits it, letterboxing one axis). Pins
+  // are positioned by percentage of THIS box, computed manually, because
+  // an object-contain <img>'s own bounding box is the full container, not
+  // its visible letterboxed content area.
+  const [floorPlanBox, setFloorPlanBox] = useState({ width: 0, height: 0, left: 0, top: 0 });
+
+  useEffect(() => {
+    const recompute = () => {
+      const container = floorPlanBoxRef.current;
+      const img = floorPlanImgRef.current;
+      if (!container || !img || !img.naturalWidth || !img.naturalHeight) return;
+      const cw = container.clientWidth;
+      const ch = container.clientHeight;
+      const containerRatio = cw / ch;
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+      const width = imgRatio > containerRatio ? cw : ch * imgRatio;
+      const height = imgRatio > containerRatio ? cw / imgRatio : ch;
+      setFloorPlanBox({ width, height, left: (cw - width) / 2, top: (ch - height) / 2 });
+    };
+    recompute();
+    window.addEventListener('resize', recompute);
+    return () => window.removeEventListener('resize', recompute);
+  }, [floorIdx]);
 
   const tabs: { id: HeroMode; label: string; thumb?: string; icon?: React.ElementType }[] = [
     { id: 'photos', label: 'Photos', thumb: photos[0] },
@@ -55,12 +81,40 @@ export const HeroMedia: React.FC<Props> = ({
       )}
 
       {mode === 'floorplan' && floorPlanImages.length > 0 && (
-        <div className="absolute inset-0 bg-[#F5F1E8] flex items-center justify-center">
+        <div ref={floorPlanBoxRef} className="absolute inset-0 bg-[#F5F1E8] flex items-center justify-center p-4 sm:p-8">
           <img
+            ref={floorPlanImgRef}
             src={floorPlanImages[floorIdx]}
             alt={`${address} floor plan ${floorIdx + 1}`}
-            className="max-w-full max-h-full object-contain p-4 sm:p-8"
+            className="max-w-full max-h-full object-contain"
+            onLoad={() => window.dispatchEvent(new Event('resize'))}
           />
+
+          {/* Makes the floor plan interactive the way Zillow Showcase's is:
+              a dot at each photo's actual spot in the room, not just a
+              static image. Positioned by percentage of the image's actual
+              rendered box (measured above), not the padded container it
+              sits in. Only floor-1 has pin coordinates mapped. */}
+          {floorIdx === 0 && floorPlanBox.width > 0 && (
+            <div
+              className="absolute pointer-events-none"
+              style={{ width: floorPlanBox.width, height: floorPlanBox.height, left: floorPlanBox.left, top: floorPlanBox.top }}
+            >
+              {floorPlanPins.map((pin, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  aria-label="View photo taken here"
+                  onClick={() => onExpand(resolvePhotoIndex(pin.photo))}
+                  style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 z-20 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#0F5C63] border-2 border-white shadow-md flex items-center justify-center hover:scale-110 hover:bg-[#C9A96A] transition-transform pointer-events-auto"
+                >
+                  <Camera className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
+                </button>
+              ))}
+            </div>
+          )}
+
           {floorPlanImages.length > 1 && (
             <>
               <button
@@ -80,26 +134,6 @@ export const HeroMedia: React.FC<Props> = ({
                 <ChevronRight className="w-5 h-5" />
               </button>
             </>
-          )}
-
-          {/* Makes the floor plan interactive the way Zillow Showcase's is:
-              tap a room, jump straight to that room's photos, instead of
-              the floor plan being a dead static image. */}
-          {roomGroups.some((g) => g.photos.length > 0) && (
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex flex-wrap justify-center gap-2 px-4 max-w-full">
-              {roomGroups
-                .filter((g) => g.photos.length > 0)
-                .map((g) => (
-                  <button
-                    key={g.room}
-                    type="button"
-                    onClick={() => onExpand(resolvePhotoIndex(g.photos[0]))}
-                    className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[#0D2226] bg-[#FAF8F5] border border-[#0D2226]/20 hover:border-[#C9A96A] hover:bg-[#C9A96A]/20 rounded-full px-3 py-1.5 transition-colors whitespace-nowrap"
-                  >
-                    {g.room}
-                  </button>
-                ))}
-            </div>
           )}
         </div>
       )}

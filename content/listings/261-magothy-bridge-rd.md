@@ -18,6 +18,16 @@ floorPlanImages:
   - "/images/listings/261-magothy-bridge-rd/floorplan/floor-1.jpg"
   - "/images/listings/261-magothy-bridge-rd/floorplan/basement.jpg"
   - "/images/listings/261-magothy-bridge-rd/floorplan/combined.jpg"
+floorPlanPins:
+  - "7:26,64"
+  - "8:32.5,67.5"
+  - "9:28,82.5"
+  - "13:37.5,36"
+  - "14:45,37.5"
+  - "17:39,51"
+  - "31:61,34.5"
+  - "32:72.5,35.5"
+  - "33:65,51"
 roomNames:
   - "Living Room"
   - "Kitchen"
