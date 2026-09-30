@@ -88,6 +88,7 @@ export interface SignListing {
   yearBuilt: string;
   mlsId: string;
   tourUrl: string;
+  videoUrl: string;
   heroImage: string;
   photos: string[];
   floorPlanImages: string[];

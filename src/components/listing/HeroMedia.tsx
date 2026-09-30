@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, MapPin, Image as ImageIcon, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
+import { Box, MapPin, Image as ImageIcon, ChevronLeft, ChevronRight, Camera, Film } from 'lucide-react';
 import { HeroCarousel } from './HeroCarousel';
 
-export type HeroMode = 'photos' | 'floorplan' | 'tour' | 'map';
+export type HeroMode = 'photos' | 'floorplan' | 'video' | 'tour' | 'map';
 
 interface Props {
   photos: string[]; // curated hero rotation
   floorPlanImages: string[];
   tourUrl: string;
+  videoUrl: string;
   address: string;
   onExpand: (photoIndex: number) => void; // opens the full lightbox on the real photos array
   resolvePhotoIndex: (src: string) => number;
@@ -26,6 +27,7 @@ export const HeroMedia: React.FC<Props> = ({
   photos,
   floorPlanImages,
   tourUrl,
+  videoUrl,
   address,
   onExpand,
   resolvePhotoIndex,
@@ -64,6 +66,7 @@ export const HeroMedia: React.FC<Props> = ({
   const tabs: { id: HeroMode; label: string; thumb?: string; icon?: React.ElementType }[] = [
     { id: 'photos', label: 'Photos', thumb: photos[0] },
     ...(floorPlanImages.length ? [{ id: 'floorplan' as HeroMode, label: 'Floor Plan', thumb: floorPlanImages[0] }] : []),
+    ...(videoUrl ? [{ id: 'video' as HeroMode, label: 'Video', icon: Film }] : []),
     ...(tourUrl ? [{ id: 'tour' as HeroMode, label: '3D Tour', icon: Box }] : []),
     { id: 'map', label: 'Map', icon: MapPin },
   ];
@@ -138,6 +141,16 @@ export const HeroMedia: React.FC<Props> = ({
             </>
           )}
         </div>
+      )}
+
+      {mode === 'video' && videoUrl && (
+        <video
+          key={videoUrl}
+          src={videoUrl}
+          controls
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover bg-black"
+        />
       )}
 
       {/* Embedded per Kyle's request, even though Zillow's own bot-check

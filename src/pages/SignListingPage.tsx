@@ -56,6 +56,7 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
     lotSize: listing?.lotSize || '',
     yearBuilt: listing?.yearBuilt || '',
     tourUrl: listing?.tourUrl || '',
+    videoUrl: listing?.videoUrl || '',
   };
 
   const photos = listing?.photos?.length ? listing.photos : [];
@@ -104,6 +105,7 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
   const stickyTabs: { id: HeroMode; label: string }[] = [
     { id: 'photos', label: 'Photos' },
     ...(listing?.floorPlanImages?.length ? [{ id: 'floorplan' as HeroMode, label: 'Floor Plan' }] : []),
+    ...(v.videoUrl ? [{ id: 'video' as HeroMode, label: 'Video' }] : []),
     ...(v.tourUrl ? [{ id: 'tour' as HeroMode, label: '3D Tour' }] : []),
     { id: 'map', label: 'Map' },
   ];
@@ -159,6 +161,7 @@ export const SignListingPage: React.FC<Props> = ({ listing }) => {
             floorPlanImages={listing?.floorPlanImages || []}
             floorPlanPins={listing?.floorPlanPins}
             tourUrl={v.tourUrl}
+            videoUrl={v.videoUrl}
             address={addressLine}
             onExpand={setLightboxIndex}
             resolvePhotoIndex={(src) => photos.indexOf(src)}
