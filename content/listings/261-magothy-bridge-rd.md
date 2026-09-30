@@ -73,11 +73,11 @@ factGroupItems:
   - "Water Supply: Public|Sewage Disposal: Septic (holding tank)|Heating: Heat pump, dual fuel|Primary Fuel: Electric|Backup Fuel: Oil|Air Conditioning: Central air, electric|Utility Provider: BGE"
   - "Garage: 1 car, new opener, new lighting, 220V welder circuit"
   - "Home Type: Single Family"
-  - "HOA: None|Community Type: Water-privileged on the Magothy River|Amenities: Private picnic area, boat ramp, and community pier|Boat Slips: Available for rent at the community pier for a nominal fee"
+  - "HOA: None, $99.26/yr Special Community Benefit District fee via county taxes|Community Type: Water-privileged on the Magothy River|Amenities: Private picnic area, boat ramp, and community pier|Boat Slips: Available for rent at the community pier for a nominal fee"
   - "List Price: $489,999|Price per Sq Ft: $211|Status: Coming Soon"
 ---
 
-Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 2.5 bath home in the water-privileged Magothy Forge community on the Magothy River, offering 2,320 finished square feet on a 0.3 acre lot and no HOA. Residents enjoy a private picnic area, a boat ramp, and a community pier with boat slips available for rent at a nominal fee.
+Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 2.5 bath home in the water-privileged Magothy Forge community on the Magothy River, offering 2,320 finished square feet on a 0.3 acre lot with no traditional HOA, just a $99.26 per year community fee billed through county taxes. Residents enjoy a private picnic area, a boat ramp, and a community pier with boat slips available for rent at a nominal fee.
 
 Every major system was replaced in the renovation: the roof was torn off and replaced, new HVAC was installed, and all new CPVC/PVC plumbing runs throughout. The kitchen was updated with new stainless appliances, and all three bathrooms were rebuilt with new fixtures and finishes. Refinished hardwood floors run through the main level, new carpet warms the finished lower level, and crown molding plus enlarged closets in four of the five bedrooms round out the upstairs.
 
