@@ -13,7 +13,7 @@ interface Props {
   resolvePhotoIndex: (src: string) => number;
   mode: HeroMode;
   onModeChange: (mode: HeroMode) => void;
-  floorPlanPins?: { photo: string; x: number; y: number }[]; // dots at each photo's spot on floor plan 1
+  floorPlanPins?: { photo: string; x: number; y: number; floor: number }[]; // dots at each photo's spot per floor
 }
 
 // The Zillow-Showcase-style tab strip under the hero: Photos / Floor Plan /
@@ -94,13 +94,15 @@ export const HeroMedia: React.FC<Props> = ({
               a dot at each photo's actual spot in the room, not just a
               static image. Positioned by percentage of the image's actual
               rendered box (measured above), not the padded container it
-              sits in. Only floor-1 has pin coordinates mapped. */}
-          {floorIdx === 0 && floorPlanBox.width > 0 && (
+              sits in. Each floor plan image has its own pin set. */}
+          {floorPlanBox.width > 0 && (
             <div
               className="absolute pointer-events-none"
               style={{ width: floorPlanBox.width, height: floorPlanBox.height, left: floorPlanBox.left, top: floorPlanBox.top }}
             >
-              {floorPlanPins.map((pin, i) => (
+              {floorPlanPins
+                .filter((pin) => pin.floor === floorIdx)
+                .map((pin, i) => (
                 <button
                   key={i}
                   type="button"
