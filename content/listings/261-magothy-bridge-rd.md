@@ -70,7 +70,7 @@ factGroupItems:
   - "Lower Level: Finished|Flooring: New carpet|Waterproofing: New discharge/drainage system at back door (below grade)|Laundry: Upgraded room, new washing machine"
   - "Lot Size: 0.3 acres|Patio: Hardscaped back patio|Pool: Above ground|Retaining Wall: Replaced (front)|Gutters: New"
   - "Roof: New, torn off and replaced|HVAC: New system|Plumbing: New CPVC/PVC|Insulation: New in upstairs exterior walls|Ventilation: Increased air flow to upstairs bedrooms, new bathroom exhaust fans"
-  - "Water Supply: Public|Sewage Disposal: Septic (holding tank)|Heating: Electric, Oil|Air Conditioning: Central air, electric|Utility Provider: BGE"
+  - "Water Supply: Public|Sewage Disposal: Septic (holding tank)|Heating: Heat pump, dual fuel|Primary Fuel: Electric|Backup Fuel: Oil|Air Conditioning: Central air, electric|Utility Provider: BGE"
   - "Garage: 1 car, new opener, new lighting, 220V welder circuit"
   - "Home Type: Single Family"
   - "HOA: None|Community Type: Water-privileged on the Magothy River|Amenities: Private picnic area, boat ramp, and community pier|Boat Slips: Available for rent at the community pier for a nominal fee"
