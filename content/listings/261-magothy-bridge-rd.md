@@ -83,4 +83,4 @@ Every major system was replaced in the renovation: the roof was torn off and rep
 
 Outside, a hardscaped patio and an above ground pool turn the backyard into a summer gathering spot, backed by a replaced retaining wall, new gutters, and a new drainage system at the rear entry. The garage adds its own upgrade: a new opener, new lighting, and a 220V circuit ready for a workshop, a welder, or an EV charger.
 
-In a market where renovated homes are going under contract in days, this one is ready to move on day one. Schedule a private showing before it's gone.
+A dual fuel heat pump system, public water, and a septic system recently pumped and functioning properly round out the mechanicals. In a market where renovated homes are going under contract in days, this one is ready to move on day one. Schedule a private showing before it's gone.
