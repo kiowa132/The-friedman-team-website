@@ -214,6 +214,21 @@
     .marks .tag:nth-of-type(11) { left: 52% !important; top: 10% !important; }
   }
 
+  /* ---- give the visitor a sense of how long this is, and a way out ---- */
+  .intro-progress { position: fixed; top: var(--bar-h); left: 0; right: 0; height: 3px; z-index: 68; background: rgba(13,34,38,.08); }
+  .intro-progress__fill { height: 100%; width: 0%; background: var(--gold); }
+  .skip {
+    position: fixed; z-index: 68; top: calc(var(--bar-h) + 0.9rem); right: var(--sc-gutter);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sc-ink); text-decoration: none; background: rgba(255,255,255,.82);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    padding: 0.55rem 0.95rem; border-radius: 999px; box-shadow: 0 6px 18px -8px rgba(13,34,38,.3);
+    opacity: 0; pointer-events: none; transition: opacity 400ms var(--sc-ease-out);
+  }
+  .skip.show { opacity: 1; pointer-events: auto; }
+  .skip:hover, .skip:focus-visible { color: var(--sc-accent); }
+  @media (max-width: 820px) { .skip { top: calc(var(--bar-h) + 56.25vw + 0.6rem); } }
+
 </style>
 </head>
 <body>
@@ -222,6 +237,9 @@
   <a class="bar__mark" href="/">The Friedman Team<small>eXp Realty</small></a>
   <a class="bar__cta" href="/sell/marketing-plan/home">Build my plan</a>
 </header>
+
+<div class="intro-progress" aria-hidden="true"><div class="intro-progress__fill" id="introProgressFill"></div></div>
+<a class="skip" id="skipIntro" href="/sell/marketing-plan/home">Skip intro</a>
 
 <ul class="steps" aria-label="Your plan so far" id="steps">
   <li data-at="0.24"><i></i>Prep</li>
@@ -315,8 +333,14 @@
     advanced = true;
     try { sessionStorage.setItem('story-advanced', '1'); } catch (e) {}
     door.classList.add('is-open');
-    setTimeout(function () { location.href = door.href; }, 520);
+    // 700ms, not the 620ms the door leaves take to swing: firing navigation
+    // before that finishes would cut the signature move off mid-swing.
+    setTimeout(function () { location.href = door.href; }, 700);
   }
+
+  var progressFill = document.getElementById('introProgressFill');
+  var skipLink = document.getElementById('skipIntro');
+  var skipShown = false;
 
   function tick() {
     var p = parseFloat(getComputedStyle(act).getPropertyValue('--sc-p')) || 0, cur = -1;
@@ -327,15 +351,27 @@
       li.classList.toggle('on', i === cur || p >= at);
     });
     steps.classList.toggle('dark', p > 0.88);
+    if (progressFill) progressFill.style.width = (Math.min(p, 1) * 100) + '%';
+
+    // Reveal the skip link once someone has actually started scrolling
+    // (not on first paint, that would just be clutter before they've even
+    // seen the hook), hide it again once the finale starts since by then
+    // auto-advance is already seconds away.
+    if (skipLink) {
+      if (!skipShown && p > 0.02 && p < 0.85) { skipLink.classList.add('show'); skipShown = true; }
+      if (p >= 0.85 || p <= 0.02) skipLink.classList.remove('show');
+    }
 
     var already = false;
     try { already = sessionStorage.getItem('story-advanced') === '1'; } catch (e) {}
-    // Fires right as the screen finishes going cream (zoom and light wash
-    // both complete at 0.88), not after an extra scroll's worth of a
-    // separate "door screen." The line gets a brief flash, then it's gone,
-    // there is nothing left to scroll or swipe past.
-    if (p >= 0.89 && !already) go();
-    if (p < 0.85 && already) { try { sessionStorage.removeItem('story-advanced'); } catch (e) {} advanced = false; }
+    // The ".fin" cue (0.88 to 1.01, 45% ramp-in of that 0.13 window) only
+    // reaches full opacity at p=0.9385. Firing at 0.89, like this used to,
+    // meant the headline was only ~17% faded in, and if the visitor's
+    // momentum ran out right at the threshold it would sit there dim for
+    // the whole redirect delay and never get seen at full strength. 0.945
+    // gives it room to finish, plus a small hold, before the jump.
+    if (p >= 0.945 && !already) go();
+    if (p < 0.9 && already) { try { sessionStorage.removeItem('story-advanced'); } catch (e) {} advanced = false; }
   }
   // --sc-p is driven by scrollcraft's own requestAnimationFrame loop, not
   // gated on a native 'scroll' event, so a plain scroll listener can miss
