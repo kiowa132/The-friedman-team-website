@@ -167,6 +167,24 @@
   .steps.dark li i { border-color: var(--sc-ink); }
   .credit { z-index: 66; }
   .win { position: absolute; inset: 0; overflow: hidden; }
+
+  /* ---- idle hook: the very first frame already moves, before any scroll
+     input, so the page proves it's alive the instant it paints. A slow
+     continuous Ken Burns drift on the base (before.webp) layer only, the
+     later layers (.s1/.s2/.s3) are scroll-driven and stay still until the
+     visitor earns them. ---- */
+  @keyframes sc-idle-kb {
+    0%   { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.045) translate(-0.6%, -0.5%); }
+  }
+  .plane > img:first-child {
+    animation: sc-idle-kb 18s ease-in-out infinite alternate;
+    transform-origin: 50% 42%;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .plane > img:first-child { animation: none; }
+  }
   @media (max-width: 820px) {
     .win { inset: auto; left: 0; right: 0; top: var(--bar-h); height: 56.25vw; }
     .plane { left: 0; top: 0; width: 100vw; height: 56.25vw; translate: none; }
@@ -175,6 +193,25 @@
     .tag::before { width: .4rem; height: .4rem; }
     .steps { display: none; }
     .fin { top: calc(var(--bar-h) + 56.25vw + 1.4rem); translate: -50% 0; }
+
+    /* The desktop tag coordinates are tuned for a tall, wide hero. The
+       mobile window is only ~56.25vw tall (about 210px on a 375px phone),
+       so the same percentage gaps that read fine on desktop collide into
+       each other here. Every cluster of simultaneously-visible tags gets
+       pinned to one of four corners instead, so no two can ever overlap
+       regardless of exact cue timing, same pointing-at-a-feature feel,
+       just room to breathe. !important beats the inline left/top style. */
+    .marks .tag:nth-of-type(1)  { left: 5%  !important; top: 10% !important; }
+    .marks .tag:nth-of-type(2)  { left: 52% !important; top: 10% !important; }
+    .marks .tag:nth-of-type(3)  { left: 5%  !important; top: 66% !important; }
+    .marks .tag:nth-of-type(4)  { left: 52% !important; top: 66% !important; }
+    .marks .tag:nth-of-type(5)  { left: 5%  !important; top: 10% !important; }
+    .marks .tag:nth-of-type(6)  { left: 52% !important; top: 38% !important; }
+    .marks .tag:nth-of-type(7)  { left: 5%  !important; top: 66% !important; }
+    .marks .tag:nth-of-type(8)  { left: 5%  !important; top: 10% !important; }
+    .marks .tag:nth-of-type(9)  { left: 52% !important; top: 38% !important; }
+    .marks .tag:nth-of-type(10) { left: 5%  !important; top: 66% !important; }
+    .marks .tag:nth-of-type(11) { left: 52% !important; top: 10% !important; }
   }
 
 </style>
