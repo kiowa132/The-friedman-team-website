@@ -4,7 +4,7 @@ mlsId: ""
 status: "Coming Soon"
 streetAddress: "261 Magothy Bridge Rd"
 cityStateZip: "Pasadena, MD 21122"
-listPrice: "$489,999"
+listPrice: "$489,000"
 beds: "5"
 baths: "2.5"
 sqft: "2,320"
@@ -74,7 +74,7 @@ factGroupItems:
   - "Garage: 1 car, new opener, new lighting, 220V welder circuit"
   - "Home Type: Single Family"
   - "HOA: None, $99.26/yr Special Community Benefit District fee via county taxes|Community Type: Water-privileged on the Magothy River|Amenities: Private picnic area, boat ramp, and community pier|Boat Slips: Available for rent at the community pier for a nominal fee"
-  - "List Price: $489,999|Price per Sq Ft: $211|Status: Coming Soon"
+  - "List Price: $489,000|Price per Sq Ft: $211|Status: Coming Soon"
 ---
 
 Fully renovated from the roof down, 261 Magothy Bridge Rd is a move in ready 5 bedroom, 2.5 bath home in the water-privileged Magothy Forge community on the Magothy River, offering 2,320 finished square feet on a 0.3 acre lot with no traditional HOA, just a $99.26 per year community fee billed through county taxes. Residents enjoy a private picnic area, a boat ramp, and a community pier with boat slips available for rent at a nominal fee.
