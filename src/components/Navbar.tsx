@@ -254,7 +254,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="font-serif text-lg sm:text-xl font-bold tracking-wider text-[#FAF8F5] uppercase group-hover:text-[#C9A96A] transition-colors leading-tight">
                 Friedman
               </div>
-              <div className="text-[10px] sm:text-xs font-medium tracking-[0.25em] text-[#C9A96A] uppercase flex items-center gap-1.5">
+              <div className="hidden sm:flex text-[10px] sm:text-xs font-medium tracking-[0.25em] text-[#C9A96A] uppercase items-center gap-1.5">
                 <span>The Friedman Team</span>
                 <span className="inline-block w-1 h-1 rounded-full bg-[#A8B2A1]"></span>
                 <span className="text-[#A8B2A1]/90">eXp Realty</span>
