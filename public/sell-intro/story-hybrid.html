@@ -263,7 +263,7 @@
   <li data-at="0.93"><i></i>Offers</li>
 </ul>
 
-<p class="credit" id="credit">Home tour footage courtesy of Brent Sledd, The Rob Ellerman Team, Reece Nichols Real Estate</p>
+<p class="credit" id="credit" hidden></p>
 
 <main id="top">
 
@@ -411,7 +411,8 @@
   var creditEl = document.getElementById('credit');
   var flightDone = false;
 
-  var REAL_CREDIT = 'Home tour footage courtesy of Brent Sledd, The Rob Ellerman Team, Reece Nichols Real Estate';
+  // Kyle paid for the drone footage, so the real-footage act carries no credit line.
+  var REAL_CREDIT = '';
   var AI_CREDIT = 'Illustrative AI-generated imagery of a fictional home.';
 
   function clamp01(n) { return Math.max(0, Math.min(1, n)); }
@@ -446,6 +447,7 @@
       railEl.classList.toggle('is-hidden', flightDone);
       stepsEl.classList.toggle('is-visible', flightDone);
       creditEl.textContent = flightDone ? AI_CREDIT : REAL_CREDIT;
+      creditEl.hidden = !creditEl.textContent;
     }
     if (!flightDone) markRail();
 
