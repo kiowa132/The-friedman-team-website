@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sell Your Home the Right Way | The Friedman Team</title>
+<meta name="description" content="Follow one home from the air to the front door and through every room, then watch the marketing plan come together before you build yours with The Friedman Team, eXp Realty.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230F5C63'/><text x='16' y='23' font-size='20' text-anchor='middle' fill='%23FAF8F5' font-family='Georgia,serif' font-weight='700'>F</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="scrollcraft.css">
+<style>
+  :root {
+    --sc-canvas:     #FAF8F5;
+    --sc-surface:    #FFFFFF;
+    --sc-ink:        #0D2226;
+    --sc-ink-soft:   #3D5357;
+    --sc-accent:     #0F5C63;
+    --sc-accent-ink: #FAF8F5;
+    --sc-font-display: "Playfair Display", Georgia, serif;
+    --sc-font-text:    "Inter", system-ui, sans-serif;
+    --gold: #C9A84C;
+    --bar-h: 3.6rem;
+  }
+
+  /* ---- site bar: the brand and the one call to action, same label everywhere ---- */
+  .bar {
+    position: fixed; inset: 0 0 auto 0; z-index: 70; height: var(--bar-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding-inline: var(--sc-gutter);
+    background: color-mix(in oklab, var(--sc-canvas) 84%, transparent);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--sc-hairline);
+  }
+  .bar__mark { font-family: var(--sc-font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--sc-ink); text-decoration: none; }
+  .bar__mark small { font-family: var(--sc-font-text); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sc-accent); margin-left: 0.7rem; }
+  .bar__cta {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--sc-accent-ink); background: var(--sc-accent); text-decoration: none;
+    padding: 0.62rem 1.1rem; border-radius: 3px;
+    transition: background var(--sc-d-base) var(--sc-ease-out), transform var(--sc-d-base) var(--sc-ease-out);
+  }
+  .bar__cta:hover { background: var(--sc-ink); transform: translateY(-1px); }
+
+  /* ---- copy: one glass card per stop, anchor varies, never over the middle of the footage ---- */
+  .c {
+    position: absolute; z-index: var(--sc-z-copy);
+    width: min(29rem, 86vw);
+    padding: clamp(1.25rem, 2.4vw, 2rem);
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(16px) saturate(1.1); -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(13,34,38,.10), 0 22px 44px -18px rgba(13,34,38,.34);
+  }
+  .c h1, .c h2 { margin: 0; font-family: var(--sc-font-display); font-weight: 700; color: var(--sc-ink); line-height: 1.06; letter-spacing: -0.02em; text-wrap: balance; }
+  .c h1 { font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.6rem); }
+  .c h2 { font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.6rem); }
+  .c p { margin: 0.9rem 0 0; color: var(--sc-ink-soft); font-size: var(--sc-t-base); line-height: 1.6; max-width: 46ch; text-wrap: pretty; }
+  .c--l { left: var(--sc-gutter); bottom: clamp(3.6rem, 11vh, 8rem); }
+  .c--r { right: var(--sc-gutter); bottom: clamp(3.6rem, 11vh, 8rem); }
+  .c--fin { left: 50%; bottom: clamp(3.4rem, 9vh, 6rem); translate: -50% 0; width: min(33rem, 90vw); text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .c--fin p { margin-inline: auto; }
+
+  /* ---- signature move: the closing button is the arched front door, and it opens ---- */
+  .door { display: inline-flex; flex-direction: column; align-items: center; gap: 0.85rem; margin-top: 1.4rem; text-decoration: none; color: var(--sc-ink); }
+  .door__arch {
+    position: relative; display: block; width: 8.2rem; height: 6.4rem; overflow: hidden;
+    border-radius: 4.1rem 4.1rem 0 0;
+    border: 3px solid var(--gold); border-bottom-width: 0;
+    background: radial-gradient(ellipse at 50% 100%, #fff6dc 0%, #f3dc9d 45%, #e2c46f 100%);
+    box-shadow: inset 0 0 22px rgba(201, 168, 76, .55);
+  }
+  .door__leaf {
+    position: absolute; top: 0; bottom: 0; width: 50%; background: var(--sc-accent);
+    transition: transform 620ms var(--sc-ease-drawer);
+    box-shadow: inset 0 0 0 5px color-mix(in oklab, var(--sc-accent) 70%, #000);
+  }
+  .door__leaf::after { content: ""; position: absolute; top: 52%; width: 0.42rem; height: 0.42rem; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 2px rgba(0,0,0,.15); }
+  .door__leaf--l { left: 0; transform-origin: 0 50%; }
+  .door__leaf--l::after { right: 0.5rem; }
+  .door__leaf--r { right: 0; transform-origin: 100% 50%; }
+  .door__leaf--r::after { left: 0.5rem; }
+  .door:is(:hover, :focus-visible, .is-open) .door__leaf--l { transform: translateX(-104%); }
+  .door:is(:hover, :focus-visible, .is-open) .door__leaf--r { transform: translateX(104%); }
+  .door__label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .door:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 6px; }
+
+  /* ---- the front door opens on scroll: its own worldflight leg between the
+     drone descent and the interior. Every layer is cut from real frames:
+     door-house.webp is the drone clip's last frame, p2-manor.webp is the
+     interior clip's first frame, so both seams are frame-matched. Geometry
+     (in % of the 16:9 frame) was measured off the 2560x1440 encode. ---- */
+  .doorwin { position: absolute; overflow: hidden; }
+  .dlayer { position: absolute; inset: 0; background-size: 100% 100%; }
+  .dplate, .din { position: absolute; will-change: transform; }
+  .din { background: url(assets/p2-manor.webp) center / 100% 100%; }
+  .dplate { transform-origin: 49.69% 48.5%; }
+  .dhouse {
+    background-image: url(assets/door-house.webp);
+    /* the doorway is a hole, so the interior shows through once the leaves swing */
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2560 1440' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' fill-rule='evenodd' d='M0 0H2560V1440H0Z M1157 870V643A115 115 0 0 1 1387 643V870Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2560 1440' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' fill-rule='evenodd' d='M0 0H2560V1440H0Z M1157 870V643A115 115 0 0 1 1387 643V870Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  }
+  .dway {
+    position: absolute; left: 45.195%; top: 36.667%; width: 8.984%; height: 23.75%;
+    border-radius: 50% 50% 0 0 / 33.6% 33.6% 0 0; overflow: hidden; perspective: 340px;
+  }
+  .dglow { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 75%, rgba(255,230,180,.7) 0%, rgba(255,214,150,.25) 40%, transparent 70%); mix-blend-mode: screen; opacity: 0; pointer-events: none; }
+  .dleaf {
+    position: absolute; top: 0; bottom: 0; width: 50%;
+    background-image: url(assets/door-house.webp); background-size: 2226.2% 421.05%;
+    backface-visibility: hidden;
+  }
+  .dleaf::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.55), rgba(0,0,0,.15)); opacity: var(--shade, 0); }
+  .dleaf--l { left: 0; transform-origin: 0 50%; background-position: 47.32% 48.09%; }
+  .dleaf--r { right: 0; transform-origin: 100% 50%; background-position: 52.02% 48.09%; }
+  .dleaf--r::after { background: linear-gradient(270deg, rgba(0,0,0,.55), rgba(0,0,0,.15)); }
+  .dspill { position: absolute; left: 49.69%; top: 52%; width: 34%; height: 46%; translate: -50% -50%; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255,224,170,.55), transparent 70%); mix-blend-mode: screen; opacity: 0; pointer-events: none; }
+  .dbloom { position: absolute; inset: 0; pointer-events: none; opacity: 0;
+    background: radial-gradient(ellipse at 49.7% 52%, #FFFDF6 0%, #FFF4DC 38%, #F7E7C4 72%, #EED9AE 100%); }
+  @media (hover: hover) and (pointer: fine) {
+    .doorwin { scale: 1.05; translate: var(--dx, 0px) var(--dy, 0px); transition: translate 500ms var(--sc-ease-out); }
+  }
+
+  /* ---- route rail: tap a room to fly there (opening real-footage act only) ---- */
+  .rail { position: fixed; z-index: 65; right: 1.4rem; top: 50%; translate: 0 -50%; display: flex; flex-direction: column; gap: 0.9rem; align-items: flex-end; opacity: 1; transition: opacity 400ms var(--sc-ease-out); }
+  .rail.is-hidden { opacity: 0; pointer-events: none; }
+  .rail button { all: unset; cursor: pointer; display: flex; align-items: center; gap: 0.7rem; padding: 0.15rem; }
+  .rail span.n { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.55); opacity: 0; transition: opacity var(--sc-d-base) var(--sc-ease-out); }
+  .rail button:is(:hover, :focus-visible) span.n, .rail button[aria-current="true"] span.n { opacity: 1; }
+  .rail i { display: block; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: rgba(255,255,255,.55); border: 2px solid #fff; box-shadow: 0 1px 6px rgba(0,0,0,.35); transition: transform var(--sc-d-base) var(--sc-ease-out), background var(--sc-d-base); }
+  .rail button[aria-current="true"] i { background: var(--gold); transform: scale(1.35); }
+  .rail button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  /* ---- footage credit, swapped between the two acts ---- */
+  .credit {
+    position: fixed; z-index: 66; left: var(--sc-gutter); bottom: 0.9rem; max-width: min(34rem, 60vw);
+    font-size: 0.66rem; line-height: 1.35; color: var(--sc-ink);
+    background: color-mix(in oklab, #fff 78%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    padding: 0.4rem 0.8rem; border-radius: 999px;
+  }
+
+  /* ---- desktop: soft vignette so the frame feels lit, not flat ---- */
+  .lens { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(ellipse at 50% 45%, transparent 62%, rgba(13,34,38,.20) 100%); }
+  /* pointer drift uses the individual scale/translate properties, so it composes with the engine's own transforms */
+  @media (hover: hover) and (pointer: fine) {
+    .sc-world__seg > :is(video, img) { scale: 1.05; translate: var(--dx, 0px) var(--dy, 0px); transition: translate 500ms var(--sc-ease-out); }
+  }
+
+  /* ---- phones: art directed. The 16:9 footage sits in a window under the bar, nothing is cropped or blown up ---- */
+  @media (max-width: 820px) {
+    .bar__mark small { display: none; }
+    .sc-world__seg > :is(video, img) { top: var(--bar-h); bottom: auto; height: 56.25vw; }
+    .lens { display: none; }
+    .sc-world { background: linear-gradient(180deg, #DCE7E8 0%, #FAF8F5 46%, #F6EEDD 100%); }
+    .rail { right: auto; left: 50%; translate: -50% 0; top: calc(var(--bar-h) + 56.25vw + 1.6rem); flex-direction: row; gap: 0.9rem; }
+    .rail span.n { display: none; }
+    .rail i { background: rgba(13,34,38,.22); border-color: var(--sc-accent); box-shadow: none; }
+    .rail button[aria-current="true"] i { background: var(--gold); }
+    .c { left: 1rem !important; right: 1rem !important; translate: 0 0 !important; bottom: auto !important; width: auto; top: calc(var(--bar-h) + 56.25vw + 2.6rem); padding: 1.1rem 1.15rem; }
+    .c--fin { align-items: flex-start; text-align: left; }
+    .c--fin p { margin-inline: 0; }
+    .credit { left: 0.5rem; right: 0.5rem; max-width: none; top: calc(var(--bar-h) + 56.25vw - 1.9rem); bottom: auto; text-align: center; border-radius: 6px; }
+    .door { margin-top: 1rem; }
+    .door__arch { width: 6.6rem; height: 5.2rem; border-radius: 3.3rem 3.3rem 0 0; }
+  }
+
+
+  :root { --cream: #FAF8F5; }
+  /* ---- act two: the same house, four marketing-beat transitions ---- */
+  .plane { position: absolute; left: 50%; top: 50%; width: max(100vw, calc(100svh * 1.7778)); height: max(56.25vw, 100svh); translate: -50% -50%; transform-origin: 50% 60.5%;
+    --w1: clamp(0, calc((var(--sc-p, 0) - 0.05) / 0.19), 1);
+    --w2: clamp(0, calc((var(--sc-p, 0) - 0.32) / 0.17), 1);
+    --w3: clamp(0, calc((var(--sc-p, 0) - 0.56) / 0.17), 1);
+    --z:  clamp(0, calc((var(--sc-p, 0) - 0.74) / 0.14), 1);
+    --c:  clamp(0, calc((var(--sc-p, 0) - 0.78) / 0.10), 1);
+    transform: scale(calc(1 + var(--z) * 2.6)); }
+  .plane > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .s1 { clip-path: inset(0 calc((1 - var(--w1)) * 100%) 0 0); }
+  .s2 { clip-path: circle(calc(var(--w2) * 78%) at 50% 60.5%); }
+  .s3 { opacity: var(--w3); }
+  .light { position: absolute; inset: 0; opacity: calc(var(--c) * 40); background: radial-gradient(ellipse at 50% 60.5%, #FFF6DC 0, var(--cream) calc(var(--c) * 100%), transparent calc(var(--c) * 100% + 3%)); }
+  .edge { position: absolute; top: 0; bottom: 0; left: calc(var(--w1) * 100%); width: 2px; background: #fff; box-shadow: 0 0 18px rgba(255,255,255,.9); opacity: calc(min(var(--w1), 1 - var(--w1)) * 20); }
+  .edge::after { content: ""; position: absolute; top: 50%; left: 50%; width: 2.6rem; height: 2.6rem; translate: -50% -50%; border-radius: 50%; background: rgba(255,255,255,.92); box-shadow: 0 6px 22px rgba(13,34,38,.35); }
+  .marks { position: absolute; left: 50%; top: 50%; width: max(100vw, calc(100svh * 1.7778)); height: max(56.25vw, 100svh); translate: -50% -50%; pointer-events: none; }
+  .tag { position: absolute; z-index: 5; display: inline-flex; align-items: center; gap: .55rem; padding: .5rem .85rem; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--sc-ink); background: rgba(255,255,255,.93); box-shadow: 0 8px 26px -8px rgba(13,34,38,.5); white-space: nowrap; }
+  .tag::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(201,168,76,.3); }
+  .tag--red::before { background: #D64545; box-shadow: 0 0 0 4px rgba(214,69,69,.28); }
+  .c--dark { color: #fff; background: rgba(13, 34, 38, 0.80); border-color: rgba(255,255,255,.14); }
+  .c--dark h2, .c--dark h1 { color: #fff; }
+  .c--dark p { color: rgba(255,255,255,.84); }
+  .fin { position: absolute; z-index: var(--sc-z-copy); left: 50%; top: 50%; translate: -50% -50%; width: min(40rem, 90vw); text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .fin h2 { margin: 0; font-family: var(--sc-font-display); font-weight: 700; color: var(--sc-ink); font-size: clamp(2rem, 1.3rem + 3vw, 3.8rem); line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+  .fin p { margin: 1rem auto 0; color: var(--sc-ink-soft); max-width: 44ch; }
+  .steps { position: fixed; z-index: 65; right: 1.4rem; top: 50%; translate: 0 -50%; display: flex; flex-direction: column; gap: .7rem; align-items: flex-end; margin: 0; padding: 0; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.6); opacity: 0; transition: opacity 400ms var(--sc-ease-out); }
+  .steps.is-visible { opacity: 1; }
+  .steps li { list-style: none; display: flex; align-items: center; gap: .6rem; opacity: .55; transition: opacity var(--sc-d-base); }
+  .steps li i { width: 1.15rem; height: 1.15rem; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 6px rgba(0,0,0,.4); display: grid; place-items: center; font-style: normal; font-size: .62rem; line-height: 1; }
+  .steps li.on { opacity: 1; }
+  .steps li.done i { background: var(--gold); border-color: var(--gold); color: var(--sc-ink); }
+  .steps li.done i::after { content: "\2713"; }
+  .steps.dark { color: var(--sc-ink); text-shadow: none; }
+  .steps.dark li i { border-color: var(--sc-ink); }
+  .credit { z-index: 66; }
+  .win { position: absolute; inset: 0; overflow: hidden; }
+
+  /* ---- idle hook on act two's base plate: by the time the visitor reaches
+     it the page has already proven it's alive once (the real footage), this
+     keeps that same promise through the crossfade act. ---- */
+  @keyframes sc-idle-kb {
+    0%   { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.045) translate(-0.6%, -0.5%); }
+  }
+  .plane > img:first-child {
+    animation: sc-idle-kb 18s ease-in-out infinite alternate;
+    transform-origin: 50% 42%;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .plane > img:first-child { animation: none; }
+  }
+  @media (max-width: 820px) {
+    .win { inset: auto; left: 0; right: 0; top: var(--bar-h); height: 56.25vw; }
+    .plane { left: 0; top: 0; width: 100vw; height: 56.25vw; translate: none; }
+    .marks { left: 0; top: 0; width: 100vw; height: 56.25vw; translate: none; }
+    .tag { font-size: .58rem; padding: .28rem .5rem; gap: .35rem; }
+    .tag::before { width: .4rem; height: .4rem; }
+    .steps { display: none; }
+    .fin { top: calc(var(--bar-h) + 56.25vw + 1.4rem); translate: -50% 0; }
+
+    /* The desktop tag coordinates are tuned for a tall, wide hero. The
+       mobile window is only ~56.25vw tall (about 210px on a 375px phone),
+       so the same percentage gaps that read fine on desktop collide into
+       each other here. Every cluster of simultaneously-visible tags gets
+       pinned to one of four corners instead, so no two can ever overlap
+       regardless of exact cue timing, same pointing-at-a-feature feel,
+       just room to breathe. !important beats the inline left/top style. */
+    .marks .tag:nth-of-type(1)  { left: 5%  !important; top: 10% !important; }
+    .marks .tag:nth-of-type(2)  { left: 52% !important; top: 10% !important; }
+    .marks .tag:nth-of-type(3)  { left: 5%  !important; top: 66% !important; }
+    .marks .tag:nth-of-type(4)  { left: 52% !important; top: 66% !important; }
+    .marks .tag:nth-of-type(5)  { left: 5%  !important; top: 10% !important; }
+    .marks .tag:nth-of-type(6)  { left: 52% !important; top: 38% !important; }
+    .marks .tag:nth-of-type(7)  { left: 5%  !important; top: 66% !important; }
+    .marks .tag:nth-of-type(8)  { left: 5%  !important; top: 10% !important; }
+    .marks .tag:nth-of-type(9)  { left: 52% !important; top: 38% !important; }
+    .marks .tag:nth-of-type(10) { left: 5%  !important; top: 66% !important; }
+    .marks .tag:nth-of-type(11) { left: 52% !important; top: 10% !important; }
+  }
+
+  /* ---- give the visitor a sense of how long this is, and a way out.
+     Driven off the whole document's scroll, since the page is now two
+     acts long, not just one. ---- */
+  .intro-progress { position: fixed; top: var(--bar-h); left: 0; right: 0; height: 3px; z-index: 68; background: rgba(13,34,38,.08); }
+  .intro-progress__fill { height: 100%; width: 0%; background: var(--gold); }
+  .skip {
+    position: fixed; z-index: 68; top: calc(var(--bar-h) + 0.9rem); right: var(--sc-gutter);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sc-ink); text-decoration: none; background: rgba(255,255,255,.82);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    padding: 0.55rem 0.95rem; border-radius: 999px; box-shadow: 0 6px 18px -8px rgba(13,34,38,.3);
+    opacity: 0; pointer-events: none; transition: opacity 400ms var(--sc-ease-out);
+  }
+  .skip.show { opacity: 1; pointer-events: auto; }
+  .skip:hover, .skip:focus-visible { color: var(--sc-accent); }
+  @media (max-width: 820px) { .skip { top: calc(var(--bar-h) + 56.25vw + 0.6rem); } }
+
+</style>
+</head>
+<body>
+<span data-sc-progress></span>
+<div class="sc-grain" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="bar__mark" href="/">The Friedman Team<small>eXp Realty</small></a>
+  <a class="bar__cta" href="/sell/marketing-plan/home">Build my plan</a>
+</header>
+
+<div class="intro-progress" aria-hidden="true"><div class="intro-progress__fill" id="introProgressFill"></div></div>
+<a class="skip" id="skipIntro" href="/sell/marketing-plan/home">Skip intro</a>
+
+<div class="lens" aria-hidden="true"></div>
+
+<!-- act one's room nav, shown only while the real-footage walkthrough plays -->
+<nav class="rail" id="rail" aria-label="Rooms">
+  <button type="button" data-stop="0"><span class="n">The aerial</span><i></i></button>
+  <button type="button" data-stop="1"><span class="n">Front door</span><i></i></button>
+  <button type="button" data-stop="3"><span class="n">Dining room</span><i></i></button>
+  <button type="button" data-stop="4"><span class="n">Great room</span><i></i></button>
+</nav>
+
+<!-- act two's plan checklist, shown only once the marketing beats start -->
+<ul class="steps" aria-label="Your plan so far" id="steps">
+  <li data-at="0.24"><i></i>Prep</li>
+  <li data-at="0.50"><i></i>Photos</li>
+  <li data-at="0.74"><i></i>Reach</li>
+  <li data-at="0.93"><i></i>Offers</li>
+</ul>
+
+<p class="credit" id="credit" hidden></p>
+
+<main id="top">
+
+  <!-- ==================== ACT ONE: real-footage walkthrough ==================== -->
+  <div id="flight" data-sc-mode="worldflight" data-sc-seam="0.16">
+
+    <div data-sc-world>
+      <div data-sc-segment data-sc-w="1.02" data-sc-linger="0.35" data-sc-waypoint="The aerial">
+        <img class="sc-world__poster" src="assets/p1-manor.webp" alt="" decoding="async" fetchpriority="high">
+        <video data-sc-src="assets/leg1-manor.mp4" data-sc-src-mobile="assets/leg1-manor-m.mp4" muted playsinline></video>
+      </div>
+      <div data-sc-segment data-sc-w="1.1" data-sc-waypoint="Front door" id="doorSeg">
+        <i data-sc-poster hidden></i>
+        <div class="doorwin" id="doorWin" aria-hidden="true">
+          <div class="din" id="doorIn"></div>
+          <div class="dplate" id="doorPlate">
+            <div class="dlayer dhouse"></div>
+            <div class="dway">
+              <div class="dglow" id="doorGlow"></div>
+              <div class="dleaf dleaf--l" id="leafL"></div>
+              <div class="dleaf dleaf--r" id="leafR"></div>
+            </div>
+            <div class="dspill" id="doorSpill"></div>
+          </div>
+          <div class="dbloom" id="doorBloom"></div>
+        </div>
+      </div>
+      <div data-sc-segment data-sc-w="0.68" data-sc-linger="0.35" data-sc-waypoint="Inside">
+        <img class="sc-world__poster" src="assets/p2-manor.webp" alt="" decoding="async">
+        <video data-sc-src="assets/leg2-manor.mp4" data-sc-src-mobile="assets/leg2-manor-m.mp4" muted playsinline></video>
+      </div>
+      <div data-sc-segment data-sc-w="1.33" data-sc-linger="0.35" data-sc-waypoint="Dining room">
+        <img class="sc-world__poster" src="assets/p3.webp" alt="" decoding="async">
+        <video data-sc-src="assets/leg3.mp4" data-sc-src-mobile="assets/leg3-m.mp4" muted playsinline></video>
+      </div>
+      <div data-sc-segment data-sc-w="1.21" data-sc-linger="0.35" data-sc-waypoint="Great room">
+        <img class="sc-world__poster" src="assets/p4.webp" alt="" decoding="async">
+        <video data-sc-src="assets/leg4.mp4" data-sc-src-mobile="assets/leg4-m.mp4" muted playsinline></video>
+      </div>
+    </div>
+
+    <div data-sc-world-copy>
+      <div class="c c--l" data-sc-copy data-sc-window="hero">
+        <h1>Let's sell your home the right way.</h1>
+        <p>Follow one home from the air to the front door and through every room, then watch the marketing plan come together.</p>
+      </div>
+    </div>
+
+    <div data-sc-spacer aria-hidden="true"></div>
+  </div>
+
+  <!-- ==================== ACT TWO: the marketing beats ==================== -->
+  <section id="act" data-sc-act="pin" data-sc-span="11">
+    <div data-sc-stage>
+      <div class="win">
+        <div class="plane">
+          <img src="imp/before.webp" alt="The house today: patchy lawn, stained stone, bins and clutter" fetchpriority="high">
+          <img class="s1" src="imp/after.webp" alt="The same house after preparation: cleaned, landscaped and ready to sell">
+          <img class="s2" src="imp/twilight.webp" alt="The same house photographed at twilight with every window glowing">
+          <img class="s3" src="imp/openhouse.webp" alt="The same house on open house day with a yard sign and cars in the drive">
+          <div class="edge" aria-hidden="true"></div>
+          <div class="light" aria-hidden="true"></div>
+        </div>
+        <div class="marks">
+          <span class="tag" style="left:12%;top:78%" data-sc-cue="0.13 0.25"><span>Lawn restored and striped</span></span>
+          <span class="tag" style="left:26%;top:71%" data-sc-cue="0.17 0.29"><span>Walkway pressure washed</span></span>
+          <span class="tag" style="left:22%;top:28%" data-sc-cue="0.21 0.33"><span>Roof and stone cleaned</span></span>
+          <span class="tag" style="left:10%;top:52%" data-sc-cue="0.25 0.37"><span>Clutter cleared</span></span>
+
+          <span class="tag" style="left:12%;top:14%" data-sc-cue="0.37 0.51"><span>Twilight photography</span></span>
+          <span class="tag" style="left:38%;top:44%" data-sc-cue="0.42 0.56"><span>3D tour and video</span></span>
+          <span class="tag" style="left:66%;top:18%" data-sc-cue="0.47 0.61"><span>Drone aerials</span></span>
+
+          <span class="tag" style="left:12%;top:14%" data-sc-cue="0.61 0.73"><span>Every major listing site</span></span>
+          <span class="tag" style="left:20%;top:58%" data-sc-cue="0.65 0.77"><span>Yard sign with a QR code</span></span>
+          <span class="tag" style="left:36%;top:70%" data-sc-cue="0.69 0.81"><span>Open houses all weekend</span></span>
+          <span class="tag tag--red" style="left:24%;top:44%" data-sc-cue="0.74 0.90"><span>Under contract</span></span>
+        </div>
+      </div>
+
+      <div class="c c--r" data-sc-cue="0.19 0.30">
+        <h2>First, we get it ready.</h2>
+        <p>Your Home Prep Advisor decides what is worth doing, and we line up the vendors.</p>
+      </div>
+      <div class="c c--l c--dark" data-sc-cue="0.43 0.55">
+        <h2>Then we show it off.</h2>
+        <p>Beautiful photos, 3D tours, drone views and video that make buyers stop scrolling.</p>
+      </div>
+      <div class="c c--r" data-sc-cue="0.68 0.78">
+        <h2>Then we get it seen.</h2>
+        <p>Every major site, our buyer network and paid reach, plus open houses that fill the driveway.</p>
+      </div>
+
+      <div class="fin" data-sc-cue="0.88 1.01 0.45 0">
+        <h2>Then we bring buyers through your front door.</h2>
+        <p>Feedback within 48 hours, a weekly call, and a negotiation plan set before the first offer. Now build the plan for your home.</p>
+        <a class="door" href="/sell/marketing-plan/home" id="door">
+          <span class="door__arch" aria-hidden="true"><span class="door__leaf door__leaf--l"></span><span class="door__leaf door__leaf--r"></span></span>
+          <span class="door__label">Build my plan</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="scrollcraft.js"></script>
+<script>
+  ScrollCraft.mount(document);
+  window.__sc = ScrollCraft.instances[0]; // exposed for the verification scripts
+
+  // The engine sizes the scroll track once at mount; re-measure when the window and fonts settle.
+  function relayout() { dispatchEvent(new Event('resize')); }
+  addEventListener('load', relayout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+
+  // ---- act one's route rail: four rooms, tap to fly there (stops sit on the leg boundaries) ----
+  // aerial, front door (scroll-driven door opening), inside, dining, great room
+  var WEIGHTS = [1.02, 1.1, 0.68, 1.33, 1.21];
+  var STOPS = [0]; WEIGHTS.forEach(function (w) { STOPS.push(STOPS[STOPS.length - 1] + w); });
+  var railEl = document.getElementById('rail');
+  var buttons = Array.prototype.slice.call(railEl.querySelectorAll('button'));
+  function nearestStop() {
+    var t = window.scrollY / window.innerHeight, best = 0, d = 1e9;
+    buttons.forEach(function (b) { var i = +b.dataset.stop, dd = Math.abs(STOPS[i] - t); if (dd < d) { d = dd; best = i; } });
+    return best;
+  }
+  function markRail() { var n = nearestStop(); buttons.forEach(function (b) { b.setAttribute('aria-current', String(+b.dataset.stop === n)); }); }
+
+  // ---- the front door: push in, the leaves swing open, fly through ----
+  var doorWin = document.getElementById('doorWin'), doorPlate = document.getElementById('doorPlate'), doorIn = document.getElementById('doorIn');
+  var leafL = document.getElementById('leafL'), leafR = document.getElementById('leafR');
+  var doorGlow = document.getElementById('doorGlow'), doorSpill = document.getElementById('doorSpill'), doorBloom = document.getElementById('doorBloom');
+  var leg1Video = document.querySelector('#flight [data-sc-segment] video');
+  var flightRoot = document.getElementById('flight');
+  function inOut(x) { x = clamp01(x); return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+  // Match the clip layers exactly: same box as the leg-one video, and a
+  // 16:9 plate cover-fitted inside it, the way object-fit: cover draws the clip.
+  function sizeDoor() {
+    var bw = leg1Video.offsetWidth, bh = leg1Video.offsetHeight;
+    doorWin.style.left = leg1Video.offsetLeft + 'px'; doorWin.style.top = leg1Video.offsetTop + 'px';
+    doorWin.style.width = bw + 'px'; doorWin.style.height = bh + 'px';
+    var s = Math.max(bw / 16, bh / 9), pw = 16 * s, ph = 9 * s;
+    [doorPlate, doorIn].forEach(function (el) {
+      el.style.width = pw + 'px'; el.style.height = ph + 'px';
+      el.style.left = ((bw - pw) / 2) + 'px'; el.style.top = ((bh - ph) / 2) + 'px';
+    });
+  }
+  addEventListener('resize', sizeDoor); addEventListener('load', sizeDoor); sizeDoor();
+  var lastDoorP = -1;
+  function doorTick() {
+    var flightTop = flightRoot.getBoundingClientRect().top + scrollY;
+    var p = clamp01(((scrollY - flightTop) / innerHeight - STOPS[1]) / WEIGHTS[1]);
+    if (p === lastDoorP) return;
+    lastDoorP = p;
+    // Flat cut-out leaves rotating in 3D read as fake (Kyle, 2026-10-02), so
+    // the doors stay shut: glide up to them, then a warm burst of light
+    // carries the visitor inside. A real door-opening clip can replace this.
+    var push = inOut(p / 0.6);                          // glide up to the closed door
+    var open = 0;
+    var fly = 0;
+    var scale = 1 + 1.6 * push + 0.6 * inOut((p - 0.5) / 0.3);
+    var bloom = Math.sin(Math.PI * clamp01((p - 0.48) / 0.44)); // up then down
+    doorPlate.style.transform = 'scale(' + scale.toFixed(4) + ')';
+    doorPlate.style.opacity = (1 - clamp01((p - 0.66) / 0.08)).toFixed(3); // swap happens under full light
+    doorBloom.style.opacity = bloom.toFixed(3);
+    // through the open door you first see the windows and sofas (left of the
+    // interior frame), then the room settles to centre as you step inside
+    var settle = inOut((p - 0.3) / 0.7);
+    doorIn.style.transform = 'translateX(' + (17 * (1 - settle)).toFixed(3) + '%) scale(' + (1.3 - 0.3 * settle).toFixed(4) + ')';
+    leafL.style.transform = 'rotateY(' + (open * 104).toFixed(2) + 'deg)';
+    leafR.style.transform = 'rotateY(' + (-open * 104).toFixed(2) + 'deg)';
+    leafL.style.setProperty('--shade', (open * 0.9).toFixed(3));
+    leafR.style.setProperty('--shade', (open * 0.9).toFixed(3));
+    // a hint of warm light from inside, never enough to wash the room out
+    doorGlow.style.opacity = (Math.sin(Math.PI * open) * 0.32 * (1 - fly)).toFixed(3);
+    doorSpill.style.opacity = (open * 0.55 * (1 - fly)).toFixed(3);
+  }
+  markRail();
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      window.scrollTo({ top: STOPS[+b.dataset.stop] * window.innerHeight + 2, behavior: 'smooth' });
+    });
+  });
+
+  // ---- act two: checklist that ticks as each beat lands, plus the finale/auto-advance ----
+  var act = document.getElementById('act'), items = Array.prototype.slice.call(document.querySelectorAll('#steps li')), stepsEl = document.getElementById('steps');
+  var door = document.getElementById('door');
+
+  // No click required at the end: reaching the bottom of the scroll IS the
+  // decision. The door opens on its own and the page carries the visitor
+  // straight into the plan, the same way scrolling drove every earlier
+  // beat. sessionStorage stops a re-fire if they land back here after
+  // Back; scrolling back up re-arms it, so it never fires from a stray
+  // scroll near the bottom before they actually finish. Skipped for
+  // webdriver (test harnesses) and ?noadvance (manual testing).
+  var advanced = false;
+  var skipAdvance = navigator.webdriver || /[?&]noadvance\b/.test(location.search);
+  function go() {
+    if (advanced || skipAdvance) return;
+    advanced = true;
+    try { sessionStorage.setItem('story-advanced', '1'); } catch (e) {}
+    door.classList.add('is-open');
+    // 700ms, not the 620ms the door leaves take to swing: firing navigation
+    // before that finishes would cut the signature move off mid-swing.
+    setTimeout(function () { location.href = door.href; }, 700);
+  }
+
+  var progressFill = document.getElementById('introProgressFill');
+  var skipLink = document.getElementById('skipIntro');
+  var flightEl = document.getElementById('flight');
+  var creditEl = document.getElementById('credit');
+  var flightDone = false;
+
+  // Kyle paid for the drone footage, so the real-footage act carries no credit line.
+  var REAL_CREDIT = '';
+  var AI_CREDIT = 'Illustrative AI-generated imagery of a fictional home.';
+
+  function clamp01(n) { return Math.max(0, Math.min(1, n)); }
+
+  function tick() {
+    var actP = parseFloat(getComputedStyle(act).getPropertyValue('--sc-p')) || 0, cur = -1;
+    items.forEach(function (li, i) {
+      var at = parseFloat(li.dataset.at);
+      li.classList.toggle('done', actP >= at);
+      if (actP < at && cur < 0) cur = i;
+      li.classList.toggle('on', i === cur || actP >= at);
+    });
+    stepsEl.classList.toggle('dark', actP > 0.88);
+
+    // ---- page-wide progress bar: this page is two acts long now, so the
+    // bar tracks the whole document's scroll, not one act's local --sc-p. ----
+    var maxScroll = Math.max(document.body.scrollHeight - innerHeight, 1);
+    var pageP = clamp01(scrollY / maxScroll);
+    if (progressFill) progressFill.style.width = (pageP * 100) + '%';
+
+    // Skip link: available from the very first scroll of the real-footage
+    // act (not gated on act two, which hasn't started yet at that point),
+    // hidden again once the finale is seconds from firing.
+    if (skipLink) skipLink.classList.toggle('show', pageP > 0.01 && actP < 0.85);
+
+    // Rail <-> steps crossfade, and the credit line swap, at the seam
+    // between the two acts: once the real-footage act has scrolled fully
+    // out of view, hand off to act two's own chrome.
+    var nowDone = flightEl.getBoundingClientRect().bottom <= 1;
+    if (nowDone !== flightDone) {
+      flightDone = nowDone;
+      railEl.classList.toggle('is-hidden', flightDone);
+      stepsEl.classList.toggle('is-visible', flightDone);
+      creditEl.textContent = flightDone ? AI_CREDIT : REAL_CREDIT;
+      creditEl.hidden = !creditEl.textContent;
+    }
+    if (!flightDone) { markRail(); doorTick(); }
+
+    var already = false;
+    try { already = sessionStorage.getItem('story-advanced') === '1'; } catch (e) {}
+    // The ".fin" cue (0.88 to 1.01, 45% ramp-in of that 0.13 window) only
+    // reaches full opacity at p=0.9385. Firing at 0.89, like this used to,
+    // meant the headline was only ~17% faded in, and if the visitor's
+    // momentum ran out right at the threshold it would sit there dim for
+    // the whole redirect delay and never get seen at full strength. 0.945
+    // gives it room to finish, plus a small hold, before the jump.
+    if (actP >= 0.945 && !already) go();
+    if (actP < 0.9 && already) { try { sessionStorage.removeItem('story-advanced'); } catch (e) {} advanced = false; }
+  }
+  // --sc-p is driven by scrollcraft's own requestAnimationFrame loop, not
+  // gated on a native 'scroll' event, so a plain scroll listener can miss
+  // the moment it actually crosses the auto-advance threshold. Polling on
+  // rAF alongside it keeps this in lockstep with the value that's really
+  // on screen.
+  addEventListener('scroll', tick, { passive: true });
+  (function poll() { tick(); requestAnimationFrame(poll); })();
+
+  // still clickable, for anyone who gets there and doesn't want to wait
+  door.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    e.preventDefault(); go();
+  });
+
+  // ---- desktop: the picture drifts a little with the pointer ----
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    addEventListener('mousemove', function (e) {
+      var x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
+      document.documentElement.style.setProperty('--dx', (-x * 30).toFixed(1) + 'px');
+      document.documentElement.style.setProperty('--dy', (-y * 18).toFixed(1) + 'px');
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
