@@ -1,5 +1,5 @@
 ---
-active: false
+active: true
 mlsId: ""
 status: "Coming Soon"
 streetAddress: "7721 Wilson Ave"
