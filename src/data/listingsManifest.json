@@ -83,5 +83,22 @@
     "heroImage": "",
     "hero": "",
     "photos": []
+  },
+  {
+    "slug": "7721-wilson-ave",
+    "active": false,
+    "status": "Coming Soon",
+    "streetAddress": "7721 Wilson Ave",
+    "cityStateZip": "Parkville, MD 21234",
+    "listPrice": "",
+    "beds": "3",
+    "baths": "2",
+    "sqft": "",
+    "mlsId": "",
+    "heroImage": "/images/listings/7721-wilson-ave/hero.jpg",
+    "hero": "/images/listings/7721-wilson-ave/hero.jpg",
+    "photos": [
+      "/images/listings/7721-wilson-ave/hero.jpg"
+    ]
   }
 ]
