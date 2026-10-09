@@ -141,7 +141,7 @@ collections:
         name: "active"
         widget: "boolean"
         default: true
-        hint: "Turn this ON for the one listing your For Sale sign's QR code should currently show. Turn it OFF on the old one when you switch. Only one should be ON at a time."
+        hint: "ON = this listing is featured on the homepage and counts for /listings/active (the first ON listing). Your slot pages, /listings/listing-1 and /listings/listing-2, always show whatever is saved in that slot, so each sign's QR code keeps working when you change the property in the slot. Turn it OFF when the listing sells."
       - label: "MLS # (fills in everything below automatically)"
         name: "mlsId"
         widget: "string"

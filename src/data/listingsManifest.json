@@ -85,7 +85,7 @@
     "photos": []
   },
   {
-    "slug": "7721-wilson-ave",
+    "slug": "listing-2",
     "active": true,
     "status": "Coming Soon",
     "streetAddress": "7721 Wilson Ave",
@@ -95,10 +95,10 @@
     "baths": "2",
     "sqft": "1,655",
     "mlsId": "",
-    "heroImage": "/images/listings/7721-wilson-ave/hero.jpg",
-    "hero": "/images/listings/7721-wilson-ave/hero.jpg",
+    "heroImage": "/images/listings/listing-2/hero.jpg",
+    "hero": "/images/listings/listing-2/hero.jpg",
     "photos": [
-      "/images/listings/7721-wilson-ave/hero.jpg"
+      "/images/listings/listing-2/hero.jpg"
     ]
   }
 ]

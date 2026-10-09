@@ -4,7 +4,8 @@
   "outputDirectory": "dist",
   "redirects": [
     { "source": "/sell-your-home", "destination": "/sell", "permanent": true },
-    { "source": "/market-reports", "destination": "/blog", "permanent": true }
+    { "source": "/market-reports", "destination": "/blog", "permanent": true },
+    { "source": "/listings/7721-wilson-ave", "destination": "/listings/listing-2", "permanent": false }
   ],
   "rewrites": [
     { "source": "/((?!api/|admin/).*)", "destination": "/index.html" }

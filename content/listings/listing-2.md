@@ -12,7 +12,7 @@ lotSize: "0.138 acres"
 yearBuilt: "1951"
 tourUrl: ""
 videoUrl: ""
-heroImage: "/images/listings/7721-wilson-ave/hero.jpg"
+heroImage: "/images/listings/listing-2/hero.jpg"
 heroPhotoIndexes: ""
 photos: []
 floorPlanImages: []
