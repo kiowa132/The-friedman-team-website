@@ -13,12 +13,30 @@ yearBuilt: "1951"
 tourUrl: ""
 videoUrl: ""
 heroImage: "/images/listings/listing-2/hero.jpg"
-heroPhotoIndexes: ""
+heroPhotoIndexes: "1,7,15,19,24,30,36"
 photos: []
 floorPlanImages: []
 floorPlanPins: []
-roomNames: []
-roomPhotoIndexes: []
+roomNames:
+  - "Exterior"
+  - "Living Room"
+  - "Dining Room"
+  - "Kitchen"
+  - "Primary Bedroom"
+  - "Bathroom"
+  - "Upper Level"
+  - "Lower Level"
+  - "Backyard"
+roomPhotoIndexes:
+  - "1,2,3,4,5,6"
+  - "7,8,9,10"
+  - "11,12,13,14"
+  - "15,16,17,18"
+  - "19,20,21,22"
+  - "23"
+  - "24,25,26,27,28,29"
+  - "30,31,32,33,34,35"
+  - "36,37,38,39,40,41"
 factGroups:
   - "Interior"
   - "Lower Level"
@@ -27,7 +45,7 @@ factGroups:
   - "Utilities"
   - "Community"
 factGroupItems:
-  - "Bedrooms: 3|Bathrooms: 2 full|Primary Bedroom: Main level|Dining Room: Formal, with bay window|Flooring: Wood, plus carpet and laminate|Crown Molding: Yes|Kitchen: Renovated August 2026"
+  - "Bedrooms: 3|Bathrooms: 2 full|Primary Bedroom: Main level|Dining Room: Formal, with bay window|Flooring: Wood, plus carpet and laminate|Crown Molding: Yes|Kitchen: Renovated August 2026|Closet Door: New, in the primary bedroom"
   - "Completed: October 2026|Flooring: New|Recreation Room: Finished|Full Bathroom: Yes|Access: Walk-up to the backyard"
   - "Lot Size: 0.138 acres|Backyard: Large, fenced, with fire pit area|Style: Cape Cod|Year Built: 1951"
   - "Roof: 2018|Boiler: 2022|Basement Door: 2022|Mini-Split System: 2023|Sewer Line: 2023|Hot Water Heater: September 2026"
@@ -41,7 +59,7 @@ A classic Parkville Cape Cod with a flexible floor plan and recent updates, incl
 
 **Open house:** Saturday, October 17, 11 AM to 1 PM, and Sunday, October 18, 12 to 2 PM.
 
-The main level offers the renovated kitchen, a formal dining room with a bay window, wood flooring and crown molding, plus a primary bedroom with a full bath on the same level. Interior doors have been painted and fitted with new hardware, and the living room and primary bedroom were recently painted.
+The main level offers the renovated kitchen, a formal dining room with a bay window, wood flooring and crown molding, plus a primary bedroom with a full bath on the same level. Interior doors have been painted and fitted with new hardware, the primary bedroom has a new closet door, and the living room and primary bedroom were recently painted.
 
 The lower level adds real flexibility. With its recreation room, full bath and walk-up exit, it is an easy fit for a media or game room, home office, guest space or hobby area.
 
@@ -51,7 +69,7 @@ The lower level adds real flexibility. With its recreation room, full bath and w
 - A lower level completed in October 2026 with new flooring, a recreation room, a full bathroom and walk-up access
 - A new hot water heater (September 2026)
 - Fresh paint in the living room and primary bedroom
-- Painted interior doors with new hardware
+- Painted interior doors with new hardware and a new closet door in the primary bedroom
 
 The big items are already done too: a roof from 2018, a boiler from 2022, a basement door from 2022, a mini-split system from 2023 and a sewer line from 2023.
 
