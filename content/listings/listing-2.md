@@ -55,7 +55,7 @@ factGroupItems:
 
 ## Updated Character. Flexible Living.
 
-A classic Parkville Cape Cod with a flexible floor plan and a long list of recent updates: a kitchen renovated in August 2026, a new hot water heater in September 2026, and a lower level completed in October 2026 with new flooring, a recreation room, a full bathroom, a finished laundry area and walk-up access to the backyard. Coming soon to Taylor Heights.
+A classic Parkville Cape Cod with a flexible floor plan and a long list of recent updates: a kitchen renovated in August 2026, a new hot water heater in September 2026, and a lower level completed in October 2026 with new flooring, a recreation room, a full bathroom, a finished laundry area and walk-up access to the backyard. Now available in Taylor Heights.
 
 **Open house:** Saturday, October 17, 11 AM to 1 PM, and Sunday, October 18, 12 to 2 PM.
 
