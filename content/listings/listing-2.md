@@ -1,7 +1,7 @@
 ---
 active: true
 mlsId: ""
-status: "Coming Soon"
+status: "Active"
 streetAddress: "7721 Wilson Ave"
 cityStateZip: "Parkville, MD 21234"
 listPrice: "$324,900"
