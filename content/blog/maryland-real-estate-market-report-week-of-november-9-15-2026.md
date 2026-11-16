@@ -5,7 +5,8 @@ category: Market Reports
 publishDate: "2026-11-16"
 heroImage: /images/uploads/maryland-real-estate-market-report-week-of-november-9-15-2026-hero.jpg
 carouselImages: []
-youtubeVideoId: ""
+youtubeVideoId: "BGeBJCw9Czo"
+youtubeIsShort: true
 ---
 Priya had the plan written on the fridge calendar in red marker: "Start looking. January." Everyone told her and Marcus the same thing. Nobody lists a house the week before Thanksgiving, so why tour empty weeks?
 
