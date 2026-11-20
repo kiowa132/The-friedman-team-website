@@ -17,6 +17,10 @@
 //                       goes to <url>. The ping body has only ids and counters, NEVER a name, phone, email or message.
 //                       Unset = no pings. A ping can never change the visitor's result.
 //   LEAD_LEG_TIMEOUT_MS / HC_PING_TIMEOUT_MS   optional overrides (defaults 7000 and 1500; the ping is capped at 2000).
+//   LEAD_CRM_RETRY=on   (front door G17, off by default) one retry of the CRM leg after a fast transient failure (network, timeout, 5xx);
+//                       LEAD_RETRY_BUDGET_MS (3000) = the longest the first try may have taken, LEAD_RETRY_DELAY_MS (1000, max 3000) = the wait.
+//   A CRM answer of 202 {parked:true} (the edge function's LEAD_PARK_MODE=on) counts as STORED for the visitor (the payload is in the CRM's
+//   inbound_leads and HQ alerts Kyle) but still sends the Healthchecks fail ping, because no person or task exists yet.
 // See server/mlsClient.js's sibling comment style for the "why a backend" explanation - short
 // version: your FUB API key must never reach the browser.
 
@@ -51,8 +55,18 @@ async function sendToCrm(payload) {
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(legTimeoutMs()),
     });
+    const text = await res.text().catch(() => '');
+    // The CRM edge function (LEAD_PARK_MODE=on) answers 202 {ok:false, parked:true} when intake_lead refused the lead but the
+    // payload is safely stored for HQ to follow up. That is NOT a delivery (no person, no task yet) but it is not a lost lead either.
+    let parsed = null;
+    try { parsed = text ? JSON.parse(text) : null; } catch { /* not JSON: treat as before */ }
+    if (parsed && parsed.parked === true) {
+      const why = `CRM lead intake refused the lead but parked it for follow-up: ${String(parsed.error || '').slice(0, 120)}`;
+      console.error(why);
+      return { ok: false, parked: true, status: 'parked', why };
+    }
     if (!res.ok) {
-      const why = `CRM lead intake rejected the lead: ${res.status} ${await res.text().catch(() => '')}`;
+      const why = `CRM lead intake rejected the lead: ${res.status} ${text}`;
       console.error(why);
       return { ok: false, status: res.status, why };
     }
@@ -62,6 +76,23 @@ async function sendToCrm(payload) {
     console.error(why);
     return { ok: false, status: failStatus(err), why };
   }
+}
+
+// ONE retry of the CRM leg for a transient failure (network error, timeout, a 5xx). Off by default (LEAD_CRM_RETRY=on turns it on).
+// Only when the first try failed fast enough to leave the serverless time budget (LEAD_RETRY_BUDGET_MS, default 3000) and never for a
+// skipped, parked or 4xx answer (a retry cannot fix those). The retry's result replaces the first.
+const retryOn = () => String(process.env.LEAD_CRM_RETRY || 'off').trim().toLowerCase() === 'on';
+const retryBudgetMs = () => Math.max(Number(process.env.LEAD_RETRY_BUDGET_MS) || 3000, 0);
+const retryDelayMs = () => Math.min(Math.max(Number(process.env.LEAD_RETRY_DELAY_MS) || 1000, 0), 3000);
+const transient = (r) => !r.ok && !r.skipped && !r.parked && (r.status === 'timeout' || r.status === 'network' || (typeof r.status === 'number' && r.status >= 500));
+
+async function sendToCrmWithRetry(payload) {
+  const t0 = Date.now();
+  const first = await sendToCrm(payload);
+  if (!retryOn() || !transient(first) || Date.now() - t0 > retryBudgetMs()) return first;
+  await new Promise((r) => setTimeout(r, retryDelayMs()));
+  const second = await sendToCrm(payload);
+  return second.ok ? { ...second, retried: true } : { ...first, retried: true };
 }
 
 async function sendToFub(fubPayload) {
@@ -138,6 +169,7 @@ function pingBody({ form, page, type, crm, fub, addrOnly }) {
     `crm=${crm.status}`,
     `fub=${fub.ok ? 'ok' : fub.status}`,
     `addr_only=${addrOnly ? 1 : 0}`,
+    `retried=${crm.retried ? 1 : 0}`,
     `at=${new Date().toISOString()}`,
   ].join('\n');
 }
@@ -246,20 +278,24 @@ export default async function handler(req, res) {
     }
 
     // Both go out at the same time and neither waits for the other.
-    const [fub, crm] = await Promise.all([sendToFub(fubPayload), sendToCrm(crmPayload)]);
+    const [fub, crm] = await Promise.all([sendToFub(fubPayload), sendToCrmWithRetry(crmPayload)]);
 
-    if (!fub.ok && !crm.ok) {
+    // The visitor is told thanks only when the lead is STORED somewhere: the CRM took it, Follow Up Boss took it, or the CRM
+    // parked it (inbound_leads, read by HQ: web_lead_watch.py). Otherwise it is the honest error plus the log line below.
+    const stored = !!(fub.ok || crm.ok || crm.parked);
+
+    if (!stored) {
       console.error('LEAD NOT DELIVERED (follow up by hand):', JSON.stringify({ name, email, phone, type, message, address, tags, fub: fub.why, crm: crm.why }));
     }
 
-    // Alert on ANY CRM failure (FUB ok or not); success ping doubles as a dead-man's switch.
+    // Alert on ANY CRM failure (FUB ok or not, parked or not); success ping doubles as a dead-man's switch.
     await pingHealthchecks(!!crm.ok, { ...pingInfoBase, crm, fub });
 
-    if (!fub.ok && !crm.ok) {
+    if (!stored) {
       return res.status(502).json({ ok: false, error: 'We could not record your submission just now. Please call or email us.' });
     }
 
-    return res.status(200).json({ ok: true, crm: !!crm.ok, fub: !!fub.ok });
+    return res.status(200).json({ ok: true, crm: !!crm.ok, fub: !!fub.ok, parked: !!crm.parked });
   } catch (err) {
     console.error('Error handling a lead:', err);
     await pingHealthchecks(false, { crm: { status: 'error' }, fub: { ok: false, status: 'error' } });
