@@ -54,12 +54,14 @@ export const VideosPage: React.FC = () => {
                   <p className="text-xs text-[#1C2B2E]/70 mt-1.5 leading-relaxed">{v.description}</p>
                   <div className="flex items-center justify-between mt-3">
                     <span className="text-[11px] text-[#1C2B2E]/50">{formatDisplayDate(v.publishDate)}</span>
-                    <Link
-                      to={`/blog/${v.sourceSlug}`}
-                      className="text-[11px] font-bold uppercase tracking-wider text-[#0F5C63] hover:text-[#C9A96A] transition-colors"
-                    >
-                      Read the Report &rarr;
-                    </Link>
+                    {v.sourceSlug && (
+                      <Link
+                        to={`/blog/${v.sourceSlug}`}
+                        className="text-[11px] font-bold uppercase tracking-wider text-[#0F5C63] hover:text-[#C9A96A] transition-colors"
+                      >
+                        Read the Report &rarr;
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
