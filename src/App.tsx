@@ -179,6 +179,16 @@ export default function App() {
   const [isValuationOpen, setIsValuationOpen] = useState(false);
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
 
+  // Deep link for print QR codes (rack cards, flyers): any URL with ?book
+  // opens the Schedule a Strategy Call popup on arrival, e.g.
+  // friedmanreteam.com/?book&c=samsara. The c= code is already captured by
+  // captureAttribution() in main.tsx, so the lead arrives tagged with it.
+  useEffect(() => {
+    if (new URLSearchParams(location.search).has('book')) {
+      setIsConsultationOpen(true);
+    }
+  }, [location.search]);
+
   const handleToggleSave = (id: string) => {
     setSavedListings((prev) => {
       const updated = prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
